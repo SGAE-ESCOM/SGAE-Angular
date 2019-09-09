@@ -7,4 +7,6 @@ export const links:Link[] = [
     new Link("Pagos",""),
     new Link("Evaluación",""),
     new Link("Publicación de resultados",""),
+    new Link("---------------------",""),
+    new Link("Buttons","view-buttons"),
 ];

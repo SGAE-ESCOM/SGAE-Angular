@@ -18,12 +18,14 @@ import { MatCardModule } from '@angular/material/card';
 /* COMPONENTS */
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ViewButtonsComponent } from './components/shared/view-buttons/view-buttons.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
-    DashboardComponent
+    DashboardComponent,
+    ViewButtonsComponent
   ],
   imports: [
     BrowserModule,
