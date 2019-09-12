@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 /* Components view examples */
-import { ViewButtonsComponent } from './components/shared/view-buttons/view-buttons.component';
+import { ViewButtonsComponent } from './components/shared/view/view-buttons/view-buttons.component';
 import { DNDListComponent } from './components/shared/view/dndlist/dndlist.component';
 
 const routes: Routes = [

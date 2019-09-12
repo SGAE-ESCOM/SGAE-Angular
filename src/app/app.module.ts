@@ -19,7 +19,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 /* COMPONENTS */
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ViewButtonsComponent } from './components/shared/view-buttons/view-buttons.component';
+import { ViewButtonsComponent } from './components/shared/view/view-buttons/view-buttons.component';
 import { DNDListComponent } from './components/shared/view/dndlist/dndlist.component';
 
 @NgModule({

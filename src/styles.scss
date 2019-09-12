@@ -154,3 +154,7 @@ a.mat-flat-button:hover, a.mat-icon-button:hover, a.mat-fab:hover, a.mat-mini-fa
 button:focus{
     outline: none;
 }
+
+.mat-icon{
+    margin-top: -4px !important;
+}
