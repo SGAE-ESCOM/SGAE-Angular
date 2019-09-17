@@ -158,3 +158,17 @@ button:focus{
 .mat-icon{
     margin-top: -4px !important;
 }
+
+.mat-form-field{
+    width: 100%;
+}
+
+/* Override styles */
+.breadcrumb{
+    padding: 0rem 1rem;
+    background: #F4F6F7;
+
+    .mat-button{
+        padding: 0px 0px;
+    }
+}

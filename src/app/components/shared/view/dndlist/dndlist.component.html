@@ -1,16 +1,24 @@
 <div class="row">
+    <div class="col-12">
+        <h1>Drag & drop, order list </h1>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-8 col-sm-6 col-md-6">
         <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
             <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-6">        
-        <ul *ngFor="let peli of movies">
-            {{peli}}
-        </ul>
+    <div class="col-12 col-sm-6 col-md-6">
+        <ol>
+            <li *ngFor="let peli of movies">
+                {{peli}}
+            </li>
+        </ol>
         <p>
             {{ hello }}
         </p>
-
     </div>
 </div>

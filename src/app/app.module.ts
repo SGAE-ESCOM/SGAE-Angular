@@ -15,12 +15,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatInputModule } from '@angular/material/input';
 
 /* COMPONENTS */
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ViewButtonsComponent } from './components/shared/view/view-buttons/view-buttons.component';
 import { DNDListComponent } from './components/shared/view/dndlist/dndlist.component';
+import { FormComponent } from './components/shared/view/form/form.component';
+import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { DNDListComponent } from './components/shared/view/dndlist/dndlist.compo
     SidenavComponent,
     DashboardComponent,
     ViewButtonsComponent,
-    DNDListComponent
+    DNDListComponent,
+    FormComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,8 @@ import { DNDListComponent } from './components/shared/view/dndlist/dndlist.compo
     MatSidenavModule,
     MatListModule,
     MatCardModule,
-    DragDropModule
+    DragDropModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,9 @@
-import { Link } from '../../classes/Link';
+import { Link } from '../../models/Link';
 
 export const links:Link[] = [
     new Link("Buttons theme","view-buttons"),
-    new Link("Drag n drop list","view-DND-list")
+    new Link("Drag n drop list","view-DND-list"),
+    new Link("Form","view-form")
     /*
     new Link("Registro",""),
     new Link("Convocatoria",""),
