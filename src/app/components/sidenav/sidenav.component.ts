@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { links } from './sidenav-links';
+import { Breadcrumb } from 'src/app/models/Breadcrumb';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,8 +11,9 @@ import { links } from './sidenav-links';
 export class SidenavComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
-
   fillerNav = links;
+
+  breadcrumb:Breadcrumb = new Breadcrumb( links );
 
   private _mobileQueryListener: () => void;
 
@@ -28,6 +30,7 @@ export class SidenavComponent implements OnInit {
   shouldRun = true;
 
   ngOnInit() {
+      
   }
 
 }

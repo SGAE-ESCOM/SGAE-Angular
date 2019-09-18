@@ -1,8 +1,8 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#" mat-button routerLink="home">Home</a></li>
-        <li class="breadcrumb-item"><a href="#" mat-button routerLink="home">Home</a></li>
-        <li class="breadcrumb-item"><a href="#" mat-button routerLink="home">Home</a></li>
+        <li class="breadcrumb-item" *ngFor="let link of breadcrumb.links">
+            <a href="#" mat-button routerLink="home">Home</a>
+        </li>
         <li class="breadcrumb-item active" aria-current="page"> <a mat-button disabled>Form and validation</a></li>
     </ol>
 </nav>

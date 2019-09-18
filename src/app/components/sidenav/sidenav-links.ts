@@ -2,8 +2,8 @@ import { Link } from '../../models/Link';
 
 export const links:Link[] = [
     new Link("Buttons theme","view-buttons"),
-    new Link("Drag n drop list","view-DND-list"),
-    new Link("Form","view-form")
+    new Link("Drag and drop list","view-DND-list"),
+    new Link("Forms and validation","view-form")
     /*
     new Link("Registro",""),
     new Link("Convocatoria",""),
