@@ -1,4 +1,4 @@
-import { Link } from '../../models/Link';
+import { Link } from '@app/models/Link';
 
 export const links:Link[] = [
     new Link("Buttons theme","view-buttons"),

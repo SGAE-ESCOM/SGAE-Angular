@@ -1,4 +1,3 @@
-
 /* Bootstrap colors styles*/
 /*$primary: purple;*/
 /*$primary: #ff0;*/
@@ -10,108 +9,108 @@
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 $md-matprimary: (
-    50 : #e0efff,
-    100 : #b3d7ff,
-    200 : #80bdff,
-    300 : #4da3ff,
-    400 : #268fff,
-    500 : #007bff,
-    600 : #0073ff,
-    700 : #0068ff,
-    800 : #005eff,
-    900 : #004bff,
-    A100 : #ffffff,
-    A200 : #f2f5ff,
-    A400 : #bfceff,
-    A700 : #a6baff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+  50: #e0efff,
+  100: #b3d7ff,
+  200: #80bdff,
+  300: #4da3ff,
+  400: #268fff,
+  500: #007bff,
+  600: #0073ff,
+  700: #0068ff,
+  800: #005eff,
+  900: #004bff,
+  A100: #ffffff,
+  A200: #f2f5ff,
+  A400: #bfceff,
+  A700: #a6baff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
 );
 
 /* Success #28a745 */
 $md-matsuccess: (
-    50 : #e5f4e9,
-    100 : #bfe5c7,
-    200 : #94d3a2,
-    300 : #69c17d,
-    400 : #48b461,
-    500 : #28a745,
-    600 : #249f3e,
-    700 : #1e9636,
-    800 : #188c2e,
-    900 : #0f7c1f,
-    A100 : #aeffb8,
-    A200 : #7bff8b,
-    A400 : #48ff5e,
-    A700 : #2fff47,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+  50: #e5f4e9,
+  100: #bfe5c7,
+  200: #94d3a2,
+  300: #69c17d,
+  400: #48b461,
+  500: #28a745,
+  600: #249f3e,
+  700: #1e9636,
+  800: #188c2e,
+  900: #0f7c1f,
+  A100: #aeffb8,
+  A200: #7bff8b,
+  A400: #48ff5e,
+  A700: #2fff47,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
 );
 
 /* Danger #dc3545*/
 $md-matdanger: (
-    50 : #fbe7e9,
-    100 : #f5c2c7,
-    200 : #ee9aa2,
-    300 : #e7727d,
-    400 : #e15361,
-    500 : #dc3545,
-    600 : #d8303e,
-    700 : #d32836,
-    800 : #ce222e,
-    900 : #c5161f,
-    A100 : #fff6f7,
-    A200 : #ffc3c6,
-    A400 : #ff9095,
-    A700 : #ff777c,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+  50: #fbe7e9,
+  100: #f5c2c7,
+  200: #ee9aa2,
+  300: #e7727d,
+  400: #e15361,
+  500: #dc3545,
+  600: #d8303e,
+  700: #d32836,
+  800: #ce222e,
+  900: #c5161f,
+  A100: #fff6f7,
+  A200: #ffc3c6,
+  A400: #ff9095,
+  A700: #ff777c,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
 );
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -137,38 +136,47 @@ $SGAE-frontend-theme: mat-light-theme($SGAE-frontend-primary, $SGAE-frontend-acc
 @include angular-material-theme($SGAE-frontend-theme);
 
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; width: 100%; margin: 0; padding: 0;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* fixed problems with bootstrap styles */
-.mat-button:focus, .mat-raised-button:focus, .mat-stroked-button:focus,
-.mat-flat-button:focus, .mat-icon-button:focus, .mat-fab:focus, .mat-mini-fab:focus{
-    outline: 0;
+.mat-button:focus,
+.mat-raised-button:focus,
+.mat-stroked-button:focus,
+.mat-flat-button:focus,
+.mat-icon-button:focus,
+.mat-fab:focus,
+.mat-mini-fab:focus {
+  outline: 0;
 }
 
-a.mat-button:hover, a.mat-raised-button:hover, a.mat-stroked-button:hover,
-a.mat-flat-button:hover, a.mat-icon-button:hover, a.mat-fab:hover, a.mat-mini-fab:hover{
-    text-decoration: dashed;
+a.mat-button:hover,
+a.mat-raised-button:hover,
+a.mat-stroked-button:hover,
+a.mat-flat-button:hover,
+a.mat-icon-button:hover,
+a.mat-fab:hover,
+a.mat-mini-fab:hover {
+  text-decoration: dashed;
 }
 
-button:focus{
-    outline: none;
+button:focus {
+  outline: none;
 }
 
-.mat-icon{
-    margin-top: -4px !important;
+.mat-icon {
+  margin-top: -4px !important;
 }
 
-.mat-form-field{
-    width: 100%;
-}
-
-/* Override styles */
-.breadcrumb{
-    padding: 0rem 0.2rem;
-    background: #F4F6F7;
-
-    .mat-button{
-        padding: 0px 0px;
-    }
+.mat-form-field {
+  width: 100%;
 }

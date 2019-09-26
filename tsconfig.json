@@ -2,6 +2,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths":{
+      "@app/components/*":["src/app/components/*"],
+      "@app/models/*":["src/app/models/*"],
+      "@app/assets/*":["src/app/assets/*"]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
