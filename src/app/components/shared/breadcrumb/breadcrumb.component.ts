@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Breadcrumb } from '../../../models/Breadcrumb';
+import { Breadcrumb } from '@app/models/template/Breadcrumb';
 
 @Component({
   selector: 'app-breadcrumb',

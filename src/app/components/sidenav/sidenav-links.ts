@@ -1,9 +1,9 @@
-import { Link } from '@app/models/Link';
+import { LinkNavigation } from '@app/models/template/link-navigation';
 
-export const links:Link[] = [
-    new Link("Buttons theme","view-buttons"),
-    new Link("Drag and drop list","view-DND-list"),
-    new Link("Forms and validation","view-form")
+export const links:LinkNavigation[] = [
+    new LinkNavigation("Buttons theme","view-buttons", "format_paint", "Use different buttons bootstrap or angular theme"),
+    new LinkNavigation("Drag and drop list","view-DND-list", "format_list_numbered", "Sort your list as you want"),
+    new LinkNavigation("Forms and validation","view-form", "check_circle", "Validate form with different input")
     /*
     new Link("Registro",""),
     new Link("Convocatoria",""),

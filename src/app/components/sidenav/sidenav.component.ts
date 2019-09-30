@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { links } from './sidenav-links';
-import { Breadcrumb } from 'src/app/models/Breadcrumb';
+import { Breadcrumb } from '@app/models/template/Breadcrumb';
 
 @Component({
   selector: 'app-sidenav',

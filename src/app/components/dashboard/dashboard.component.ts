@@ -6,6 +6,7 @@ import { links } from '../sidenav/sidenav-links';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
 export class DashboardComponent implements OnInit {
 
   constructor() { }
