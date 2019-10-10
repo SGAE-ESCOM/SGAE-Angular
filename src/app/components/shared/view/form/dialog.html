@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Information</h1>
+<div mat-dialog-content>
+  <p>Name: {{ data.name }}</p>
+  <p>Last name: {{ data.lastName }}</p>
+  <p>Email: {{ data.email }}</p>
+  <p>Phone number: {{ data.phoneNumber }}</p>
+  <p>Password: {{ data.password }}</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

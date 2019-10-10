@@ -2,15 +2,16 @@
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Name</mat-label>
-      <input matInput placeholder="Insert your name">
+      <input [(ngModel)]="user.name" type="{{field.type}}" matInput placeholder="Insert your name">
       <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       <mat-hint>Only letters </mat-hint>
     </mat-form-field>
   </div>
+
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Last name</mat-label>
-      <input matInput placeholder="Insert your name">
+      <input [(ngModel)]="user.lastName" matInput placeholder="Insert your name">
       <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       <mat-hint>Only letters </mat-hint>
     </mat-form-field>
@@ -18,7 +19,7 @@
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Email</mat-label>
-      <input matInput placeholder="Placeholder">
+      <input [(ngModel)]="user.email" matInput placeholder="Placeholder">
       <mat-icon matSuffix>mail</mat-icon>
       <mat-hint>Valid mail direction</mat-hint>
     </mat-form-field>
@@ -26,7 +27,7 @@
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Phone number</mat-label>
-      <input matInput placeholder="Insert your name">
+      <input [(ngModel)]="user.phoneNumber" matInput type="number" placeholder="Insert your name">
       <mat-icon matSuffix>phone</mat-icon>
       <mat-hint>Only numbers </mat-hint>
     </mat-form-field>
@@ -34,9 +35,17 @@
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Password</mat-label>
-      <input matInput placeholder="Placeholder">
+      <input [(ngModel)]="user.password" matInput placeholder="Placeholder">
       <mat-icon matSuffix>vpn_key</mat-icon>
       <mat-hint>Use alphanumeric characters</mat-hint>
     </mat-form-field>
+  </div>
+</div>
+<div class="row justify-content-end">
+  <div class="col-3">
+    <button mat-stroked-button color="accent" (click)="openDialog()">Modal Bootstrap</button>
+  </div>
+  <div class="col-3">
+    <button mat-stroked-button color="primary" (click)="openDialog()">Dialog Material</button>
   </div>
 </div>
