@@ -148,7 +148,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* fixed problems with bootstrap styles */
+/* Fixed problems with bootstrap styles */
 .mat-button:focus,
 .mat-raised-button:focus,
 .mat-stroked-button:focus,
@@ -173,10 +173,21 @@ button:focus {
   outline: none;
 }
 
+.modal{
+  position: absolute;
+  z-index: 4000;
+}
+
+
+/* Angular Material problems fixed */
 .mat-icon {
   margin-top: -4px !important;
 }
 
 .mat-form-field {
   width: 100%;
+}
+
+b{
+  font-weight: 550;
 }

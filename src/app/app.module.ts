@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 
 /* COMPONENTS */
@@ -28,6 +29,7 @@ import { DNDListComponent } from './components/shared/view/dndlist/dndlist.compo
 import { FormComponent } from './components/shared/view/form/form.component';
 import { DialogForm } from './components/shared/view/form/form.component';
 import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.component';
+import { DynamicFormComponent } from './components/shared/view/dynamic-form/dynamic-form.component';
 
 @NgModule({
   declarations: [
@@ -38,13 +40,15 @@ import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.c
     DNDListComponent,
     FormComponent,
     DialogForm,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    DynamicFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
@@ -55,6 +59,7 @@ import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.c
     MatCardModule,
     DragDropModule,
     MatInputModule,
+    MatSelectModule,
     MatDialogModule
   ],
   providers: [],

@@ -4,9 +4,9 @@ export class Breadcrumb{
     title: string;
     links: LinkNavigation[];
     visible: boolean;
-    constructor( title:string, links: LinkNavigation[], visible?: boolean | true ){
+    constructor( title:string, links?: LinkNavigation[], visible?: boolean ){
         this.title = title;
-        this.links = links;
-        this.visible = visible;
+        this.links = links || null;
+        this.visible = visible || true;
     }
 }
