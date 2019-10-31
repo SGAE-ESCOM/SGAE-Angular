@@ -11,7 +11,7 @@ import { Breadcrumb } from '@app/models/template/Breadcrumb';
 export class SidenavComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
-  fillerNav = links;
+  navigationLinks = links;
 
   breadcrumb:Breadcrumb = new Breadcrumb( "Home" );
 

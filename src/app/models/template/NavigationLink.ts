@@ -1,6 +1,6 @@
 import { Link } from './Link';
 
-export class LinkNavigation extends Link{
+export class NavigationLink extends Link{
     icon: string;
     description: string;
     constructor(name:string, url: string, icon?: string | "", description?: string | ""){
