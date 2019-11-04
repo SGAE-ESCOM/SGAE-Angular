@@ -12,9 +12,7 @@ export class SidenavComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
   navigationLinks = links;
-
-  breadcrumb:Breadcrumb = new Breadcrumb( "Home" );
-
+  
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {

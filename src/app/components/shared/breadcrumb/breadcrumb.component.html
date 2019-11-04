@@ -1,10 +1,10 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item" *ngFor="let link of breadcrumb.links">
+        <li class="breadcrumb-item" *ngFor="let link of classReference.breadcrumb.links">
             <a href="#" mat-button routerLink="{{link.url}}"> {{link.name}} </a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-            <a mat-button disabled>{{ breadcrumb.title }}</a>
+            <a mat-button disabled>{{ classReference.breadcrumb.title }}</a>
         </li>
     </ol>
 </nav>

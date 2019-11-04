@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BreadcrumbComponent } from '@app/components/shared/breadcrumb/breadcrumb.component';
+import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
 
 export interface DialogData {
   animal: string;
@@ -46,7 +48,7 @@ export class FormComponent {
   constructor(public dialog: MatDialog) {
     this.field = new Field("text");
     this.user = new User("Andres", "Lopez", "andres@gmail.com", "5512345678", "HolaMundo");
-    console.log(this.user);
+    BreadcrumbComponent.update( ListLinks.FORMS_AND_VALIDATION, [ListLinks.HOME]);
   }
 
   openDialog(): void {

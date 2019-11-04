@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { BreadcrumbComponent } from '@app/components/shared/breadcrumb/breadcrumb.component';
+import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
 
 export interface TypeOfData {
   name: string;
@@ -14,7 +16,9 @@ export interface TypeOfData {
 })
 export class DynamicFormComponent {
 
-  constructor(){}
+  constructor(){
+    BreadcrumbComponent.update( ListLinks.DYNAMIC_FORM, [ListLinks.HOME]);
+  }
 
   typeOfInput: TypeOfData[] = [
     { name: "Text" , description: '', subdata: null},
