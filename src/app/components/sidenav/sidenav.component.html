@@ -10,7 +10,7 @@
     </h1>
     <span class="spacer"></span>
     <button mat-button [matMenuTriggerFor]="menu">Menu <mat-icon>arrow_drop_down</mat-icon> </button>
-    <mat-menu #menu="matMenu">
+    <mat-menu>
       <button mat-menu-item>Settings <mat-icon>build</mat-icon></button>
       <button mat-menu-item>Sign out <mat-icon>subdirectory_arrow_right</mat-icon></button>
     </mat-menu>
@@ -21,7 +21,7 @@
     <!-- SIDENAV ELEMENTS  -->
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="45">
-      <mat-nav-list>
+      <mat-nav-list> 
         <a mat-list-item routerLink="home">
           <mat-icon class="sidenav-icon" matSuffix>home</mat-icon>Home
         </a>
@@ -34,8 +34,8 @@
     <!-- MAIN CONTENT  -->
     <mat-sidenav-content>
       <div class="container pb-4">
-        <app-breadcrumb ></app-breadcrumb>
-        <ng-content></ng-content>
+        <app-breadcrumb></app-breadcrumb>
+        <ng-content class="animated"></ng-content>
       </div>
     </mat-sidenav-content>
 
