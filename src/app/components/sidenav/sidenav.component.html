@@ -10,7 +10,7 @@
     </h1>
     <span class="spacer"></span>
     <button mat-button [matMenuTriggerFor]="menu">Menu <mat-icon>arrow_drop_down</mat-icon> </button>
-    <mat-menu>
+    <mat-menu #menu="matMenu">
       <button mat-menu-item>Settings <mat-icon>build</mat-icon></button>
       <button mat-menu-item>Sign out <mat-icon>subdirectory_arrow_right</mat-icon></button>
     </mat-menu>

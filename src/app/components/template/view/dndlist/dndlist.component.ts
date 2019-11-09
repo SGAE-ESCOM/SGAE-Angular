@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { BreadcrumbComponent } from '@app/components/shared/breadcrumb/breadcrumb.component';
 import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
 
