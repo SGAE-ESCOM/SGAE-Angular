@@ -12,23 +12,37 @@ Run `ng serve --host your-ip` for a dev server. Navigate to `http://your-ip:4200
 
 Run `ng generate component components/component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-Run `ng g m components/module-folder/module-name --module app --flat --routing` to generate a new module with own routing module. The **--module app** imports module in app.module and **--routing** creates a own routing module.
+Run `ng g c components/component-folder/component-name --module=name-module` to generate a new component in specific module. The flag **--module=name-module** indicate module and can be replace to **-m=name-module**.
 
 Example:
-...
-    ng g m components/template/templateModule --module app --flat --routing
-...
+```
+ng g c components/template/view/messages -m=template
+```
+
+Run `ng g m components/module-folder/module-name --module app --flat --routing` to generate a new module with own routing module. The flags **--module app** imports module in app.module and **--routing** creates a own routing module.
+
+Example:
+```
+ng g m components/template/templateModule --module app --flat --routing
+```
 
 ## Aliases for imports
 
 This template use some aliases. You can edit aliases in `tsconfig.json`,  in section `compilerOptions.paths`.
 
-`@app/components/*` refers to src/app/components/*. 
-`@app/models/*` refers to src/app/models/*.
-`@app/services/*` refers to src/app/services/*.
-`@template/*` refers to src/app/components/template/*.
+`@app/components/*` refers to src/app/components/* . 
+
+`@app/models/*` refers to src/app/models/* .
+
+`@app/services/*` refers to src/app/services/* .
+
+`@template/*` refers to src/app/components/template/* .
 
 ## Template modules
+
+Angular Material modules
+
+Component `@template/` refers to src/app/components/*.  
 
 ## Build
 

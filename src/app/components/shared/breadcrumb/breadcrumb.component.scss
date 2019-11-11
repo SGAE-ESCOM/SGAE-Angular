@@ -1,7 +1,10 @@
 /* Override styles */
 .breadcrumb {
+  display: flex;
   padding: 0rem 0.5rem;
-  background: #f4f6f7;
+  align-items: center;
+  background: #F7F9FA;
+  margin-bottom: 12;
 
   .breadcrumb-item {
     + .breadcrumb-item {
@@ -13,6 +16,17 @@
   }
 
   .mat-button {
+    font-size: 13px;
     padding: 0px 5px;
+    height: 30px;
+    line-height: 2.5;    
+    align-items: center;
+    span{
+      margin-top: -10px;
+    }
   }
+}
+
+.title{
+  
 }

@@ -16,6 +16,16 @@
       <mat-hint>Only letters </mat-hint>
     </mat-form-field>
   </div>
+
+  <div class="col-12 col-md-4 form-group">
+    <mat-form-field appearance="legacy">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" min="18" max="100" placeholder="Insert your name">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <mat-hint>Only letters </mat-hint>
+    </mat-form-field>
+  </div>
+
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Email</mat-label>
@@ -27,7 +37,7 @@
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Phone number</mat-label>
-      <input [(ngModel)]="user.phoneNumber" matInput type="number" placeholder="Insert your name">
+      <input [(ngModel)]="user.phoneNumber" matInput type="text" placeholder="Insert your name">
       <mat-icon matSuffix>phone</mat-icon>
       <mat-hint>Only numbers </mat-hint>
     </mat-form-field>
@@ -35,7 +45,7 @@
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Password</mat-label>
-      <input [(ngModel)]="user.password" matInput placeholder="Placeholder">
+      <input [(ngModel)]="user.password" matInput type="password" placeholder="Placeholder">
       <mat-icon matSuffix>vpn_key</mat-icon>
       <mat-hint>Use alphanumeric characters</mat-hint>
     </mat-form-field>

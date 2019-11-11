@@ -5,7 +5,7 @@ export const links:NavigationLink[] = [
     new NavigationLink("Drag and drop list","view-DND-list", "format_list_numbered", "Sort your list as you want"),
     new NavigationLink("Forms and validation","view-form", "check_circle", "Validate form with different input"),
     new NavigationLink("Dynamic form","dynamic-form", "dynamic_feed", "Create a form with your own form elements and parametters"),
-    new NavigationLink("Messages","dynamic-form", "message", "Alerts, Messages and tooltip")
+    new NavigationLink("Messages","view-messages", "message", "Alerts, Messages and tooltip")
     /*
     new Link("Registro",""),
     new Link("Convocatoria",""),

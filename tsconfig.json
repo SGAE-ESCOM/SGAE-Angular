@@ -6,7 +6,7 @@
       "@app/components/*":["src/app/components/*"],
       "@app/models/*":["src/app/models/*"],
       "@app/services/*":["src/app/services/*"],
-      "@template/*":["src/app/components/template*"],
+      "@template/*":["src/app/components/template/*"],
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
