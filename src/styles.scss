@@ -54,7 +54,9 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* Fixed problems with bootstrap styles */
+/**************************************
+    FIX BOOTSTRAP STYLE PROBLEMS
+***************************************/
 .mat-button:focus,
 .mat-raised-button:focus,
 .mat-stroked-button:focus,
@@ -79,7 +81,9 @@ button:focus {
   outline: none;
 }
 
-/* Angular Material problems fixed */
+/**************************************
+    FIX ANGULAR MATERIAL STYLE PROBLEMS
+***************************************/
 .mat-icon {
   margin-top: -4px !important;
 }
@@ -90,6 +94,16 @@ button:focus {
 
 b{
   font-weight: 550;
+}
+
+/**************************************
+    TEMPLATE STYLES
+***************************************/
+
+.highlight{
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background-color:#F5F7F7;
 }
 
 /* Animations */
