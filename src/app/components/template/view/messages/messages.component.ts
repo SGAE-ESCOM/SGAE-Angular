@@ -13,6 +13,14 @@ export class MessagesComponent implements OnInit {
     BreadcrumbComponent.update( ListLinks.MESSAGES, [ListLinks.HOME]);
   }
 
+  showSuccess(){
+    console.log("success message");
+  }
+
+  showMessage(message: string ){
+    console.log("Messages: "+ message);
+  }
+
   ngOnInit() {
   }
 

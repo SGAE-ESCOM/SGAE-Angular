@@ -2,12 +2,13 @@
     <div class="col-12 my-2">
         <p>Click a button to show a messages</p>
         <button mat-stroked-button>Basic</button>
-        <button mat-stroked-button color="primary">Primary</button>
-        <button mat-stroked-button color="success">Success</button>
-        <button mat-stroked-button color="info">Info</button>
-        <button mat-stroked-button color="warning">Warning</button>
-        <button mat-stroked-button color="danger">Danger</button>
-        <button mat-stroked-button color="dark">Dark</button>
+        <button mat-stroked-button (click)="showMessage('Info')" color="primary">Primary</button>
+        <button mat-stroked-button (click)="showSuccess()" color="success">Success</button>
+        <button mat-stroked-button (click)="showMessage('Info')" color="info">Info</button>
+        <button mat-stroked-button (click)="showMessage('Info')" color="warning">Warning</button>
+        <button mat-stroked-button (click)="showMessage('Info')" color="danger">Danger</button>
+        <button mat-stroked-button (click)="showMessage('Info')" color="dark">Dark</button>
+        <button *ngIf="false" mat-stroked-button color="dark">Dark</button>
     </div>
     <div class="col-12">
         <h3>Messages theme</h3>
