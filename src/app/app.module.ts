@@ -12,6 +12,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.component';
 import { TemplateModule } from './components/template/template.module';
 import { AngularMaterialModule } from './components/template/angular-material.module';
+import { ReversePipe } from './pipes/reverse.pipe';
+import { ToastMessageComponent } from './components/shared/toast-message/toast-message.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AngularMaterialModule } from './components/template/angular-material.mo
     SidenavComponent,
     DashboardComponent,
     BreadcrumbComponent,
+    ReversePipe,
+    ToastMessageComponent,
   ],
   imports: [
     BrowserModule,
