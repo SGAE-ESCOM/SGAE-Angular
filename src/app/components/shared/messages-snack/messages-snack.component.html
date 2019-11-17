@@ -1,0 +1,7 @@
+<div class="alert alert-dismissible [ngClass]='{{message.style}}'">
+    <p *ngIf=" message.title != ''"><b>{{ message.title }}</b></p>
+    <p>{{ message.content}} </p>
+    <button type="button" class="close" (click)="snackBarRef.dismiss()" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true"><i class="material-icons">{{message.icon}}</i></span>
+    </button>
+</div>

@@ -11,10 +11,31 @@
   right: 0;
 }
 
+/* Toolbar */
 .mat-toolbar {
   z-index: 2;
   height: 48px; /*56px;*/
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Sidebar */
+.mat-drawer {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.mat-list-base .mat-list-item {
+  font-size: 14px;
+}
+
+/* Container */
+.mat-sidenav-content {
+  padding-top: 9px;
+
+  &.mat-drawer-content {
+    background: #ffffff;
+  }
 }
 
 .mat-elevation-z3 {
@@ -37,25 +58,10 @@ h1.example-app-name {
   flex: 1;
 }
 
-.mat-list-base .mat-list-item {
-  font-size: 14px;
-}
-
-.mat-sidenav-content {
-  padding-top: 9px;
-
-  &.mat-drawer-content {
-    background: #ffffff;
-  }
-}
-
 .example-is-mobile .example-sidenav-container {
   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
        `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
-}
-
-.mat-nav-list {
 }
 
 .spacer {
@@ -72,7 +78,7 @@ h1.example-app-name {
 
 .color-line {
   background: #f7f9fa;
-  height: 1% !important;
+  height: 4px !important;
   padding-top: 0;
   margin-top: -1px;
   background-image: -webkit-linear-gradient(

@@ -1,47 +1,95 @@
 <div class="row fadeIn">
     <div class="col-12 my-2">
-        <p>Click a button to show a messages</p>
-        <button mat-stroked-button>Basic</button>
-        <button mat-stroked-button (click)="showMessage('Info')" color="primary">Primary</button>
-        <button mat-stroked-button (click)="showSuccess()" color="success">Success</button>
-        <button mat-stroked-button (click)="showMessage('Info')" color="info">Info</button>
-        <button mat-stroked-button (click)="showMessage('Info')" color="warning">Warning</button>
-        <button mat-stroked-button (click)="showMessage('Info')" color="danger">Danger</button>
-        <button mat-stroked-button (click)="showMessage('Info')" color="dark">Dark</button>
-        <button *ngIf="false" mat-stroked-button color="dark">Dark</button>
-    </div>
-    <div class="col-12">
-        <h3>Messages theme</h3>
+        <h4>Simple Message</h4>
         <hr>
-    </div>
-    <div class="col-12 col-md-4 col-lg-3">
-        <div class="alert alert-primary" role="alert">
-            A simple primary alert—check it out!
+        <p>Write a message and then click a button to show a messages.</p>
+        <div class="col-12 col-md-4 form-group">
+            <mat-form-field appearance="legacy">
+                <mat-label>Message</mat-label>
+                <input [(ngModel)]="inputSimpleMessage" type="text" matInput placeholder="Your Message">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-hint>Write a message </mat-hint>
+            </mat-form-field>
         </div>
+        <button mat-stroked-button (click)="showSuccess()" color="success">Success</button>
+        <button mat-stroked-button (click)="showInfo()" color="info">Info</button>
+        <button mat-stroked-button (click)="showWarning()" color="warning">Warning</button>
+        <button mat-stroked-button (click)="showDanger()" color="danger">Danger</button>
     </div>
-    <div class="col-12 col-md-4 col-lg-3">
-        <div class="alert alert-success" role="alert">
-            A simple success alert—check it out!
+
+    <div class="col-12 my-2">
+        <h4>Complex Message</h4>
+        <hr>
+        <p>Write a complex message with content, title, icon and then click a button to show a messages.</p>
+        <div class="row">
+            <div class="col-12 col-md-4 form-group">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Title</mat-label>
+                    <input [(ngModel)]="inputTitle" type="text" matInput placeholder="Your message title">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint>Write a message title</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Message</mat-label>
+                    <input [(ngModel)]="inputContent" type="text" matInput placeholder="Your Message content">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint>Write a message content </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Icon's name</mat-label>
+                    <input [(ngModel)]="inputIcon" type="text" matInput placeholder="Icon's name">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint>Write icon's name </mat-hint>
+                </mat-form-field>
+            </div>
         </div>
+        <button mat-stroked-button (click)="showMessage('light')"> Basic</button>
+        <button mat-stroked-button (click)="showMessage('info')" color="primary">Primary</button>
+        <button mat-stroked-button (click)="showMessage('success')" color="success">Success</button>
+        <button mat-stroked-button (click)="showMessage('info')" color="info">Info</button>
+        <button mat-stroked-button (click)="showMessage('warning')" color="warning">Warning</button>
+        <button mat-stroked-button (click)="showMessage('danger')" color="danger">Danger</button>
+        <button mat-stroked-button (click)="showMessage('dark')" color="dark">Dark</button>
     </div>
-    <div class="col-12 col-md-4 col-lg-3">
-        <div class="alert alert-info" role="alert">
-            A simple info alert—check it out!
-        </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-3">
-        <div class="alert alert-warning" role="alert">
-            A simple warning alert—check it out!
-        </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-3">
-        <div class="alert alert-danger" role="alert">
-            A simple danger alert—check it out!
-        </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-3">
-        <div class="alert alert-dark" role="alert">
-            A simple dark alert—check it out!
+
+    <div class="col-12 my-2">
+        <h4>Messages theme</h4>
+        <hr>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="alert alert-primary" role="alert">
+                    A simple primary alert—check it out!
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="alert alert-success" role="alert">
+                    A simple success alert—check it out!
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="alert alert-info" role="alert">
+                    A simple info alert—check it out!
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="alert alert-warning" role="alert">
+                    A simple warning alert—check it out!
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="alert alert-danger" role="alert">
+                    A simple danger alert—check it out!
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="alert alert-dark" role="alert">
+                    A simple dark alert—check it out!
+                </div>
+            </div>
         </div>
     </div>
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@app/components/shared/breadcrumb/breadcrumb.component';
 import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
+import { MessagesService } from "@services/messages.service";
 
 @Component({
   selector: 'app-messages',
@@ -9,16 +10,37 @@ import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
 })
 export class MessagesComponent implements OnInit {
 
-  constructor() { 
-    BreadcrumbComponent.update( ListLinks.MESSAGES, [ListLinks.HOME]);
+  inputSimpleMessage: string;
+  inputContent: string;
+  inputTitle: string;
+  inputIcon: string;
+
+  constructor(private _menssage: MessagesService) {
+    BreadcrumbComponent.update(ListLinks.MESSAGES, [ListLinks.HOME]);
+    this.inputSimpleMessage = "This is a simple messages";
+    this.inputTitle = "Some title";
+    this.inputContent = "This is a complex messages";
+    this.inputIcon = "message";
   }
 
-  showSuccess(){
-    console.log("success message");
+  showMessage(type: string) {
+    this._menssage.showMessage(this.inputContent, type, this.inputTitle, this.inputIcon);
   }
 
-  showMessage(message: string ){
-    console.log("Messages: "+ message);
+  showSuccess() {
+    this._menssage.success(this.inputSimpleMessage);
+  }
+
+  showInfo() {
+    this._menssage.info(this.inputSimpleMessage);
+  }
+
+  showWarning() {
+    this._menssage.warning(this.inputSimpleMessage);
+  }
+
+  showDanger() {
+    this._menssage.danger(this.inputSimpleMessage);
   }
 
   ngOnInit() {

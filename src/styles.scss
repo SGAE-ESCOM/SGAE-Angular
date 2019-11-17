@@ -34,7 +34,16 @@ $color-accent: mat-palette($md-matwarning);
 $color-warn: mat-palette($md-matdanger);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$angular-material-theme: mat-light-theme($color-primary, $color-success, $color-info, $color-warning, $color-danger, $color-dark, $color-accent, $color-warn);
+$angular-material-theme: mat-light-theme(
+  $color-primary,
+  $color-success,
+  $color-info,
+  $color-warning,
+  $color-danger,
+  $color-dark,
+  $color-accent,
+  $color-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -92,7 +101,7 @@ button:focus {
   width: 100%;
 }
 
-b{
+b {
   font-weight: 550;
 }
 
@@ -100,10 +109,52 @@ b{
     TEMPLATE STYLES
 ***************************************/
 
-.highlight{
+.highlight {
   padding: 1.5rem;
   margin-bottom: 1rem;
-  background-color:#F5F7F7;
+  background-color: #f5f7f7;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Messages styles */
+.mat-snack-bar-container {
+  margin: 0px !important;
+  position: relative !important;
+  top: 58px;
+  left: -5px;
+
+  @each $color, $value in $theme-colors {
+    padding: 0 !important;
+    &.#{$color} {
+      @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
+    }
+  }
+}
+
+.alert {
+  margin-bottom: 0 !important;
+}
+
+/* Scrollbar theme */
+
+::-webkit-scrollbar{
+  width: 8px;
+}
+::-webkit-scrollbar-track-piece{
+	background-color: transparent;
+}
+::-webkit-scrollbar-thumb{
+	background-color:rgba(#cfcfcf, 0.8);
+	outline: 2px solid #FFF;
+	outline-offset: -10px;
+  border: .1px solid #B7B7B7;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background-color: #B5B5B5;
 }
 
 /* Animations */
@@ -123,10 +174,10 @@ b{
 
 @keyframes fadeIn {
   from {
-      opacity: 0;
+    opacity: 0;
   }
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
 

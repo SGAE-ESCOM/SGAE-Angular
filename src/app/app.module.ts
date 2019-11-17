@@ -14,6 +14,7 @@ import { TemplateModule } from './components/template/template.module';
 import { AngularMaterialModule } from './components/template/angular-material.module';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { ToastMessageComponent } from './components/shared/toast-message/toast-message.component';
+import { MessagesSnackComponent } from './components/shared/messages-snack/messages-snack.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ToastMessageComponent } from './components/shared/toast-message/toast-m
     BreadcrumbComponent,
     ReversePipe,
     ToastMessageComponent,
+    MessagesSnackComponent,
   ],
   imports: [
     BrowserModule,
