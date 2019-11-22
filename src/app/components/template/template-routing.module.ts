@@ -7,8 +7,10 @@ import { DNDListComponent } from './view/dndlist/dndlist.component';
 import { FormComponent } from './view/form/form.component';
 import { DynamicFormComponent } from './view/dynamic-form/dynamic-form.component';
 import { MessagesComponent } from './view/messages/messages.component';
+import { CustomThemeComponent } from './view/custom-theme/custom-theme.component';
 
 const routes: Routes = [
+  { path:'view-custom-theme' , component: CustomThemeComponent },
   { path:'view-buttons' , component: ViewButtonsComponent },
   { path:'view-DND-list' , component: DNDListComponent },
   { path:'view-form' , component: FormComponent },

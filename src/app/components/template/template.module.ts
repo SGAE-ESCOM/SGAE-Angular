@@ -14,6 +14,7 @@ import { FormComponent } from './view/form/form.component';
 import { DialogForm } from './view/form/form.component';
 import { DynamicFormComponent } from './view/dynamic-form/dynamic-form.component';
 import { MessagesComponent } from './view/messages/messages.component';
+import { CustomThemeComponent } from './view/custom-theme/custom-theme.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MessagesComponent } from './view/messages/messages.component';
     FormComponent,
     DialogForm,
     DynamicFormComponent,
-    MessagesComponent
+    MessagesComponent,
+    CustomThemeComponent
   ],
   imports: [
     CommonModule,
