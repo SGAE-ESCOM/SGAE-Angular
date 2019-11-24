@@ -3,10 +3,11 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths":{
-      "@app/components/*":["src/app/components/*"],
-      "@app/models/*":["src/app/models/*"],
+      "@components/*":["src/app/components/*"],
+      "@models/*":["src/app/models/*"],
       "@services/*":["src/app/services/*"],
       "@pipes/*":["src/app/pipes/*"],
+      "@breadcrumb/*":["src/app/components/shared/breadcrumb/*"],
       "@template/*":["src/app/components/template/*"],
     },
     "outDir": "./dist/out-tsc",

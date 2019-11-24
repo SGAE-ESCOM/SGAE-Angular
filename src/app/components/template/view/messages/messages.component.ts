@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BreadcrumbComponent } from '@app/components/shared/breadcrumb/breadcrumb.component';
-import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
+import { BD_MESSAGES } from '@breadcrumb/ListLinks';
 import { MessagesService } from "@services/messages.service";
 
 @Component({
@@ -16,7 +16,7 @@ export class MessagesComponent implements OnInit {
   inputIcon: string;
 
   constructor(private _menssage: MessagesService) {
-    BreadcrumbComponent.update(ListLinks.MESSAGES, [ListLinks.HOME]);
+    BreadcrumbComponent.update(BD_MESSAGES);
     this.inputSimpleMessage = "This is a simple messages";
     this.inputTitle = "Some title";
     this.inputContent = "This is a complex messages";

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BreadcrumbComponent } from '@app/components/shared/breadcrumb/breadcrumb.component';
-import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
+import { BD_FORMS_AND_VALIDATION } from '@breadcrumb/ListLinks';
 
 export interface DialogData {
   animal: string;
@@ -16,11 +16,11 @@ export class User {
   password: string;
   constructor(name?: string, lastName?: string, email?: string,
     phoneNumber?: string, password?: string) {
-      this.name = name || '';
-      this.lastName = lastName || '';
-      this.email = email || '';
-      this.phoneNumber = phoneNumber || '';
-      this.password = password || '';
+    this.name = name || '';
+    this.lastName = lastName || '';
+    this.email = email || '';
+    this.phoneNumber = phoneNumber || '';
+    this.password = password || '';
   }
 }
 
@@ -48,7 +48,7 @@ export class FormComponent {
   constructor(public dialog: MatDialog) {
     this.field = new Field("text");
     this.user = new User("Andres", "Lopez", "andres@gmail.com", "5512345678", "HolaMundo");
-    BreadcrumbComponent.update( ListLinks.FORMS_AND_VALIDATION, [ListLinks.HOME]);
+    BreadcrumbComponent.update(BD_FORMS_AND_VALIDATION);
   }
 
   openDialog(): void {
@@ -75,8 +75,8 @@ export class DialogForm {
   constructor(
     public dialogRef: MatDialogRef<DialogForm>,
     @Inject(MAT_DIALOG_DATA) public data: User) {
-      this.dialogRef.disableClose = true;
-    }
+    this.dialogRef.disableClose = true;
+  }
 
   onNoClick(): void {
     this.dialogRef.close(this.data);

@@ -1,10 +1,19 @@
-import { Link } from '@app/models/template/Link';
+import { Link } from '@models/template/Link';
+import { Breadcrumb } from '@models/template/Breadcrumb';
 
-export abstract class ListLinks {
-    static readonly HOME = new Link("Home","home");
-    static readonly BUTTONS = new Link("Buttons theme","view-buttons");
-    static readonly DRAG_AND_DROP = new Link("Drag and drop list","view-DND-list");
-    static readonly FORMS_AND_VALIDATION = new Link("Forms and validation","view-form");
-    static readonly DYNAMIC_FORM = new Link("Dynamic form","dynamic-form");
-    static readonly MESSAGES = new Link("Messages","view-messages");
-}
+const HOME = new Link("Home", "home");
+const BUTTONS = new Link("Buttons theme", "view-buttons");
+const DRAG_AND_DROP = new Link("Drag and drop list", "view-DND-list");
+const FORMS_AND_VALIDATION = new Link("Forms and validation", "view-form");
+const DYNAMIC_FORM = new Link("Dynamic form", "dynamic-form");
+const MESSAGES = new Link("Messages", "view-messages");
+const CUSTOM_THEME = new Link("Custom Theme", "view-custom-theme");
+
+//Abrevation of BC_Name_Component
+export const BC_HOME = new Breadcrumb(HOME);
+export const BD_BUTTONS = new Breadcrumb(BUTTONS, [HOME]);
+export const BD_DRAG_AND_DROP = new Breadcrumb(DRAG_AND_DROP, [HOME]);
+export const BD_FORMS_AND_VALIDATION = new Breadcrumb(FORMS_AND_VALIDATION, [HOME]);
+export const BD_DYNAMIC_FORM = new Breadcrumb(DYNAMIC_FORM, [HOME]);
+export const BD_MESSAGES = new Breadcrumb(MESSAGES, [HOME]);
+export const BD_CUSTOM_THEME = new Breadcrumb(CUSTOM_THEME, [HOME]);

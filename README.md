@@ -30,11 +30,11 @@ ng g m components/template/templateModule --module app --flat --routing
 
 This template use some aliases. You can edit aliases in `tsconfig.json`,  in section `compilerOptions.paths`.
 
-`@app/components/*` refers to src/app/components/* . 
+`@components/*` refers to src/app/components/* . 
 
-`@app/models/*` refers to src/app/models/* .
+`@models/*` refers to src/app/models/* .
 
-`@app/services/*` refers to src/app/services/* .
+`@services/*` refers to src/app/services/* .
 
 `@template/*` refers to src/app/components/template/* .
 

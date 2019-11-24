@@ -1,4 +1,4 @@
-import { NavigationLink } from '@app/models/template/NavigationLink';
+import { NavigationLink } from '@models/template/NavigationLink';
 
 export const links:NavigationLink[] = [
     new NavigationLink("Custom theme","view-custom-theme", "format_paint", "Override the default theme and choose your palette colors"),

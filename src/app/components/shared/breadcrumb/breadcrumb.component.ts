@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Breadcrumb } from '@app/models/template/Breadcrumb';
-import { Link } from '@app/models/template/Link';
+import { Breadcrumb } from '@models/template/Breadcrumb';
+import { BC_HOME } from '@components/shared/breadcrumb/ListLinks';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -13,11 +13,11 @@ export class BreadcrumbComponent {
   public classReference = BreadcrumbComponent;
 
   constructor() {
-    this.classReference.breadcrumb = new Breadcrumb( "Home" );
+    this.classReference.breadcrumb = BC_HOME;
   }
 
-  public static update(link:Link, links:Link[]){
-    this.breadcrumb = new Breadcrumb( link.name , links);
+  public static update(breadcrumb: Breadcrumb) {
+    this.breadcrumb = breadcrumb;
   }
 
 }

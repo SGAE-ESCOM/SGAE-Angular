@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
+import { BD_CUSTOM_THEME } from "@breadcrumb/ListLinks";
 
 @Component({
   selector: 'app-custom-theme',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomThemeComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    BreadcrumbComponent.update(BD_CUSTOM_THEME);
+  }
 
   ngOnInit() {
   }

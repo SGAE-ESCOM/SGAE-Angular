@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { BreadcrumbComponent } from '@app/components/shared/breadcrumb/breadcrumb.component';
-import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
+import { BD_DRAG_AND_DROP } from '@breadcrumb/ListLinks';
 
 @Component({
   selector: 'app-dndlist',
@@ -11,7 +11,7 @@ import { ListLinks } from '@app/components/shared/breadcrumb/ListLinks';
 export class DNDListComponent {
 
   constructor(){
-    BreadcrumbComponent.update( ListLinks.DRAG_AND_DROP, [ListLinks.HOME]);
+    BreadcrumbComponent.update( BD_DRAG_AND_DROP );
   }
 
   hello = "";
