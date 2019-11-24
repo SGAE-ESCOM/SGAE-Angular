@@ -1,5 +1,5 @@
 /* Palette color theme */
-@import "assets/css/palette.scss";
+@import "assets/scss/palette.scss";
 
 //Bootstrap imports
 @import "~bootstrap/scss/bootstrap.scss";
@@ -12,7 +12,7 @@
 
 //This file override _theming.scss to use 'success' and 'danger'.
 //If you want to add new color suppor edit the next file.
-@import "assets/css/override-angular.scss";
+@import "assets/scss/override-angular.scss";
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
