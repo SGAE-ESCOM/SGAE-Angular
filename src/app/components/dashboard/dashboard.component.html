@@ -1,6 +1,6 @@
 <div class="row animated fadeIn animated-panel" [@cardAnimation]="cards.length" >
-  <div *ngFor="let card of cards" class="col-6 col-sm-4 col-md-3 py-2">
-    <mat-card class="example-card mat-elevation-z3 ">
+  <div *ngFor="let card of cards; trackBy: trackById" class="col-6 col-sm-4 col-md-3 py-2">
+    <mat-card class="example-card mat-elevation-z3 bd-callout bd-callout-primary">
       <mat-card-header>
         <mat-card-title> {{ card.name }}</mat-card-title>
       </mat-card-header>

@@ -3,11 +3,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BD_FORMS_AND_VALIDATION } from '@breadcrumb/ListLinks';
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
-
 export class User {
   name: string;
   lastName: string;
@@ -40,10 +35,9 @@ export class Field {
 })
 export class FormComponent {
 
-  animal: string;
-  name: string;
   field: Field;
   user: User;
+  hide = true;
 
   constructor(public dialog: MatDialog) {
     this.field = new Field("text");

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 /* Material modules */
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
@@ -19,7 +18,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatGridListModule,
     MatMenuModule,
     MatListModule,
     MatCardModule,

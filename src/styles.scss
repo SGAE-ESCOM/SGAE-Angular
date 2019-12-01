@@ -90,6 +90,47 @@ button:focus {
   outline: none;
 }
 
+.bd-callout {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: 0.20rem;
+  @include border-radius;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  code {
+    @include border-radius;
+  }
+
+  + .bd-callout {
+    margin-top: -0.25rem;
+  }
+}
+
+// Variations
+@mixin bs-callout-variant($color) {
+  border-left-color: $color;
+
+  h4 {
+    color: $color;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .bd-callout-#{$color} {
+    @include bs-callout-variant($value);
+  }
+}
+
 /**************************************
     FIX ANGULAR MATERIAL STYLE PROBLEMS
 ***************************************/
@@ -129,7 +170,11 @@ b {
   @each $color, $value in $theme-colors {
     padding: 0 !important;
     &.#{$color} {
-      @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
+      @include alert-variant(
+        theme-color-level($color, $alert-bg-level),
+        theme-color-level($color, $alert-border-level),
+        theme-color-level($color, $alert-color-level)
+      );
     }
   }
 }
@@ -140,21 +185,21 @@ b {
 
 /* Scrollbar theme */
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 8px;
 }
-::-webkit-scrollbar-track-piece{
-	background-color: transparent;
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
 }
-::-webkit-scrollbar-thumb{
-	background-color:rgba(#cfcfcf, 0.8);
-	outline: 2px solid #FFF;
-	outline-offset: -10px;
-  border: .1px solid #B7B7B7;
+::-webkit-scrollbar-thumb {
+  background-color: rgba(#cfcfcf, 0.8);
+  outline: 2px solid #fff;
+  outline-offset: -10px;
+  border: 0.1px solid #b7b7b7;
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover{
-  background-color: #B5B5B5;
+::-webkit-scrollbar-thumb:hover {
+  background-color: #b5b5b5;
 }
 
 /* Animations */

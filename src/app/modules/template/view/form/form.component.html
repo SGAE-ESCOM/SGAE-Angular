@@ -22,7 +22,7 @@
       <mat-label>Age</mat-label>
       <input matInput type="number" min="18" max="100" placeholder="Insert your name">
       <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-      <mat-hint>Only letters </mat-hint>
+      <mat-hint>Only numbers </mat-hint>
     </mat-form-field>
   </div>
 
@@ -45,8 +45,10 @@
   <div class="col-12 col-md-4 form-group">
     <mat-form-field appearance="legacy">
       <mat-label>Password</mat-label>
-      <input [(ngModel)]="user.password" matInput type="password" placeholder="Placeholder">
-      <mat-icon matSuffix>vpn_key</mat-icon>
+      <input [(ngModel)]="user.password" matInput [type]="hide ? 'password' : 'text'" placeholder="Placeholder">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
       <mat-hint>Use alphanumeric characters</mat-hint>
     </mat-form-field>
   </div>
