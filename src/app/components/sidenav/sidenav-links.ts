@@ -2,6 +2,7 @@ import { NavigationLink } from '@models/template/NavigationLink';
 
 export const links:NavigationLink[] = [
     new NavigationLink("Custom theme","view-custom-theme", "format_paint", "Override the default theme and choose your palette colors"),
+    new NavigationLink("Usage","view-custom-theme", "format_paint", "How to generate modules and components in this template, structure and more"),
     new NavigationLink("Buttons theme","view-buttons", "radio_button_checked", "Use different buttons bootstrap or angular theme"),
     new NavigationLink("Drag and drop list","view-DND-list", "format_list_numbered", "Sort your list as you want"),
     new NavigationLink("Forms and validation","view-form", "check_circle", "Validate form with different input"),

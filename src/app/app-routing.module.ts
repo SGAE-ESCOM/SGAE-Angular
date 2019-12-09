@@ -5,16 +5,22 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: 'home', component: DashboardComponent },
+  {
+    path: 'home', component: DashboardComponent,
+    children: [
+      { path: 'template', loadChildren: () => import('./modules/template/template.module').then(m => m.TemplateModule) },
+    ]
+  },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    useHash: true,
-    scrollPositionRestoration: 'top',
+    //useHash: true,
+    initialNavigation: 'enabled',
+    scrollPositionRestoration: 'enabled',
     anchorScrolling: 'enabled',
-    scrollOffset: [0, 64]
+    //scrollOffset: [0, 64]
   })],
   exports: [RouterModule]
 })

@@ -10,7 +10,7 @@
       Angular app
     </h1>
     <span class="spacer"></span>
-    <button mat-button [matMenuTriggerFor]="menu">Menu <mat-icon>arrow_drop_down</mat-icon> </button>
+    <button mat-button [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> Menu </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>Settings <mat-icon>build</mat-icon></button>
       <button mat-menu-item>Sign out <mat-icon>subdirectory_arrow_right</mat-icon></button>
@@ -18,14 +18,15 @@
   </mat-toolbar>
 
   <!-- SIDENAV  -->
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 48 : 0">
+  <mat-sidenav-container class="example-sidenav-container mt-5" [style.marginTop.px]="mobileQuery.matches ? 48 : 0">
     <!-- SIDENAV ELEMENTS  -->
     <mat-sidenav 
       #snav
+      class="pt-5"
       [fixedInViewport]="mobileQuery.matches"
       [mode]="mobileQuery.matches ? 'over' : 'side'" 
       [opened]="!mobileQuery.matches"
-      fixedTopGap="45">
+      fixedTopGap="0">
       <mat-nav-list>
         <a mat-list-item routerLink="home">
           <mat-icon class="sidenav-icon" matSuffix>home</mat-icon>Home
