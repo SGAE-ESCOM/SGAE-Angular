@@ -2,11 +2,44 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
 
-## Development server
+Update to version 8.3.19.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Preinstalación
 
-Run `ng serve --host your-ip` for a dev server. Navigate to `http://your-ip:4200/`. The app will automatically reload if you change any of the source files.
+1. Instalar node js en Linux
+```
+  sudo apt update
+  sudo apt install nodejs
+  sudo apt install npm
+```
+
+o en Windows descargar instalable en su página oficial [Node JS](https://nodejs.org/es/)
+
+2. Instalar angular cli
+```
+npm install -g @angular/cli
+```
+
+## Instalación
+
+1. Instalar @angular-devkit/build-angular como dev dependency.
+```
+npm install --save-dev @angular-devkit/build-angular
+```
+
+## Errores de instalación
+
+1. An unhandled exception occurred: Could not find module "@angular-devkit/build-angular" from ".../TT/SGAE-Angular".
+See "/tmp/ng-tK5npU/angular-errors.log" for further details.
+
+2. found 3 high severity vulnerabilities
+  run `npm audit fix` to fix them, or `npm audit` for details
+
+## Correr el proyecto
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
+
+Run `ng serve --host your-ip` for a dev server. Navigate to `http://your-ip:4200/`.
 
 ## Code scaffolding
 
