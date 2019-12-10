@@ -1,21 +1,13 @@
 import { NavigationLink } from '@models/template/NavigationLink';
 
 export const links:NavigationLink[] = [
-    new NavigationLink("Custom theme","view-custom-theme", "format_paint", "Override the default theme and choose your palette colors"),
-    new NavigationLink("Usage","view-custom-theme", "format_paint", "How to generate modules and components in this template, structure and more"),
-    new NavigationLink("Buttons theme","view-buttons", "radio_button_checked", "Use different buttons bootstrap or angular theme"),
-    new NavigationLink("Drag and drop list","view-DND-list", "format_list_numbered", "Sort your list as you want"),
-    new NavigationLink("Forms and validation","view-form", "check_circle", "Validate form with different input"),
-    new NavigationLink("Dynamic form","dynamic-form", "dynamic_feed", "Create a form with your own form elements and parametters"),
-    new NavigationLink("Messages","view-messages", "message", "Alerts, Messages and tooltip")
-    /*
-    new Link("Registro",""),
-    new Link("Convocatoria",""),
-    new Link("Recepción de documentos",""),
-    new Link("Pagos",""),
-    new Link("Evaluación",""),
-    new Link("Publicación de resultados",""),
-    new Link("---------------------",""),
-    new Link("Buttons","view-buttons"),
-    */
+    /*new NavigationLink("Ejemplo de crud","view-form", "check_circle", "Validate form with different input"),
+    new NavigationLink("Dynamic form","dynamic-form", "dynamic_feed", "Create a form with your own form elements and parametters"),*/
+    new NavigationLink("Test","test","event_available", "CRUD y Archivos Dimámicos"),
+    new NavigationLink("Registro","", "contact_mail", "Registro en la plataforma y creación de usuario"),
+    new NavigationLink("Convocatoria","", "event", "Convocatoria para realizar el proceso de admisión"),
+    new NavigationLink("Recepción de documentos","","folder_open","Documentos necesarios para el registro"),
+    new NavigationLink("Pagos","","credit_card","Generación de lineas de pagos"),
+    new NavigationLink("Evaluación","", "spellcheck", "Simulador de exámen"),
+    new NavigationLink("Publicación de resultados","","event_available", "Fechas de publicacion de los resultados del simulador"),
 ];

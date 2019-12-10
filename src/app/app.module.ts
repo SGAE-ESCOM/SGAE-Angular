@@ -10,6 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 /* SERVICES */
 
+/* PIPES */
+import { ReversePipe } from '@pipes/reverse.pipe';
+
 /* COMPONENTS */
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -18,8 +21,8 @@ import { ToastMessageComponent } from '@shared/toast-message/toast-message.compo
 import { MessagesSnackComponent } from '@shared/messages-snack/messages-snack.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-/* PIPES */
-import { ReversePipe } from '@pipes/reverse.pipe';
+/* MDOULES */
+import { TestModule } from './modules/test/test.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import { ReversePipe } from '@pipes/reverse.pipe';
     AngularMaterialTemplateModule,
     TemplateModule,
     AppRoutingModule,
+    TestModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

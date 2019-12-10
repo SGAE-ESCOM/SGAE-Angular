@@ -41,6 +41,12 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 Run `ng serve --host your-ip` for a dev server. Navigate to `http://your-ip:4200/`.
 
+## Commit en proyecto
+
+1. Usar notacion `add():`, `update():`, `fix():` o `delete():` para indicar el tipo de commit.
+2. Dentro del paréntesis indicar el modulo que se está actualizando.
+3. Posterior a los dos puntos escribir una descripción de lo que se realizó
+
 ## Code scaffolding
 
 Run `ng generate component components/component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
@@ -59,7 +65,7 @@ Example:
 ng g m components/template/templateModule --module app --flat --routing
 ```
 
-## Aliases for imports
+## Aliases para importaciones
 
 This template use some aliases. You can edit aliases in `tsconfig.json`,  in section `compilerOptions.paths`.
 
@@ -79,20 +85,12 @@ Component `@template/` refers to src/app/components/*.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build aot` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Ayuda extra API
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-Angular Material Components [Angular Material](https://material.angular.io/).
-Correct example about how to use modules [Understanding Angular modules](https://medium.com/@cyrilletuzi/understanding-angular-modules-ngmodule-and-their-scopes-81e4ed6f7407).
+1. Para más ayuda para Angular CLI usa `ng help` o revisa la página [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. Angular Material Components [Angular Material](https://material.angular.io/).
+1. Ejecmplo de como crear modulos [Understanding Angular modules](https://medium.com/@cyrilletuzi/understanding-angular-modules-ngmodule-and-their-scopes-81e4ed6f7407).
 
 # angular-bootstrap-template

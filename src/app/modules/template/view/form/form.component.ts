@@ -2,22 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BD_FORMS_AND_VALIDATION } from '@breadcrumb/ListLinks';
-
-export class User {
-  name: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-  constructor(name?: string, lastName?: string, email?: string,
-    phoneNumber?: string, password?: string) {
-    this.name = name || '';
-    this.lastName = lastName || '';
-    this.email = email || '';
-    this.phoneNumber = phoneNumber || '';
-    this.password = password || '';
-  }
-}
+import { User } from '@models/template/User';
 
 export class Field {
   type: string;
