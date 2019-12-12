@@ -93,6 +93,20 @@ Component `@template/` refers to src/app/components/*.
 
 Run `ng build aot` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+## Actualizar dependencias y versión local de CLI-Angular
+
+Ejecuta los comando en el orden para actualizar la versión global de angular:
+```
+npm uninstall -g angular-cli
+npm cache clean or npm cache verify #(if npm > 5)
+npm install -g @angular/cli@latest
+```
+Posteriormente entrar a la carpeta del proyecto y ejecutar 
+```
+ng update
+```
+Indicara los comando de ng para actualizar las dependencias correspondientes.
+
 ## Ayuda extra API
 
 1. Para más ayuda para Angular CLI usa `ng help` o revisa la página [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
