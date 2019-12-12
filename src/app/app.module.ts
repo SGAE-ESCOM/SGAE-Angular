@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-/* MODULES */
+/* MAIN MODULES */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialTemplateModule } from '@template/angular-material-template.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -17,10 +16,6 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-/* MDOULES */
-import { TemplateModule } from '@modules/template/template.module';
-import { TestModule } from './modules/test/test.module';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,12 +26,8 @@ import { TestModule } from './modules/test/test.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
     AngularMaterialTemplateModule,
-    TemplateModule,
     AppRoutingModule,
-    TestModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
