@@ -48,9 +48,12 @@
 }
 
 /*Menu*/
+.mat-menu-item{
+  padding-right: 19px;
+}
 .mat-icon.notranslate.material-icons.mat-icon-no-color{
-  margin-right: 0px;
-  margin-left: 4px;
+  margin-right: 2px;
+  margin-left: -2px;
   margin-top: -2px !important;
 }
 .mat-elevation-z3 {

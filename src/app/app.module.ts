@@ -27,7 +27,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     BrowserModule,
     BrowserAnimationsModule,
     AngularMaterialTemplateModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

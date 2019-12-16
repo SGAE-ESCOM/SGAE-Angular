@@ -2,7 +2,10 @@
   <div *ngFor="let card of cards; trackBy: trackById" class="col-6 col-sm-4 col-md-3 py-2">
     <mat-card class="example-card mat-elevation-z3 bd-callout bd-callout-primary">
       <mat-card-header>
-        <mat-card-title> {{ card.name }}</mat-card-title>
+        <mat-card-title> 
+          <mat-icon class="icon-position">{{card.icon}}</mat-icon>
+          {{ card.name }}
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p>
