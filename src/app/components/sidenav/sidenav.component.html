@@ -1,6 +1,5 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
   <!-- TOOLBAR  -->
-  <div class="color-line"></div>
   <mat-toolbar color="basic" class="example-toolbar mat-elevation-z3">
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
@@ -20,17 +19,14 @@
   <!-- SIDENAV  -->
   <mat-sidenav-container class="example-sidenav-container mt-5" [style.marginTop.px]="mobileQuery.matches ? 48 : 0">
     <!-- SIDENAV ELEMENTS  -->
+    <!-- Agregar atributo para mantener visible -- [opened]="!mobileQuery.matches" --  -->
     <mat-sidenav 
       #snav
       class="pt-5"
       [fixedInViewport]="mobileQuery.matches"
       [mode]="mobileQuery.matches ? 'over' : 'side'" 
-      [opened]="!mobileQuery.matches"
       fixedTopGap="0">
       <mat-nav-list>
-        <a mat-list-item routerLink="home">
-          <mat-icon class="sidenav-icon" matSuffix>home</mat-icon>Home
-        </a>
         <a mat-list-item routerLink="{{nav.url}}" *ngFor="let nav of navigationLinks">
           <mat-icon class="sidenav-icon" matSuffix> {{nav.icon}} </mat-icon> {{nav.name}}
         </a>
@@ -39,10 +35,13 @@
 
     <!-- MAIN CONTENT  -->
     <mat-sidenav-content>
-      <div class="container pb-4">
+      <div *ngIf="isLoggedIn; else loggedOut" class="container pb-4">
         <app-breadcrumb></app-breadcrumb>
-        <ng-content class="animated"></ng-content>
+        <ng-content class="animated pt-0"></ng-content>
       </div>
+      <ng-content class="animated" #loggedOut>
+
+      </ng-content>
     </mat-sidenav-content>
 
   </mat-sidenav-container>

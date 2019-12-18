@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { links } from './sidenav-links';
+import { linksMainPage, linksAdmin } from './sidenav-links';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,7 +10,8 @@ import { links } from './sidenav-links';
 export class SidenavComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
-  navigationLinks = links;
+  navigationLinks = linksMainPage;
+  isLoggedIn: boolean = false;
   
   private _mobileQueryListener: () => void;
 

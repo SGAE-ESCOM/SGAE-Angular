@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Routing */
 import { TemplateRoutingModule } from './template-routing.module';
-import { AngularMaterialModule } from './angular-material.module'
-import { MaterialMessagesModule } from './material-messages.module'
+import { AngularMaterialModule } from './angular-material.module';
+import { MaterialMessagesModule } from './material-messages.module';
 
 /* Components */
 import { ViewButtonsComponent } from './view/view-buttons/view-buttons.component';
@@ -16,6 +16,8 @@ import { DynamicFormComponent } from './view/dynamic-form/dynamic-form.component
 import { MessagesComponent } from './view/messages/messages.component';
 import { CustomThemeComponent } from './view/custom-theme/custom-theme.component';
 import { UsageModule } from './view/usages/usage.module';
+import { HomeComponent } from './home/home.component';
+import { TestComponent } from '@modules/test/test/test.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { UsageModule } from './view/usages/usage.module';
     DialogForm,
     DynamicFormComponent,
     MessagesComponent,
-    CustomThemeComponent
+    CustomThemeComponent,
+    HomeComponent,
+    TestComponent
   ],
   imports: [
     CommonModule,
