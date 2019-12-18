@@ -18,6 +18,7 @@ import { CustomThemeComponent } from './view/custom-theme/custom-theme.component
 import { UsageModule } from './view/usages/usage.module';
 import { HomeComponent } from './home/home.component';
 import { TestComponent } from '@modules/test/test/test.component';
+import { DashboardComponent } from '@components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TestComponent } from '@modules/test/test/test.component';
     MessagesComponent,
     CustomThemeComponent,
     HomeComponent,
-    TestComponent
+    TestComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

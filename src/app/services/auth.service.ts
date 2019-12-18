@@ -31,10 +31,10 @@ export class AuthService {
     });
   }
 
-  /*loginFacebookUser() {
+  loginFacebookUser() {
     return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
       .then(credential => this.updateUserData(credential.user))
-  }*/
+  }
 
   loginGoogleUser() {
     return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())

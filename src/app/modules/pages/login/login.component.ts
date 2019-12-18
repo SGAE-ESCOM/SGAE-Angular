@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,20 @@ import { AuthService } from '@services/auth.service';
 export class LoginComponent implements OnInit {
 
   hide: boolean = true;
-
-  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService) { }
   public email: string = '';
   public password: string = '';
-  
+  emailControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordControl = new FormControl('', [Validators.required]);
+
+  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService) { }
+
   ngOnInit() {
+  }
+
+  getErrorMessage() {
+    return this.emailControl.hasError('required') ? 'Debes ingresar un valor' :
+      this.emailControl.hasError('email') ? 'Email no valido' :
+        '';
   }
 
   onLogin(): void {
@@ -30,15 +39,15 @@ export class LoginComponent implements OnInit {
     this.authService.loginGoogleUser()
       .then((res) => {
         this.onLoginRedirect();
-      }).catch(err => console.log('err', err.message));
+      }).catch(err => console.error('err', err.message));
   }
-  
-  /*onLoginFacebook(): void {
+
+  onLoginFacebook(): void {
     this.authService.loginFacebookUser()
       .then((res) => {
         this.onLoginRedirect();
-      }).catch(err => console.log('err', err.message));
-  }*/
+      }).catch(err => console.error('err', err.message));
+  }
 
   onLogout() {
     this.authService.logoutUser();

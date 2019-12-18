@@ -22,14 +22,12 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
-    BreadcrumbComponent,
-    DashboardComponent
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,

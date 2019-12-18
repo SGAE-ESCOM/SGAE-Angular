@@ -6,14 +6,18 @@
     </button>
     <h1 class="example-app-name">
       <img src="assets/favicon.ico" width="22px" alt="..." class="app-icon rounded">
-      SGAE<!--SiGAdE-->
+      SGAE
     </h1>
     <span class="spacer"></span>
-    <button mat-button [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> Menu </button>
+    <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> Menu </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item> <mat-icon>settings_application</mat-icon> Configurar</button>
-      <button mat-menu-item> <mat-icon>exit_to_app</mat-icon> Salir</button>
+      <button mat-menu-item (click)="onLogout()"> <mat-icon>exit_to_app</mat-icon> Salir</button>
     </mat-menu>
+    <ng-template #loggedOutOptions>
+      <a mat-button routerLink="login"> <mat-icon>account_circle</mat-icon> Iniciar Sesión </a>
+    </ng-template>
+    
   </mat-toolbar>
 
   <!-- SIDENAV  -->
@@ -39,9 +43,7 @@
         <app-breadcrumb></app-breadcrumb>
         <ng-content class="animated pt-0"></ng-content>
       </div>
-      <ng-content class="animated" #loggedOut>
-
-      </ng-content>
+      <ng-content class="animated" #loggedOut></ng-content>
     </mat-sidenav-content>
 
   </mat-sidenav-container>
