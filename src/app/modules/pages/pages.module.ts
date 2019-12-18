@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     PagesRoutingModule,
     AngularMaterialTemplateModule,
-    MatInputModule
+    MatInputModule,
   ]
 })
 export class PagesModule { }

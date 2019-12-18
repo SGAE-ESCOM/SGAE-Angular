@@ -13,7 +13,8 @@ const routes: Routes = [
     //useHash: true,
     initialNavigation: 'enabled',
     scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled'
+    anchorScrolling: 'enabled',
+    onSameUrlNavigation: 'reload'
   })],
   exports: [RouterModule]
 })

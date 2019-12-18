@@ -1,56 +1,47 @@
 <section id="login" class="mb-5 mt-5">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+            <div class="col-xs-12 col-sm-8 col-md-4 mx-auto">
                 <div class="card_login">
                     <div class="card">
                         <div class="card-body text-center">
-                            <form #formLogin="ngForm" (submit)="onLogin()">
-                                <h1 class="h3 mb-3 font-weight-normal" *ngIf="!isError">Iniciar Sesión</h1>
-                                <div class="alert alert-danger" role="alert" *ngIf="isError">
-                                    Something is wrong!
-                                </div>
+                            <form #formLogin="ngForm" (submit)="onLogin()" [formGroup]="fgUsuario">
+                                <h1 class="h3 my-4 font-weight-normal">Iniciar Sesión</h1>
                                 <div class="form-grup">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Email</mat-label>
-                                        <input matInput [formControl]="emailControl" type="email" id="email" name="email" placeholder="Introduce tu correo" required>
+                                        <input matInput formControlName="email" type="email" id="email"
+                                            name="email" placeholder="Introduce tu correo" required>
                                         <mat-icon matSuffix>mail</mat-icon>
-                                        <mat-error *ngIf="emailControl.invalid">{{getErrorMessage()}}</mat-error >
+                                        <mat-error *ngIf="fgUsuario.get('email').invalid">{{getErrorMessage()}}</mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Contraseña</mat-label>
-                                        <input matInput id="password" [formControl]="passwordControl" name="password" placeholder="****" [type]="hide ? 'password' : 'text'" required>
+                                        <input matInput id="password" formControlName="password" name="password"
+                                            placeholder="****" [type]="hide ? 'password' : 'text'" required>
                                         <button mat-icon-button matSuffix (click)="hide = !hide"
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
-                                        <mat-error *ngIf="passwordControl.invalid"> Debes ingresar un valor </mat-error >
+                                        <mat-error *ngIf="fgUsuario.get('password').hasError('required')"> Debes ingresar un valor </mat-error>
                                     </mat-form-field>
                                 </div>
-
+                                <button mat-flat-button color="primary" type="submit" class=" btn-block">Iniciar Sesión</button>
+                                <hr>
                                 <div class="form-group">
-                                    <input [(ngModel)]="email" type="email" id="email" name="email" class="form-control"
-                                        placeholder="Email" required>
-                                </div>
-                                <div class="form-group">
-                                    <input [(ngModel)]="password" type="password" id="password" name="password"
-                                        class="form-control" placeholder="Password" required>
-                                </div>
-                                <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
-                                <div class="form-group">
-                                    <a routerLink="/user/register" class="form-control login-user">Are you new ?</a>
-                                </div>
-                                <div class="form-group">
-                                    <!-- <button class="btn btn-block btn-social btn-facebook" (click)="onLoginFacebook()">
-                                        <span class="fa fa-facebook"></span>
-                                        FACEBOOK
-                                    </button>-->
-                                    <button class="btn btn-block btn-social btn-google" (click)="onLoginGoogle()">
+                                    <button mat-flat-button class="btn-block btn-social btn-google"
+                                        (click)="onLoginGoogle()">
                                         <span class="fa fa-google"></span>
                                         GOOGLE
                                     </button>
+                                </div>
+                                <div class="form-group">
+                                    <a mat-button routerLink="/registro" class="btn-block">Registrate aquí</a>
+                                </div>
+                                <div class="form-group">
+                                    <a mat-button routerLink="/app" class="btn-block" >Go to app</a>
                                 </div>
                             </form>
                         </div>

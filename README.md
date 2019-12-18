@@ -114,5 +114,6 @@ Indicara los comando de ng para actualizar las dependencias correspondientes.
 1. Ejemplo de como crear modulos [Understanding Angular modules](https://medium.com/@cyrilletuzi/understanding-angular-modules-ngmodule-and-their-scopes-81e4ed6f7407).
 1. Como usar Lazy Loading en angular 8 [Manually Lazy load Components in Angular 8](https://dev.to/binarysort/manually-lazy-load-components-in-angular-8-ffi)
 1. Definir estructura escalable para un proyecto en Angular [How to define a highly scalable folder structure for your Angular project](https://itnext.io/choosing-a-highly-scalable-folder-structure-in-angular-d987de65ec7)
+1. Ejemplo de formularios en Angular (Angular - FormControl y FormGroup)[https://codingpotions.com/angular-formularios]
 
 # angular-bootstrap-template

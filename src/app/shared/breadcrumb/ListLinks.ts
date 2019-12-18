@@ -2,7 +2,7 @@ import { Link } from '@models/template/Link';
 import { Breadcrumb } from '@models/template/Breadcrumb';
 
 //CREACION DE LAS RUTAS
-const HOME = new Link("Home", "home");
+const HOME = new Link("Inicio", "/app/");
 const TEST = new Link("Test", "test");
 const BUTTONS = new Link("Buttons theme", "view-buttons");
 const DRAG_AND_DROP = new Link("Drag and drop list", "view-DND-list");

@@ -8,12 +8,10 @@ import { FormComponent } from './view/form/form.component';
 import { DynamicFormComponent } from './view/dynamic-form/dynamic-form.component';
 import { MessagesComponent } from './view/messages/messages.component';
 import { CustomThemeComponent } from './view/custom-theme/custom-theme.component';
-import { HomeComponent } from './home/home.component';
 import { TestComponent } from '@modules/test/test/test.component';
-import { DashboardComponent } from '@components/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
   //{ path: 'test', loadChildren: () => import('@modules/test/test.module').then(m => m.TestModule) },
   //Template views
   { path: '', component: DashboardComponent },

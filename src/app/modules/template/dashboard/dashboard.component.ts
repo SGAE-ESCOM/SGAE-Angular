@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-import { linksAdmin } from '../sidenav/sidenav-links';
+import { linksAdmin } from '@components/sidenav/sidenav-links';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_HOME } from '@breadcrumb/ListLinks';
 

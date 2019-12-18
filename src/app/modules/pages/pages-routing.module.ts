@@ -5,7 +5,8 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
 
 const routes: Routes = [
   { path: '', component: LandingpageComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', loadChildren: () => import('./registro/registro.module').then(m => m.RegistroModule) }
 ];
 
 @NgModule({

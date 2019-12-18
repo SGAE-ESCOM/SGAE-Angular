@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
-import { FormControl, Validators } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { MessagesService } from '@services/messages.service';
 
 @Component({
   selector: 'app-login',
@@ -12,48 +13,60 @@ import { FormControl, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   hide: boolean = true;
-  public email: string = '';
-  public password: string = '';
-  emailControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordControl = new FormControl('', [Validators.required]);
+  isError: boolean = false;
+  fgUsuario: FormGroup;
 
-  constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService) { }
+  constructor(  
+    public afAuth: AngularFireAuth, private router: Router, 
+    private authService: AuthService, private fb: FormBuilder ) {
+  }
 
   ngOnInit() {
+    this.fgUsuario = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
   }
 
   getErrorMessage() {
-    return this.emailControl.hasError('required') ? 'Debes ingresar un valor' :
-      this.emailControl.hasError('email') ? 'Email no valido' :
+    return this.fgUsuario.get('email').hasError('required') ? 'Debes ingresar un valor' :
+      this.fgUsuario.get('email').hasError('email') ? 'Email no valido' :
         '';
   }
 
   onLogin(): void {
-    this.authService.loginEmailUser(this.email, this.password)
+    this.authService.loginEmailUser(this.fgUsuario.get('email').value, this.fgUsuario.get('password').value)
       .then((res) => {
         this.onLoginRedirect();
-      }).catch(err => console.log('err', err.message));
+    }).catch(err => this.showError(err));
+    console.log(this.fgUsuario.get('email').value);
+    console.log(this.fgUsuario.get('password').value);
   }
 
   onLoginGoogle(): void {
     this.authService.loginGoogleUser()
       .then((res) => {
         this.onLoginRedirect();
-      }).catch(err => console.error('err', err.message));
+      }).catch(err => this.showError(err));
   }
 
   onLoginFacebook(): void {
     this.authService.loginFacebookUser()
       .then((res) => {
         this.onLoginRedirect();
-      }).catch(err => console.error('err', err.message));
+      }).catch(err => this.showError(err));
   }
 
   onLogout() {
     this.authService.logoutUser();
   }
+
+  showError(err){
+    console.error('err', err.message)
+  }
+  
   onLoginRedirect(): void {
-    this.router.navigate(['/app/']);
+    this.router.navigate(['/app']);
   }
 
 }
