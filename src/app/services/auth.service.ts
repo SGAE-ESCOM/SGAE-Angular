@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 import { auth } from 'firebase/app';
@@ -11,7 +11,8 @@ import { UserInterface } from '@models/user';
 })
 export class AuthService {
 
-  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
+  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore,
+    private ngZone:NgZone) { }
 
   registerUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
@@ -38,7 +39,7 @@ export class AuthService {
 
   loginGoogleUser() {
     return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
-      .then(credential => this.updateUserData(credential.user))
+      .then(credential => this.ngZone.run( () => this.updateUserData(credential.user)) )
   }
 
   logoutUser() {

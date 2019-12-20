@@ -16,21 +16,26 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 
 /* SERVICES */
+import { AuthService } from '@services/auth.service';
 
 /* PIPES */
+import { ReversePipe } from '@pipes/reverse.pipe';
 
 /* COMPONENTS */
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { MessagesSnackComponent } from '@shared/messages-snack/messages-snack.component';
+import { ToastMessageComponent } from '@shared/toast-message/toast-message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     BreadcrumbComponent,
-    MessagesSnackComponent
+    MessagesSnackComponent,
+    ToastMessageComponent,
+    ReversePipe
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,7 @@ import { MessagesSnackComponent } from '@shared/messages-snack/messages-snack.co
     AngularFireDatabaseModule,
     AngularFireStorageModule
   ],
-  providers: [AngularFireAuth, AngularFirestore],
+  providers: [AngularFireAuth, AngularFirestore, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

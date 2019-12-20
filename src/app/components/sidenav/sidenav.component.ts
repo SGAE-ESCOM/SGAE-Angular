@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { linksMainPage, linksAdmin } from './sidenav-links';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -20,7 +20,7 @@ export class SidenavComponent implements OnInit {
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, 
     private _authService:AuthService, private _afsAuth: AngularFireAuth,
-    private router: Router) {
+    private router: Router, private  ngZone:NgZone) {
       this.mobileQuery = media.matchMedia('(max-width: 600px)');
       this._mobileQueryListener = () => changeDetectorRef.detectChanges();
       this.mobileQuery.addListener(this._mobileQueryListener);
@@ -37,19 +37,27 @@ export class SidenavComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this._authService.isAuth().subscribe(auth => {
-      if (auth) {
-        this.isLoggedIn = true;
-        this.navigationLinks = linksAdmin;
-      } else {
-        this.isLoggedIn = false;
-        this.navigationLinks = linksMainPage;
-      }
+    this.ngZone.run(()=>{
+      //execute subscription outside Angular Zone
+      this._authService.isAuth().subscribe(auth => {
+        if (auth) {
+          this.isLoggedIn = true;
+          this.navigationLinks = linksAdmin;
+        } else {
+          this.isLoggedIn = false;
+          this.navigationLinks = linksMainPage;
+        }
+      });
     });
   }
 
   onLogout() {
     this._afsAuth.auth.signOut();
     this.router.navigate(['']);
+  }
+
+  cambiarRuta(){
+    console.log("Cambiando :V ")
+    this.router.navigate(['/app']);
   }
 }

@@ -30,20 +30,21 @@
                                 </div>
                                 <button mat-flat-button color="primary" type="submit" class=" btn-block">Iniciar Sesión</button>
                                 <hr>
-                                <div class="form-group">
-                                    <button mat-flat-button class="btn-block btn-social btn-google"
-                                        (click)="onLoginGoogle()">
-                                        <span class="fa fa-google"></span>
-                                        GOOGLE
-                                    </button>
-                                </div>
-                                <div class="form-group">
-                                    <a mat-button routerLink="/registro" class="btn-block">Registrate aquí</a>
-                                </div>
-                                <div class="form-group">
-                                    <a mat-button routerLink="/app" class="btn-block" >Go to app</a>
-                                </div>
+                                
                             </form>
+                            <div class="form-group">
+                                <p>¿Aún no tienes cuenta?</p>
+                                <a mat-flat-button color="success" routerLink="/registro" class="btn-block">Registrate aquí</a>
+                            </div>
+                            <div class="form-group">
+                                <p>O</p>
+                                <button mat-flat-button class="btn-block btn-social btn-google"
+                                    (click)="onLoginGoogle()">
+                                    <span class="fa fa-google"></span>
+                                    Inicia con Google
+                                </button>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,6 @@ import { DynamicFormComponent } from './view/dynamic-form/dynamic-form.component
 import { MessagesComponent } from './view/messages/messages.component';
 import { CustomThemeComponent } from './view/custom-theme/custom-theme.component';
 import { UsageModule } from './view/usages/usage.module';
-import { TestComponent } from '@modules/test/test/test.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
@@ -28,7 +27,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     DynamicFormComponent,
     MessagesComponent,
     CustomThemeComponent,
-    TestComponent,
     DashboardComponent
   ],
   imports: [

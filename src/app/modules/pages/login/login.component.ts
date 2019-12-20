@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(  
     public afAuth: AngularFireAuth, private router: Router, 
-    private authService: AuthService, private fb: FormBuilder ) {
+    private authService: AuthService, private fb: FormBuilder, private ngZone: NgZone ) {
   }
 
   ngOnInit() {
@@ -39,15 +39,16 @@ export class LoginComponent implements OnInit {
       .then((res) => {
         this.onLoginRedirect();
     }).catch(err => this.showError(err));
-    console.log(this.fgUsuario.get('email').value);
-    console.log(this.fgUsuario.get('password').value);
   }
 
   onLoginGoogle(): void {
-    this.authService.loginGoogleUser()
-      .then((res) => {
-        this.onLoginRedirect();
-      }).catch(err => this.showError(err));
+    this.ngZone.run( ()=>{
+      //execute subscription outside Angular Zone
+      this.authService.loginGoogleUser()
+        .then((res) => {
+          this.onLoginRedirect();
+        }).catch(err => this.showError(err));
+      });
   }
 
   onLoginFacebook(): void {
@@ -62,7 +63,10 @@ export class LoginComponent implements OnInit {
   }
 
   showError(err){
+    console.log("------------------");
+    console.log(err);
     console.error('err', err.message)
+    console.log("------------------");
   }
   
   onLoginRedirect(): void {

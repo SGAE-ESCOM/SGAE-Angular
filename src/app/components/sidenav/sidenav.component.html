@@ -21,6 +21,9 @@
       </button>
     </mat-menu>
     <ng-template #loggedOutOptions>
+      <a mat-button routerLink="">
+        <mat-icon>home</mat-icon> Inicio
+      </a>
       <a mat-button routerLink="login">
         <mat-icon>account_circle</mat-icon> Iniciar Sesión
       </a>
@@ -35,6 +38,9 @@
     <mat-sidenav #snav class="pt-5" [fixedInViewport]="mobileQuery.matches"
       [mode]="mobileQuery.matches ? 'over' : 'side'" fixedTopGap="0">
       <mat-nav-list>
+        <a mat-list-item (click)="cambiarRuta()">
+          <mat-icon class="sidenav-icon" matSuffix> home </mat-icon> prueba
+        </a>
         <a mat-list-item routerLink="{{nav.url}}" *ngFor="let nav of navigationLinks">
           <mat-icon class="sidenav-icon" matSuffix> {{nav.icon}} </mat-icon> {{nav.name}}
         </a>
@@ -49,7 +55,6 @@
       </div>
       <ng-content class="animated" #loggedOut></ng-content>
     </mat-sidenav-content>
-
   </mat-sidenav-container>
 </div>
 
