@@ -117,6 +117,7 @@ Ejemplo:
 
 1. Mostrar ramas y señala rama actual `git branch`.
 1. Crear una rama `git branch nombre_rama`.
+1. Crear y cambiar a rama `git checkout -b nombre_nueva_rama`.
 1. Cambiar nombre de rama `git branch -m nombre_anterior nombre_nuevo`.
 1. Eliminar rama `git branch -d nombre_rama`.
 1. Cambiar de rama `git checkout nombre_rama`.
