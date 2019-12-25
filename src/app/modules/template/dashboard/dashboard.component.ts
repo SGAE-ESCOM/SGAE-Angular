@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
     BreadcrumbComponent.update(BC_HOME);
   }
 
-  cards = linksAdmin; 
+  cards = linksAdmin.slice(1); 
 
   ngOnInit() {
   }

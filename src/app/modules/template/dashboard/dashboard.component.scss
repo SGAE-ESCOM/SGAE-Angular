@@ -4,11 +4,17 @@
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-
 .mat-card .mat-card-header .mat-card-header-text{
   margin: 0px !important;
 }
+.card .body{
+  padding: 0px;
+}
 
+/* Postion icon card*/
+span .mat-icon{
+  position: relative;
+}
 .icon-position{
-  top: 22px !important;
+  top: 4px !important;
 }

@@ -1,10 +1,18 @@
-# Angular Material with Bootstrap
+# Sistema de Gestión de Admisión Escolar
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
 
-Update to version 8.3.19.
+Actualisado a la version 8.3.19.
 
-## Preinstalación
+## Indice
+
+1. [Entorno](#entorno)
+1. [Uso del proyecto](#uso-del-proyecto)
+1. [Guia de Github](#guia-de-Github)
+
+## Entorno
+
+### Preinstalación
 
 1. Instalar node js en Linux
 ```
@@ -20,14 +28,14 @@ o en Windows descargar instalable en su página oficial [Node JS](https://nodejs
 npm install -g @angular/cli
 ```
 
-## Instalación
+### Instalación
 
 1. Instalar @angular-devkit/build-angular como dev dependency.
 ```
 npm install --save-dev @angular-devkit/build-angular
 ```
 
-## Errores de instalación
+### Errores de instalación
 
 1. An unhandled exception occurred: Could not find module "@angular-devkit/build-angular" from ".../TT/SGAE-Angular".
 See "/tmp/ng-tK5npU/angular-errors.log" for further details.
@@ -35,42 +43,38 @@ See "/tmp/ng-tK5npU/angular-errors.log" for further details.
 2. found 3 high severity vulnerabilities
   run `npm audit fix` to fix them, or `npm audit` for details
 
-## Correr el proyecto
+## Uso del proyecto
+
+### Correr el proyecto
 
 En terminal usar `ng serve` para deplegar el server. Navegar a `http://localhost:4200/`.
 
 En terminal usar `ng serve --host your-ip` para desplegar el server. Navegar a `http://your-ip:4200/`.
 
-Ejemplo: Remplaza los valores de x por tu dirección de ip, en otro caso evita el parametro --host
+Ejemplo: Remplaza los valores de x por tu dirección de ip, en otro caso evita el flag --host
 ```
 ng serve --host 192.182.x.x
 ```
 
-## Commit en proyecto
+### Creación de elementos
 
-1. Usar notacion `add():`, `update():`, `fix():` o `delete():` para indicar el tipo de commit.
-2. Dentro del paréntesis indicar el modulo que se está actualizando.
-3. Posterior a los dos puntos escribir una descripción de lo que se realizó
+Ejecuta `ng g c modules/module-folde/component-name --module=name-module` para generar un nuevo componente en un modulo especifico. El flag **--module=name-module** indica el modulo; puedes remplazarlo por la versión corta con **-m=name-module**.
 
-## Code scaffolding
-
-Ejecuta `ng g c components/component-folder/component-name --module=name-module` para generar un nuevo componente en un modulo especifico. El flag **--module=name-module** indica el module; puedes remplazarlo por la versión corta con **-m=name-module**.
-
-Example: Se generara un componente en la ubicación de `components/template/view/` llamado **messages** dentro del module llamado **template**
+Ejemplo: Se generara un componente en la ubicación de `components/template/view/` llamado **messages** dentro del module llamado **template**
 ```
-ng g c components/template/view/messages -m=template
+ng g c modules/template/view/messages -m=template
 ```
 
-Ejecuta `ng g m components/module-folder/module-name --module app --flat --routing` para generar un nuevo module con su propio routing-module. Las banderas **--module app** importa el module en app.module y **--routing** crea su proprio routing module.
+Ejecuta `ng g m modules/module-folder/module-name -m=app --flat --routing` para generar un nuevo module con su propio routing-module. Las banderas **-m=app** importa el module en app.module y **--routing** crea su proprio routing module.
 
-Example: Se genera un modulo ubicado en `components/template/` con nombre de **templateModule** dentro del module **app** y con su propio routing module.
+Ejemplo: Se genera un modulo ubicado en `components/template/` con nombre de **templateModule** dentro del module **app** y con su propio routing module.
 ```
-ng g m components/template/templateModule --module app --flat --routing
+ng g m modules/template/templateModule -m=app --flat --routing
 ```
 
-También puedes usar `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+También puedes usar `ng generate directive|pipe|service|class|guard|interface|enum|module` utilizando los flags que se usaron anteriormente.
 
-## Aliases para importaciones
+### Aliases para importaciones
 
 Esta plantilla usa alias. Puedes editar nuevas alias en el archivo `tsconfig.json`,  en la sección de `compilerOptions.paths`.
 
@@ -83,17 +87,49 @@ Esta plantilla usa alias. Puedes editar nuevas alias en el archivo `tsconfig.jso
 1. `@breadcrumb/*` hace referencia al fichero `src/app/shared/breadcrumb/*`
 1. `@template/*` hace referencia al fichero `src/app/modules/template/*`
 
-## Template modules
+### Build
 
-Angular Material modules
+Ejecutar en terminal `ng build aot` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-Component `@template/` refers to src/app/components/*.  
+## Guia de Github
 
-## Build
+### Esencial con Github
 
-Run `ng build aot` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+1. Mostrar los archivos y directorios modificados o creados `git status`.
+1. Agregar todos los cambios realizados `git add . `, si se desea agregar uno en especifico `git add nombre_archivo` si esta al mismo nivel, sino especificar la ruta `git add ruta/nombre_archivo`
+1. Crear un commit  `git commit -m "mensaje del commit"` agrega una descripcion de los cambios que se hicieron. Vea referencia de [como hacer un commit](#como-hacer-un-commit).
+1. Para subir los cambios hacer un push `git push origin develope` despues de la palabra  `origin` agrega el branch en el que se encuntra, por lo regular ocuparemos la rama de  `develope`. Si deseas hacer un push a otra branch cambia el nombre del branch.
+1. Para descargar los cambios hacer un pull  `git pull origin develope` despues de la palabra  `origin` agrega el branch en el que se encuntra, por lo regular ocuparemos la rama de  `develope`. Si deseas hacer un pull a otra branch cambia el nombre del branch.
+1. Si te equivocaste usa `git checkout nombre_archivo` para revertir todos los cambios sobre el arvhico. Si deseas volver por completo a la última version a la que hiciste pull usa `git checkout -- .` esto eliminara todos los cambios que hayas hecho.
 
-## Actualizar dependencias y versión local de CLI-Angular
+### Como hacer un commit
+
+1. Usar notacion `add():`, `update():`, `fix():` o `delete():` para indicar el tipo de commit.
+2. Dentro del paréntesis indicar el modulo que se está actualizando, seguido del Caso de Uso.
+3. Posterior a los dos puntos escribir una descripción de lo que se realizó.
+
+Ejemplo:
+```
+  git commit -m "add(evaluacion): Se agreago el modulo de evaluacion"
+```
+
+## Uso de Branch (ramas)
+
+1. Mostrar ramas y señala rama actual `git branch`.
+1. Crear una rama `git branch nombre_rama`.
+1. Cambiar nombre de rama `git branch -m nombre_anterior nombre_nuevo`.
+1. Eliminar rama `git branch -d nombre_rama`.
+1. Cambiar de rama `git checkout nombre_rama`.
+
+## Control de Cambios
+
+1. Mostrar los commit completos realizados `git log`.
+1. Mostrar los commit solo la descripcion `git log --oneline`.
+1. Mostrar los commit solo la descripcion con apuntador a HEAD y branch `git log --oneline --decorate`.
+1. Mostrar los commit de todas las ramas  `git log --all`.
+1. Fucionar una rama con otra. Cambiarse a la rama destino con `git checkout rama_destino` posteriormente usar `git merge nombre_rama_a_fucionar`. 
+
+# Actualizar dependencias y versión local de CLI-Angular
 
 Ejecuta los comando en el orden para actualizar la versión global de angular:
 ```
@@ -107,7 +143,15 @@ ng update
 ```
 Indicara los comando de ng para actualizar las dependencias correspondientes.
 
-## Ayuda extra API
+# Ayuda extra API
+
+## Capacitacion 
+
+1. Tutorial Angular Básico [Angular Básico](https://www.youtube.com/watch?v=zp-fvJdZXNk&list=PL_9MDdjVuFjE6Ob7pd1SKwQGULUikXn6J)
+1. Tutoriales Angular con Firebase [Curso Angular 7, Bootstrap 4 & Firebase Firestore](https://www.youtube.com/watch?v=UiA8QQ5modE&list=PL_9MDdjVuFjHgSCW7_15yoCAFUE5NAEjm)
+1. Github [Tutorial de github](https://www.youtube.com/watch?v=jSJ8xhKtfP4&list=PLTd5ehIj0goMCnj6V5NdzSIHBgrIXckGU)
+
+## Links referencias extra
 
 1. Para más ayuda para Angular CLI usa `ng help` o revisa la página [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 1. Angular Material Components [Angular Material](https://material.angular.io/).

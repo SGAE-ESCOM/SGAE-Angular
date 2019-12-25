@@ -8,7 +8,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -19,8 +18,7 @@ import { MatCardModule } from '@angular/material/card';
     MatToolbarModule,
     MatMenuModule,
     MatSidenavModule,
-    MatListModule,
-    MatCardModule
+    MatListModule
   ],
   exports:[
     CommonModule,
@@ -29,8 +27,7 @@ import { MatCardModule } from '@angular/material/card';
     MatToolbarModule,
     MatMenuModule,
     MatSidenavModule,
-    MatListModule,
-    MatCardModule
+    MatListModule
   ]
 })
 export class AngularMaterialTemplateModule {}
