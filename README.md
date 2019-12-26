@@ -28,12 +28,28 @@ o en Windows descargar instalable en su página oficial [Node JS](https://nodejs
 npm install -g @angular/cli
 ```
 
-### Instalación
+3. Instalar Git
+```
+  sudo apt update
+  sudo apt install git
+```
+
+o en Windows descargar instalable en su página oficial [Git](https://git-scm.com/download/)
+
+### Dependencias para correr el proyecto
 
 1. Instalar @angular-devkit/build-angular como dev dependency.
 ```
 npm install --save-dev @angular-devkit/build-angular
 ```
+
+### Configurar alias para git
+
+1. Agregar alias para ver log `git config --global alias.lod 'log --oneline --decorate --color'`
+1. Agregar alias para hacer push en branch develope `git config --global alias.pud 'push origin develope'`
+1. Agregar alias para hacer pull en branch develope `git config --global alias.pod 'pull origin develope'`
+1. Mostrar alias creados `git config --global --get-regexp alias`
+1. Eliminar alias `git config --global --unset alias.nombre_alias`
 
 ### Errores de instalación
 
@@ -74,7 +90,7 @@ ng g m modules/template/templateModule -m=app --flat --routing
 
 También puedes usar `ng generate directive|pipe|service|class|guard|interface|enum|module` utilizando los flags que se usaron anteriormente.
 
-### Aliases para importaciones
+### Alias  para importaciones
 
 Esta plantilla usa alias. Puedes editar nuevas alias en el archivo `tsconfig.json`,  en la sección de `compilerOptions.paths`.
 

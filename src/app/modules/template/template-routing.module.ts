@@ -11,10 +11,14 @@ import { CustomThemeComponent } from './view/custom-theme/custom-theme.component
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  //{ path: 'test', loadChildren: () => import('@modules/test/test.module').then(m => m.TestModule) },
-  //Template views
   { path: '', component: DashboardComponent },
-  { path: 'test', loadChildren: () => import('@modules/test/test.module').then( m=> m.TestModule) },
+  { path: 'documentacion', loadChildren: () => import('@modules/documentacion/documentacion.module').then( m=> m.DocumentacionModule) },
+  { path: 'evaluacion', loadChildren: () => import('@modules/evaluacion/evaluacion.module').then( m=> m.EvaluacionModule) },
+  { path: 'pagos', loadChildren: () => import('@modules/pagos/pagos.module').then( m=> m.PagosModule) },
+  { path: 'convocatoria', loadChildren: () => import('@modules/convocatoria/convocatoria.module').then( m=> m.ConvocatoriaModule) },
+  { path: 'etapas', loadChildren: () => import('@modules/etapas/etapas.module').then( m=> m.EtapasModule) },
+  { path: 'usuarios', loadChildren: () => import('@modules/usuarios/usuarios.module').then( m=> m.UsuariosModule) },
+  //Template views
   { path: 'view-custom-theme', component: CustomThemeComponent },
   { path: 'view-buttons', component: ViewButtonsComponent },
   { path: 'view-DND-list', component: DNDListComponent },
