@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
+import { BC_PAGOS } from "@breadcrumb/ListLinks";
 
 @Component({
   selector: 'app-main-pagos',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPagosComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    BreadcrumbComponent.update(BC_PAGOS);
+  }
 
   ngOnInit() {
   }

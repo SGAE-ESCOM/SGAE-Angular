@@ -1,1 +1,81 @@
-<p>main-etapas works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <mat-vertical-stepper [disableRipple]="true" [linear]="isLinear" #stepper>
+                <mat-step [stepControl]="fgEtapaUsar">
+                    <ng-template matStepLabel>Etapas necesarias</ng-template>
+                    <div class="col-12">
+                        <p>Selecciona las etapas que tendra el proceso de admisión.</p>
+                    </div>
+                    <form [formGroup]="fgEtapaUsar">
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <b>Etapas</b>
+                                </div>
+                                <mat-selection-list formControlName="etapas">
+                                    <mat-list-option *ngFor="let etapa of etapasDisponibles; let i = index" [value]="etapa">
+                                        {{etapa}}
+                                    </mat-list-option>
+                                </mat-selection-list>
+                            </div>
+                        </div>
+                        <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
+                            <button mat-flat-button color="info" (click)="definirEtapas()"  [disabled]="fgEtapaUsar.invalid"  matStepperNext>Siguiente</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Ordena las etapas</ng-template>
+                    <div class="col-12">
+                        <p>Arrastra y ordena las etapas según el orden en que quieras que se lleven a cabo.</p>
+                    </div>
+                    <div class="col-8 col-sm-6 col-md-6 py-1">
+                        <div class="card border-info">
+                            <div class="card-header bg-info">
+                                Etapas
+                            </div>
+                            <ul cdkDropList (cdkDropListDropped)="onDrop($event)" class="list-group list-group-flush">
+                                <li *ngFor="let etapa of etapas; let i = index" class="list-group-item" cdkDrag>
+                                    {{i+1}} {{etapa}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
+                        <button mat-flat-button matStepperPrevious>Regresar</button>
+                        <button mat-flat-button color="info" matStepperNext>Siguiente</button>
+                    </div>
+                </mat-step>
+
+                <mat-step [stepControl]="fgEtapasFechas">
+                    <ng-template matStepLabel>Definición Fechas</ng-template>
+                    <div class="col-12">
+                        <p>Selecciona las etapas que tendra el proceso de admisión.</p>
+                    </div>
+                    <form [formGroup]="fgEtapasFechas">
+                        <div class="col-12 col-sm-6 col-md-6">
+                            
+                        </div>
+                        <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
+                            <button mat-flat-button color="info" (click)="definirEtapas()"  [disabled]="fgEtapasFechas.invalid"  matStepperNext>Siguiente</button>
+                        </div>
+                    </form>
+                </mat-step>
+                
+                <mat-step>
+                    <ng-template matStepLabel>Done</ng-template>
+                    You are now done.
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button (click)="stepper.reset()">Reset</button>
+                    </div>
+                </mat-step>
+            </mat-vertical-stepper>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+    </div>
+</div>

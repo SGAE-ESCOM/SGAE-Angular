@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
+import { BC_EVALUACION } from "@breadcrumb/ListLinks";
 
 @Component({
   selector: 'app-main-evaluacion',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainEvaluacionComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    BreadcrumbComponent.update(BC_EVALUACION);
+  }
 
   ngOnInit() {
   }

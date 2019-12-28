@@ -130,21 +130,17 @@ button:focus {
 /**************************************
     FIX ANGULAR MATERIAL STYLE PROBLEMS
 ***************************************/
-.mat-icon {
-  margin-top: -4px !important;
-}
-
 .mat-form-field {
   width: 100%;
 }
 
-.mat-form-field-subscript-wrapper {
+/*.mat-form-field-subscript-wrapper {
   position: static !important;
 }
 
 .mat-form-field-wrapper {
   padding-bottom: 0.8em !important;
-}
+}*/
 
 b {
   font-weight: 550;

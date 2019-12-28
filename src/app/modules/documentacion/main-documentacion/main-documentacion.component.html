@@ -1,5 +1,38 @@
 <div class="container">
     <div class="row">
-        <p>main-documentacion works!</p>
+        <div class="col-12 col-md-4 form-group">
+            <mat-form-field appearance="legacy">
+                <mat-label>Name of attribute</mat-label>
+                <input matInput placeholder="Insert your name">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4 form-group">
+            <mat-form-field>
+                <mat-label>Type of data</mat-label>
+                <mat-select [formControl]="typeOfDataControl" required>
+                    <mat-option *ngFor="let data of typeOfData" [value]="data">
+                        {{data.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="typeOfDataControl.hasError('required')">Please choose an Type of data</mat-error>
+                <mat-hint>{{typeOfDataControl.value?.description}}</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4 form-group">
+            <mat-form-field>
+                <mat-label>Type of {{ typeOfDataControl.value?.name }}</mat-label>
+                <mat-select [formControl]="typeOfSubDataControl" required>
+                    <mat-option *ngFor="let data of typeOfDataControl.value?.subdata" [value]="data">
+                        {{data.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="typeOfSubDataControl.hasError('required')">Please choose an
+                    {{ typeOfDataControl.value?.name }}</mat-error>
+                <mat-hint>{{typeOfSubDataControl.value?.description}}</mat-hint>
+            </mat-form-field>
+        </div>
     </div>
 </div>

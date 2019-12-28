@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
+import { BC_CONVOCATORIA } from "@breadcrumb/ListLinks";
 
 @Component({
   selector: 'app-main-convocatoria',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainConvocatoriaComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    BreadcrumbComponent.update(BC_CONVOCATORIA);
+  }
 
   ngOnInit() {
   }

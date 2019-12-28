@@ -7,7 +7,7 @@ export const linksAdmin:NavigationLink[] = [
     new NavigationLink("Convocatoria","/app/convocatoria", "event", "Convocatoria para realizar el proceso de admisión"),
     new NavigationLink("Pagos","/app/pagos","credit_card","Generación de lineas de pagos"),
     new NavigationLink("Gestión Etapas","/app/etapas","dynamic_feed","Gestiona el orden y fecha de las etapas"),
-    new NavigationLink("Gestión Usuarios","/app/usuarios","people_outline","Generación los usuarios de la aplicacion"),
+    new NavigationLink("Gestión Usuarios","/app/usuarios","people_outline","Generación los usuarios y grupos de la aplicacion"),
 ];
 
 export const linksMainPage:NavigationLink[] = [
