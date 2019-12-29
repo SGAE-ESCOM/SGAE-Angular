@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_DOCUMENTACION } from "@breadcrumb/ListLinks";
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { EnumTipoDato } from '@models/documentacion/enums/enum-tipo-dato.enum';
+import { Dato } from '@models/documentacion/enums/dato';
+
 
 export interface TypeOfData {
   name: string;
@@ -16,37 +19,24 @@ export interface TypeOfData {
 })
 export class MainDocumentacionComponent implements OnInit {
 
-  constructor() {
+  tipoDatos: any = EnumTipoDato.ALL;
+  dato: Dato;
+  subDato: Dato;
+  fcTipoDato: FormControl = new FormControl('', [Validators.required]);
+  fcTipoSubDato: FormControl = new FormControl('', [Validators.required]);
+
+  constructor(private _fb: FormBuilder) {
     BreadcrumbComponent.update(BC_DOCUMENTACION);
+    this.dato = EnumTipoDato.CAMPO;
+    //this.subDato = this.dato.subDato;
+    console.log(this.tipoDatos)
   }
 
   ngOnInit() {
   }
 
-  typeOfInput: TypeOfData[] = [
-    { name: "Text" , description: '', subdata: null},
-    { name: "Number" , description: '', subdata: null},
-    { name: "Phone" , description: '', subdata: null}
-  ];
-
-  typeOfSelect: TypeOfData[] = [
-    { name: "One option" , description: '', subdata: null},
-    { name: "Multiple option" , description: '', subdata: null},
-  ];
-
-  typeOfFile: TypeOfData[] = [
-    { name: "Image" , description: '', subdata: null},
-    { name: "PDF" , description: '', subdata: null},
-  ];
-
-  typeOfData: TypeOfData[] = [
-    { name: 'Text', description: 'It\'s an Input', subdata : this.typeOfInput},
-    { name: 'Options', description: 'It\'s a file' , subdata: this.typeOfSelect},
-    { name: 'File', description: 'It\'s a file' , subdata: this.typeOfFile}
-  ];
-
-  //This formControl has a init value, "Text"
-  typeOfDataControl = new FormControl(this.typeOfData[0], [Validators.required]);
-  typeOfSubDataControl = new FormControl('', [Validators.required]);
+  cambiarSubData(){
+    this.dato = this.fcTipoDato.value;
+  }
 
 }

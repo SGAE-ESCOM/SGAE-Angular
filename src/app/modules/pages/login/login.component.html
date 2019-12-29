@@ -5,7 +5,7 @@
                 <div class="card_login">
                     <div class="card">
                         <div class="card-body text-center">
-                            <form #formLogin="ngForm" (submit)="onLogin()" [formGroup]="fgUsuario">
+                            <form (submit)="onLogin()" [formGroup]="fgUsuario">
                                 <h1 class="h3 my-4 font-weight-normal">Iniciar Sesión</h1>
                                 <div class="form-grup">
                                     <mat-form-field appearance="outline">

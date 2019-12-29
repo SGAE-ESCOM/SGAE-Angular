@@ -1,42 +1,29 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Routing */
 import { TemplateRoutingModule } from './template-routing.module';
+import { MatIconModule } from '@angular/material/icon';
 import { AngularMaterialModule } from './angular-material.module';
 import { MaterialMessagesModule } from './material-messages.module';
 
 /* Components */
-import { ViewButtonsComponent } from './view/view-buttons/view-buttons.component';
-import { DNDListComponent } from './view/dndlist/dndlist.component';
-import { FormComponent } from './view/form/form.component';
-import { DialogForm } from './view/form/form.component';
-import { DynamicFormComponent } from './view/dynamic-form/dynamic-form.component';
-import { MessagesComponent } from './view/messages/messages.component';
-import { CustomThemeComponent } from './view/custom-theme/custom-theme.component';
-import { UsageModule } from './view/usages/usage.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
-    ViewButtonsComponent,
-    DNDListComponent,
-    FormComponent,
-    DialogForm,
-    DynamicFormComponent,
-    MessagesComponent,
-    CustomThemeComponent,
     DashboardComponent
   ],
   imports: [
     CommonModule,
+    MatIconModule,
     AngularMaterialModule,
     MaterialMessagesModule,
     TemplateRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    UsageModule,
-  ]
+    ReactiveFormsModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TemplateModule { }

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavComponent } from './sidenav.component';
+import { AngularMaterialTemplateModule } from "@template/angular-material-template.module";
+import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { RouterModule } from '@angular/router';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -8,7 +11,8 @@ describe('SidenavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidenavComponent ]
+      declarations: [ SidenavComponent, BreadcrumbComponent],
+      imports: [ RouterModule, AngularMaterialTemplateModule ]
     })
     .compileComponents();
   }));

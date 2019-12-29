@@ -1,15 +1,21 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { SidenavComponent } from '@components/sidenav/sidenav.component';
+import { AngularMaterialTemplateModule } from "@template/angular-material-template.module";
+import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule.withRoutes([]),
+        AngularMaterialTemplateModule,
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        SidenavComponent,
+        BreadcrumbComponent
       ],
     }).compileComponents();
   }));
@@ -20,16 +26,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'SGAE-frontend'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('SGAE-frontend');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to SGAE-frontend!');
-  });
 });

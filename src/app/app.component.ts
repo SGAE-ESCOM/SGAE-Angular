@@ -8,7 +8,7 @@ import { Location, PopStateEvent } from "@angular/common";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'SGAE-frontend';
+  title = 'SGAE-angular';
 
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
