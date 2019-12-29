@@ -18,10 +18,25 @@ export function cardAnimation() {
     ])
 }
 
+export function fadeInDown() {
+    return trigger('fadeInDown', [
+        state('void', style({ width: '100%' })),
+        state('*', style({ width: '100%' })),
+        transition(':enter', [
+            style({ opacity: '0', transform: 'translateX(100px)' }),
+            animate('.6s ease-in-out', style({ opacity: '1', transform: 'translateX(0)' }))
+        ]),
+        transition(':leave', [
+            style({ opacity: '1', transform: 'translateX(0)' }),
+            animate('.3s ease-in-out', style({ opacity: '0', transform: 'translateX(-200px)' }))
+        ])
+    ]);
+}
+
 export function moveIn() {
     return trigger('moveIn', [
-        state('void', style({ position: 'fixed', width: '100%' })),
-        state('*', style({ position: 'fixed', width: '100%' })),
+        state('void', style({ width: '100%' })),
+        state('*', style({ width: '100%' })),
         transition(':enter', [
             style({ opacity: '0', transform: 'translateX(100px)' }),
             animate('.6s ease-in-out', style({ opacity: '1', transform: 'translateX(0)' }))
@@ -36,12 +51,12 @@ export function moveIn() {
 export function fallIn() {
     return trigger('fallIn', [
         transition(':enter', [
-            style({ opacity: '0', transform: 'translateY(40px)' }),
-            animate('.4s .2s ease-in-out', style({ opacity: '1', transform: 'translateY(0)' }))
+            style({ opacity: '0', transform: 'translateY(-40px)' }),
+            animate('.1s .1s ease-in-out', style({ opacity: '1', transform: 'translateY(0)' }))
         ]),
         transition(':leave', [
-            style({ opacity: '1', transform: 'translateX(0)' }),
-            animate('.3s ease-in-out', style({ opacity: '0', transform: 'translateX(-200px)' }))
+            style({ opacity: '1', transform: 'translateY(0)' }),
+            animate('.1s .1s ease-in-out', style({ opacity: '0', transform: 'translateY(-40px)' }))
         ])
     ]);
 }

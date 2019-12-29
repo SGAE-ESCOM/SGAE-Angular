@@ -47,7 +47,7 @@ import { ToastMessageComponent } from '@shared/toast-message/toast-message.compo
     AngularFireDatabaseModule,
     AngularFireStorageModule
   ],
-  exports: [ AngularMaterialTemplateModule ],
+  entryComponents: [ MessagesSnackComponent ],
   providers: [AngularFireAuth, AngularFirestore, AuthService],
   bootstrap: [AppComponent]
 })

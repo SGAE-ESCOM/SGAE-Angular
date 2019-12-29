@@ -3,8 +3,8 @@ import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_DOCUMENTACION } from "@breadcrumb/ListLinks";
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { EnumTipoDato } from '@models/documentacion/enums/enum-tipo-dato.enum';
-import { Dato } from '@models/documentacion/enums/dato';
-
+import { fallIn } from '@shared/router.animations';
+import { MessagesService } from '@services/messages.service';
 
 export interface TypeOfData {
   name: string;
@@ -15,28 +15,33 @@ export interface TypeOfData {
 @Component({
   selector: 'app-main-documentacion',
   templateUrl: './main-documentacion.component.html',
-  styleUrls: ['./main-documentacion.component.scss']
+  styleUrls: ['./main-documentacion.component.scss'],
+  animations: [ fallIn() ]
 })
 export class MainDocumentacionComponent implements OnInit {
 
+  tipoComplemento: string = ""; 
   tipoDatos: any = EnumTipoDato.ALL;
-  dato: Dato;
-  subDato: Dato;
   fcTipoDato: FormControl = new FormControl('', [Validators.required]);
   fcTipoSubDato: FormControl = new FormControl('', [Validators.required]);
+  //Validacion para fechas
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date(2020, 0, 1);
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private _message: MessagesService ) {
     BreadcrumbComponent.update(BC_DOCUMENTACION);
-    this.dato = EnumTipoDato.CAMPO;
-    //this.subDato = this.dato.subDato;
-    console.log(this.tipoDatos)
   }
 
   ngOnInit() {
   }
 
   cambiarSubData(){
-    this.dato = this.fcTipoDato.value;
+    this.fcTipoSubDato =  new FormControl('', [Validators.required]);
+    this.tipoComplemento =this.fcTipoDato.value.nombre;
+  }
+
+  alert(){
+    this._message.success('Todo salio correcto', "Agregado Correctamente");
   }
 
 }
