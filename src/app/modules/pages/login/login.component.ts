@@ -3,7 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { MessagesService } from '@services/messages.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -16,9 +17,10 @@ export class LoginComponent implements OnInit {
   isError: boolean = false;
   fgUsuario: FormGroup;
 
-  constructor(  
-    public afAuth: AngularFireAuth, private router: Router, 
-    private authService: AuthService, private fb: FormBuilder, private ngZone: NgZone ) {
+  constructor(
+    public afAuth: AngularFireAuth, private router: Router,
+    private authService: AuthService, private fb: FormBuilder, 
+    private _toats: ToastrService) {
   }
 
   ngOnInit() {
@@ -38,17 +40,15 @@ export class LoginComponent implements OnInit {
     this.authService.loginEmailUser(this.fgUsuario.get('email').value, this.fgUsuario.get('password').value)
       .then((res) => {
         this.onLoginRedirect();
-    }).catch(err => this.showError(err));
+      }).catch(err => this.showError(err));
   }
 
   onLoginGoogle(): void {
-    this.ngZone.run( ()=>{
-      //execute subscription outside Angular Zone
-      this.authService.loginGoogleUser()
-        .then((res) => {
-          this.onLoginRedirect();
-        }).catch(err => this.showError(err));
-      });
+    //execute subscription outside Angular Zone
+    this.authService.loginGoogleUser()
+      .then((res) => {
+        this.onLoginRedirect();
+      }).catch(err => this.showError(err));
   }
 
   onLoginFacebook(): void {
@@ -62,13 +62,11 @@ export class LoginComponent implements OnInit {
     this.authService.logoutUser();
   }
 
-  showError(err){
-    console.log("------------------");
+  showError(err) {
     console.log(err);
-    console.error('err', err.message)
-    console.log("------------------");
+    this._toats.error(err.message);
   }
-  
+
   onLoginRedirect(): void {
     this.router.navigate(['/app']);
   }

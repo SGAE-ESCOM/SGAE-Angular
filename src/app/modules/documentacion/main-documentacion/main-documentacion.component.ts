@@ -4,7 +4,7 @@ import { BC_DOCUMENTACION } from "@breadcrumb/ListLinks";
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { EnumTipoDato } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { fallIn } from '@shared/router.animations';
-import { MessagesService } from '@services/messages.service';
+import { ToastrService } from 'ngx-toastr';
 
 export interface TypeOfData {
   name: string;
@@ -28,7 +28,7 @@ export class MainDocumentacionComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2020, 0, 1);
 
-  constructor(private _fb: FormBuilder, private _message: MessagesService ) {
+  constructor(private _fb: FormBuilder, private toast: ToastrService) {
     BreadcrumbComponent.update(BC_DOCUMENTACION);
   }
 
@@ -40,8 +40,8 @@ export class MainDocumentacionComponent implements OnInit {
     this.tipoComplemento =this.fcTipoDato.value.nombre;
   }
 
-  alert(){
-    this._message.success('Todo salio correcto', "Agregado Correctamente");
+  alert2(){
+    this.toast.success("Hola perro ");
   }
 
 }
