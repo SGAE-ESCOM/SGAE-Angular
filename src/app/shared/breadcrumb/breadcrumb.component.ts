@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Breadcrumb } from '@models/template/Breadcrumb';
-import { BC_HOME } from '@breadcrumb/ListLinks';
+import { BC_HOME } from '@routing/ListLinks';
 
 @Component({
   selector: 'app-breadcrumb',

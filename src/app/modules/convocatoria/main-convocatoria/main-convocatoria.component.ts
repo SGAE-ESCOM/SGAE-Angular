@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_CONVOCATORIA } from "@breadcrumb/ListLinks";
+import { BC_CONVOCATORIA } from "@routing/ListLinks";
 
 @Component({
   selector: 'app-main-convocatoria',

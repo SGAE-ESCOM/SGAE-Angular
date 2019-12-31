@@ -42,7 +42,7 @@ import { ToastrModule } from 'ngx-toastr';
     AngularFireDatabaseModule,
     AngularFireStorageModule
   ],
-  entryComponents: [  ],
+  entryComponents: [ BreadcrumbComponent ],
   providers: [AngularFireAuth, AngularFirestore, AuthService],
   bootstrap: [AppComponent]
 })

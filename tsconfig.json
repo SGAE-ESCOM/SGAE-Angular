@@ -10,6 +10,7 @@
       "@pipes/*":["src/app/pipes/*"],
       "@shared/*":["src/app/shared/*"],
       "@breadcrumb/*":["src/app/shared/breadcrumb/*"],
+      "@routing/*":["src/app/shared/routing-list/*"],
       "@template/*":["src/app/modules/template/*"],
       "@environment/*":["src/environments/*"],
     },

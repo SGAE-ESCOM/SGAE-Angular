@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_USUARIOS } from "@breadcrumb/ListLinks";
+import { BC_USUARIOS } from "@routing/ListLinks";
 
 @Component({
   selector: 'app-main-usuarios',

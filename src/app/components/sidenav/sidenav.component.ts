@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { linksMainPage, linksAdmin } from './sidenav-links';
+import { linksPage, linksAdmin } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class SidenavComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
-  navigationLinks = linksAdmin; //CAMBIAR A linksMainPage EN PRODUCCION
+  navigationLinks = linksAdmin; //CAMBIAR A linksPage EN PRODUCCION
   isLoggedIn: boolean = true;  //CAMBIAR A false EN PRODUCCION
   
   private _mobileQueryListener: () => void;
@@ -45,7 +45,7 @@ export class SidenavComponent implements OnInit {
           this.navigationLinks = linksAdmin;
         } else {
           this.isLoggedIn = false;
-          this.navigationLinks = linksMainPage;
+          this.navigationLinks = linksPage;
         }
       });
     });

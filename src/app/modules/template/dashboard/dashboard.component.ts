@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { linksAdmin } from '@components/sidenav/sidenav-links';
+import { linksAdmin } from '@routing/ListLinks';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
-import { BC_HOME } from '@breadcrumb/ListLinks';
+import { BC_HOME } from '@routing/ListLinks';
 import { cardAnimation } from '@shared/router.animations';
 
 @Component({

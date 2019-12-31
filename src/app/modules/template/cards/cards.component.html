@@ -1,0 +1,17 @@
+<div class="row" [@cardAnimation]="cards.length">
+    <div *ngFor="let card of cards; trackBy: trackById" class="col-6 col-sm-4 col-md-3 py-2">
+        <div class="card mat-elevation-z3 bd-callout bd-callout-primary">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span>
+                        <mat-icon class="icon-position">{{card.icon}}</mat-icon>
+                    </span> {{card.name}}
+                </h5>
+                <p class="card-text">{{card.description}}</p>
+                <div class="text-right">
+                    <a mat-button class="text-right" color="primary" routerLink="/{{ card.url }}">Ir a</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

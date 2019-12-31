@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainDocumentacionComponent } from './main-documentacion/main-documentacion.component';
 
 const routes: Routes = [ 
-  { path: '', component: MainDocumentacionComponent }
+  { path: '', component: MainDocumentacionComponent },
+  { path: '', loadChildren: () => import('./admin/documentacion-admin.module').then( m => m.DocumentacionAdminModule ) }
 ];
 
 @NgModule({
