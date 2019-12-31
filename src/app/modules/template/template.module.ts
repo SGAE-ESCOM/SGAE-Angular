@@ -10,12 +10,10 @@ import { MaterialMessagesModule } from './material-messages.module';
 
 /* Components */
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CardsComponent } from './cards/cards.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    CardsComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule,
@@ -25,8 +23,6 @@ import { CardsComponent } from './cards/cards.component';
     TemplateRoutingModule,
     FormsModule,
     ReactiveFormsModule
-  ],
-  exports: [ CardsComponent ],
-  entryComponents: [ CardsComponent ]
+  ]
 })
 export class TemplateModule { }

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DocumentacionRoutingModule } from './documentacion-routing.module';
 import { MainDocumentacionComponent } from './main-documentacion/main-documentacion.component';
 import { AngularMaterialModule } from "@template/angular-material.module";
-import { TemplateModule } from '@modules/template/template.module';
+import { CardsModule } from '@shared/cards/cards.module';
 
 @NgModule({
   declarations: [MainDocumentacionComponent],
@@ -12,7 +12,7 @@ import { TemplateModule } from '@modules/template/template.module';
     CommonModule,
     DocumentacionRoutingModule,
     AngularMaterialModule,
-    TemplateModule
+    CardsModule
   ],
 })
 export class DocumentacionModule { }

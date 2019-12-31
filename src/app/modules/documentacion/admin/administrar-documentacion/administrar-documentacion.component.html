@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-4">
     <div class="row">
         <div class="col-12">
             <p>Agrega la documentación que requerira para los aspirantes.</p>
@@ -41,7 +41,7 @@
                         <mat-hint>{{fcTipoSubDato.value?.descripcion}}</mat-hint>
                     </mat-form-field>
                 </div>
-                <div class="col-12" *ngIf="tipoComplemento == 'Campo'" @fallIn>
+                <div class="col-12" *ngIf="tipoComplemento == 'Campo'" @fadeInDown>
                     <div class="row">
                         <div class="col-6 col-md-2 form-group">
                             <mat-form-field appearance="legacy">
@@ -60,13 +60,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12" *ngIf="tipoComplemento == 'Archivo'" @fallIn>
+                <div class="col-12" *ngIf="tipoComplemento == 'Archivo'" @fadeInDown>
                     <p>Agreaga una descripción si es que el nombre del archivo debe de llevar formato en especifico</p>
                 </div>
-                <div class="col-12" *ngIf="tipoComplemento == 'Selección'" @fallIn>
+                <div class="col-12" *ngIf="tipoComplemento == 'Selección'" @fadeInDown>
                     Seleccion
                 </div>
-                <div class="col-12" *ngIf="tipoComplemento == 'Fecha'" @fallIn>
+                <div class="col-12" *ngIf="tipoComplemento == 'Fecha'" @fadeInDown>
                     <div class="row">
                         <div class="col-6 col-sm-4 col-md-3 form-group">
                             <mat-form-field class="example-full-width">
@@ -93,5 +93,34 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+        </div>
+        <div class="col-12">
+            <div class="">
+                <table mat-table class="table" [dataSource]="dataSource" matSort>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                        <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+                    </ng-container>
+
+                    <!-- Progress Column -->
+                    <ng-container matColumnDef="requerido">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Requerido </th>
+                        <td mat-cell *matCellDef="let row"> {{row.requerido}}% </td>
+                    </ng-container>
+
+                    <tr mat-header-row class="table-info" *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
+            </div>
+        </div>
     </div>
 </div>

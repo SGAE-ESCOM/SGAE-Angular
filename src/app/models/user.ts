@@ -1,6 +1,7 @@
 export interface Roles {
-    editor?: boolean;
+    aspirante?: boolean;
     admin?: boolean;
+    root?: boolean;
   }
   
   export interface UserInterface {

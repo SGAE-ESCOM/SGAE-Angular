@@ -8,6 +8,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from "@angular/material";
+import { MatSortModule } from "@angular/material";
 
 import { AdministrarDocumentacionComponent } from './administrar-documentacion/administrar-documentacion.component';
 import { ValidarDocumentacionComponent } from './validar-documentacion/validar-documentacion.component';
@@ -22,7 +24,9 @@ import { ValidarDocumentacionComponent } from './validar-documentacion/validar-d
     AngularMaterialModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }]
 })

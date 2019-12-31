@@ -156,6 +156,11 @@ b {
   font-weight: 550;
 }
 
+/* Arreglar tables */
+.table th, .table td {
+  padding: 0.75rem 24px !important;
+}
+
 /**************************************
     TEMPLATE STYLES
 ***************************************/
