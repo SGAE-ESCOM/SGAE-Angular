@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { linksAdmin } from '@routing/ListLinks';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_HOME } from '@routing/ListLinks';
-import { cardAnimation } from '@shared/router.animations';
+import { cardAnimation } from '@shared/animations/router.animations';
 
 @Component({
   selector: 'app-dashboard',

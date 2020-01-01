@@ -3,7 +3,7 @@ import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_ADMINISTRAR_DOCUMENTACION } from "@routing/ListLinks";
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { EnumTipoDato } from '@models/documentacion/enums/enum-tipo-dato.enum';
-import { fadeInDown } from '@shared/router.animations';
+import { fadeInDown } from '@shared/animations/router.animations';
 import { ToastrService } from 'ngx-toastr';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';

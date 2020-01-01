@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { cardAnimation } from '@shared/router.animations';
+import { cardAnimation } from '@shared/animations/router.animations';
 import { NavigationLink } from '@models/template/NavigationLink';
 
 @Component({

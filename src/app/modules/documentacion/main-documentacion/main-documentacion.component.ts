@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_DOCUMENTACION, linksDocumentacionAdmin } from "@routing/ListLinks";
-import { fallIn } from '@shared/router.animations';
+import { fallIn } from '@shared/animations/router.animations';
 
 @Component({
   selector: 'app-main-documentacion',
