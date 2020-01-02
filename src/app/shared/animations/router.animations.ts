@@ -21,8 +21,8 @@ export function cardAnimation() {
 export function fadeInDown() {
     return trigger('fadeInDown', [
         transition(':enter', [
-            style({ opacity: '0', transform: 'translate3d(0,-100%,0)' }),
-            animate('.15s .1s ease-in-out', style({ opacity: '1', transform: 'translateZ(0)' }))
+            style({ opacity: '0', transform: 'translateY(-40px)' }),
+            animate('.15s .1s ease-in-out', style({ opacity: '1', transform: 'translateY(0)' }))
         ])
     ]);
 }

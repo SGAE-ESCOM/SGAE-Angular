@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_ADMINISTRAR_DOCUMENTACION } from "@routing/ListLinks";
-import { FormControl, Validators, FormBuilder } from '@angular/forms';
-import { EnumTipoDato } from '@models/documentacion/enums/enum-tipo-dato.enum';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { fadeInDown } from '@shared/animations/router.animations';
 import { ToastrService } from 'ngx-toastr';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TipoDato } from '@models/documentacion/tipo-dato';
+import { EnumTipoDato } from '@models/documentacion/enums/enum-tipo-dato.enum';
+import { Numero } from '@models/documentacion/numero';
 
 @Component({
   selector: 'app-administrar-documentacion',
@@ -19,57 +20,89 @@ import { TipoDato } from '@models/documentacion/tipo-dato';
 export class AdministrarDocumentacionComponent implements OnInit {
 
   //Variables para las tablas
-  displayedColumns: string[] = ['nombre', 'requerido'];
+  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'max', 'min', 'tipoArchivo'];
   dataSource: MatTableDataSource<TipoDato>;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  listaRequerimientos = [];
 
   //Variables para los TipoDato Generales
   tipoComplemento: string = "";
   tipoDatos: any = EnumTipoDato.ALL;
-  fcTipoDato: FormControl = new FormControl('', [Validators.required]);
-  fcTipoSubDato: FormControl = new FormControl('', [Validators.required]);
+  //FormGroup 
+  fgGeneral: FormGroup;
+
   //Validacion para fechas
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2020, 0, 1);
 
   constructor(private _fb: FormBuilder, private toast: ToastrService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
-    // Create 100 users
-    const documentacion = Array.from({length: 10}, (_, k) => this.getDocumentacion(k+1) );
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(documentacion);
+    this.fgGeneral = this._fb.group({
+      tipoDato: ['', Validators.required],
+      subtipo: ['', Validators.required],
+      min: [0],
+      max: [0]
+    });
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.updateTablaRequerimiento();
   }
 
-  getDocumentacion(index){
+  getDocumentacion(index) {
     const tipoDatoAux: TipoDato = {
-      nombre : `Atributo ${index}`,
+      nombre: `Atributo ${index}`,
       requerido: true
     };
     return tipoDatoAux;
   }
 
+  getNumero(index: number) {
+    const numero: Numero = {
+      nombre: `Soy un numero :v ${index}`,
+      requerido: true,
+      min: index,
+      max: 100 + index,
+      valor: 2 * index
+    };
+    return numero;
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
   cambiarSubData() {
-    this.fcTipoSubDato = new FormControl('', [Validators.required]);
-    this.tipoComplemento = this.fcTipoDato.value.nombre;
+    this.fgGeneral.get('subtipo').setValue('');
+    this.tipoComplemento = this.fgGeneral.get('tipoDato').value.nombre;
+    console.log(this.tipoComplemento);
   }
 
   alert2() {
-    this.toast.success("Hola perro ");
+    this.toast.success("Se agrego correctamente");
+    this.listaRequerimientos.push(this.getNumero(1));
+    this.updateTablaRequerimiento();
   }
+
+  private updateTablaRequerimiento(): void {
+    this.dataSource = new MatTableDataSource(this.listaRequerimientos);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  //Control de form grpup
+  setFormGroupNumber() {
+    this.fgGeneral = this._fb.group({
+      tipoDato: ['', Validators.required],
+      subtipo: ['', Validators.required],
+      min: [0],
+      max: [0]
+    });
+  }
+
 
 }

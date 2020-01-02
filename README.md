@@ -177,5 +177,7 @@ Indicara los comando de ng para actualizar las dependencias correspondientes.
 1. Definir estructura escalable para un proyecto en Angular [How to define a highly scalable folder structure for your Angular project](https://itnext.io/choosing-a-highly-scalable-folder-structure-in-angular-d987de65ec7)
 1. Ejemplo de formularios en Angular [Angular - FormControl y FormGroup](https://codingpotions.com/angular-formularios)
 1. Validar formilarios [Validators](https://www.positronx.io/angular-7-reactive-forms-validation-tutorial/)
+1. Validación dinámica [Three Ways to Dynamically Alter your Form Validation in Angular](https://netbasal.com/three-ways-to-dynamically-alter-your-form-validation-in-angular-e5fd15f1e946)
+1. Obtener valores dentro de FormGroup  [Angular Form Fundamentals: Reactive Forms](https://ultimatecourses.com/blog/angular-2-forms-reactive)
 
 # angular-bootstrap-template
