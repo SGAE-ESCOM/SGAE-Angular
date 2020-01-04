@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_ADMINISTRAR_DOCUMENTACION } from "@routing/ListLinks";
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { fadeInDown } from '@shared/animations/router.animations';
-import { ToastrService } from 'ngx-toastr';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
+import { fadeInDown } from '@shared/animations/router.animations';
+import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { TipoDato } from '@models/documentacion/tipo-dato';
-import { EnumTipoDato } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { Numero } from '@models/documentacion/numero';
 
 @Component({
@@ -18,31 +18,33 @@ import { Numero } from '@models/documentacion/numero';
   animations: [fadeInDown()]
 })
 export class AdministrarDocumentacionComponent implements OnInit {
+  //Variables OPCIONES DISPONIBLES
+  public readonly OPC = OPC_TIPO_DATO;
 
   //Variables para las tablas
-  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'max', 'min', 'tipoArchivo'];
+  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'max', 'min', 'tipoArchivo'];
   dataSource: MatTableDataSource<TipoDato>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   listaRequerimientos = [];
 
   //Variables para los TipoDato Generales
-  tipoComplemento: string = "";
-  tipoDatos: any = EnumTipoDato.ALL;
+  tipoOpcion: string = "";
+  tipos: any = EnumTipoDato.ALL;
+  subtipos: any;
   //FormGroup 
   fgGeneral: FormGroup;
-
-  //Validacion para fechas
-  minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2020, 0, 1);
 
   constructor(private _fb: FormBuilder, private toast: ToastrService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
     this.fgGeneral = this._fb.group({
-      tipoDato: ['', Validators.required],
+      nombre: ['', Validators.required],
+      requerido: ['', Validators.required],
+      tipo: ['', Validators.required],
       subtipo: ['', Validators.required],
       min: [0],
-      max: [0]
+      max: [0],
+      descripcion: ['', Validators.required]
     });
   }
 
@@ -50,23 +52,34 @@ export class AdministrarDocumentacionComponent implements OnInit {
     this.updateTablaRequerimiento();
   }
 
-  getDocumentacion(index) {
-    const tipoDatoAux: TipoDato = {
-      nombre: `Atributo ${index}`,
-      requerido: true
-    };
-    return tipoDatoAux;
+  getNumero(index: number) {
+    return new Numero(`Nombre ${index}`, true);
   }
 
-  getNumero(index: number) {
-    const numero: Numero = {
-      nombre: `Soy un numero :v ${index}`,
-      requerido: true,
-      min: index,
-      max: 100 + index,
-      valor: 2 * index
-    };
-    return numero;
+  onChangeSubtipo(tipoSelected: any) {
+    switch (tipoSelected) {
+      case this.OPC.CAMPO: {
+        this.subtipos = EnumTipoDato.CAMPO.subtipos;
+        break;
+      }
+      case this.OPC.ARCHIVO: {
+        this.subtipos = EnumTipoDato.ARCHIVO.subtipos;
+        break;
+      }
+      case this.OPC.SELECCION: {
+        this.subtipos = EnumTipoDato.SELECCION.subtipos;
+        break;
+      }
+      case this.OPC.FECHA: {
+        this.subtipos = EnumTipoDato.FECHA.subtipos;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    this.subtipo.setValue('');
+    this.tipoOpcion = tipoSelected;
   }
 
   applyFilter(filterValue: string) {
@@ -76,33 +89,44 @@ export class AdministrarDocumentacionComponent implements OnInit {
     }
   }
 
-  cambiarSubData() {
-    this.fgGeneral.get('subtipo').setValue('');
-    this.tipoComplemento = this.fgGeneral.get('tipoDato').value.nombre;
-    console.log(this.tipoComplemento);
-  }
-
-  alert2() {
-    this.toast.success("Se agrego correctamente");
-    this.listaRequerimientos.push(this.getNumero(1));
-    this.updateTablaRequerimiento();
-  }
-
   private updateTablaRequerimiento(): void {
     this.dataSource = new MatTableDataSource(this.listaRequerimientos);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  //Control de form grpup
-  setFormGroupNumber() {
-    this.fgGeneral = this._fb.group({
-      tipoDato: ['', Validators.required],
-      subtipo: ['', Validators.required],
-      min: [0],
-      max: [0]
-    });
+  addTipoDato(data: TipoDato) {
+    console.log(data);
+    console.log(data.tipo);
+    if (data instanceof EnumTipoDato) {
+      console.log("CORRECTO :v")
+    }
+    switch (data.tipo) {
+      case this.OPC.CAMPO: {
+        console.log(this.OPC.CAMPO);
+        break;
+      }
+      case this.OPC.ARCHIVO: {
+        console.log(this.OPC.ARCHIVO);
+        break;
+      }
+      default: {
+        console.log("Invalid choice");
+        break;
+      }
+    }
+    this.toast.success("Se agrego correctamente");
+    this.listaRequerimientos.push(this.getNumero(1));
+    this.updateTablaRequerimiento();
   }
 
+  //Control de form grpup
+  get tipo() {
+    return this.fgGeneral.get('tipo') as FormControl;
+  }
+
+  get subtipo() {
+    return this.fgGeneral.get('subtipo') as FormControl;
+  }
 
 }

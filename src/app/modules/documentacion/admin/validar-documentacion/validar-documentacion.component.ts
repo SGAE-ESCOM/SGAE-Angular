@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BC_VALIDAR_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 
 @Component({
   selector: 'app-validar-documentacion',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ValidarDocumentacionComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    BreadcrumbComponent.update(BC_VALIDAR_DOCUMENTACION);
+  }
 
   ngOnInit() {
   }

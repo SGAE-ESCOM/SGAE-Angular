@@ -2,21 +2,28 @@ import { Dato } from './dato';
 import { EnumTipoCampo } from './enum-tipo-campo.enum';
 import { EnumTipoArchivo } from './enum-tipo-archivo.enum';
 
-export class EnumTipoDato implements Dato{
+export const OPC_TIPO_DATO = {
+    CAMPO: 'campo',
+    ARCHIVO: 'archivo',
+    SELECCION: 'seleccion',
+    FECHA: 'fecha'
+};
+
+export class EnumTipoDato implements Dato {
     nombre: string;
     descripcion: string;
-    subDato: Dato[];
+    subtipos: Dato[];
     public static ALL: Dato[] = [];
 
-    static readonly CAMPO = new EnumTipoDato('Campo','Ingresar un valor a través del teclado', EnumTipoCampo.ALL);
-    static readonly ARCHIVO = new EnumTipoDato('Archivo','Subir algún tipo de archivo', EnumTipoArchivo.ALL);
-    static readonly SELECCION = new EnumTipoDato('Selección','Selecciona valor entre opciones definidas', null);
-    static readonly FECHA = new EnumTipoDato('Fecha','Subir algún tipo de archivo', null);
+    static readonly CAMPO = new EnumTipoDato(OPC_TIPO_DATO.CAMPO, 'Ingresar un valor a través del teclado', EnumTipoCampo.ALL);
+    static readonly ARCHIVO = new EnumTipoDato(OPC_TIPO_DATO.ARCHIVO, 'Subir algún tipo de archivo', EnumTipoArchivo.ALL);
+    static readonly SELECCION = new EnumTipoDato(OPC_TIPO_DATO.SELECCION, 'Selecciona valor entre opciones definidas', null);
+    static readonly FECHA = new EnumTipoDato(OPC_TIPO_DATO.FECHA, 'Subir algún tipo de archivo', null);
 
-    private constructor( nombre: string, descripcion:string, subDato: Dato[] ){
+    private constructor(nombre: string, descripcion: string, subtipos: Dato[]) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.subDato = subDato;
+        this.subtipos = subtipos;
         EnumTipoDato.ALL.push(this);
     }
 }

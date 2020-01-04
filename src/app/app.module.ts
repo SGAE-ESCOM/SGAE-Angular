@@ -5,6 +5,9 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialTemplateModule } from '@template/angular-material-template.module';
 import { AppRoutingModule } from './app-routing.module';
+import { ToastrModule } from 'ngx-toastr';
+import { MatPaginatorIntl } from '@angular/material';
+import { CustomPaginator } from "@shared/traduccion/custom-paginator";
 
 /* FIREBASE MODULES */
 import { AngularFireModule } from '@angular/fire';
@@ -23,9 +26,7 @@ import { AuthService } from '@services/auth.service';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-
-import { ToastrModule } from 'ngx-toastr';
-
+  
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,7 @@ import { ToastrModule } from 'ngx-toastr';
     AngularFireStorageModule
   ],
   entryComponents: [ BreadcrumbComponent ],
-  providers: [AngularFireAuth, AngularFirestore, AuthService],
+  providers: [AngularFireAuth, AngularFirestore, AuthService, { provide: MatPaginatorIntl, useValue: CustomPaginator() }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

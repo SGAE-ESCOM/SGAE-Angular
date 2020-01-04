@@ -1,5 +1,5 @@
 export interface Dato {
     nombre: string;
     descripcion: string;
-    subDato: Dato[];
+    subtipos: Dato[];
 }
