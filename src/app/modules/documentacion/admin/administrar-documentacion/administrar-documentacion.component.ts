@@ -18,6 +18,7 @@ import { Numero } from '@models/documentacion/numero';
   animations: [fadeInDown()]
 })
 export class AdministrarDocumentacionComponent implements OnInit {
+
   //Variables OPCIONES DISPONIBLES
   public readonly OPC = OPC_TIPO_DATO;
 
@@ -31,15 +32,18 @@ export class AdministrarDocumentacionComponent implements OnInit {
   //Variables para los TipoDato Generales
   tipoOpcion: string = "";
   tipos: any = EnumTipoDato.ALL;
+  tipoDescripcion: string;
   subtipos: any;
-  //FormGroup 
+  subtiposDescripcion: string;
+
+  //FormGroup
   fgGeneral: FormGroup;
 
   constructor(private _fb: FormBuilder, private toast: ToastrService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
     this.fgGeneral = this._fb.group({
       nombre: ['', Validators.required],
-      requerido: ['', Validators.required],
+      requerido: [true, Validators.required],
       tipo: ['', Validators.required],
       subtipo: ['', Validators.required],
       min: [0],
@@ -56,22 +60,38 @@ export class AdministrarDocumentacionComponent implements OnInit {
     return new Numero(`Nombre ${index}`, true);
   }
 
-  onChangeSubtipo(tipoSelected: any) {
+  enableControles( arrayFormControl:FormControl[] ){
+    arrayFormControl.forEach(formControl => formControl.enable() );
+  }
+
+  disableControles( arrayFormControl:FormControl[] ){
+    arrayFormControl.forEach(formControl => formControl.disable() );
+  }
+
+  onChangeSubtipo(tipoSelected: string) {
     switch (tipoSelected) {
       case this.OPC.CAMPO: {
         this.subtipos = EnumTipoDato.CAMPO.subtipos;
+        this.tipoDescripcion = EnumTipoDato.CAMPO.descripcion;
+        this.enableControles( [ this.min, this.max ] );
+        this.disableControles( [ this.descripcion] ); 
         break;
       }
       case this.OPC.ARCHIVO: {
         this.subtipos = EnumTipoDato.ARCHIVO.subtipos;
+        this.tipoDescripcion = EnumTipoDato.ARCHIVO.descripcion;
+        this.enableControles( [ this.descripcion] ); 
+        this.disableControles( [ this.min, this.max ] );
         break;
       }
       case this.OPC.SELECCION: {
         this.subtipos = EnumTipoDato.SELECCION.subtipos;
+        this.tipoDescripcion = EnumTipoDato.SELECCION.descripcion;
         break;
       }
       case this.OPC.FECHA: {
         this.subtipos = EnumTipoDato.FECHA.subtipos;
+        this.tipoDescripcion = EnumTipoDato.FECHA.descripcion;
         break;
       }
       default: {
@@ -96,31 +116,30 @@ export class AdministrarDocumentacionComponent implements OnInit {
   }
 
   addTipoDato(data: TipoDato) {
-    console.log(data);
-    console.log(data.tipo);
-    if (data instanceof EnumTipoDato) {
-      console.log("CORRECTO :v")
+    if( this.fgGeneral.valid ){
+      switch (data.tipo) {
+        case this.OPC.CAMPO: {
+          console.log(this.OPC.CAMPO);
+          break;
+        }
+        case this.OPC.ARCHIVO: {
+          console.log(this.OPC.ARCHIVO);
+          break;
+        }
+        default: {
+          console.log("Invalid choice");
+          break;
+        }
+      }
+      this.toast.success("Se agrego correctamente");
+      this.listaRequerimientos.push(data);
+      this.updateTablaRequerimiento();
+    }else{
+      this.toast.error("Llena todos los campos requeridos");
     }
-    switch (data.tipo) {
-      case this.OPC.CAMPO: {
-        console.log(this.OPC.CAMPO);
-        break;
-      }
-      case this.OPC.ARCHIVO: {
-        console.log(this.OPC.ARCHIVO);
-        break;
-      }
-      default: {
-        console.log("Invalid choice");
-        break;
-      }
-    }
-    this.toast.success("Se agrego correctamente");
-    this.listaRequerimientos.push(this.getNumero(1));
-    this.updateTablaRequerimiento();
   }
 
-  //Control de form grpup
+  //Getters de FormControl mas cortos
   get tipo() {
     return this.fgGeneral.get('tipo') as FormControl;
   }
@@ -129,4 +148,17 @@ export class AdministrarDocumentacionComponent implements OnInit {
     return this.fgGeneral.get('subtipo') as FormControl;
   }
 
+  get min() {
+    return this.fgGeneral.get('min') as FormControl;
+  }
+
+  get max() {
+    return this.fgGeneral.get('max') as FormControl;
+  }
+
+  get descripcion() {
+    return this.fgGeneral.get('descripcion') as FormControl;
+  }
+
+  
 }

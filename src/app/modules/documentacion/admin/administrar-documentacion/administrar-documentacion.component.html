@@ -27,7 +27,7 @@
                         </mat-select>
                         <mat-error *ngIf="tipo.hasError('required')">Por favor elige una opción
                         </mat-error>
-                        <mat-hint>{{tipo.value?.descripcion}}</mat-hint>
+                        <mat-hint>{{ tipoDescripcion }}</mat-hint>
                     </mat-form-field>
                 </div>
 
@@ -39,10 +39,18 @@
                                 {{subtipoDato.nombre | titlecase}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="fgGeneral.get('subtipo').hasError('required')">Por favor elige un tipo
+                        <mat-error *ngIf="subtipo.hasError('required')">Por favor elige un tipo
                             {{ tipo.value }}</mat-error>
-                        <mat-hint>{{fgGeneral.get('subtipo').value?.descripcion}}</mat-hint>
+                        <mat-hint>{{subtipo.value.descripcion}}</mat-hint>
                     </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-2 form-group">
+                    <mat-label class="label-toggle"> Requerido </mat-label>
+                    <section class="example-section">
+                        <mat-slide-toggle color="accent" formControlName="requerido" >Si</mat-slide-toggle>
+                    </section>
+                    <mat-hint class="toggle-hint">Es un requisito obligatorio</mat-hint>
                 </div>
 
                 <div class="col-12" *ngIf="tipoOpcion == OPC.CAMPO" @fadeInDown>
@@ -53,14 +61,14 @@
                         <div class="col-6 col-md-2 form-group">
                             <mat-form-field appearance="legacy">
                                 <mat-label>Mínimo</mat-label>
-                                <input type="number" matInput placeholder="Escribe un mínimo">
+                                <input formControlName="min" type="number" matInput placeholder="Escribe un mínimo">
                                 <mat-icon matSuffix>trending_up</mat-icon>
                             </mat-form-field>
                         </div>
                         <div class="col-6 col-md-2 form-group">
                             <mat-form-field appearance="legacy">
                                 <mat-label>Máximo</mat-label>
-                                <input type="number" matInput placeholder="Escribe un máximo">
+                                <input formControlName="max" type="number" matInput placeholder="Escribe un máximo">
                                 <mat-icon matSuffix>trending_down</mat-icon>
                             </mat-form-field>
                         </div>
@@ -117,6 +125,9 @@
         </form>
     </div>
     <div class="row">
+        <div class="col-12"> {{ fgGeneral.value | json }}</div>
+    </div>
+    <div class="row">
         <div class="col-12 col-md-4 align-self-end">
             <mat-form-field>
                 <mat-label>Buscar</mat-label>
@@ -151,16 +162,16 @@
                         <td mat-cell *matCellDef="let row"> {{row.subtipo}} </td>
                     </ng-container>
 
-                    <!-- Max Column -->
-                    <ng-container matColumnDef="max">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Máximo </th>
-                        <td mat-cell *matCellDef="let row"> {{row.max}} </td>
-                    </ng-container>
-
                     <!-- Min Column -->
                     <ng-container matColumnDef="min">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Mínimo </th>
                         <td mat-cell *matCellDef="let row"> {{row.min}} </td>
+                    </ng-container>
+                    
+                    <!-- Max Column -->
+                    <ng-container matColumnDef="max">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Máximo </th>
+                        <td mat-cell *matCellDef="let row"> {{row.max}} </td>
                     </ng-container>
 
                     <!-- TipoArchivo Column -->
