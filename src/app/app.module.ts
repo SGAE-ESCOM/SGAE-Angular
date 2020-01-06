@@ -26,12 +26,14 @@ import { AuthService } from '@services/auth.service';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BooleanPipePipe } from './shared/pipes/boolean-pipe.pipe';
   
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    BooleanPipePipe
   ],
   imports: [
     BrowserModule,

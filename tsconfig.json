@@ -7,7 +7,6 @@
       "@models/*":["src/app/models/*"],
       "@modules/*":["src/app/modules/*"],
       "@services/*":["src/app/services/*"],
-      "@pipes/*":["src/app/pipes/*"],
       "@shared/*":["src/app/shared/*"],
       "@breadcrumb/*":["src/app/shared/breadcrumb/*"],
       "@routing/*":["src/app/shared/routing-list/*"],

@@ -23,7 +23,7 @@ export class AdministrarDocumentacionComponent implements OnInit {
   public readonly OPC = OPC_TIPO_DATO;
 
   //Variables para las tablas
-  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'max', 'min', 'tipoArchivo'];
+  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'min', 'max', 'tipoArchivo'];
   dataSource: MatTableDataSource<TipoDato>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -38,34 +38,34 @@ export class AdministrarDocumentacionComponent implements OnInit {
 
   //FormGroup
   fgGeneral: FormGroup;
+  opcMin: FormControl;
+  opcMax: FormControl;
 
   constructor(private _fb: FormBuilder, private toast: ToastrService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
-    this.fgGeneral = this._fb.group({
-      nombre: ['', Validators.required],
-      requerido: [true, Validators.required],
-      tipo: ['', Validators.required],
-      subtipo: ['', Validators.required],
-      min: [0],
-      max: [0],
-      descripcion: ['', Validators.required]
-    });
+    this.initForm();
   }
 
   ngOnInit() {
     this.updateTablaRequerimiento();
+    this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
+    this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
   }
 
   getNumero(index: number) {
     return new Numero(`Nombre ${index}`, true);
   }
 
-  enableControles( arrayFormControl:FormControl[] ){
-    arrayFormControl.forEach(formControl => formControl.enable() );
+  enableControles(arrayFormControl: FormControl[]) {
+    arrayFormControl.forEach(formControl => formControl.enable());
   }
 
-  disableControles( arrayFormControl:FormControl[] ){
-    arrayFormControl.forEach(formControl => formControl.disable() );
+  disableControles(arrayFormControl: FormControl[]) {
+    arrayFormControl.forEach(formControl => formControl.disable());
+  }
+
+  offToggels(arrayFormControl: FormControl[]) {
+    arrayFormControl.forEach(formControl => { formControl.patchValue(false) });
   }
 
   onChangeSubtipo(tipoSelected: string) {
@@ -73,25 +73,31 @@ export class AdministrarDocumentacionComponent implements OnInit {
       case this.OPC.CAMPO: {
         this.subtipos = EnumTipoDato.CAMPO.subtipos;
         this.tipoDescripcion = EnumTipoDato.CAMPO.descripcion;
-        this.enableControles( [ this.min, this.max ] );
-        this.disableControles( [ this.descripcion] ); 
+        //this.enableControles([this.min, this.max]);
+        this.disableControles([this.descripcion, this.fechaMin, this.fechaMax]);
         break;
       }
       case this.OPC.ARCHIVO: {
         this.subtipos = EnumTipoDato.ARCHIVO.subtipos;
         this.tipoDescripcion = EnumTipoDato.ARCHIVO.descripcion;
-        this.enableControles( [ this.descripcion] ); 
-        this.disableControles( [ this.min, this.max ] );
+        this.enableControles([this.descripcion]);
+        this.disableControles([this.min, this.max, this.fechaMin, this.fechaMax]);
+        this.offToggels([this.opcMin, this.opcMax]);
         break;
       }
       case this.OPC.SELECCION: {
         this.subtipos = EnumTipoDato.SELECCION.subtipos;
         this.tipoDescripcion = EnumTipoDato.SELECCION.descripcion;
+        this.disableControles([this.min, this.max, this.descripcion, this.fechaMin, this.fechaMax]);
+        this.offToggels([this.opcMin, this.opcMax]);
         break;
       }
       case this.OPC.FECHA: {
         this.subtipos = EnumTipoDato.FECHA.subtipos;
         this.tipoDescripcion = EnumTipoDato.FECHA.descripcion;
+        this.enableControles([this.fechaMin, this.fechaMax]);
+        this.disableControles([this.descripcion, this.min, this.max]);
+        this.offToggels([this.opcMin, this.opcMax]);
         break;
       }
       default: {
@@ -116,7 +122,7 @@ export class AdministrarDocumentacionComponent implements OnInit {
   }
 
   addTipoDato(data: TipoDato) {
-    if( this.fgGeneral.valid ){
+    if (this.fgGeneral.valid) {
       switch (data.tipo) {
         case this.OPC.CAMPO: {
           console.log(this.OPC.CAMPO);
@@ -134,12 +140,28 @@ export class AdministrarDocumentacionComponent implements OnInit {
       this.toast.success("Se agrego correctamente");
       this.listaRequerimientos.push(data);
       this.updateTablaRequerimiento();
-    }else{
+    } else {
       this.toast.error("Llena todos los campos requeridos");
     }
   }
 
   //Getters de FormControl mas cortos
+  initForm() {
+    this.fgGeneral = this._fb.group({
+      nombre: ['', Validators.required],
+      requerido: [true, Validators.required],
+      tipo: ['', Validators.required],
+      subtipo: ['', Validators.required],
+      min: [{ value: 0, disabled: true }, Validators.required],
+      max: [{ value: 0, disabled: true }, Validators.required],
+      fechaMin: ['', Validators.required],
+      fechaMax: ['', Validators.required],
+      descripcion: ['']
+    });
+    this.opcMin = new FormControl(false);
+    this.opcMax = new FormControl(false);
+  }
+
   get tipo() {
     return this.fgGeneral.get('tipo') as FormControl;
   }
@@ -156,9 +178,17 @@ export class AdministrarDocumentacionComponent implements OnInit {
     return this.fgGeneral.get('max') as FormControl;
   }
 
+  get fechaMin() {
+    return this.fgGeneral.get('fechaMin') as FormControl;
+  }
+
+  get fechaMax() {
+    return this.fgGeneral.get('fechaMax') as FormControl;
+  }
+
   get descripcion() {
     return this.fgGeneral.get('descripcion') as FormControl;
   }
 
-  
+
 }
