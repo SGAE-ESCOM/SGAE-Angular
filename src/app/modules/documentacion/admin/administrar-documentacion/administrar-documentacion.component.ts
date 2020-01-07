@@ -10,6 +10,7 @@ import { fadeInDown } from '@shared/animations/router.animations';
 import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { Numero } from '@models/documentacion/numero';
+import { AdministrarDocumentacionService } from '@services/documentacion/administrar-documentacion.service';
 
 @Component({
   selector: 'app-administrar-documentacion',
@@ -24,7 +25,7 @@ export class AdministrarDocumentacionComponent implements OnInit {
 
   //Variables para las tablas
   displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'min', 'max', 'tipoArchivo'];
-  dataSource: MatTableDataSource<TipoDato>;
+  documentos: MatTableDataSource<TipoDato>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   listaRequerimientos = [];
@@ -41,15 +42,26 @@ export class AdministrarDocumentacionComponent implements OnInit {
   opcMin: FormControl;
   opcMax: FormControl;
 
-  constructor(private _fb: FormBuilder, private toast: ToastrService) {
+  constructor(private _fb: FormBuilder, private toast: ToastrService, private _ads: AdministrarDocumentacionService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
     this.initForm();
   }
 
   ngOnInit() {
-    this.updateTablaRequerimiento();
+    this._ads.getDocumentos().subscribe(data => {
+      this.listaRequerimientos = data.map(e => {
+        const data = e.payload.doc.data() as TipoDato;
+        const id = e.payload.doc.id;
+        return { id, ...data } as TipoDato;
+      })
+    });
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
+    this.updateTablaRequerimiento();
+  }
+
+  auxBoton(){
+    this.updateTablaRequerimiento();
   }
 
   getNumero(index: number) {
@@ -109,16 +121,18 @@ export class AdministrarDocumentacionComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    this.documentos.filter = filterValue.trim().toLowerCase();
+    if (this.documentos.paginator) {
+      this.documentos.paginator.firstPage();
     }
   }
 
   private updateTablaRequerimiento(): void {
-    this.dataSource = new MatTableDataSource(this.listaRequerimientos);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    console.log("===========>");
+    console.log(this.listaRequerimientos);
+    this.documentos = new MatTableDataSource(this.listaRequerimientos);
+    this.documentos.paginator = this.paginator;
+    this.documentos.sort = this.sort;
   }
 
   addTipoDato(data: TipoDato) {
@@ -139,6 +153,7 @@ export class AdministrarDocumentacionComponent implements OnInit {
       }
       this.toast.success("Se agrego correctamente");
       this.listaRequerimientos.push(data);
+      //this._ads.createDocumento(data);
       this.updateTablaRequerimiento();
     } else {
       this.toast.error("Llena todos los campos requeridos");
@@ -160,6 +175,10 @@ export class AdministrarDocumentacionComponent implements OnInit {
     });
     this.opcMin = new FormControl(false);
     this.opcMax = new FormControl(false);
+  }
+
+  get requerido() {
+    return this.fgGeneral.get('requerido') as FormControl;
   }
 
   get tipo() {

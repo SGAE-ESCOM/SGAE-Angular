@@ -7,8 +7,8 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header text-center">
-                    Formulario para creacion de requisito
+                <div class="card-header text-center bg-success text-white">
+                    <h5 class="m-0">Formulario para creacion de requisito</h5>
                 </div>
                 <div class="card-body">
                     <form [formGroup]="fgGeneral" (ngSubmit)="addTipoDato(fgGeneral.value)">
@@ -56,7 +56,7 @@
                             <div class="col-12 col-md-2 form-group">
                                 <mat-label class="label-toggle"> Requerido </mat-label>
                                 <section class="example-section">
-                                    <mat-slide-toggle color="accent" formControlName="requerido">Si</mat-slide-toggle>
+                                    <mat-slide-toggle color="accent" formControlName="requerido">{{ requerido.value | boolean }}</mat-slide-toggle>
                                 </section>
                                 <mat-hint class="toggle-hint">Es un requisito obligatorio</mat-hint>
                             </div>
@@ -69,18 +69,18 @@
                                     <div class="col-6 col-md-1 pr-0 form-group">
                                         <mat-label class="label-toggle"> Mínimo </mat-label>
                                         <section class="example-section">
-                                            <mat-slide-toggle [formControl]="opcMin" color="accent">Si
+                                            <mat-slide-toggle [formControl]="opcMin" color="accent">{{ opcMin.value | boolean }}
                                             </mat-slide-toggle>
                                         </section>
                                     </div>
                                     <div class="col-6 col-md-1 pr-0 form-group">
                                         <mat-label class="label-toggle"> Máximo </mat-label>
                                         <section class="example-section">
-                                            <mat-slide-toggle [formControl]="opcMax" color="accent">Si
+                                            <mat-slide-toggle [formControl]="opcMax" color="accent">{{ opcMax.value | boolean }}
                                             </mat-slide-toggle>
                                         </section>
                                     </div>
-                                    <div class="col-6 col-md-2 form-group" @fadeInDown>
+                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMin.value" @fadeInDown>
                                         <mat-form-field appearance="legacy">
                                             <mat-label>Mínimo</mat-label>
                                             <input formControlName="min" type="number" matInput
@@ -88,7 +88,7 @@
                                             <mat-icon matSuffix>trending_up</mat-icon>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-6 col-md-2 form-group" @fadeInDown>
+                                    <div class="col-6 col-md-2 form-group"  *ngIf="opcMax.value" @fadeInDown>
                                         <mat-form-field appearance="legacy">
                                             <mat-label>Máximo</mat-label>
                                             <input formControlName="max" type="number" matInput
@@ -160,7 +160,11 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-right">
-                                <button mat-stroked-button color="success" type="submit"> Agregar <mat-icon
+                                <button mat-raised-button color="success" type="submit"> Agregar <mat-icon
+                                        class="material-icons-outlined">add</mat-icon> </button>
+                            </div>
+                            <div class="col-12 text-right">
+                                <button mat-button (click)="auxBoton()" color="success" type="button"> Prueba <mat-icon
                                         class="material-icons-outlined">add</mat-icon> </button>
                             </div>
                         </div>
@@ -188,7 +192,7 @@
         </div>
         <div class="col-12">
             <div class="table-responsive mat-elevation-z3">
-                <table mat-table class="table" [dataSource]="dataSource" matSort>
+                <table mat-table class="table" [dataSource]="documentos" matSort>
                     <!-- Nombre Column -->
                     <ng-container matColumnDef="nombre">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>

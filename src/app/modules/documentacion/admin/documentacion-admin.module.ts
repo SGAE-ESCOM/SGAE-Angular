@@ -14,6 +14,7 @@ import { MatSortModule } from "@angular/material";
 
 import { AdministrarDocumentacionComponent } from './administrar-documentacion/administrar-documentacion.component';
 import { ValidarDocumentacionComponent } from './validar-documentacion/validar-documentacion.component';
+import { PipesModule } from '@shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [AdministrarDocumentacionComponent, ValidarDocumentacionComponent],
@@ -28,7 +29,8 @@ import { ValidarDocumentacionComponent } from './validar-documentacion/validar-d
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    PipesModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }]
 })
