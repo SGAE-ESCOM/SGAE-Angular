@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header text-center bg-success text-white">
+                <div class="card-header text-center">
                     <h5 class="m-0">Formulario para creacion de requisito</h5>
                 </div>
                 <div class="card-body">
@@ -160,11 +160,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-right">
-                                <button mat-raised-button color="success" type="submit"> Agregar <mat-icon
-                                        class="material-icons-outlined">add</mat-icon> </button>
-                            </div>
-                            <div class="col-12 text-right">
-                                <button mat-button (click)="auxBoton()" color="success" type="button"> Prueba <mat-icon
+                                <button mat-button color="success" type="submit"> Agregar <mat-icon
                                         class="material-icons-outlined">add</mat-icon> </button>
                             </div>
                         </div>
@@ -184,11 +180,13 @@
     <br>
     <div class="row">
         <div class="col-12 col-md-4 align-self-end">
-            <mat-form-field>
-                <mat-label>Buscar</mat-label>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar por palabra">
-                <mat-icon matSuffix>search </mat-icon>
-            </mat-form-field>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-label>Buscar</mat-label>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar por palabra">
+                    <mat-icon matSuffix>search </mat-icon>
+                </mat-form-field>
+            </div>
         </div>
         <div class="col-12">
             <div class="table-responsive mat-elevation-z3">
@@ -202,7 +200,7 @@
                     <!-- Requerido Column -->
                     <ng-container matColumnDef="requerido">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Requerido </th>
-                        <td mat-cell *matCellDef="let row"> {{row.requerido}} </td>
+                        <td mat-cell *matCellDef="let row"> {{row.requerido | boolean}} </td>
                     </ng-container>
 
                     <!-- Tipo Column -->
@@ -231,8 +229,17 @@
 
                     <!-- TipoArchivo Column -->
                     <ng-container matColumnDef="tipoArchivo">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Archivo </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
                         <td mat-cell *matCellDef="let row"> {{row.tipoArchivo}} </td>
+                    </ng-container>
+
+                    <!-- TipoArchivo Column -->
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+                        <td mat-cell *matCellDef="let row">
+                            <button mat-button color="info"><mat-icon>edit</mat-icon></button>
+                            <button mat-button color="danger"><mat-icon>delete</mat-icon></button>
+                        </td>
                     </ng-container>
 
                     <tr mat-header-row class="table-warning" *matHeaderRowDef="displayedColumns"></tr>

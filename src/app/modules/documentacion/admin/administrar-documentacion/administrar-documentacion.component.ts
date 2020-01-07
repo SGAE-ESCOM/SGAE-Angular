@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_ADMINISTRAR_DOCUMENTACION } from "@routing/ListLinks";
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
@@ -18,17 +18,16 @@ import { AdministrarDocumentacionService } from '@services/documentacion/adminis
   styleUrls: ['./administrar-documentacion.component.scss'],
   animations: [fadeInDown()]
 })
-export class AdministrarDocumentacionComponent implements OnInit {
+export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
 
   //Variables OPCIONES DISPONIBLES
   public readonly OPC = OPC_TIPO_DATO;
 
   //Variables para las tablas
-  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'min', 'max', 'tipoArchivo'];
-  documentos: MatTableDataSource<TipoDato>;
+  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'min', 'max', 'tipoArchivo', 'acciones'];
+  documentos: MatTableDataSource<TipoDato> = new MatTableDataSource();;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  listaRequerimientos = [];
 
   //Variables para los TipoDato Generales
   tipoOpcion: string = "";
@@ -48,15 +47,12 @@ export class AdministrarDocumentacionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._ads.getDocumentos().subscribe(data => {
-      this.listaRequerimientos = data.map(e => {
-        const data = e.payload.doc.data() as TipoDato;
-        const id = e.payload.doc.id;
-        return { id, ...data } as TipoDato;
-      })
-    });
+    this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos );
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
+  }
+
+  ngAfterViewInit(){
     this.updateTablaRequerimiento();
   }
 
@@ -128,16 +124,13 @@ export class AdministrarDocumentacionComponent implements OnInit {
   }
 
   private updateTablaRequerimiento(): void {
-    console.log("===========>");
-    console.log(this.listaRequerimientos);
-    this.documentos = new MatTableDataSource(this.listaRequerimientos);
     this.documentos.paginator = this.paginator;
     this.documentos.sort = this.sort;
   }
 
-  addTipoDato(data: TipoDato) {
+  addTipoDato(documento: TipoDato) {
     if (this.fgGeneral.valid) {
-      switch (data.tipo) {
+      switch (documento.tipo) {
         case this.OPC.CAMPO: {
           console.log(this.OPC.CAMPO);
           break;
@@ -152,8 +145,7 @@ export class AdministrarDocumentacionComponent implements OnInit {
         }
       }
       this.toast.success("Se agrego correctamente");
-      this.listaRequerimientos.push(data);
-      //this._ads.createDocumento(data);
+      this._ads.createDocumento(documento);
       this.updateTablaRequerimiento();
     } else {
       this.toast.error("Llena todos los campos requeridos");
@@ -208,6 +200,5 @@ export class AdministrarDocumentacionComponent implements OnInit {
   get descripcion() {
     return this.fgGeneral.get('descripcion') as FormControl;
   }
-
 
 }
