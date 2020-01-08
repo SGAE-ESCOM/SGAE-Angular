@@ -126,17 +126,19 @@
                                             por lo menos una opción para el requisito.</p>
                                     </div>
                                     <div class="col-12">
-                                        <div class="row" *ngFor="let opcion of opcionesSeleccion; let i = index">
+                                        <div class="row"
+                                            *ngFor="let opcion of objectKeys(opciones.value); let i = index">
                                             <div class="form-group col-4">
                                                 <mat-form-field>
-                                                    <mat-label>Opcion {{ i+1 }}</mat-label>
-                                                    <input matInput
-                                                        placeholder="Escribe un valor para opcion {{ i+1 }}">
-                                                    <mat-icon matSuffix>search </mat-icon>
+                                                    <mat-label>{{ opcion }}</mat-label>
+                                                    <input matInput readonly>
+                                                    <mat-icon class="material-icons-outlined" matSuffix>check_box
+                                                    </mat-icon>
                                                 </mat-form-field>
                                             </div>
                                             <div class="form-group col-4">
-                                                <button mat-button color="danger" type="button" (click)="deleteOpcion(i)">
+                                                <button mat-button color="danger" type="button"
+                                                    (click)="deleteOpcion(opcion)">
                                                     <mat-icon>delete</mat-icon>
                                                 </button>
                                             </div>
@@ -144,8 +146,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="form-group col-4">
+                                        <mat-form-field>
+                                            <mat-label>Opcion</mat-label>
+                                            <input matInput [formControl]="nombreOpcion"
+                                                placeholder="Escribe nombre de la opción">
+                                            <mat-icon class="material-icons-outlined" matSuffix>check_box_outline_blank
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </div>
                                     <div class="col-4">
-                                        <button type="button" (click)="addOpcion()" mat-mini-fab color="success">
+                                        <button type="button" (click)="addOpcion()" [disabled]="nombreOpcion.invalid"
+                                            mat-mini-fab color="success">
                                             <mat-icon>add</mat-icon>
                                         </button>
                                     </div>
@@ -183,33 +195,23 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-footer text-muted text-center">
+                    {{ fgGeneral.value | json }}
+                </div>
             </div>
         </div>
     </div>
     <br>
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12"> {{ fgGeneral.value | json }}</div>
-                    </div>
+            <div class="row">
+                <div class="col-4 offset-md-8">
+                    <mat-form-field id="bucar" appearance="outline">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar por palabra">
+                        <mat-icon matSuffix>search </mat-icon>
+                    </mat-form-field>
                 </div>
-                <div class="card-footer text-muted text-center">
-                    Vista previa
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-12 col-md-4 align-self-end">
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-label>Buscar</mat-label>
-                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar por palabra">
-                    <mat-icon matSuffix>search </mat-icon>
-                </mat-form-field>
             </div>
         </div>
         <div class="col-12">
@@ -278,4 +280,7 @@
             </div>
         </div>
     </div>
+    <br>
+    <h3>Vista previa de requisitos</h3>
+    <hr>
 </div>

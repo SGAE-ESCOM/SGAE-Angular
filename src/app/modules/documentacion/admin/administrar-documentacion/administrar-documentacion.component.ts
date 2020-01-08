@@ -18,7 +18,7 @@ import { AdministrarDocumentacionService } from '@services/documentacion/adminis
   styleUrls: ['./administrar-documentacion.component.scss'],
   animations: [fadeInDown()]
 })
-export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
+export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit {
 
   //Variables OPCIONES DISPONIBLES
   public readonly OPC = OPC_TIPO_DATO;
@@ -40,7 +40,8 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
   fgGeneral: FormGroup;
   opcMin: FormControl;
   opcMax: FormControl;
-  opcionesSeleccion: FormControl[];
+  nombreOpcion: FormControl;
+  objectKeys = Object.keys;
 
   constructor(private _fb: FormBuilder, private toast: ToastrService, private _ads: AdministrarDocumentacionService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
@@ -53,11 +54,11 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.updateTablaRequerimiento();
   }
 
-  auxBoton(){
+  auxBoton() {
     this.updateTablaRequerimiento();
   }
 
@@ -65,11 +66,11 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
     return new Numero(`Nombre ${index}`, true);
   }
 
-  enableControles(arrayFormControl: FormControl[]) {
+  enableControles(arrayFormControl: any[]) {
     arrayFormControl.forEach(formControl => formControl.enable());
   }
 
-  disableControles(arrayFormControl: FormControl[]) {
+  disableControles(arrayFormControl: any[]) {
     arrayFormControl.forEach(formControl => formControl.disable());
   }
 
@@ -82,21 +83,21 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
       case this.OPC.CAMPO: {
         this.subtipos = EnumTipoDato.CAMPO.subtipos;
         this.tipoDescripcion = EnumTipoDato.CAMPO.descripcion;
-        //this.enableControles([this.min, this.max]);
-        this.disableControles([this.descripcion, this.fechaMin, this.fechaMax]);
+        this.disableControles([this.descripcion, this.fechaMin, this.fechaMax, this.opciones]);
         break;
       }
       case this.OPC.ARCHIVO: {
         this.subtipos = EnumTipoDato.ARCHIVO.subtipos;
         this.tipoDescripcion = EnumTipoDato.ARCHIVO.descripcion;
         this.enableControles([this.descripcion]);
-        this.disableControles([this.min, this.max, this.fechaMin, this.fechaMax]);
+        this.disableControles([this.min, this.max, this.fechaMin, this.fechaMax, this.opciones]);
         this.offToggels([this.opcMin, this.opcMax]);
         break;
       }
       case this.OPC.SELECCION: {
         this.subtipos = EnumTipoDato.SELECCION.subtipos;
         this.tipoDescripcion = EnumTipoDato.SELECCION.descripcion;
+        this.enableControles([this.opciones]);
         this.disableControles([this.min, this.max, this.descripcion, this.fechaMin, this.fechaMax]);
         this.offToggels([this.opcMin, this.opcMax]);
         break;
@@ -105,7 +106,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
         this.subtipos = EnumTipoDato.FECHA.subtipos;
         this.tipoDescripcion = EnumTipoDato.FECHA.descripcion;
         this.enableControles([this.fechaMin, this.fechaMax]);
-        this.disableControles([this.descripcion, this.min, this.max]);
+        this.disableControles([this.descripcion, this.min, this.max, this.opciones]);
         this.offToggels([this.opcMin, this.opcMax]);
         break;
       }
@@ -117,16 +118,13 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
     this.tipoOpcion = tipoSelected;
   }
 
-  addOpcion(){
-    //this.opciones.addControl( '', new FormControl('',Validators.required));
-    this.opcionesSeleccion.push( new FormControl('',Validators.required) );
+  addOpcion() {
+    let nombre = this.nombreOpcion.value;
+    this.opciones.addControl(nombre, new FormControl(nombre, Validators.required));
   }
 
-  deleteOpcion(index: number){
-    console.log('Se elimino '+index);
-    console.log(this.opcionesSeleccion );
-    this.opcionesSeleccion.splice(index,1);
-    console.log(this.opcionesSeleccion );
+  deleteOpcion(nombre: string) {
+    this.opciones.removeControl(nombre);
   }
 
   applyFilter(filterValue: string) {
@@ -183,7 +181,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
     });
     this.opcMin = new FormControl(false);
     this.opcMax = new FormControl(false);
-    this.opcionesSeleccion = [];
+    this.nombreOpcion = new FormControl('', Validators.required);
   }
 
   get requerido() {

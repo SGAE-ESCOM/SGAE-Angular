@@ -1,13 +1,17 @@
 .card-header {
-    background-color: #fafafa;
+  background-color: #fafafa;
 }
 
-.label-toggle{
-    font-size: 0.9rem;
+.label-toggle {
+  font-size: 0.9rem;
 }
 
-.toggle-hint{
-    margin: -5px;
-    font-size: 0.7rem;
-    line-height: 1;
+.toggle-hint {
+  margin: -5px;
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+#buscar{
+    padding-bottom: 0.5em !important;
 }
