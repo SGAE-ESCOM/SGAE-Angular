@@ -40,6 +40,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
   fgGeneral: FormGroup;
   opcMin: FormControl;
   opcMax: FormControl;
+  opcionesSeleccion: FormControl[];
 
   constructor(private _fb: FormBuilder, private toast: ToastrService, private _ads: AdministrarDocumentacionService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
@@ -47,7 +48,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
-    this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos );
+    //this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
   }
@@ -116,6 +117,18 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
     this.tipoOpcion = tipoSelected;
   }
 
+  addOpcion(){
+    //this.opciones.addControl( '', new FormControl('',Validators.required));
+    this.opcionesSeleccion.push( new FormControl('',Validators.required) );
+  }
+
+  deleteOpcion(index: number){
+    console.log('Se elimino '+index);
+    console.log(this.opcionesSeleccion );
+    this.opcionesSeleccion.splice(index,1);
+    console.log(this.opcionesSeleccion );
+  }
+
   applyFilter(filterValue: string) {
     this.documentos.filter = filterValue.trim().toLowerCase();
     if (this.documentos.paginator) {
@@ -163,10 +176,14 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
       max: [{ value: 0, disabled: true }, Validators.required],
       fechaMin: ['', Validators.required],
       fechaMax: ['', Validators.required],
-      descripcion: ['']
+      descripcion: [''],
+      opciones: this._fb.group({
+
+      })
     });
     this.opcMin = new FormControl(false);
     this.opcMax = new FormControl(false);
+    this.opcionesSeleccion = [];
   }
 
   get requerido() {
@@ -201,4 +218,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit{
     return this.fgGeneral.get('descripcion') as FormControl;
   }
 
+  get opciones() {
+    return this.fgGeneral.get('opciones') as FormGroup;
+  }
 }

@@ -56,7 +56,8 @@
                             <div class="col-12 col-md-2 form-group">
                                 <mat-label class="label-toggle"> Requerido </mat-label>
                                 <section class="example-section">
-                                    <mat-slide-toggle color="accent" formControlName="requerido">{{ requerido.value | boolean }}</mat-slide-toggle>
+                                    <mat-slide-toggle color="accent" formControlName="requerido">
+                                        {{ requerido.value | boolean }}</mat-slide-toggle>
                                 </section>
                                 <mat-hint class="toggle-hint">Es un requisito obligatorio</mat-hint>
                             </div>
@@ -69,14 +70,16 @@
                                     <div class="col-6 col-md-1 pr-0 form-group">
                                         <mat-label class="label-toggle"> Mínimo </mat-label>
                                         <section class="example-section">
-                                            <mat-slide-toggle [formControl]="opcMin" color="accent">{{ opcMin.value | boolean }}
+                                            <mat-slide-toggle [formControl]="opcMin" color="accent">
+                                                {{ opcMin.value | boolean }}
                                             </mat-slide-toggle>
                                         </section>
                                     </div>
                                     <div class="col-6 col-md-1 pr-0 form-group">
                                         <mat-label class="label-toggle"> Máximo </mat-label>
                                         <section class="example-section">
-                                            <mat-slide-toggle [formControl]="opcMax" color="accent">{{ opcMax.value | boolean }}
+                                            <mat-slide-toggle [formControl]="opcMax" color="accent">
+                                                {{ opcMax.value | boolean }}
                                             </mat-slide-toggle>
                                         </section>
                                     </div>
@@ -88,7 +91,7 @@
                                             <mat-icon matSuffix>trending_up</mat-icon>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-6 col-md-2 form-group"  *ngIf="opcMax.value" @fadeInDown>
+                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMax.value" @fadeInDown>
                                         <mat-form-field appearance="legacy">
                                             <mat-label>Máximo</mat-label>
                                             <input formControlName="max" type="number" matInput
@@ -122,13 +125,27 @@
                                             existir
                                             por lo menos una opción para el requisito.</p>
                                     </div>
-                                    <div class="col-4">
-
+                                    <div class="col-12">
+                                        <div class="row" *ngFor="let opcion of opcionesSeleccion; let i = index">
+                                            <div class="form-group col-4">
+                                                <mat-form-field>
+                                                    <mat-label>Opcion {{ i+1 }}</mat-label>
+                                                    <input matInput
+                                                        placeholder="Escribe un valor para opcion {{ i+1 }}">
+                                                    <mat-icon matSuffix>search </mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <button mat-button color="danger" type="button" (click)="deleteOpcion(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
-                                        <button type="button" mat-mini-fab color="success">
+                                        <button type="button" (click)="addOpcion()" mat-mini-fab color="success">
                                             <mat-icon>add</mat-icon>
                                         </button>
                                     </div>
@@ -171,9 +188,16 @@
     </div>
     <br>
     <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <div class="col-12"> {{ fgGeneral.value | json }}</div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12"> {{ fgGeneral.value | json }}</div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Vista previa
+                </div>
             </div>
         </div>
     </div>
@@ -237,8 +261,12 @@
                     <ng-container matColumnDef="acciones">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                         <td mat-cell *matCellDef="let row">
-                            <button mat-button color="info"><mat-icon>edit</mat-icon></button>
-                            <button mat-button color="danger"><mat-icon>delete</mat-icon></button>
+                            <button mat-button color="info">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-button color="danger">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </td>
                     </ng-container>
 
