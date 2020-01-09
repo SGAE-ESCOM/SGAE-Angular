@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="card-header text-center">
+        <h5 class="m-0">{{titulo}}</h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="fgFormulario">
+            <div class="row">
+                <div class="col-4" *ngFor="let documento of documentos">
+                    <div class="form-group" *ngIf="documento.tipo == OPC.CAMPO">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>{{ documento.nombre }}</mat-label>
+                            <input type="{{ documento.subtipo | tipo }}" formControlName="{{ documento.nombre }}"
+                                min="{{ documento.min }}" max="{{ documento.max }}" matInput placeholder=""
+                                [required]="documento.requerido">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group" *ngIf="documento.tipo == OPC.ARCHIVO">
+                        <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                        <input hidden (change)="onUploadChange($event)" #fileInput type="file" id="file">
+                        <!-- -->
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile" lang="es" required>
+                            <label class="custom-file-label" data-browse="Subir" for="validatedCustomFile">{{ documento.nombre }}.</label>
+                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="documento.tipo == OPC.SELECCION">
+                        <mat-form-field>
+                            <mat-label>{{ documento.nombre}} </mat-label>
+                            <mat-select formControlName="{{ documento.nombre }}" [required]="documento.requerido">
+                                <mat-option *ngFor="let opcion of objectKeys(documento.opciones)" [value]="opcion">
+                                    {{opcion}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group" *ngIf="documento.tipo == OPC.FECHA">
+                        <mat-form-field class="example-full-width">
+                            <input matInput formControlName="{{ documento.nombre }}" [min]="documento.fechaMin"
+                                [max]="documento.fechaMax" [matDatepicker]="picker" placeholder="Choose a date"
+                                [required]="documento.requerido">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <button mat-button color="success"> Finalizar </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer text-muted text-center">
+        {{ fgFormulario.value | json }}
+    </div>
+</div>

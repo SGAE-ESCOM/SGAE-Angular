@@ -276,11 +276,11 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
 
-                <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[10, 20]"></mat-paginator>
             </div>
         </div>
     </div>
     <br>
-    <h3>Vista previa de requisitos</h3>
+    <app-formulario [titulo]='tituloVistaPrevia' [documentos]="listaRequisitos"></app-formulario>
     <hr>
 </div>

@@ -29,6 +29,17 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  //Variables para Vista previa
+  tituloVistaPrevia = 'Vista previa de requisitos';
+  listaRequisitos = [
+    { "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "minLength": 18, "maxLength": 18},
+    { "nombre": "Edad", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18, "max": 30 },
+    { "nombre": "Otro", "requerido": false, "tipo": "campo", "subtipo": "número" },
+    { "nombre": "Genero", "requerido": true, "tipo": "seleccion", "subtipo": "unica", "opciones": { "Hombre": "Hombre", "Mujer": "Mujer", "Otro": "Otro" } },
+    { "nombre": "Acta de Nacimiento", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Ninguna" },
+    { "nombre": "Fecha de egreso", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z", "fechaMax": "2020-01-23T06:00:00.000Z" }	
+  ];
+
   //Variables para los TipoDato Generales
   tipoOpcion: string = "";
   tipos: any = EnumTipoDato.ALL;
@@ -50,6 +61,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
 
   ngOnInit() {
     //this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
+    this.documentos.data = this.listaRequisitos; // DEBUG
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
   }
