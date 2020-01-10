@@ -3,7 +3,7 @@ import { TipoDato } from '@models/documentacion/tipo-dato';
 import { OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum'
 import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.enum'
-import { OPC_FECHA} from '@models/documentacion/enums/enum-tipo-fecha.enum'
+import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
@@ -13,12 +13,14 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 })
 export class FormularioComponent implements OnInit {
 
+  prueba;
+
   public readonly OPC = OPC_TIPO_DATO;
   objectKeys = Object.keys;
   srcResult;
   inputNode;
   fgFormulario: FormGroup;
-  base64textString = [];
+  base64textString = '';
 
   @Input() titulo = '';
   @Input() documentos: TipoDato[];
@@ -28,7 +30,6 @@ export class FormularioComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Documentos: ")
     this.documentos.forEach(
       documento => this.fgFormulario.addControl(documento.nombre, this.validarFormulario(documento))
     );
@@ -38,16 +39,16 @@ export class FormularioComponent implements OnInit {
     this.fgFormulario = this.fg.group({});
   }
 
-  validarFormulario(documento):FormControl{
+  validarFormulario(documento): FormControl {
     let validadores = [];
-    if(documento.requerido)
+    if (documento.requerido)
       validadores.push(Validators.required);
     switch (documento.subtipo) {
       case OPC_CAMPO.TEXTO: {
-        if (documento.minLength != null)
-          validadores.push(Validators.minLength(documento.minLength));
-        if (documento.maxLength != null)
-          validadores.push(Validators.maxLength(documento.maxLength));
+        if (documento.min != null)
+          validadores.push(Validators.minLength(documento.min));
+        if (documento.max != null)
+          validadores.push(Validators.maxLength(documento.max));
         break;
       }
       case OPC_CAMPO.NUMERO: {
@@ -57,40 +58,48 @@ export class FormularioComponent implements OnInit {
           validadores.push(Validators.max(documento.max));
         break;
       }
-      case this.OPC.ARCHIVO: {
-    
+      case OPC_SELECCION.MULTIPLE: {
         break;
       }
-      case this.OPC.SELECCION: {
-        
+      case OPC_SELECCION.UNICA: {
         break;
       }
-      case this.OPC.FECHA: {
-        
+      case OPC_FECHA.RANGO: {
         break;
       }
       default: {
         break;
       }
     }
-    console.log(`${ documento.subtipo } => ${ validadores }`);
+    //console.log(`${ documento.subtipo } => ${ validadores }`);
     return new FormControl('', validadores);
   }
 
-  onUploadChange(evt: any) {
-    const file = evt.target.files[0];
+  enviarFormulario(formulario) {
+    console.log(formulario);
+  }
 
-    if (file) {
+  test(){
+    console.log(this.base64textString);
+  }
+
+  handleUpload(event:any, documento) {
+    const file = event.target.files[0];
+    if(file){
       const reader = new FileReader();
-
-      reader.onload = this.handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(file);
-      console.log(this.base64textString);
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let jsonFile = {
+          nombre : file.name,
+          archivo: reader.result
+        };
+        this.fgFormulario.get(documento).patchValue( jsonFile );
+      };
     }
   }
 
-  handleReaderLoaded(e) {
-    this.base64textString.push('data:image/png;base64,' + btoa(e.target.result));
+  testing(event){
+    console.log(event);
+    console.log(this.prueba);
   }
-
 }

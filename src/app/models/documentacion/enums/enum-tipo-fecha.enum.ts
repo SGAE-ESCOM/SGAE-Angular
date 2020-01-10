@@ -1,6 +1,7 @@
 import { Dato } from './dato';
 
 export const OPC_FECHA = {
+    LIBRE : 'libre',
     RANGO : 'rango'
 };
 
@@ -10,6 +11,7 @@ export class EnumTipoFecha implements Dato{
     subtipos: Dato[];
     public static ALL: Dato[] = [];
 
+    public static readonly LIBRE = new EnumTipoFecha(OPC_FECHA.LIBRE,'Elegir una fecha dentro del rango', null);
     public static readonly IMAGEN = new EnumTipoFecha(OPC_FECHA.RANGO,'Elegir una fecha dentro del rango', null);
 
     private constructor( nombre: string, descripcion:string, subtipos: Dato[] ){

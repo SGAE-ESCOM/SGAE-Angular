@@ -6,6 +6,7 @@ import { AngularMaterialModule } from "@template/angular-material.module";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { PipesModule } from "@shared/pipes/pipes.module";
 
 @NgModule({
@@ -17,6 +18,7 @@ import { PipesModule } from "@shared/pipes/pipes.module";
     AngularMaterialModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MaterialFileInputModule,
     PipesModule
   ],
   exports: [FormularioComponent],

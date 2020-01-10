@@ -32,12 +32,18 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   //Variables para Vista previa
   tituloVistaPrevia = 'Vista previa de requisitos';
   listaRequisitos = [
-    { "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "minLength": 18, "maxLength": 18},
-    { "nombre": "Edad", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18, "max": 30 },
-    { "nombre": "Otro", "requerido": false, "tipo": "campo", "subtipo": "número" },
+    { "nombre": "CURP Min-Max", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18},
+    { "nombre": "CURP Min", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18},
+    { "nombre": "CURP Max", "requerido": true, "tipo": "campo", "subtipo": "texto", "max": 18},
+    { "nombre": "Edad Min-Max", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18, "max": 30 },
+    { "nombre": "Edad Min", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18 },
+    { "nombre": "Edad Max", "requerido": true, "tipo": "campo", "subtipo": "número", "max": 30 },
     { "nombre": "Genero", "requerido": true, "tipo": "seleccion", "subtipo": "unica", "opciones": { "Hombre": "Hombre", "Mujer": "Mujer", "Otro": "Otro" } },
-    { "nombre": "Acta de Nacimiento", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Ninguna" },
-    { "nombre": "Fecha de egreso", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z", "fechaMax": "2020-01-23T06:00:00.000Z" }	
+    { "nombre": "Acta de Nacimiento PDF", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Ninguna" },
+    { "nombre": "Acta de Nacimiento IMG", "requerido": true, "tipo": "archivo", "subtipo": "imagen", "descripcion": "Ninguna" },
+    { "nombre": "Fecha egreso Min-Max", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z", "fechaMax": "2020-01-23T06:00:00.000Z" },
+    { "nombre": "Fecha egreso Min", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z" },
+    { "nombre": "Fecha egreso Max", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMax": "2020-01-23T06:00:00.000Z" }	
   ];
 
   //Variables para los TipoDato Generales
