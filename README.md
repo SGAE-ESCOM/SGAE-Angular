@@ -42,6 +42,14 @@ o en Windows descargar instalable en su página oficial [Git](https://git-scm.co
 ```
 npm install --save-dev @angular-devkit/build-angular
 ```
+2. Instalar ngx-toastr
+```
+npm install ngx-toastr --save
+```
+3. Instalar [ngx-material-file-input](https://github.com/merlosy/ngx-material-file-input)
+```
+npm i ngx-material-file-input --save
+```
 
 ### Configurar alias para git
 
