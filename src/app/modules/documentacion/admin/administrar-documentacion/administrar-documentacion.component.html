@@ -1,4 +1,4 @@
-<div class="container pb-4">
+<div class="container animated-row pb-4">
     <div class="row">
         <div class="col-12">
             <p>Agrega la documentación que requerira para los aspirantes.</p>
@@ -83,7 +83,7 @@
                                             </mat-slide-toggle>
                                         </section>
                                     </div>
-                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMin.value" @fadeInDown>
+                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMin.value" @fadeInOutDown>
                                         <mat-form-field appearance="legacy">
                                             <mat-label>Mínimo</mat-label>
                                             <input formControlName="min" type="number" matInput
@@ -91,7 +91,7 @@
                                             <mat-icon matSuffix>trending_down</mat-icon>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMax.value" @fadeInDown>
+                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMax.value" @fadeInOutDown>
                                         <mat-form-field appearance="legacy">
                                             <mat-label>Máximo</mat-label>
                                             <input formControlName="max" type="number" matInput
@@ -127,7 +127,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="row"
-                                            *ngFor="let opcion of objectKeys(opciones.value); let i = index">
+                                            *ngFor="let opcion of objectKeys(opciones.value); let i = index" @fadeInOutLeft>
                                             <div class="form-group col-4">
                                                 <mat-form-field>
                                                     <mat-label>{{ opcion }}</mat-label>

@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { fadeInDown } from '@shared/animations/router.animations';
+import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/animations/router.animations';
 import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { Numero } from '@models/documentacion/numero';
@@ -16,7 +16,7 @@ import { AdministrarDocumentacionService } from '@services/documentacion/adminis
   selector: 'app-administrar-documentacion',
   templateUrl: './administrar-documentacion.component.html',
   styleUrls: ['./administrar-documentacion.component.scss'],
-  animations: [fadeInDown()]
+  animations: [fadeInDown(), fadeInOutDown(), fadeInOutLeft()]
 })
 export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit {
 
@@ -173,9 +173,11 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
           break;
         }
       }
-      this.toast.success("Se agrego correctamente");
-      this._ads.createDocumento(documento);
-      this.updateTablaRequerimiento();
+      this._ads.createDocumento(documento).then( () => {
+        this.toast.success("Se agrego correctamente")
+        this.updateTablaRequerimiento();
+      }).catch( err => this.toast.error(err,'Error') );
+      
     } else {
       this.toast.error("Llena todos los campos requeridos");
     }

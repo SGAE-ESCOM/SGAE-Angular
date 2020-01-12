@@ -13,14 +13,9 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 })
 export class FormularioComponent implements OnInit {
 
-  prueba;
-
   public readonly OPC = OPC_TIPO_DATO;
   objectKeys = Object.keys;
-  srcResult;
-  inputNode;
   fgFormulario: FormGroup;
-  base64textString = '';
 
   @Input() titulo = '';
   @Input() documentos: TipoDato[];
@@ -79,10 +74,6 @@ export class FormularioComponent implements OnInit {
     console.log(formulario);
   }
 
-  test(){
-    console.log(this.base64textString);
-  }
-
   handleUpload(event:any, documento) {
     const file = event.target.files[0];
     if(file){
@@ -98,8 +89,4 @@ export class FormularioComponent implements OnInit {
     }
   }
 
-  testing(event){
-    console.log(event);
-    console.log(this.prueba);
-  }
 }
