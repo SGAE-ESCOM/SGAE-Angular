@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col-12">
             <mat-vertical-stepper [disableRipple]="true" [linear]="isLinear" #stepper>
+                <!-- PASO 1 -->
                 <mat-step [stepControl]="fgEtapaUsar">
                     <ng-template matStepLabel>Etapas necesarias</ng-template>
                     <div class="col-12">
@@ -15,16 +16,17 @@
                                 </div>
                                 <mat-selection-list formControlName="etapas">
                                     <mat-list-option *ngFor="let etapa of etapasDisponibles; let i = index" [value]="etapa">
-                                        {{etapa}}
+                                        {{ etapa.nombre }}
                                     </mat-list-option>
                                 </mat-selection-list>
                             </div>
                         </div>
                         <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
-                            <button mat-flat-button color="info" (click)="definirEtapas()"  [disabled]="fgEtapaUsar.invalid"  matStepperNext>Siguiente</button>
+                            <button mat-flat-button color="info" (click)="definirEtapas()"  [disabled]="fgEtapaUsar.invalid"  matStepperNext>Siguiente<mat-icon>navigate_next</mat-icon></button>
                         </div>
                     </form>
                 </mat-step>
+                <!-- PASO 2 -->
                 <mat-step>
                     <ng-template matStepLabel>Ordena las etapas</ng-template>
                     <div class="col-12">
@@ -32,34 +34,59 @@
                     </div>
                     <div class="col-8 col-sm-6 col-md-6 py-1">
                         <div class="card border-info">
-                            <div class="card-header bg-info">
+                            <div class="card-header bg-info text-white">
                                 Etapas
                             </div>
                             <ul cdkDropList (cdkDropListDropped)="onDrop($event)" class="list-group list-group-flush">
                                 <li *ngFor="let etapa of etapas; let i = index" class="list-group-item" cdkDrag>
-                                    {{i+1}} {{etapa}}</li>
+                                    {{i+1}} {{etapa.nombre}}</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
-                        <button mat-flat-button matStepperPrevious>Regresar</button>
-                        <button mat-flat-button color="info" matStepperNext>Siguiente</button>
+                        <button mat-flat-button matStepperPrevious> <mat-icon> navigate_before </mat-icon> Anterior </button>
+                        <button mat-flat-button color="info" (click)="definirFechas(etapas)" matStepperNext>Siguiente <mat-icon>navigate_next</mat-icon></button>
                     </div>
                 </mat-step>
-
+                <!-- PASO 3 -->
                 <mat-step [stepControl]="fgEtapasFechas">
                     <ng-template matStepLabel>Definición Fechas</ng-template>
                     <div class="col-12">
                         <p>Selecciona las etapas que tendra el proceso de admisión.</p>
                     </div>
                     <form [formGroup]="fgEtapasFechas">
-                        <div class="col-12 col-sm-6 col-md-6">
-                            
+                        <div class="col-12">
+                            <div class="row pb-2" *ngFor="let etapa of etapas; let i = index" formGroupName="{{etapa.valor}}">
+                                <input hidden formControlName="lugar" value="{{ index }}">
+                                <div class="col-12 col-sm-4">
+                                    {{ etapa.nombre }}
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <mat-form-field class="form-group">
+                                        <input matInput formControlName="fechaInicio" [min]="fechaActual" [matDatepicker]="fechaInicio"
+                                            placeholder="Elige una fecha de inicio" required>
+                                        <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                                        <mat-datepicker #fechaInicio></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <mat-form-field class="form-group">
+                                        <input matInput formControlName="fechaTermino" [min]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value" [matDatepicker]="fechaTermino"
+                                            placeholder="Elige una fecha de termino" required>
+                                        <mat-datepicker-toggle matSuffix [for]="fechaTermino"></mat-datepicker-toggle>
+                                        <mat-datepicker #fechaTermino></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
-                            <button mat-flat-button color="info" (click)="definirEtapas()"  [disabled]="fgEtapasFechas.invalid"  matStepperNext>Siguiente</button>
+                            <button mat-flat-button matStepperPrevious> <mat-icon> navigate_before </mat-icon> Anterior </button>
+                            <button mat-flat-button color="info" (click)="definirEtapas()"  [disabled]="fgEtapasFechas.invalid"  matStepperNext>Siguiente <mat-icon>navigate_next</mat-icon></button>
                         </div>
                     </form>
+                    <div class="highlight">
+                        {{ fgEtapasFechas.value | json }}
+                    </div>
                 </mat-step>
                 
                 <mat-step>

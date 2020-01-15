@@ -281,6 +281,6 @@
         </div>
     </div>
     <br>
-    <app-formulario [titulo]='tituloVistaPrevia' [documentos]="listaRequisitos"></app-formulario>
+    <app-formulario [titulo]='tituloVistaPrevia' (formulario)="estadoFormulario($event)" [documentos]="listaRequisitos"></app-formulario>
     <hr>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum'
@@ -19,6 +19,7 @@ export class FormularioComponent implements OnInit {
 
   @Input() titulo = '';
   @Input() documentos: TipoDato[];
+  @Output() formulario = new EventEmitter<FormGroup>();
 
   constructor(private fg: FormBuilder) {
     this.initForm();
@@ -71,7 +72,7 @@ export class FormularioComponent implements OnInit {
   }
 
   enviarFormulario(formulario) {
-    console.log(formulario);
+    this.formulario.emit(formulario);
   }
 
   handleUpload(event:any, documento) {

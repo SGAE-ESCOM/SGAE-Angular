@@ -3,7 +3,7 @@
         <h5 class="m-0">{{titulo}}</h5>
     </div>
     <div class="card-body">
-        <form [formGroup]="fgFormulario" (ngSubmit)="enviarFormulario(fgFormulario.value)">
+        <form [formGroup]="fgFormulario" (ngSubmit)="enviarFormulario(fgFormulario)">
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-4" *ngFor="let documento of documentos">
                     <div class="form-group" *ngIf="documento.tipo == OPC.CAMPO">
@@ -48,7 +48,7 @@
             </div>
             <div class="row">
                 <div class="col-12 text-right">
-                    <button mat-button color="success"> Finalizar </button>
+                    <button type="submit" mat-button color="success"> Finalizar </button>
                 </div>
             </div>
         </form>

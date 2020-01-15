@@ -204,6 +204,15 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     this.nombreOpcion = new FormControl('', Validators.required);
   }
 
+  estadoFormulario(formularioRecivido: FormGroup){
+    if(formularioRecivido.invalid){
+      this.toast.error("El formulario no es valido");
+    }else{
+      this.toast.success("El formulario es valido");
+    }
+  }
+
+  /* Getters de FormControls */
   get requerido() {
     return this.fgGeneral.get('requerido') as FormControl;
   }
