@@ -37,17 +37,14 @@ export class SidenavComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this.ngZone.run(()=>{
-      //execute subscription outside Angular Zone
-      this._authService.isAuth().subscribe(auth => {
-        if (auth) {
-          this.isLoggedIn = true;
-          this.navigationLinks = linksAdmin;
-        } else {
-          this.isLoggedIn = false;
-          this.navigationLinks = linksPage;
-        }
-      });
+    this._authService.isAuth().subscribe(auth => {
+      if (auth) {
+        this.isLoggedIn = true;
+        this.navigationLinks = linksAdmin;
+      } else {
+        this.isLoggedIn = false;
+        this.navigationLinks = linksPage;
+      }
     });
   }
 

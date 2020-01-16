@@ -51,13 +51,6 @@ export class LoginComponent implements OnInit {
       }).catch(err => this.showError(err));
   }
 
-  onLoginFacebook(): void {
-    this.authService.loginFacebookUser()
-      .then((res) => {
-        this.onLoginRedirect();
-      }).catch(err => this.showError(err));
-  }
-
   onLogout() {
     this.authService.logoutUser();
   }
