@@ -16,6 +16,11 @@ export class AdministrarDocumentacionService {
   }
 
   //
+
+  saveDocumento(documento: TipoDato) {
+    return this.documentosCollection.add(documento);
+  }
+
   getDocumentos(): Observable<TipoDato[]> {
     return this.documentosCollection
       .snapshotChanges()
@@ -30,13 +35,13 @@ export class AdministrarDocumentacionService {
       );
   }
 
-  createDocumento(documento: TipoDato) {
-    return this.firestore.collection('RecepcionDocumentos').add(documento);
-  }
-
   updateDocumento(documento: TipoDato) {
     delete documento.nombre;
     this.firestore.doc('policies/' + documento.nombre).update(documento);
+  }
+
+  public deleteDocumento(id: any) {
+    return this.documentosCollection.doc(id).delete();
   }
 
 }

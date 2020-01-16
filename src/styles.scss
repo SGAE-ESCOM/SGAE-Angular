@@ -115,6 +115,9 @@ button:focus {
   }
 }
 
+th {
+  font-weight: 500;
+}
 // Variations
 @mixin bs-callout-variant($color) {
   border-left-color: $color;

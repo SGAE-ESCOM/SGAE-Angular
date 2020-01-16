@@ -66,8 +66,8 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   }
 
   ngOnInit() {
-    //this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
-    this.documentos.data = this.listaRequisitos; // DEBUG
+    this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
+    //this.documentos.data = this.listaRequisitos; // DEBUG
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
   }
@@ -173,7 +173,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
           break;
         }
       }
-      this._ads.createDocumento(documento).then( () => {
+      this._ads.saveDocumento(documento).then( () => {
         this.toast.success("Se agrego correctamente")
         this.updateTablaRequerimiento();
       }).catch( err => this.toast.error(err,'Error') );
@@ -181,6 +181,12 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     } else {
       this.toast.error("Llena todos los campos requeridos");
     }
+  }
+
+  deleteDocumento(id: any){
+    this._ads.deleteDocumento(id).then( () => {
+      this.toast.success("Se elimino correctamente");
+    }).catch( err => this.toast.error(err));
   }
 
   //Getters de FormControl mas cortos
@@ -195,9 +201,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
       fechaMin: ['', Validators.required],
       fechaMax: ['', Validators.required],
       descripcion: [''],
-      opciones: this._fb.group({
-
-      })
+      opciones: this._fb.group({})
     });
     this.opcMin = new FormControl(false);
     this.opcMax = new FormControl(false);

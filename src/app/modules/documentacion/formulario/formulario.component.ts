@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum'
@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.scss']
 })
-export class FormularioComponent implements OnInit {
+export class FormularioComponent implements OnInit, OnChanges {
 
   public readonly OPC = OPC_TIPO_DATO;
   objectKeys = Object.keys;
@@ -25,10 +25,14 @@ export class FormularioComponent implements OnInit {
     this.initForm();
   }
 
-  ngOnInit() {
-    this.documentos.forEach(
-      documento => this.fgFormulario.addControl(documento.nombre, this.validarFormulario(documento))
-    );
+  ngOnInit() {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['documentos']) {
+      this.documentos.forEach(
+        documento => this.fgFormulario.addControl(documento.nombre, this.validarFormulario(documento))
+      );
+    }
   }
 
   initForm() {
@@ -75,17 +79,17 @@ export class FormularioComponent implements OnInit {
     this.formulario.emit(formulario);
   }
 
-  handleUpload(event:any, documento) {
+  handleUpload(event: any, documento) {
     const file = event.target.files[0];
-    if(file){
+    if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         let jsonFile = {
-          nombre : file.name,
+          nombre: file.name,
           archivo: reader.result
         };
-        this.fgFormulario.get(documento).patchValue( jsonFile );
+        this.fgFormulario.get(documento).patchValue(jsonFile);
       };
     }
   }
