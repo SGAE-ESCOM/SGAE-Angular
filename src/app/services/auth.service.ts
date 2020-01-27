@@ -5,14 +5,17 @@ import { auth } from 'firebase/app';
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserInterface } from '@models/user';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore,
-    private ngZone:NgZone) { }
+  public userData$: Observable<firebase.User>;
+  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
+    this.userData$ = afsAuth.authState;
+  }
 
   registerUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
@@ -32,14 +35,8 @@ export class AuthService {
     });
   }
 
-  loginFacebookUser() {
-    return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
-      .then(credential => this.updateUserData(credential.user))
-  }
-
   loginGoogleUser() {
-    return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
-      .then(credential => this.ngZone.run( () => this.updateUserData(credential.user)) )
+    return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
 
   logoutUser() {
