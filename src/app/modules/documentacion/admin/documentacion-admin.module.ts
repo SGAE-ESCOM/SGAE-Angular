@@ -5,6 +5,7 @@ import { DocumentacionAdminRoutingModule } from './documentacion-admin-routing.m
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from "@template/angular-material.module";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material';
@@ -26,6 +27,7 @@ import { FormularioModule } from '../formulario/formulario.module';
     ReactiveFormsModule,
     AngularMaterialModule,
     MatSlideToggleModule,
+    MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
