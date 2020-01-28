@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public afAuth: AngularFireAuth, private router: Router,
     private authService: AuthService, private fb: FormBuilder, 
-    private _toats: ToastrService) {
+    private _toats: ToastrService, private ngZone:NgZone) {
   }
 
   ngOnInit() {
@@ -46,8 +46,11 @@ export class LoginComponent implements OnInit {
   onLoginGoogle(): void {
     //execute subscription outside Angular Zone
     this.authService.loginGoogleUser()
-      .then((res) => {
-        this.onLoginRedirect();
+      .then( (result ) => {
+        this.ngZone.run( () => {
+          this.onLoginRedirect();
+        });
+        console.log(result)
       }).catch(err => this.showError(err));
   }
 
