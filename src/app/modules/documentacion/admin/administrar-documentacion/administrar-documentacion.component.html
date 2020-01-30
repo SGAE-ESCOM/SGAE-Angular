@@ -56,7 +56,7 @@
                             <div class="col-12 col-md-2 form-group">
                                 <mat-label class="label-toggle"> Requerido </mat-label>
                                 <section class="example-section">
-                                    <mat-slide-toggle color="accent" formControlName="requerido">
+                                    <mat-slide-toggle formControlName="requerido" color="accent">
                                         {{ requerido.value | boolean }}</mat-slide-toggle>
                                 </section>
                                 <mat-hint class="toggle-hint">Es un requisito obligatorio</mat-hint>
@@ -64,40 +64,91 @@
 
                             <div class="col-12" *ngIf="tipoOpcion == OPC.CAMPO" @fadeInDown>
                                 <div class="row">
-                                    <div class="col-12">
-                                        <p>Puedes activar un valor mínimo y un valor máximo para definir un rango.</p>
+                                    <div class="col-12 col-xs-12 col-md-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p *ngIf=" this.subtipo.value == ''" > Definir un máximo y mínimo </p>
+                                                <p *ngIf="OPC_CAMPO.NUMERO == this.subtipo.value">Definir un valor mínimo y/o un valor máximo para establecer un rango de numeros.
+                                                </p>
+                                                <p *ngIf="OPC_CAMPO.TEXTO == this.subtipo.value" >Definir el mínimo y/o máximo numero de caracteres que se podrán
+                                                    ingresar.
+                                                </p>
+                                            </div>
+                                            <div class="col-6 col-md-2 pr-0 form-group">
+                                                <mat-label class="label-toggle"> Mínimo </mat-label>
+                                                <section class="example-section">
+                                                    <mat-slide-toggle [formControl]="opcMin" color="accent">
+                                                        {{ opcMin.value | boolean }}
+                                                    </mat-slide-toggle>
+                                                </section>
+                                            </div>
+                                            <div class="col-6 col-md-2 pr-0 form-group">
+                                                <mat-label class="label-toggle"> Máximo </mat-label>
+                                                <section class="example-section">
+                                                    <mat-slide-toggle [formControl]="opcMax" color="accent">
+                                                        {{ opcMax.value | boolean }}
+                                                    </mat-slide-toggle>
+                                                </section>
+                                            </div>
+                                            <div class="col-6 col-md-3 form-group" *ngIf="opcMin.value" @fadeInOutDown>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Mínimo</mat-label>
+                                                    <input formControlName="min" type="number" matInput
+                                                        placeholder="Escribe un mínimo">
+                                                    <mat-icon matSuffix>trending_down</mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-6 col-md-3 form-group" *ngIf="opcMax.value" @fadeInOutDown>
+                                                <mat-form-field appearance="legacy">
+                                                    <mat-label>Máximo</mat-label>
+                                                    <input formControlName="max" type="number" matInput
+                                                        placeholder="Escribe un máximo">
+                                                    <mat-icon matSuffix>trending_up</mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-6 col-md-1 pr-0 form-group">
-                                        <mat-label class="label-toggle"> Mínimo </mat-label>
-                                        <section class="example-section">
-                                            <mat-slide-toggle [formControl]="opcMin" color="accent">
-                                                {{ opcMin.value | boolean }}
-                                            </mat-slide-toggle>
-                                        </section>
-                                    </div>
-                                    <div class="col-6 col-md-1 pr-0 form-group">
-                                        <mat-label class="label-toggle"> Máximo </mat-label>
-                                        <section class="example-section">
-                                            <mat-slide-toggle [formControl]="opcMax" color="accent">
-                                                {{ opcMax.value | boolean }}
-                                            </mat-slide-toggle>
-                                        </section>
-                                    </div>
-                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMin.value" @fadeInOutDown>
-                                        <mat-form-field appearance="legacy">
-                                            <mat-label>Mínimo</mat-label>
-                                            <input formControlName="min" type="number" matInput
-                                                placeholder="Escribe un mínimo">
-                                            <mat-icon matSuffix>trending_down</mat-icon>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-6 col-md-2 form-group" *ngIf="opcMax.value" @fadeInOutDown>
-                                        <mat-form-field appearance="legacy">
-                                            <mat-label>Máximo</mat-label>
-                                            <input formControlName="max" type="number" matInput
-                                                placeholder="Escribe un máximo">
-                                            <mat-icon matSuffix>trending_up</mat-icon>
-                                        </mat-form-field>
+                                    <div class="col-12 col-xs-12 col-md-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p>Selecciona los caracteres que permitirá el campo.</p>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group form-check-inline">
+                                                    <mat-checkbox [formControl]="opcLetraMayuscula"
+                                                        class="example-margin">Letras mayúsculas
+                                                    </mat-checkbox>
+                                                </div>
+                                                <div class="form-group form-check-inline">
+                                                    <mat-checkbox [formControl]="opcLetraMinuscula"
+                                                        class="example-margin">Letras minúsculas
+                                                    </mat-checkbox>
+                                                </div>
+                                                <div class="form-group form-check-inline">
+                                                    <mat-checkbox [formControl]="opcNumeros" class="example-margin">
+                                                        Numeros</mat-checkbox>
+                                                </div>
+                                                <div class="form-group form-check-inline">
+                                                    <mat-checkbox [formControl]="opcEspacios" class="example-margin">
+                                                        Espacios</mat-checkbox>
+                                                </div>
+                                                <div class="form-group form-check-inline">
+                                                    <mat-checkbox [formControl]="opcExpresionRegular"
+                                                        class="example-margin">Eexpresión regular</mat-checkbox>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" formGroupName="expresionRegular">
+                                                <div class="form-group">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>Eexpresión regular</mat-label>
+                                                        <input formControlName="valor" type="text" matInput
+                                                            placeholder="Escribe una expresión regular"
+                                                            readonly="{{ !this.opcExpresionRegular.value }}">
+                                                        <mat-icon matSuffix>trending_down</mat-icon>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +178,8 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="row"
-                                            *ngFor="let opcion of objectKeys(opciones.value); let i = index" @fadeInOutLeft>
+                                            *ngFor="let opcion of objectKeys(opciones.value); let i = index"
+                                            @fadeInOutLeft>
                                             <div class="form-group col-4">
                                                 <mat-form-field>
                                                     <mat-label>{{ opcion }}</mat-label>
@@ -166,7 +218,7 @@
                             <div class="col-12" *ngIf="tipoOpcion == OPC.FECHA" @fadeInDown>
                                 <div class="row">
                                     <div class="col-12">
-                                        <p>Define una fecha mínima y una fecha máxima para definir un rango </p>
+                                        <p>Define una fecha mínima y una fecha máxima para definir un rango.</p>
                                     </div>
                                     <div class="col-6 col-sm-4 col-md-3 form-group">
                                         <mat-form-field class="example-full-width">
@@ -281,6 +333,7 @@
         </div>
     </div>
     <br>
-    <app-formulario [titulo]='tituloVistaPrevia' (formulario)="estadoFormulario($event)" [documentos]="documentos.data"></app-formulario>
+    <app-formulario [titulo]='tituloVistaPrevia' (formulario)="estadoFormulario($event)" [documentos]="documentos.data">
+    </app-formulario>
     <hr>
 </div>
