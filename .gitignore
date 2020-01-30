@@ -8,10 +8,6 @@
 # Only exists if Bazel was run
 /bazel-out
 
-#deploy folders
-/src/app/components/sidenav/*
-/src/app/app-routing.module.ts
-
 # dependencies
 /node_modules
 

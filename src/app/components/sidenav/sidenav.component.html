@@ -1,0 +1,58 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
+  <!-- TOOLBAR  -->
+  <mat-toolbar color="basic" class="example-toolbar mat-elevation-z3">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name">
+      <img src="assets/favicon.ico" width="22px" alt="..." class="app-icon rounded">
+      SGAE
+    </h1>
+    <span class="spacer"></span>
+    <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu">
+      <mat-icon class="material-icons-outlined">account_circle</mat-icon> Menu
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon class="material-icons-outlined">settings_application</mat-icon> Configurar
+      </button>
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>exit_to_app</mat-icon> Salir
+      </button>
+    </mat-menu>
+    <ng-template #loggedOutOptions>
+      <a mat-button routerLink="">
+        <mat-icon>home</mat-icon> Inicio
+      </a>
+      <a mat-button routerLink="login">
+        <mat-icon class="material-icons-outlined">account_circle</mat-icon> Iniciar Sesión
+      </a>
+    </ng-template>
+
+  </mat-toolbar>
+
+  <!-- SIDENAV  -->
+  <mat-sidenav-container class="example-sidenav-container mt-5" [style.marginTop.px]="mobileQuery.matches ? 48 : 0">
+    <!-- SIDENAV ELEMENTS  -->
+    <!-- Agregar atributo para mantener visible -- [opened]="!mobileQuery.matches" --  -->
+    <mat-sidenav #snav class="pt-5" [fixedInViewport]="mobileQuery.matches"
+      [mode]="mobileQuery.matches ? 'over' : 'side'" fixedTopGap="0">
+      <mat-nav-list>
+        <a mat-list-item routerLink="{{nav.url}}" *ngFor="let nav of navigationLinks">
+          <mat-icon class="sidenav-icon" matSuffix> {{nav.icon}} </mat-icon> {{nav.name}}
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- MAIN CONTENT  -->
+    <mat-sidenav-content>
+      <div *ngIf="isLoggedIn; else loggedOut" class="container pt-2 pb-4">
+        <app-breadcrumb></app-breadcrumb>
+        <ng-content class="animated pt-1"></ng-content>
+      </div>
+      <ng-content class="animated" #loggedOut></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<div *ngIf="!shouldRun">Please open on Stackblitz to see result</div>
