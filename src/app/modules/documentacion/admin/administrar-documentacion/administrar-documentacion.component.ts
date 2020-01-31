@@ -8,8 +8,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/animations/router.animations';
 import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
+import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum';
 import { TipoDato } from '@models/documentacion/tipo-dato';
-import { Numero } from '@models/documentacion/numero';
+import { ALPHANUMERICO_CON_ESPACIOS } from '@shared/validators/regex';
 import { AdministrarDocumentacionService } from '@services/documentacion/administrar-documentacion.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
 
   //Variables OPCIONES DISPONIBLES
   public readonly OPC = OPC_TIPO_DATO;
+  public readonly OPC_CAMPO = OPC_CAMPO;
 
   //Variables para las tablas
   displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'min', 'max', 'tipoArchivo', 'acciones'];
@@ -30,20 +32,16 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   //Variables para Vista previa
-  tituloVistaPrevia = 'Vista previa de requisitos';
-  listaRequisitos = [
-    { "nombre": "CURP Min-Max", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18},
-    { "nombre": "CURP Min", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18},
-    { "nombre": "CURP Max", "requerido": true, "tipo": "campo", "subtipo": "texto", "max": 18},
-    { "nombre": "Edad Min-Max", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18, "max": 30 },
-    { "nombre": "Edad Min", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18 },
-    { "nombre": "Edad Max", "requerido": true, "tipo": "campo", "subtipo": "número", "max": 30 },
+  tituloVistaPrevia = 'Prueba de formulario para aspirante';
+  listaRequisitos = [ //DEBUG
+    { "nombre": "Nombres", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" } },
+    { "nombre": "Nickname", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": false, "valor": "a-zá-úA-ZÁ-Ú0-9" } },
+    { "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18, "expresionRegular": { "espacios": false, "valor": "0-9A-ZÁ-Ú" } },
+    { "nombre": "Edad", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18 },
     { "nombre": "Genero", "requerido": true, "tipo": "seleccion", "subtipo": "unica", "opciones": { "Hombre": "Hombre", "Mujer": "Mujer", "Otro": "Otro" } },
-    { "nombre": "Acta de Nacimiento PDF", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Ninguna" },
-    { "nombre": "Acta de Nacimiento IMG", "requerido": true, "tipo": "archivo", "subtipo": "imagen", "descripcion": "Ninguna" },
+    { "nombre": "Acta de Nacimiento PDF", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Archivos menores a 215 KB" },
+    { "nombre": "Acta de Nacimiento IMG", "requerido": true, "tipo": "archivo", "subtipo": "imagen", "descripcion": "Imagen menor a 215 KB" },
     { "nombre": "Fecha egreso Min-Max", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z", "fechaMax": "2020-01-23T06:00:00.000Z" },
-    { "nombre": "Fecha egreso Min", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z" },
-    { "nombre": "Fecha egreso Max", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMax": "2020-01-23T06:00:00.000Z" }	
   ];
 
   //Variables para los TipoDato Generales
@@ -53,12 +51,22 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   subtipos: any;
   subtiposDescripcion: string;
 
-  //FormGroup
+  //Variables de caracteristicas para el formulario
   fgGeneral: FormGroup;
   opcMin: FormControl;
   opcMax: FormControl;
+  opcLetraMayuscula: FormControl;
+  opcLetraMinuscula: FormControl;
+  opcNumeros: FormControl;
+  opcEspacios: FormControl;
+  opcExpresionRegular: FormControl;
   nombreOpcion: FormControl;
   objectKeys = Object.keys;
+
+  //Variables para expresiones regulares
+  private readonly REGEX_MAYUSCULAS = 'A-ZÁ-Ú';
+  private readonly REGEX_MINUSCULAS = 'a-zá-ú';
+  private readonly REGEX_NUMEROS = '0-9';
 
   constructor(private _fb: FormBuilder, private toast: ToastrService, private _ads: AdministrarDocumentacionService) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
@@ -66,22 +74,20 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   }
 
   ngOnInit() {
-    this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
-    //this.documentos.data = this.listaRequisitos; // DEBUG
+    //this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
+    this.documentos.data = this.listaRequisitos; // DEBUG
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
+    this.opcLetraMayuscula.valueChanges.subscribe(valor => valor ? this.addExpresion( this.REGEX_MAYUSCULAS ) : this.removeExpresion( this.REGEX_MAYUSCULAS ) );
+    this.opcLetraMinuscula.valueChanges.subscribe(valor => valor ? this.addExpresion( this.REGEX_MINUSCULAS ) : this.removeExpresion( this.REGEX_MINUSCULAS ) );
+    this.opcNumeros.valueChanges.subscribe(valor => valor ? this.addExpresion( this.REGEX_NUMEROS ) : this.removeExpresion( this.REGEX_NUMEROS ) );
+    this.opcExpresionRegular.valueChanges.subscribe(
+      valor => valor ? 
+        this.disableControles([this.opcEspacios]) : this.enableControles([this.opcEspacios]));
   }
 
   ngAfterViewInit() {
     this.updateTablaRequerimiento();
-  }
-
-  auxBoton() {
-    this.updateTablaRequerimiento();
-  }
-
-  getNumero(index: number) {
-    return new Numero(`Nombre ${index}`, true);
   }
 
   enableControles(arrayFormControl: any[]) {
@@ -92,15 +98,39 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     arrayFormControl.forEach(formControl => formControl.disable());
   }
 
+  addExpresion( expresion: string ){
+    let nuevaExpresion = this.expresionValor.value + expresion ;
+    this.expresionValor.patchValue( nuevaExpresion );
+  }
+
+  removeExpresion( expresion: string ){
+    let nuevaExpresion = this.expresionValor.value.replace(expresion,'');
+    this.expresionValor.patchValue( nuevaExpresion );
+  }
+
   offToggels(arrayFormControl: FormControl[]) {
     arrayFormControl.forEach(formControl => { formControl.patchValue(false) });
   }
+  
+  onChangeSubtipo(subtipoSelected){
+    switch(subtipoSelected){
+      case OPC_CAMPO.TEXTO: {
+        this.enableControles([this.expresionRegular]);
+        break; 
+      }
+      default: { 
+        this.disableControles([this.expresionRegular]);
+        break; 
+     } 
+    }
+  }
 
-  onChangeSubtipo(tipoSelected: string) {
+  onChangeTipo(tipoSelected: string) {
     switch (tipoSelected) {
       case this.OPC.CAMPO: {
         this.subtipos = EnumTipoDato.CAMPO.subtipos;
         this.tipoDescripcion = EnumTipoDato.CAMPO.descripcion;
+        //this.enableControles([this.expresionRegular]);
         this.disableControles([this.descripcion, this.fechaMin, this.fechaMax, this.opciones]);
         break;
       }
@@ -108,24 +138,24 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
         this.subtipos = EnumTipoDato.ARCHIVO.subtipos;
         this.tipoDescripcion = EnumTipoDato.ARCHIVO.descripcion;
         this.enableControles([this.descripcion]);
-        this.disableControles([this.min, this.max, this.fechaMin, this.fechaMax, this.opciones]);
-        this.offToggels([this.opcMin, this.opcMax]);
+        this.disableControles([this.min, this.max, this.expresionRegular, this.fechaMin, this.fechaMax, this.opciones]);
+        this.offToggels([this.opcMin, this.opcMax, this.opcEspacios, this.opcExpresionRegular]);
         break;
       }
       case this.OPC.SELECCION: {
         this.subtipos = EnumTipoDato.SELECCION.subtipos;
         this.tipoDescripcion = EnumTipoDato.SELECCION.descripcion;
         this.enableControles([this.opciones]);
-        this.disableControles([this.min, this.max, this.descripcion, this.fechaMin, this.fechaMax]);
-        this.offToggels([this.opcMin, this.opcMax]);
+        this.disableControles([this.min, this.max, this.expresionRegular, this.descripcion, this.fechaMin, this.fechaMax]);
+        this.offToggels([this.opcMin, this.opcMax, this.opcEspacios, this.opcExpresionRegular]);
         break;
       }
       case this.OPC.FECHA: {
         this.subtipos = EnumTipoDato.FECHA.subtipos;
         this.tipoDescripcion = EnumTipoDato.FECHA.descripcion;
         this.enableControles([this.fechaMin, this.fechaMax]);
-        this.disableControles([this.descripcion, this.min, this.max, this.opciones]);
-        this.offToggels([this.opcMin, this.opcMax]);
+        this.disableControles([this.descripcion, this.min, this.max, this.expresionRegular, this.opciones]);
+        this.offToggels([this.opcMin, this.opcMax, this.opcEspacios, this.opcExpresionRegular]);
         break;
       }
       default: {
@@ -145,10 +175,20 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     this.opciones.removeControl(nombre);
   }
 
-  applyFilter(filterValue: string) {
+  //Eventos
+  buscarEnTabla(filterValue: string) {
     this.documentos.filter = filterValue.trim().toLowerCase();
     if (this.documentos.paginator) {
       this.documentos.paginator.firstPage();
+    }
+  }
+
+  verificarRegex(expresion: string) {
+    try{
+      let regex = new RegExp(expresion);
+      console.log(regex);
+    }catch(error){
+      this.expresionValor.setErrors({'incorrect': true});
     }
   }
 
@@ -157,61 +197,56 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     this.documentos.sort = this.sort;
   }
 
+  //Peticiones HTTP
   addTipoDato(documento: TipoDato) {
     if (this.fgGeneral.valid) {
-      switch (documento.tipo) {
-        case this.OPC.CAMPO: {
-          console.log(this.OPC.CAMPO);
-          break;
-        }
-        case this.OPC.ARCHIVO: {
-          console.log(this.OPC.ARCHIVO);
-          break;
-        }
-        default: {
-          console.log("Invalid choice");
-          break;
-        }
-      }
-      this._ads.saveDocumento(documento).then( () => {
+      this._ads.saveDocumento(documento).then(() => {
         this.toast.success("Se agrego correctamente")
         this.updateTablaRequerimiento();
-      }).catch( err => this.toast.error(err,'Error') );
-      
+      }).catch(err => this.toast.error(err, 'Error'));
     } else {
       this.toast.error("Llena todos los campos requeridos");
     }
   }
 
-  deleteDocumento(id: any){
-    this._ads.deleteDocumento(id).then( () => {
+  deleteDocumento(id: any) {
+    this._ads.deleteDocumento(id).then(() => {
       this.toast.success("Se elimino correctamente");
-    }).catch( err => this.toast.error(err));
+    }).catch(err => this.toast.error(err));
   }
 
   //Getters de FormControl mas cortos
   initForm() {
+    this.opcMin = new FormControl(false);
+    this.opcMax = new FormControl(false);
+    this.opcLetraMayuscula = new FormControl(true);
+    this.opcLetraMinuscula = new FormControl(true);
+    this.opcNumeros = new FormControl(true);
+    this.opcEspacios = new FormControl(false);
+    this.opcExpresionRegular = new FormControl(false);
+    this.nombreOpcion = new FormControl('', Validators.required);
     this.fgGeneral = this._fb.group({
-      nombre: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
       requerido: [true, Validators.required],
       tipo: ['', Validators.required],
       subtipo: ['', Validators.required],
       min: [{ value: 0, disabled: true }, Validators.required],
       max: [{ value: 0, disabled: true }, Validators.required],
+      expresionRegular: this._fb.group({
+        espacios: this.opcEspacios,
+        valor: ['a-zá-úA-ZÁ-Ú0-9', Validators.required]
+      }),
       fechaMin: ['', Validators.required],
       fechaMax: ['', Validators.required],
       descripcion: [''],
       opciones: this._fb.group({})
     });
-    this.opcMin = new FormControl(false);
-    this.opcMax = new FormControl(false);
-    this.nombreOpcion = new FormControl('', Validators.required);
   }
 
-  estadoFormulario(formularioRecivido: FormGroup){
-    if(formularioRecivido.invalid){
+  estadoFormulario(formularioRecivido: FormGroup) {
+    if (formularioRecivido.invalid) {
       this.toast.error("El formulario no es valido");
-    }else{
+    } else {
       this.toast.success("El formulario es valido");
     }
   }
@@ -235,6 +270,14 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
 
   get max() {
     return this.fgGeneral.get('max') as FormControl;
+  }
+
+  get expresionRegular(){
+    return this.fgGeneral.get('expresionRegular') as FormGroup;
+  }
+
+  get expresionValor(){
+    return this.fgGeneral.get('expresionRegular').get('valor') as FormControl;
   }
 
   get fechaMin() {
