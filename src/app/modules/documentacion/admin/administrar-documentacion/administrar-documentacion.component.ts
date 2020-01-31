@@ -10,6 +10,7 @@ import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/animations/rou
 import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum';
 import { TipoDato } from '@models/documentacion/tipo-dato';
+import { ALPHANUMERICO_CON_ESPACIOS } from '@shared/validators/regex';
 import { AdministrarDocumentacionService } from '@services/documentacion/administrar-documentacion.service';
 
 @Component({
@@ -31,9 +32,11 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   //Variables para Vista previa
-  tituloVistaPrevia = 'Vista previa de requisitos';
+  tituloVistaPrevia = 'Prueba de formulario para aspirante';
   listaRequisitos = [ //DEBUG
-    { "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18 },
+    { "nombre": "Nombres", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" } },
+    { "nombre": "Nickname", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": false, "valor": "a-zá-úA-ZÁ-Ú0-9" } },
+    { "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18, "expresionRegular": { "espacios": false, "valor": "0-9A-ZÁ-Ú" } },
     { "nombre": "Edad", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18 },
     { "nombre": "Genero", "requerido": true, "tipo": "seleccion", "subtipo": "unica", "opciones": { "Hombre": "Hombre", "Mujer": "Mujer", "Otro": "Otro" } },
     { "nombre": "Acta de Nacimiento PDF", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Archivos menores a 215 KB" },
@@ -108,13 +111,26 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   offToggels(arrayFormControl: FormControl[]) {
     arrayFormControl.forEach(formControl => { formControl.patchValue(false) });
   }
+  
+  onChangeSubtipo(subtipoSelected){
+    switch(subtipoSelected){
+      case OPC_CAMPO.TEXTO: {
+        this.enableControles([this.expresionRegular]);
+        break; 
+      }
+      default: { 
+        this.disableControles([this.expresionRegular]);
+        break; 
+     } 
+    }
+  }
 
-  onChangeSubtipo(tipoSelected: string) {
+  onChangeTipo(tipoSelected: string) {
     switch (tipoSelected) {
       case this.OPC.CAMPO: {
         this.subtipos = EnumTipoDato.CAMPO.subtipos;
         this.tipoDescripcion = EnumTipoDato.CAMPO.descripcion;
-        this.enableControles([this.expresionRegular]);
+        //this.enableControles([this.expresionRegular]);
         this.disableControles([this.descripcion, this.fechaMin, this.fechaMax, this.opciones]);
         break;
       }
@@ -159,10 +175,20 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     this.opciones.removeControl(nombre);
   }
 
-  applyFilter(filterValue: string) {
+  //Eventos
+  buscarEnTabla(filterValue: string) {
     this.documentos.filter = filterValue.trim().toLowerCase();
     if (this.documentos.paginator) {
       this.documentos.paginator.firstPage();
+    }
+  }
+
+  verificarRegex(expresion: string) {
+    try{
+      let regex = new RegExp(expresion);
+      console.log(regex);
+    }catch(error){
+      this.expresionValor.setErrors({'incorrect': true});
     }
   }
 
@@ -171,6 +197,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     this.documentos.sort = this.sort;
   }
 
+  //Peticiones HTTP
   addTipoDato(documento: TipoDato) {
     if (this.fgGeneral.valid) {
       this._ads.saveDocumento(documento).then(() => {
@@ -199,7 +226,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     this.opcExpresionRegular = new FormControl(false);
     this.nombreOpcion = new FormControl('', Validators.required);
     this.fgGeneral = this._fb.group({
-      nombre: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
       requerido: [true, Validators.required],
       tipo: ['', Validators.required],
       subtipo: ['', Validators.required],
@@ -207,7 +234,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
       max: [{ value: 0, disabled: true }, Validators.required],
       expresionRegular: this._fb.group({
         espacios: this.opcEspacios,
-        valor: ['', Validators.required]
+        valor: ['a-zá-úA-ZÁ-Ú0-9', Validators.required]
       }),
       fechaMin: ['', Validators.required],
       fechaMax: ['', Validators.required],

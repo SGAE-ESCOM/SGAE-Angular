@@ -49,6 +49,15 @@ export class FormularioComponent implements OnInit, OnChanges {
           validadores.push(Validators.minLength(documento.min));
         if (documento.max != null)
           validadores.push(Validators.maxLength(documento.max));
+        if( documento.expresionRegular.espacios == null ){
+          validadores.push(Validators.pattern( documento.expresionRegular.valor));
+        }else{
+          if( documento.expresionRegular.espacios ){
+            validadores.push(Validators.pattern( `^[${documento.expresionRegular.valor}]+( [${documento.expresionRegular.valor}]+)*$` ));
+          }else{
+            validadores.push(Validators.pattern( `[${documento.expresionRegular.valor}]+` ));
+          }
+        }
         break;
       }
       case OPC_CAMPO.NUMERO: {
