@@ -4,7 +4,7 @@ export function cardAnimation() {
     return trigger('cardAnimation', [
         transition('* => *', [
             // Initially the all cards are not visible
-            query(':enter', style({ opacity: 0 })),
+            query(':enter', style({ opacity: 0 }) , { optional: true }),
             // Each card will appear sequentially with the delay of 300ms
             query(':enter', stagger('75ms', [
                 animate('350ms ease-in', keyframes([
