@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-4 mx-auto">
                 <div class="card_login">
-                    <div class="card">
+                    <div class="card mat-elevation-z3 no-border">
                         <div class="card-body text-center">
                             <form (submit)="onLogin()" [formGroup]="fgUsuario">
                                 <h1 class="h3 my-4 font-weight-normal">Iniciar Sesión</h1>
@@ -16,7 +16,7 @@
                                         <mat-error *ngIf="fgUsuario.get('email').invalid">{{getErrorMessage()}}</mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mb-1">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Contraseña</mat-label>
                                         <input matInput id="password" formControlName="password" name="password"
@@ -28,14 +28,13 @@
                                         <mat-error *ngIf="fgUsuario.get('password').hasError('required')"> Debes ingresar un valor </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <button mat-flat-button color="primary" type="submit" class=" btn-block">Iniciar Sesión</button>
-                                <hr>
-                                
+                                <button mat-flat-button color="primary" type="submit" class=" btn-block">Iniciar Sesión</button>                                
+                                <div class="form-group mt-2">
+                                    <p class="pregunta my-1"><b>¿Aún no tienes cuenta?</b></p>
+                                    <a mat-flat-button color="success" routerLink="/registro" class="btn-block">Registrate aquí</a>
+                                </div>
                             </form>
-                            <div class="form-group">
-                                <p>¿Aún no tienes cuenta?</p>
-                                <a mat-flat-button color="success" routerLink="/registro" class="btn-block">Registrate aquí</a>
-                            </div>
+                            <hr>
                             <div class="form-group">
                                 <p>O</p>
                                 <button mat-flat-button class="btn-block btn-social btn-google"
