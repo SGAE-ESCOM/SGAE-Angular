@@ -1,12 +1,30 @@
-<section id="login" class="mb-5 mt-5">
+<section id="login" class="mb-5 mt-5" @moveInLeft>
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-5 mx-auto">
                 <div class="card_login">
-                    <div class="card">
+                    <div class="card no-boreder mat-elevation-z3">
                         <div class="card-body text-center">
-                            <form (submit)="onRegisterUser()" [formGroup]="fgUsuario">
-                                <h1 class="h3 my-4 font-weight-normal">Registro</h1>
+                            <form (submit)="onRegistrar(fgUsuario.value)" [formGroup]="fgUsuario">
+                                <h1 class="h3 my-4 font-weight-normal">Registro de Aspirante</h1>
+                                <div class="form-grup">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Nombre(s)</mat-label>
+                                        <input matInput formControlName="nombres" type="nombres" id="nombres"
+                                            name="nombres" placeholder="Introduce tu correo" required>
+                                        <mat-icon matSuffix>text_fields</mat-icon>
+                                        <mat-error *ngIf="fgUsuario.get('nombres').invalid">{{getErrorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-grup">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Apellido(s)</mat-label>
+                                        <input matInput formControlName="apellidos" type="apellidos" id="apellidos"
+                                            name="apellidos" placeholder="Introduce tu correo" required>
+                                        <mat-icon matSuffix>text_fields</mat-icon>
+                                        <mat-error *ngIf="fgUsuario.get('apellidos').invalid">{{getErrorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                </div>
                                 <div class="form-grup">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Email</mat-label>

@@ -10,6 +10,5 @@ export interface UsuarioInterface {
     apellidos?: string;
     email?: string;
     password?: string;
-    photoUrl?: string;
     roles: Roles;
 }

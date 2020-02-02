@@ -102,6 +102,10 @@ export function moveInLeft() {
         transition(':enter', [
             style({ opacity: '0', transform: 'translateX(-100px)' }),
             animate('.6s .2s ease-in-out', style({ opacity: '1', transform: 'translateX(0)' }))
+        ]),
+        transition(':leave', [
+            style({ opacity: '1', transform: 'translateX(0)' }),
+            animate('.1s .1s ease-in-out', style({ opacity: '0', transform: 'translateX(100px)' }))
         ])
     ]);
 }
