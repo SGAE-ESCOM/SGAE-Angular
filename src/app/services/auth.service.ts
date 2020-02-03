@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 import { auth } from 'firebase/app';
-
 import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import { UserInterface } from '@models/user';
 import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
-import { ToastrService } from 'ngx-toastr'
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +12,7 @@ import { ToastrService } from 'ngx-toastr'
 export class AuthService {
 
   public userData$: Observable<firebase.User>;
-  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore, private _toas: ToastrService) {
+  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.userData$ = afsAuth.authState;
   }
 
@@ -39,7 +36,6 @@ export class AuthService {
   }
 
   finalizarRegistroGoogle(usuario, infoComplemento){
-    this._toas.success("Hola desde el service");
     return this.updateInformacionUsuairo(usuario, infoComplemento);
   }
 
@@ -74,6 +70,6 @@ export class AuthService {
   }
 
   isUserAdmin(userUid) {
-    return this.afs.doc<UserInterface>(`users/${userUid}`).valueChanges();
+    return this.afs.doc<UsuarioInterface>(`users/${userUid}`).valueChanges();
   }
 }

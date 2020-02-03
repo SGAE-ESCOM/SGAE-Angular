@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChange
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum'
+import { OPC_ARCHIVO } from '@models/documentacion/enums/enum-tipo-archivo.enum'
 import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.enum'
 import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -14,12 +15,15 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class FormularioComponent implements OnInit, OnChanges {
 
   public readonly OPC = OPC_TIPO_DATO;
+  OPC_CAMPO = OPC_CAMPO;
+  OPC_ARCHIVO = OPC_ARCHIVO;
   objectKeys = Object.keys;
   fgFormulario: FormGroup;
 
   @Input() titulo = '';
   @Input() documentos: TipoDato[];
-  @Output() formulario = new EventEmitter<FormGroup>();
+  @Output() finalizarForm = new EventEmitter<FormGroup>();
+  @Output() guardarForm = new EventEmitter<FormGroup>();
 
   constructor(private fg: FormBuilder) {
     this.initForm();
@@ -80,12 +84,15 @@ export class FormularioComponent implements OnInit, OnChanges {
         break;
       }
     }
-    //console.log(`${ documento.subtipo } => ${ validadores }`);
     return new FormControl('', validadores);
   }
 
   enviarFormulario(formulario) {
-    this.formulario.emit(formulario);
+    this.finalizarForm.emit(formulario);
+  }
+
+  guardarFormulario(formulario){
+    this.guardarForm.emit(formulario);
   }
 
   handleUpload(event: any, documento) {
@@ -101,6 +108,13 @@ export class FormularioComponent implements OnInit, OnChanges {
         this.fgFormulario.get(documento).patchValue(jsonFile);
       };
     }
+  }
+
+  prueba(){
+    console.log("PREUBA BRO")
+    console.log("===>" + this.fgFormulario.get('Nickname').hasError('maxLength'))
+    console.log("===>" + this.fgFormulario.get('Nickname').hasError('maxlength'))
+    console.log("===>" + this.fgFormulario.get('Nickname').hasError('max'))
   }
 
 }

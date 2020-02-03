@@ -40,11 +40,11 @@ export class RegistroGoogleComponent implements OnInit {
   }
 
   onFinalizarRegistro(informacionComplemento) {
-    //let usuarioCompleto = { ... informacionComplemento, ... this.usuarioActual };
-    console.log( this.usuarioActual );
-    console.log( informacionComplemento );
     this._authService.finalizarRegistroGoogle(this.usuarioActual, informacionComplemento).then(
-      result => console.log(result)
-    ).catch( err => console.log(err) );
+      result => {
+        this._toas.success("Registro finalizado exitosamente");
+        this.router.navigate(['/app'])
+      }
+    ).catch( err => this._toas.error("Ha ocurrido un error") );
   }
 }

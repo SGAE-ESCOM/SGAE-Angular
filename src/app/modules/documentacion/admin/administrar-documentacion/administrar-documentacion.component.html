@@ -1,12 +1,12 @@
 <div class="container animated-row pb-4">
     <div class="row">
         <div class="col-12">
-            <p>Agrega la documentación que requerira para los aspirantes.</p>
+            <p>Agrega la documentación que requerida para los aspirantes.</p>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="card">
+            <div class="card no-border mat-elevation-z3">
                 <div class="card-header text-center">
                     <h5 class="m-0">Formulario para creacion de requisito</h5>
                 </div>
@@ -256,9 +256,9 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-footer text-muted text-center">
+                <!--<div class="card-footer text-muted text-center">
                     {{ fgGeneral.value | json }}
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -276,7 +276,7 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="table-responsive mat-elevation-z3">
+            <div class="table-responsive no-borde mat-elevation-z3">
                 <table mat-table class="table" [dataSource]="documentos" matSort>
                     <!-- Nombre Column -->
                     <ng-container matColumnDef="nombre">
@@ -337,12 +337,12 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
 
-                <mat-paginator [pageSizeOptions]="[10, 20]"></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[20, 30, 50]"></mat-paginator>
             </div>
         </div>
     </div>
     <br>
-    <app-formulario [titulo]='tituloVistaPrevia' (formulario)="estadoFormulario($event)" [documentos]="documentos.data">
+    <app-formulario [titulo]='tituloVistaPrevia' (finalizarForm)="finalizarFormulario($event)" (guardarForm)="guardarFormulario($event)" [documentos]="documentos.data">
     </app-formulario>
     <hr>
 </div>

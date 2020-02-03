@@ -35,7 +35,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   tituloVistaPrevia = 'Prueba de formulario para aspirante';
   listaRequisitos = [ //DEBUG
     { "nombre": "Nombres", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" } },
-    { "nombre": "Nickname", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": false, "valor": "a-zá-úA-ZÁ-Ú0-9" } },
+    { "nombre": "Nickname", "requerido": true, "tipo": "campo", "subtipo": "texto", "max":5, "expresionRegular": { "espacios": false, "valor": "a-zá-úA-ZÁ-Ú0-9" } },
     { "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18, "expresionRegular": { "espacios": false, "valor": "0-9A-ZÁ-Ú" } },
     { "nombre": "Edad", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18 },
     { "nombre": "Genero", "requerido": true, "tipo": "seleccion", "subtipo": "unica", "opciones": { "Hombre": "Hombre", "Mujer": "Mujer", "Otro": "Otro" } },
@@ -243,12 +243,16 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     });
   }
 
-  estadoFormulario(formularioRecivido: FormGroup) {
+  finalizarFormulario(formularioRecivido: FormGroup) {
     if (formularioRecivido.invalid) {
-      this.toast.error("El formulario no es valido");
+      this.toast.error("El formulario no es valido", "Mensaje de prueba");
     } else {
-      this.toast.success("El formulario es valido");
+      this.toast.success("El formulario es valido", "Mensaje de prueba");
     }
+  }
+
+  guardarFormulario(formularioRecivido: FormGroup) {
+    this.toast.info("Se ha guardado la información","Mensaje de prueba");
   }
 
   /* Getters de FormControls */
