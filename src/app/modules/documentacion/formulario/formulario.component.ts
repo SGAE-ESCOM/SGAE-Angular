@@ -109,12 +109,5 @@ export class FormularioComponent implements OnInit, OnChanges {
       };
     }
   }
-
-  prueba(){
-    console.log("PREUBA BRO")
-    console.log("===>" + this.fgFormulario.get('Nickname').hasError('maxLength'))
-    console.log("===>" + this.fgFormulario.get('Nickname').hasError('maxlength'))
-    console.log("===>" + this.fgFormulario.get('Nickname').hasError('max'))
-  }
-
+  
 }

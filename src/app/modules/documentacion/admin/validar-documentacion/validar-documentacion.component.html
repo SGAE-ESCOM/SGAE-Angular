@@ -3,21 +3,15 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-12 col-sm-3 offset-md-5 form-group">
-                    <mat-form-field>
-                        <mat-label>Filtrar por estado </mat-label>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Filtrar por estado del aspirante </mat-label>
                         <mat-select (selectionChange)="onChangeFiltroUsuario($event.value)" required>
                             <mat-option *ngFor="let filtro of filtros" [value]="filtro">
                                 {{ filtro | titlecase}}
                             </mat-option>
                         </mat-select>
-                        <mat-hint>Buscar por usuarios por estado</mat-hint>
                     </mat-form-field>
                 </div>
-                <!-- <div class="col-12 col-sm-3 offset-md-5 form-group">
-                    <select (selectionChange)="onChangeFiltroUsuario($event.value)" class="custom-select">
-                        <option *ngFor="let filtro of filtros" [value]="filtro"> {{ filtro | titlecase}} </option>
-                    </select>
-                </div> -->
                 <div class="col-12 col-sm-4">
                     <mat-form-field id="bucar" appearance="outline">
                         <mat-label>Buscar</mat-label>
@@ -53,7 +47,7 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                         <td mat-cell *matCellDef="let row">
                             <button type="button" mat-button color="info">
-                                <mat-icon>visibility</mat-icon>
+                                <mat-icon class="material-icons-outlined">visibility</mat-icon>
                             </button>
                         </td>
                     </ng-container>

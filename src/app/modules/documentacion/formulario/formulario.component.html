@@ -3,7 +3,6 @@
         <h5 class="m-0">{{titulo}}</h5>
     </div>
     <div class="card-body">
-        <button mat-button color="info" type="button" (click)="prueba()"> Prueba </button>
         <form [formGroup]="fgFormulario">
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-4" *ngFor="let documento of documentos" [ngSwitch]="documento.tipo">
