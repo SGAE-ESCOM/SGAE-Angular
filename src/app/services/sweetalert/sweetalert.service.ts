@@ -30,8 +30,20 @@ export class SweetalertService {
       icon: 'warning',
       showCancelButton: true,
       reverseButtons: true,
-      confirmButtonText: '<span class="mat-button-wrapper"> Sí, eliminar </span> <div class="mat-button-focus-overlay"></div>',
-      cancelButtonText: '<span class="mat-button-wrapper"> Cancelar </span> <div class="mat-button-focus-overlay"></div>'
+      cancelButtonText: '<span class="mat-button-wrapper"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
+      confirmButtonText: '<span class="mat-button-wrapper"> Sí, eliminar </span> <div class="mat-button-focus-overlay"></div>'
+    });
+  }
+
+  confirmarFinalizar(titulo: string, texto?: string){
+    return this.swalConfirmar.fire({
+      title: titulo,
+      text: texto,
+      icon: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      cancelButtonText: '<span class="mat-button-wrapper"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
+      confirmButtonText: '<span class="mat-button-wrapper"> Sí, finalizar </span> <div class="mat-button-focus-overlay"></div>'
     });
   }
 

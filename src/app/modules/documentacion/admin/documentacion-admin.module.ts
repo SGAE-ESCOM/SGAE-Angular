@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { DocumentacionAdminRoutingModule } from './documentacion-admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from "@template/angular-material.module";
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material';
@@ -26,6 +26,7 @@ import { FormularioModule } from '../formulario/formulario.module';
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
+    MatTooltipModule,
     MatSlideToggleModule,
     MatCheckboxModule,
     MatDatepickerModule,

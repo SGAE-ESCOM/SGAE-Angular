@@ -13,9 +13,11 @@ export const BC_HOME = new Breadcrumb(HOME);
 const DOCUMENTACION = new NavigationLink("Documentación", "/app/documentacion", "folder_open", "Recepción de documentos necesarios para el registro");
 const ADMINISTRAR_DOCUMENTACION = new NavigationLink("Administrar", "/app/documentacion/administrar", "folder_shared", "Agrega, edita o elimina los documentos necesarios para el registro");
 const VALIDAR_DOCUMENTACION = new NavigationLink("Validar", "/app/documentacion/validar", "check_box", "Valida la información de los aspirantes que ya han llenado su información");
+const SUBIR_DOCUMENTACION = new NavigationLink("Subir Documentación", "/app/documentacion/subir", "cloud_upload", "Llena información de los requisitos.");
 export const BC_DOCUMENTACION = new Breadcrumb(DOCUMENTACION, [HOME]);
 export const BC_ADMINISTRAR_DOCUMENTACION = new Breadcrumb(ADMINISTRAR_DOCUMENTACION, [HOME, DOCUMENTACION]);
 export const BC_VALIDAR_DOCUMENTACION = new Breadcrumb(VALIDAR_DOCUMENTACION, [HOME, DOCUMENTACION]);
+export const BC_SUBIR_DOCUMENTACION = new Breadcrumb(SUBIR_DOCUMENTACION, [HOME, DOCUMENTACION]);
 
 //EVALUACION
 const EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion", "spellcheck", "Simulador de exámen y publicación de resultados");
@@ -38,7 +40,7 @@ const USUARIOS = new NavigationLink("Gestión Usuarios", "/app/usuarios", "peopl
 export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
 
 //Nomenclatura de breadcrums BC_Name_Component
-export const linksAdmin: NavigationLink[] = [HOME, DOCUMENTACION, EVALUACION, CONVOCATORIA, PAGOS, ETAPAS, USUARIOS];
 export const linksPage: NavigationLink[] = [LANDINPAGE, LOGIN];
-export const linksDocumentacionAdmin: NavigationLink[] = [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION];
+export const linksAdmin: NavigationLink[] = [HOME, DOCUMENTACION, EVALUACION, CONVOCATORIA, PAGOS, ETAPAS, USUARIOS];
+export const linksDocumentacionAdmin: NavigationLink[] = [VALIDAR_DOCUMENTACION, SUBIR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION];
 export const linksDocumentacionAspirante: NavigationLink[] = [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION];
