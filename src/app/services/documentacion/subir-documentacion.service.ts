@@ -10,18 +10,32 @@ import { UsuarioInterface } from '@models/persona/usuario';
 })
 export class SubirDocumentacionService {
 
+  private documentacionCollection: AngularFirestoreCollection<any>;
   private documentosCollection: AngularFirestoreCollection<TipoDato>;
 
   constructor(private firestore: AngularFirestore) {
-    this.documentosCollection = firestore.collection<any>('Documentacion');
+    this.documentacionCollection = firestore.collection<any>('Documentacion');
+    this.documentosCollection = firestore.collection<TipoDato>('RecepcionDocumentos');
   }
 
   //CRUD
   saveDocumentacion(usuario: UsuarioInterface, documentacion: any) {
-    return this.documentosCollection.doc(usuario.id).set(documentacion);
+    return this.documentacionCollection.doc(usuario.id).set(documentacion);
   }
 
-  getDocumentos(): Observable<TipoDato[]> {
+  getDocumentacion(usuario: UsuarioInterface): Observable<any>{
+    return this.documentacionCollection.doc(usuario.id)
+    .snapshotChanges()
+    .pipe(
+      map(change =>{
+          //const data = change.payload.data() as any;
+          //const id = change.payload.id;
+          return change.payload.data() as any;
+      })
+    );
+  }
+
+  getRequisitos(): Observable<TipoDato[]> {
     return this.documentosCollection
       .snapshotChanges()
       .pipe(

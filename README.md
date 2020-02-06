@@ -154,7 +154,16 @@ Ejemplo:
 1. Mostrar los commit solo la descripcion `git log --oneline`.
 1. Mostrar los commit solo la descripcion con apuntador a HEAD y branch `git log --oneline --decorate`.
 1. Mostrar los commit de todas las ramas  `git log --all`.
-1. Fucionar una rama con otra. Cambiarse a la rama destino con `git checkout rama_destino` posteriormente usar `git merge nombre_rama_a_fucionar`. 
+1. Fucionar una rama con otra. Cambiarse a la rama destino con `git checkout rama_destino` posteriormente usar `git merge nombre_rama_a_fucionar`.
+1. Fucionar la rama master.
+```
+  git merge --no-ff --no-commit develope
+  git reset HEAD /src/app/app-routing.module.ts
+  git checkout -- /src/app/app-routing.module.ts
+  git reset HEAD /src/app/components/sidenav/
+  git checkout -- /src/app/components/sidenav/
+  git commit -m "merged <fecha-del-merge>"
+```
 
 # Actualizar dependencias y versión local de CLI-Angular
 

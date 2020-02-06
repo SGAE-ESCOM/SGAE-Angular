@@ -17,9 +17,10 @@ import { AdministrarDocumentacionComponent } from './administrar-documentacion/a
 import { ValidarDocumentacionComponent } from './validar-documentacion/validar-documentacion.component';
 import { PipesModule } from '@shared/pipes/pipes.module';
 import { FormularioModule } from '../formulario/formulario.module';
+import { ValidarAspiranteComponent } from './validar-aspirante/validar-aspirante.component';
 
 @NgModule({
-  declarations: [AdministrarDocumentacionComponent, ValidarDocumentacionComponent],
+  declarations: [AdministrarDocumentacionComponent, ValidarDocumentacionComponent, ValidarAspiranteComponent],
   imports: [
     CommonModule,
     DocumentacionAdminRoutingModule,

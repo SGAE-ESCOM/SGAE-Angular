@@ -22,6 +22,7 @@ export class FormularioComponent implements OnInit, OnChanges {
 
   @Input() titulo = '';
   @Input() documentos: TipoDato[];
+  @Input() valoresDefault: any;
   @Output() finalizarForm = new EventEmitter<FormGroup>();
   @Output() guardarForm = new EventEmitter<FormGroup>();
 
@@ -29,13 +30,18 @@ export class FormularioComponent implements OnInit, OnChanges {
     this.initForm();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initForm();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['documentos']) {
+    if (changes['documentos'] && this.documentos != null) {
       this.documentos.forEach(
         documento => this.fgFormulario.addControl(documento.nombre, this.validarFormulario(documento))
       );
+    }
+    if (changes['valoresDefault'] && this.valoresDefault != null) {
+      this.fgFormulario.setValue( this.valoresDefault );
     }
   }
 

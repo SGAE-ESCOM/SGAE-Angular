@@ -74,8 +74,8 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   }
 
   ngOnInit() {
-    //this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
-    this.documentos.data = this.listaRequisitos; // DEBUG
+    this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
+    //this.documentos.data = this.listaRequisitos; // DEBUG
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
     this.opcLetraMayuscula.valueChanges.subscribe(valor => valor ? this.addExpresion(this.REGEX_MAYUSCULAS) : this.removeExpresion(this.REGEX_MAYUSCULAS));
