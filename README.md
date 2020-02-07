@@ -8,6 +8,7 @@ Actualisado a la version 8.3.19.
 
 1. [Entorno](#entorno)
 1. [Uso del proyecto](#uso-del-proyecto)
+1. 
 1. [Guia de Github](#guia-de-Github)
 
 ## Entorno
@@ -107,15 +108,15 @@ Esta plantilla usa alias. Puedes editar nuevas alias en el archivo `tsconfig.jso
 
 ### Construccion del proyecto angular
 
-1. Ejecutar en terminal `ng build aot` construir el proyecto. The build artifacts will be stored in the `dist/` directory. Usa la bandera `--prod` para una contrucción para producción.
+1. Ejecutar en terminal `ng build --aot` construir el proyecto. The build artifacts will be stored in the `dist/` directory. Usa la bandera `--prod` para una contrucción para producción.
 1. Copiar el contenido de la carpeta `dist/` en `public/`.
 
 ### Deploy en Firebase Hosting
 
 1. Si no has instalado las herramientas de firebase usa `npm install -g firebase-tools`.
-2. Logear en la app con `firebase login`.
-3. Inicializar la acción `firebase init`.
-4. Desplegar `firebase deploy`.
+1. Logear en la app con `firebase login`.
+1. Inicializar la acción `firebase init`. Dentro de las opciones seleccionar la opción de `Hosting` con espacio, y después pulsar enter.
+1. Desplegar `firebase deploy`.
 
 ## Guia de Github
 
@@ -155,7 +156,17 @@ Ejemplo:
 1. Mostrar los commit solo la descripcion con apuntador a HEAD y branch `git log --oneline --decorate`.
 1. Mostrar los commit de todas las ramas  `git log --all`.
 1. Fucionar una rama con otra. Cambiarse a la rama destino con `git checkout rama_destino` posteriormente usar `git merge nombre_rama_a_fucionar`.
-1. Fucionar la rama master.
+1. Fucionar la rama master
+Windows
+```
+  git merge --no-ff --no-commit develope
+  git reset HEAD .\src\app\app-routing.module.ts
+  git checkout -- .\src\app\app-routing.module.ts
+  git reset HEAD .\src\app\components\sidenav\
+  git checkout -- .\src\app\components\sidenav\
+  git commit -m "merged <fecha-del-merge>"
+```
+Linux
 ```
   git merge --no-ff --no-commit develope
   git reset HEAD /src/app/app-routing.module.ts
