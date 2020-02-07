@@ -1,0 +1,15 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" *ngFor="let link of classReference.breadcrumb.links">
+            <a href="#" mat-button routerLink="{{link.url}}"> {{link.name}} </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <a mat-button disabled>{{ classReference.breadcrumb.title.name }}</a>
+        </li>
+    </ol>
+</nav>
+
+<div class="col-12">
+    <h3 class="title text-center">{{ classReference.breadcrumb.title.name }}</h3>
+</div>
+<hr>

@@ -1,0 +1,271 @@
+/* Palette color theme */
+@import "assets/scss/palette.scss";
+
+//Bootstrap imports
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap/scss/bootstrap-reboot.scss";
+@import "~bootstrap/scss/bootstrap-grid.scss";
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import "~@angular/material/theming";
+
+//This file override _theming.scss to use 'success' and 'danger'.
+//If you want to add new color suppor edit the next file.
+@import "assets/scss/override-angular.scss";
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$color-primary: mat-palette($md-matprimary);
+$color-success: mat-palette($md-matsuccess);
+$color-info: mat-palette($md-matinfo);
+$color-warning: mat-palette($md-matwarning);
+$color-danger: mat-palette($md-matdanger);
+$color-dark: mat-palette($md-matdark);
+
+// The warn palette is optional (defaults to red).
+$color-accent: mat-palette($md-matwarning);
+$color-warn: mat-palette($md-matdanger);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$angular-material-theme: mat-light-theme(
+  $color-primary,
+  $color-success,
+  $color-info,
+  $color-warning,
+  $color-danger,
+  $color-dark,
+  $color-accent,
+  $color-warn
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($angular-material-theme);
+
+// Styles for messages
+@import '~ngx-toastr/toastr-bs4-alert';
+
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
+/**************************************
+    FIX BOOTSTRAP STYLE PROBLEMS
+***************************************/
+.mat-button:focus,
+.mat-raised-button:focus,
+.mat-stroked-button:focus,
+.mat-flat-button:focus,
+.mat-icon-button:focus,
+.mat-fab:focus,
+.mat-mini-fab:focus {
+  outline: 0;
+}
+
+a.mat-button:hover,
+a.mat-raised-button:hover,
+a.mat-stroked-button:hover,
+a.mat-flat-button:hover,
+a.mat-icon-button:hover,
+a.mat-fab:hover,
+a.mat-mini-fab:hover {
+  text-decoration: dashed;
+}
+
+button:focus {
+  outline: none;
+}
+
+.bd-callout {
+  /*padding: 1.25rem;*/
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: 0.2rem;
+  @include border-radius;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  code {
+    @include border-radius;
+  }
+
+  + .bd-callout {
+    margin-top: -0.25rem;
+  }
+}
+
+th {
+  font-weight: 500;
+}
+// Variations
+@mixin bs-callout-variant($color) {
+  border-left-color: $color;
+
+  h4 {
+    color: $color;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .bd-callout-#{$color} {
+    @include bs-callout-variant($value);
+  }
+}
+
+/* Override Messages */
+
+#toast-container .ngx-toastr{
+  font-size: 15px;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+
+/**************************************
+    FIX ANGULAR MATERIAL STYLE PROBLEMS
+***************************************/
+.mat-form-field {
+  width: 100%;
+}
+
+/*.mat-form-field-subscript-wrapper {
+  position: static !important;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0.8em !important;
+}*/
+
+b {
+  font-weight: 550;
+}
+
+/* Arreglar tables */
+.table th, .table td {
+  padding: 0.75rem 24px !important;
+}
+
+.mat-header-cell {
+  font-size: 14px;
+}
+
+/* Override sweet alert */
+.swal2-title{
+  font-family: 'Roboto';
+  font-weight: 500 !important;
+  font-size: 1.5em !important;
+}
+
+.swal2-content{
+
+}
+
+/**************************************
+    TEMPLATE STYLES
+***************************************/
+
+.highlight {
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background-color: #f5f7f7;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Messages styles */
+.mat-snack-bar-container {
+  margin: 0px !important;
+  position: relative !important;
+  top: 58px;
+  left: -5px;
+
+  @each $color, $value in $theme-colors {
+    padding: 0 !important;
+    &.#{$color} {
+      @include alert-variant(
+        theme-color-level($color, $alert-bg-level),
+        theme-color-level($color, $alert-border-level),
+        theme-color-level($color, $alert-color-level)
+      );
+    }
+  }
+}
+
+.alert {
+  margin-bottom: 0 !important;
+}
+
+.no-border{
+  border: 0 !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(#cfcfcf, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #b5b5b5;
+}
+
+::-webkit-scrollbar-corner{
+  width: 0.1rem;
+}
+
+.fast {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animated-row {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  animation-name: fadeIn;
+}
