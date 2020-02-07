@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 export class SidenavComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
-  navigationLinks = linksAdmin; //CAMBIAR A linksPage EN PRODUCCION
-  isLoggedIn: boolean = true;  //CAMBIAR A false EN PRODUCCION
+  navigationLinks = linksPage; // linksAdmin; DEBUG //CAMBIAR A linksPage EN PRODUCCION
+  isLoggedIn: boolean =  false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
   
   private _mobileQueryListener: () => void;
 
@@ -33,7 +33,7 @@ export class SidenavComponent implements OnInit {
   shouldRun = true;
 
   ngOnInit() {
-    //this.getCurrentUser(); //QUITAR COMENTARIO EN PRODUCCION
+    this.getCurrentUser(); //QUITAR COMENTARIO EN PRODUCCION
   }
 
   getCurrentUser() {

@@ -111,19 +111,9 @@ Esta plantilla usa alias. Puedes editar nuevas alias en el archivo `tsconfig.jso
 1. `@breadcrumb/*` hace referencia al fichero `src/app/shared/breadcrumb/*`
 1. `@template/*` hace referencia al fichero `src/app/modules/template/*`
 
-## Deploy
+### Build
 
-### Construccion del proyecto angular
-
-1. Ejecutar en terminal `ng build aot` construir el proyecto. The build artifacts will be stored in the `dist/` directory. Usa la bandera `--prod` para una contrucción para producción.
-1. Copiar el contenido de la carpeta `dist/` en `public/`.
-
-### Deploy en Firebase Hosting
-
-1. Si no has instalado las herramientas de firebase usa `npm install -g firebase-tools`.
-2. Logear en la app con `firebase login`.
-3. Inicializar la acción `firebase init`.
-4. Desplegar `firebase deploy`.
+Ejecutar en terminal `ng build aot` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Guia de Github
 

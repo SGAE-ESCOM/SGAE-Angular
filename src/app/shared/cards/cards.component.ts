@@ -6,7 +6,7 @@ import { NavigationLink } from '@models/template/NavigationLink';
   selector: 'app-cards',
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss'],
-  animations: [ cardAnimation() ]
+  animations: [cardAnimation()]
 })
 export class CardsComponent implements OnInit {
 
