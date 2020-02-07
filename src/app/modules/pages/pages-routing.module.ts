@@ -7,7 +7,8 @@ import { RegistroComponent } from './registro/registro.component';
 const routes: Routes = [
   { path: '', component: LandingpageComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegistroComponent }
+  { path: 'registro', component: RegistroComponent },
+  { path: 'registro-goolge', loadChildren: () => import('./registro-google/registro-google.module').then( m => m.RegistroGoogleModule) }
 ];
 
 @NgModule({

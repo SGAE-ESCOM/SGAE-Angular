@@ -10,11 +10,15 @@ import { NavigationLink } from '@models/template/NavigationLink';
 })
 export class CardsComponent implements OnInit {
 
-  @Input() cards: NavigationLink;
+  @Input() cards: NavigationLink[];
   
   constructor() { }
 
   ngOnInit() {
+  }
+
+  trackById(index, item) {
+    return item.id;
   }
 
 }

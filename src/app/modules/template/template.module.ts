@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TemplateRoutingModule } from './template-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { AngularMaterialModule } from './angular-material.module';
-import { MaterialMessagesModule } from './material-messages.module';
 
 /* Components */
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,7 +18,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CommonModule,
     MatIconModule,
     AngularMaterialModule,
-    MaterialMessagesModule,
     TemplateRoutingModule,
     FormsModule,
     ReactiveFormsModule

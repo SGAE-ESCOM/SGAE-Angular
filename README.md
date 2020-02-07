@@ -111,9 +111,19 @@ Esta plantilla usa alias. Puedes editar nuevas alias en el archivo `tsconfig.jso
 1. `@breadcrumb/*` hace referencia al fichero `src/app/shared/breadcrumb/*`
 1. `@template/*` hace referencia al fichero `src/app/modules/template/*`
 
-### Build
+## Deploy
 
-Ejecutar en terminal `ng build aot` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Construccion del proyecto angular
+
+1. Ejecutar en terminal `ng build aot` construir el proyecto. The build artifacts will be stored in the `dist/` directory. Usa la bandera `--prod` para una contrucción para producción.
+1. Copiar el contenido de la carpeta `dist/` en `public/`.
+
+### Deploy en Firebase Hosting
+
+1. Si no has instalado las herramientas de firebase usa `npm install -g firebase-tools`.
+2. Logear en la app con `firebase login`.
+3. Inicializar la acción `firebase init`.
+4. Desplegar `firebase deploy`.
 
 ## Guia de Github
 
@@ -152,7 +162,16 @@ Ejemplo:
 1. Mostrar los commit solo la descripcion `git log --oneline`.
 1. Mostrar los commit solo la descripcion con apuntador a HEAD y branch `git log --oneline --decorate`.
 1. Mostrar los commit de todas las ramas  `git log --all`.
-1. Fucionar una rama con otra. Cambiarse a la rama destino con `git checkout rama_destino` posteriormente usar `git merge nombre_rama_a_fucionar`. 
+1. Fucionar una rama con otra. Cambiarse a la rama destino con `git checkout rama_destino` posteriormente usar `git merge nombre_rama_a_fucionar`.
+1. Fucionar la rama master.
+```
+  git merge --no-ff --no-commit develope
+  git reset HEAD /src/app/app-routing.module.ts
+  git checkout -- /src/app/app-routing.module.ts
+  git reset HEAD /src/app/components/sidenav/
+  git checkout -- /src/app/components/sidenav/
+  git commit -m "merged <fecha-del-merge>"
+```
 
 # Actualizar dependencias y versión local de CLI-Angular
 

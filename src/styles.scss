@@ -115,6 +115,9 @@ button:focus {
   }
 }
 
+th {
+  font-weight: 500;
+}
 // Variations
 @mixin bs-callout-variant($color) {
   border-left-color: $color;
@@ -165,6 +168,17 @@ b {
   font-size: 14px;
 }
 
+/* Override sweet alert */
+.swal2-title{
+  font-family: 'Roboto';
+  font-weight: 500 !important;
+  font-size: 1.5em !important;
+}
+
+.swal2-content{
+
+}
+
 /**************************************
     TEMPLATE STYLES
 ***************************************/
@@ -202,15 +216,21 @@ b {
   margin-bottom: 0 !important;
 }
 
+.no-border{
+  border: 0 !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  background-color: #fff;
+}
+
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   border-radius: 8px;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-  background-color: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -222,12 +242,8 @@ b {
   background-color: #b5b5b5;
 }
 
-/* Animations */
-.animated {
-  -webkit-animation-duration: 0.4s;
-  animation-duration: 0.4s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
+::-webkit-scrollbar-corner{
+  width: 0.1rem;
 }
 
 .fast {
@@ -246,7 +262,7 @@ b {
   }
 }
 
-.row {
+.animated-row {
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;
   -webkit-animation-fill-mode: both;

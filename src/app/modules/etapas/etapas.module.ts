@@ -6,6 +6,9 @@ import { AngularMaterialModule } from '@template/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 /* Components */
 import { MainEtapasComponent } from './main-etapas/main-etapas.component';
@@ -19,7 +22,11 @@ import { MainEtapasComponent } from './main-etapas/main-etapas.component';
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
-    MatStepperModule
-  ]
+    MatStepperModule,
+    MatDatepickerModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }]
 })
 export class EtapasModule { }
