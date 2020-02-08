@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Breadcrumb } from '@models/template/Breadcrumb';
 import { BC_HOME } from '@routing/ListLinks';
+import { fadeInDown } from '@shared/animations/router.animations';
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.scss']
+  styleUrls: ['./breadcrumb.component.scss'],
+  animations: [fadeInDown()]
 })
 export class BreadcrumbComponent {
 

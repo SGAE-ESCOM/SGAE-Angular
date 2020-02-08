@@ -5,8 +5,7 @@ import { AuthGuard } from "@shared/guards/auth.guard";
 const routes: Routes = [
   { path: '', loadChildren: () => import('./modules/pages/pages.module').then(m => m.PagesModule) },
   { 
-    path: 'app', loadChildren: () => import('./modules/template/template.module').then(m => m.TemplateModule),
-    
+    path: 'app', loadChildren: () => import('./modules/template/template.module').then(m => m.TemplateModule)
   },
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
