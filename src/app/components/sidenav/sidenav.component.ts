@@ -4,11 +4,13 @@ import { linksPage, linksAdmin } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
+import { fadeInDown } from '@shared/animations/router.animations';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+  styleUrls: ['./sidenav.component.scss'],
+  animations: [fadeInDown()]
 })
 export class SidenavComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb" @fadeInDown>
     <ol class="breadcrumb">
         <li class="breadcrumb-item" *ngFor="let link of classReference.breadcrumb.links">
             <a href="#" mat-button routerLink="{{link.url}}"> {{link.name}} </a>
@@ -8,8 +8,7 @@
         </li>
     </ol>
 </nav>
-
-<div class="col-12">
+<div class="col-12" @fadeInDown>
     <h3 class="title text-center">{{ classReference.breadcrumb.title.name }}</h3>
 </div>
 <hr>

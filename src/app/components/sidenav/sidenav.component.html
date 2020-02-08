@@ -9,7 +9,7 @@
       SGAE
     </h1>
     <span class="spacer"></span>
-    <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu">
+    <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu" @fadeInDown>
       <mat-icon class="material-icons-outlined">account_circle</mat-icon> Menu
     </button>
     <mat-menu #menu="matMenu">
@@ -21,10 +21,10 @@
       </button>
     </mat-menu>
     <ng-template #loggedOutOptions>
-      <a mat-button routerLink="">
+      <a mat-button routerLink="" @fadeInDown>
         <mat-icon>home</mat-icon> Inicio
       </a>
-      <a mat-button routerLink="login">
+      <a mat-button routerLink="login" @fadeInDown>
         <mat-icon class="material-icons-outlined">account_circle</mat-icon> Iniciar Sesión
       </a>
     </ng-template>
@@ -46,13 +46,10 @@
 
     <!-- MAIN CONTENT  -->
     <mat-sidenav-content>
-      <div *ngIf="isLoggedIn; else loggedOut" class="container pt-2 pb-4">
-        <app-breadcrumb></app-breadcrumb>
-        <ng-content class="animated pt-1"></ng-content>
+      <div [className]="isLoggedIn ? 'container pt-2 pb-4' : 'animated'">
+        <app-breadcrumb *ngIf="isLoggedIn"></app-breadcrumb>
+        <ng-content></ng-content>
       </div>
-      <ng-template #loggedOut>
-        <ng-content class="animated" ></ng-content>
-      </ng-template>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
