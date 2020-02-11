@@ -36,7 +36,7 @@
                                 El valor mínimo permitido es {{ documento.min }}
                             </mat-error>
                             <mat-error *ngIf="fgFormulario.get(documento.nombre).hasError('max')">
-                                El valor máximo permitido es {{ documento.min }}
+                                El valor máximo permitido es {{ documento.max }}
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -91,7 +91,7 @@
             </div>
         </form>
     </div>
-    <!-- <div class="card-footer text-muted text-center">
+    <div class="card-footer text-muted text-center">
         {{ fgFormulario.value | json }}
-    </div>-->
+    </div>
 </div>

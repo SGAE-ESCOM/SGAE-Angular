@@ -16,25 +16,26 @@ import { TipoDato } from '@models/documentacion/tipo-dato';
 })
 export class SubirDocumentacionComponent implements OnInit {
 
+  private usuario: UsuarioInterface;
   formularioRequisito: FormGroup;
+  requisitosValidos: any;
   tituloFormulario = 'Formulario de requisitos';
   requisitos: any[];
   requisitosGuardados: any;
-  private usuario: UsuarioInterface;
+  //getAtributos = Object.entries;
 
-  /*listaRequisitos = [ //DEBUG
-    { "id": "1", "nombre": "Nombres", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" } },
-    { "id": "2", "nombre": "Apellidos", "requerido": true, "tipo": "campo", "subtipo": "texto", "max": 50, "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" } },
-    { "id": "3", "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18, "expresionRegular": { "espacios": false, "valor": "0-9A-ZÁ-Ú" } },
-    { "id": "4", "nombre": "Edad", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18 },
-    { "id": "5", "nombre": "Género", "requerido": true, "tipo": "seleccion", "subtipo": "unica", "opciones": { "Hombre": "Hombre", "Mujer": "Mujer", "Otro": "Otro" } },
-    { "id": "6", "nombre": "Acta de Nacimiento PDF", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Archivos menores a 215 KB" },
-    { "id": "7", "nombre": "Fecha egreso Min-Max", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z" },
-  ];*/
+  listaRequisitos: Array<any> = [
+    { "id": "JqFqP8AhC4PmfY4zLRrp", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" }, "max": 50, "nombre": "Nombres", "requerido": true, "subtipo": "texto", "tipo": "campo" },
+    { "id": "9alPjAsQmUfUAVYqK6r2", "descripcion": "Sin tachaduras ni enmendaras", "nombre": "Acta de Nacimiento", "requerido": true, "subtipo": "pdf", "tipo": "archivo" },
+    { "id": "MOBJdY7vaN50cNUE962g", "min": 18, "nombre": "Edad", "requerido": true, "subtipo": "número", "tipo": "campo" },
+    { "id": "QKrSvodcGlR9QrnVw1Xo", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" }, "max": 50, "min": 10, "nombre": "Apellidos", "requerido": true, "subtipo": "texto", "tipo": "campo" },
+    { "id": "oUS6gWm9fItBkznvMFwU", "expresionRegular": { "espacios": false, "valor": "0-9A-ZÁ-Ú" }, "max": 18, "min": "18", "nombre": "CURP", "requerido": true, "subtipo": "texto", "tipo": "campo" },
+    { "id": "pgYSsgwBCrQh2CDK16ry", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú0-9" }, "max": 100, "min": 15, "nombre": "Calle", "requerido": true, "subtipo": "texto", "tipo": "campo" }
+  ];
 
   constructor(private _toast: ToastrService, private _swal: SweetalertService, private _subirDoc: SubirDocumentacionService) {
     BreadcrumbComponent.update(BC_SUBIR_DOCUMENTACION);
-    this.usuario  = { id: 'kigHobwLkyZNYs9BXx0mJnvgaFA3', roles: { aspirante: true } }; //DEBUG
+    this.usuario = { id: 'kigHobwLkyZNYs9BXx0mJnvgaFA3', roles: { aspirante: true } }; //DEBUG
   }
 
   /**
@@ -46,13 +47,9 @@ export class SubirDocumentacionComponent implements OnInit {
    */
   ngOnInit() {
     /* */
-    this._subirDoc.getRequisitos().subscribe( (documentos:TipoDato[]) => this.requisitos = documentos ); //PRODUCCION
+    this._subirDoc.getRequisitos().subscribe((documentos: TipoDato[]) => this.requisitos = documentos ); //PRODUCCION
     this._subirDoc.getDocumentacion(this.usuario).subscribe( requisito => {this.requisitosGuardados = requisito;}); //PRODUCCION
     //this.requisitos = this.listaRequisitos; //DEBUG
-  }
-
-  console(){
-    console.log(this.formularioRequisito );
   }
 
   //Peticiones REST
@@ -63,14 +60,15 @@ export class SubirDocumentacionComponent implements OnInit {
       this._swal.confirmarFinalizar('¿Deseas finalizar la documentación?');
     }
   }
-  
+
   guardarFormulario(formularioRecivido: FormGroup) {
-    let requisitosValidos = this.getRequisitosValidos(formularioRecivido);
-    if(Object.keys(requisitosValidos ).length )
-      this._subirDoc.saveDocumentacion( this.usuario, requisitosValidos)
+    this.requisitosValidos = this.getRequisitosValidos(formularioRecivido);
+    this.requisitosValidos = this.addAtributoValidacion(this.requisitosValidos);
+    if (Object.keys(this.requisitosValidos).length)
+      this._subirDoc.saveDocumentacion(this.usuario, this.requisitosValidos)
         .then(result => this._toast.info("La información se guardo correctamente"))
         .catch(error => this._toast.error(error));
-    else{
+    else {
       this._toast.error("Debe existir por lo menos un valor para guardar", "Valor invalido");
     }
   }
@@ -82,5 +80,13 @@ export class SubirDocumentacionComponent implements OnInit {
         listaRequisitosValidos[nombre] = requisito.value;
     }
     return listaRequisitosValidos;
+  }
+
+  private addAtributoValidacion(requisitos){
+    let requisitosConValidacion = {};
+    for (let [nombre, requisito] of Object.entries(requisitos)) {
+      requisitosConValidacion[nombre] = { valor: requisito, valido: false}
+    }
+    return requisitosConValidacion;
   }
 }

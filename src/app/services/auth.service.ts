@@ -11,6 +11,8 @@ import { UsuarioInterface } from '@models/persona/usuario';
 })
 export class AuthService {
 
+  private usuario:UsuarioInterface;
+
   public userData$: Observable<firebase.User>;
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.userData$ = afsAuth.authState;
@@ -71,5 +73,16 @@ export class AuthService {
 
   isUserAdmin(userUid) {
     return this.afs.doc<UsuarioInterface>(`users/${userUid}`).valueChanges();
+  }
+
+  /**
+   * 
+   */
+  getUsuario( uid ) {
+    return this.afs.doc(`Usuarios/${uid}`).valueChanges();
+  }
+
+  setUsuario(usuario){
+    this.usuario = usuario;
   }
 }

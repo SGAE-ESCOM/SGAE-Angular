@@ -10,7 +10,7 @@
     </h1>
     <span class="spacer"></span>
     <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu" @fadeInDown>
-      <mat-icon class="material-icons-outlined">account_circle</mat-icon> Menu
+      <mat-icon class="material-icons-outlined">account_circle</mat-icon> {{ usuario.nombres }}
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>

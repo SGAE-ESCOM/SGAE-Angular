@@ -1,0 +1,243 @@
+<form [formGroup]="fgGeneral" (ngSubmit)="agregarFormulario()">
+    <div class="row">
+        <div class="col-12 col-md-4 form-group">
+            <mat-form-field appearance="legacy">
+                <mat-label>Nombre del requisito</mat-label>
+                <input formControlName="nombre" matInput placeholder="Escribe nombre del requisito" required>
+                <mat-error *ngIf="fgGeneral.get('nombre').hasError('required')">Por favor escribe un
+                    nombre
+                </mat-error>
+                <mat-error *ngIf="fgGeneral.get('nombre').hasError('pattern')">El nombre no es valido
+                </mat-error>
+                <mat-icon matSuffix>playlist_add_check </mat-icon>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-3 form-group">
+            <mat-form-field>
+                <mat-label>Tipo de Dato</mat-label>
+                <mat-select formControlName="tipo" (selectionChange)="onChangeTipo($event.value)" required>
+                    <mat-option *ngFor="let tipoDato of tipos" [value]="tipoDato.nombre">
+                        {{tipoDato.nombre | titlecase}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="tipo.hasError('required')">Por favor elige una opción
+                </mat-error>
+                <mat-hint>{{ tipoDescripcion }}</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-3 form-group">
+            <mat-form-field>
+                <mat-label> Tipo de {{ tipo.value }}</mat-label>
+                <mat-select formControlName="subtipo" (selectionChange)="onChangeSubtipo($event.value)" required>
+                    <mat-option *ngFor="let subtipoDato of subtipos" [value]="subtipoDato.nombre">
+                        {{subtipoDato.nombre | titlecase}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="subtipo.hasError('required')">Por favor elige un tipo
+                    {{ tipo.value }}</mat-error>
+                <mat-hint>{{subtipo.value.descripcion}}</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-2 form-group">
+            <mat-label class="label-toggle"> Requerido </mat-label>
+            <section class="example-section">
+                <mat-slide-toggle formControlName="requerido" color="accent">
+                    {{ requerido.value | boolean }}</mat-slide-toggle>
+            </section>
+            <mat-hint class="toggle-hint">Es un requisito obligatorio</mat-hint>
+        </div>
+
+        <div class="col-12" *ngIf="tipoOpcion == OPC.CAMPO" @fadeInDown>
+            <div class="row">
+                <div class="col-12 col-xs-12 col-md-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <p *ngIf=" this.subtipo.value == ''"> Definir un máximo y mínimo </p>
+                            <p *ngIf="OPC_CAMPO.NUMERO == this.subtipo.value">Definir un valor mínimo y/o un
+                                valor máximo para establecer un rango de numeros.
+                            </p>
+                            <p *ngIf="OPC_CAMPO.TEXTO == this.subtipo.value">Definir el mínimo y/o máximo numero
+                                de caracteres que se podrán
+                                ingresar.
+                            </p>
+                        </div>
+                        <div class="col-6 col-md-2 pr-0 form-group">
+                            <mat-label class="label-toggle"> Mínimo </mat-label>
+                            <section class="example-section">
+                                <mat-slide-toggle [formControl]="opcMin" color="accent">
+                                    {{ opcMin.value | boolean }}
+                                </mat-slide-toggle>
+                            </section>
+                        </div>
+                        <div class="col-6 col-md-2 pr-0 form-group">
+                            <mat-label class="label-toggle"> Máximo </mat-label>
+                            <section class="example-section">
+                                <mat-slide-toggle [formControl]="opcMax" color="accent">
+                                    {{ opcMax.value | boolean }}
+                                </mat-slide-toggle>
+                            </section>
+                        </div>
+                        <div class="col-6 col-md-3 form-group" *ngIf="opcMin.value" @fadeInOutDown>
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Mínimo</mat-label>
+                                <input formControlName="min" type="number" matInput placeholder="Escribe un mínimo">
+                                <mat-icon matSuffix>trending_down</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6 col-md-3 form-group" *ngIf="opcMax.value" @fadeInOutDown>
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Máximo</mat-label>
+                                <input formControlName="max" type="number" matInput placeholder="Escribe un máximo">
+                                <mat-icon matSuffix>trending_up</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xs-12 col-md-6">
+                    <div class="row" *ngIf="OPC_CAMPO.TEXTO == this.subtipo.value" @fadeInOutDown>
+                        <div class="col-12">
+                            <p>Selecciona los caracteres que permitirá el campo.</p>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group form-check-inline">
+                                <mat-checkbox [formControl]="opcLetraMayuscula" class="example-margin">Letras
+                                    mayúsculas
+                                </mat-checkbox>
+                            </div>
+                            <div class="form-group form-check-inline">
+                                <mat-checkbox [formControl]="opcLetraMinuscula" class="example-margin">Letras
+                                    minúsculas
+                                </mat-checkbox>
+                            </div>
+                            <div class="form-group form-check-inline">
+                                <mat-checkbox [formControl]="opcNumeros" class="example-margin">
+                                    Numeros</mat-checkbox>
+                            </div>
+                            <div class="form-group form-check-inline">
+                                <mat-checkbox [formControl]="opcEspacios" class="example-margin">
+                                    Espacios</mat-checkbox>
+                            </div>
+                            <div class="form-group form-check-inline">
+                                <mat-checkbox [formControl]="opcExpresionRegular" class="example-margin">
+                                    Eexpresión regular</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="col-12" formGroupName="expresionRegular" *ngIf="this.opcExpresionRegular.value"
+                            @fadeInOutDown>
+                            <div class="form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Eexpresión regular</mat-label>
+                                    <input formControlName="valor" type="text" matInput
+                                        (keyup)="verificarRegex($event.target.value)"
+                                        placeholder="Escribe una expresión regular"
+                                        readonly="{{ !this.opcExpresionRegular.value }}" required>
+                                    <mat-icon matSuffix>tune</mat-icon>
+                                    <mat-error *ngIf="this.expresionValor.hasError('required')">
+                                        Por favor ingresa una expresión regular
+                                    </mat-error>
+                                    <mat-error *ngIf="this.expresionValor.hasError('incorrect')">
+                                        Expresión regular invalida
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" *ngIf="tipoOpcion == OPC.ARCHIVO" @fadeInDown>
+            <div class="row">
+                <div class="col-12">
+                    <p>Agrega una descripción si es que el nombre del archivo debe de llevar formato
+                        en
+                        especifico</p>
+                </div>
+                <div class="col-12 col-md-8 form-group">
+                    <mat-form-field class="form">
+                        <mat-label>Descripción</mat-label>
+                        <textarea matInput formControlName="descripcion"
+                            placeholder="Escribe una descripción o deja en blanco"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" *ngIf="tipoOpcion == OPC.SELECCION" @fadeInDown>
+            <div class="row">
+                <div class="col-12">
+                    <p>Da click en el botón de + para agregar una nueva opción. Si eliges selección
+                        debe
+                        existir
+                        por lo menos una opción para el requisito.</p>
+                </div>
+                <div class="col-12">
+                    <div class="row" *ngFor="let opcion of objectKeys(opciones.value); let i = index" @fadeInOutLeft>
+                        <div class="form-group col-4">
+                            <mat-form-field>
+                                <mat-label>{{ opcion }}</mat-label>
+                                <input matInput readonly>
+                                <mat-icon class="material-icons-outlined" matSuffix>check_box
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-4">
+                            <button mat-button color="danger" type="button" (click)="deleteOpcion(opcion)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <mat-form-field>
+                        <mat-label>Opcion</mat-label>
+                        <input matInput [formControl]="nombreOpcion" placeholder="Escribe nombre de la opción">
+                        <mat-icon class="material-icons-outlined" matSuffix>check_box_outline_blank
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <button type="button" (click)="addOpcion()" [disabled]="nombreOpcion.invalid" mat-mini-fab
+                        color="success">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" *ngIf="tipoOpcion == OPC.FECHA" @fadeInDown>
+            <div class="row">
+                <div class="col-12">
+                    <p>Define una fecha mínima y una fecha máxima para definir un rango.</p>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="fechaMin" [matDatepicker]="fechaMin"
+                            placeholder="Elige una fecha mínima" required>
+                        <mat-datepicker-toggle matSuffix [for]="fechaMin"></mat-datepicker-toggle>
+                        <mat-datepicker #fechaMin></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="fechaMax" [matDatepicker]="fechaMax"
+                            placeholder="Elige una decha máxima" required>
+                        <mat-datepicker-toggle matSuffix [for]="fechaMax"></mat-datepicker-toggle>
+                        <mat-datepicker #fechaMax></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <button mat-button color="success" type="submit"> Agregar <mat-icon class="material-icons-outlined">
+                    add</mat-icon> </button>
+        </div>
+    </div>
+</form>
+<div class="card-footer text-muted text-center">
+    {{ fgGeneral.value | json }}
+</div>

@@ -7,6 +7,11 @@ import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.e
 import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
+interface KeyValue{
+  key: any;
+  value: any;
+}
+
 @Component({
   selector: 'app-formulario',
   templateUrl: './formulario.component.html',
@@ -41,12 +46,18 @@ export class FormularioComponent implements OnInit, OnChanges {
       );
     }
     if (changes['valoresDefault'] && this.valoresDefault != null) {
-      this.fgFormulario.setValue( this.valoresDefault );
+      this.setValores();
     }
   }
 
   initForm() {
     this.fgFormulario = this.fg.group({});
+  }
+
+  private setValores(){
+    Object.entries(this.valoresDefault).forEach( ([nombre,requisito]:any) => {
+      this.fgFormulario.get(nombre).setValue(requisito.valor);
+    });
   }
 
   validarFormulario(documento): FormControl {

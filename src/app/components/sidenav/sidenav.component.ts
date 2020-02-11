@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { fadeInDown } from '@shared/animations/router.animations';
+import { UsuarioInterface } from '@models/persona/usuario';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,6 +15,7 @@ import { fadeInDown } from '@shared/animations/router.animations';
 })
 export class SidenavComponent implements OnInit {
 
+  usuario:UsuarioInterface = { nombres: '-', roles: null };
   mobileQuery: MediaQueryList;
   navigationLinks = linksAdmin; // linksAdmin; DEBUG //CAMBIAR A linksPage EN PRODUCCION
   isLoggedIn: boolean =  false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
@@ -35,14 +37,25 @@ export class SidenavComponent implements OnInit {
   shouldRun = true;
 
   ngOnInit() {
-    this.getCurrentUser(); //QUITAR COMENTARIO EN PRODUCCION
+    this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
   }
 
-  getCurrentUser() {
+  getUsuarioActual() {
     this._authService.isAuth().subscribe(auth => {
-      if (auth) {
-        this.isLoggedIn = true;
-        this.navigationLinks = linksAdmin;
+      if (auth) {        
+        this._authService.getUsuario(auth.uid).subscribe( (data:UsuarioInterface) => {
+          if(data){
+            this.usuario = data;
+            this.isLoggedIn = true;
+            this.navigationLinks = linksAdmin;
+          }else{
+            const infoUsuario = {
+              uid: auth.uid,
+              email: auth.email
+            }
+            this.router.navigate(['/registro-goolge'], { queryParams: { usuario: JSON.stringify(infoUsuario) } });
+          }
+        },error => {});
       } else {
         this.isLoggedIn = false;
         this.navigationLinks = linksPage;
