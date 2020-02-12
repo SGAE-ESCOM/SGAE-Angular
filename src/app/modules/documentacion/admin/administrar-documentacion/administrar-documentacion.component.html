@@ -11,7 +11,7 @@
                     <h5 class="m-0">Formulario para creacion de requisito</h5>
                 </div>
                 <div class="card-body">
-                <app-form-requisitos (agregarForm)="addTipoDato($event)"></app-form-requisitos>
+                <app-form-requisitos [tipoForm]="'agregar'" (enviarForm)="addTipoDato($event)"></app-form-requisitos>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from "@angular/material";
 import { MatSortModule } from "@angular/material";
 import { MatDialogModule } from '@angular/material/dialog';
-import { AdministrarDocumentacionComponent, ModalEditar } from './administrar-documentacion/administrar-documentacion.component';
+import { AdministrarDocumentacionComponent, ModalEditarRequisito } from './administrar-documentacion/administrar-documentacion.component';
 import { ValidarDocumentacionComponent } from './validar-documentacion/validar-documentacion.component';
 import { PipesModule } from '@shared/pipes/pipes.module';
 import { FormularioModule } from '../formulario/formulario.module';
@@ -22,7 +22,7 @@ import { ValidarAspiranteComponent } from './validar-aspirante/validar-aspirante
 import { FormRequisitosComponent } from './form-requisitos/form-requisitos.component';
 
 @NgModule({
-  declarations: [AdministrarDocumentacionComponent, ModalEditar, ValidarDocumentacionComponent, ValidarAspiranteComponent, FormRequisitosComponent],
+  declarations: [AdministrarDocumentacionComponent, ModalEditarRequisito, ValidarDocumentacionComponent, ValidarAspiranteComponent, FormRequisitosComponent],
   imports: [
     CommonModule,
     DocumentacionAdminRoutingModule,

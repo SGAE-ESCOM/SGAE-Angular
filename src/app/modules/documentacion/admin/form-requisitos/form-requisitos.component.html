@@ -1,4 +1,4 @@
-<form [formGroup]="fgGeneral" (ngSubmit)="agregarFormulario()">
+<form [formGroup]="fgGeneral" (ngSubmit)="enviarFormulario()">
     <div class="row">
         <div class="col-12 col-md-4 form-group">
             <mat-form-field appearance="legacy">
@@ -200,8 +200,8 @@
                     </mat-form-field>
                 </div>
                 <div class="col-4">
-                    <button type="button" (click)="addOpcion()" [disabled]="nombreOpcion.invalid" mat-mini-fab
-                        color="success">
+                    <button type="button" (click)="addOpcion(nombreOpcion.value)" [disabled]="nombreOpcion.invalid"
+                        mat-mini-fab color="success">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
@@ -231,13 +231,18 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 text-right">
+    <div class="row" [ngSwitch]="tipoForm">
+        <div *ngSwitchCase="'agregar'" class="col-12 text-right">
             <button mat-button color="success" type="submit"> Agregar <mat-icon class="material-icons-outlined">
                     add</mat-icon> </button>
         </div>
+        <div *ngSwitchCase="'editar'" class="col-12 text-right">
+            <button mat-button type="button" (click)="cancelar()"> Cancelar</button>
+            <button mat-button color="info" type="submit"> Guardar <mat-icon class="material-icons-outlined">
+                    save</mat-icon> </button>
+        </div>
     </div>
 </form>
-<div class="card-footer text-muted text-center">
+<!--<div class="card-footer text-muted text-center">
     {{ fgGeneral.value | json }}
-</div>
+</div>-->

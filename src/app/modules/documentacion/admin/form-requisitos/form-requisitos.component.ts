@@ -5,8 +5,6 @@ import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/animations/rou
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum';
-import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.enum';
-import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum';
 
 @Component({
   selector: 'app-form-requisitos',
@@ -17,7 +15,9 @@ import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum';
 export class FormRequisitosComponent implements OnInit, OnChanges {
 
   @Input() requisito: TipoDato;
-  @Output() agregarForm = new EventEmitter<FormGroup>();
+  @Input() tipoForm: string;
+  @Output() enviarForm = new EventEmitter<FormGroup>();
+  @Output() cancelarForm = new EventEmitter<any>();
 
   //Variables OPCIONES DISPONIBLES
   public readonly OPC = OPC_TIPO_DATO;
@@ -69,8 +69,12 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   }
 
   //Envio de datos
-  agregarFormulario() {
-    this.agregarForm.emit(this.fgGeneral);
+  enviarFormulario() {
+    this.enviarForm.emit(this.fgGeneral);
+  }
+
+  cancelar(){
+    this.cancelarForm.emit('');
   }
 
   //Funciones de control
@@ -96,8 +100,7 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
     arrayFormControl.forEach(formControl => { formControl.patchValue(false) });
   }
 
-  addOpcion() {
-    let nombre = this.nombreOpcion.value;
+  addOpcion(nombre) {
     this.opciones.addControl(nombre, new FormControl(nombre, Validators.required));
   }
 
@@ -207,22 +210,35 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
           this.opcMax.setValue(true); this.max.enable(); this.max.setValue(requisito.max);
         }
         if (requisito.subtipo == OPC_CAMPO.TEXTO) {
-          if (requisito.expresionRegular.espacios == null) {
-            //validadores.push(Validators.pattern(requisito.expresionRegular.valor));
-          } else {
-            if (requisito.expresionRegular.espacios) {
-              //validadores.push(Validators.pattern(`^[${requisito.expresionRegular.valor}]+( [${requisito.expresionRegular.valor}]+)*$`));
-            } else {
-              //validadores.push(Validators.pattern(`[${requisito.expresionRegular.valor}]+`));
+          this.offToggels([this.opcLetraMayuscula, this.opcLetraMinuscula, this.opcNumeros]);
+          let expresion: string = requisito.expresionRegular.valor;
+          if (requisito.expresionRegular.espacios != null) {
+            if (expresion.includes(this.REGEX_MAYUSCULAS)) {
+              this.opcLetraMayuscula.setValue(true);
+            } if (expresion.includes(this.REGEX_MINUSCULAS)) {
+              this.opcLetraMinuscula.setValue(true);
+            } if (expresion.includes(this.REGEX_NUMEROS)) {
+              this.opcNumeros.setValue(true);
             }
+            if (requisito.expresionRegular.espacios) {
+              this.opcEspacios.setValue(true);
+            }
+          } else {
+            this.disableControles([this.opcEspacios]);
+            this.opcExpresionRegular.setValue(true);
           }
+          this.expresionValor.setValue(expresion);
         }
         break;
       }
       case OPC_TIPO_DATO.ARCHIVO: {
+        this.descripcion.setValue(requisito.descripcion);
         break;
       }
       case OPC_TIPO_DATO.SELECCION: {
+        Object.entries(requisito.opciones).forEach( ([opcion, valor]) => {
+          this.addOpcion(opcion)
+        });
         break;
       }
       case OPC_TIPO_DATO.FECHA: {

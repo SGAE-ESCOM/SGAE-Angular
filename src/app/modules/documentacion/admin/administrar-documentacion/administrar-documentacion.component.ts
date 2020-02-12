@@ -73,7 +73,6 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   }
 
   deleteDocumento(elemento: any) {
-    console.log(elemento.id)
     this._swal.confirmarEliminar(`¿Deseas eliminar '${elemento.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
@@ -84,14 +83,18 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
       });
   }
 
-  updateDocumento(documento:TipoDato){
-    const dialogRef = this.dialog.open(ModalEditar, {
+  updateDocumento(documento: any) {
+    const dialogRef = this.dialog.open(ModalEditarRequisito, {
       width: '1000px',
       data: documento
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed ===> '+ result);
+      if (result != null) {
+        this._ads.updateDocumento(documento.id, result).then(data =>
+          this.toast.info("El requisito se actualizo exitosamente")
+        ).catch(error => this.toast.error(error))
+      }
     });
   }
 
@@ -120,14 +123,23 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   selector: 'modal-editar',
   templateUrl: './modal-editar.component.html',
 })
-export class ModalEditar {
+export class ModalEditarRequisito {
 
   constructor(
-    public dialogRef: MatDialogRef<ModalEditar>,
+    public dialogRef: MatDialogRef<ModalEditarRequisito>,
+    private _toast: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  enviarForm(requisito: FormGroup) {
+    if (requisito.valid)
+      this.dialogRef.close(requisito.value);
+    else {
+      this._toast.error("Llena todos los campos requeridos");
+    }
   }
 
 }

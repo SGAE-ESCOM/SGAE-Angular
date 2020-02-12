@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { linksPage, linksAdmin } from '@routing/ListLinks';
+import { linksPage, linksAdmin, linksRoot, linksAspirante } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
@@ -15,19 +15,19 @@ import { UsuarioInterface } from '@models/persona/usuario';
 })
 export class SidenavComponent implements OnInit {
 
-  usuario:UsuarioInterface = { nombres: '-', roles: null };
+  usuario: UsuarioInterface = { nombres: '-', roles: null };
   mobileQuery: MediaQueryList;
   navigationLinks = linksAdmin; // linksAdmin; DEBUG //CAMBIAR A linksPage EN PRODUCCION
-  isLoggedIn: boolean =  false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
-  
+  isLoggedIn: boolean = false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
+
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, 
-    private _authService:AuthService, private _afsAuth: AngularFireAuth,
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
+    private _authService: AuthService, private _afsAuth: AngularFireAuth,
     private router: Router) {
-      this.mobileQuery = media.matchMedia('(max-width: 600px)');
-      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-      this.mobileQuery.addListener(this._mobileQueryListener);
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnDestroy(): void {
@@ -42,20 +42,29 @@ export class SidenavComponent implements OnInit {
 
   getUsuarioActual() {
     this._authService.isAuth().subscribe(auth => {
-      if (auth) {        
-        this._authService.getUsuario(auth.uid).subscribe( (data:UsuarioInterface) => {
-          if(data){
+      if (auth) {
+        this._authService.getUsuario(auth.uid).subscribe((data: UsuarioInterface) => {
+          if (data) {
             this.usuario = data;
             this.isLoggedIn = true;
-            this.navigationLinks = linksAdmin;
-          }else{
+            console.log(data.roles);
+            if (data.roles.aspirante != null) {
+              this.navigationLinks = linksAspirante;
+            } else {
+              if (data.roles.root != null ) {
+                this.navigationLinks = linksRoot;
+              }else{
+                this.navigationLinks = linksAdmin;
+              }
+            }
+          } else {
             const infoUsuario = {
               uid: auth.uid,
               email: auth.email
             }
             this.router.navigate(['/registro-goolge'], { queryParams: { usuario: JSON.stringify(infoUsuario) } });
           }
-        },error => {});
+        }, error => { });
       } else {
         this.isLoggedIn = false;
         this.navigationLinks = linksPage;
@@ -67,5 +76,5 @@ export class SidenavComponent implements OnInit {
     this._afsAuth.auth.signOut();
     this.router.navigate(['']);
   }
-  
+
 }

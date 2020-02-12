@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <h1 mat-dialog-title>Editar '{{data.nombre}}' </h1>
+        <h1 class="text-center" mat-dialog-title>Editar '{{data.nombre}}' </h1>
         <hr>
         <div mat-dialog-content>
             <div class="row">
@@ -8,15 +8,7 @@
                     <p>Edita los datos del tipo de dato</p>
                 </div>
                 <div class="col-12">
-                    <app-form-requisitos [requisito]="data" ></app-form-requisitos>
-                </div>
-            </div>
-        </div>
-        <div mat-dialog-actions>
-            <div class="row">
-                <div class="col-12 text-right">
-                    <button mat-button color="danger" (click)="onNoClick()">Cancelar</button>
-                    <button mat-button color="info" [mat-dialog-close]="data" cdkFocusInitial>Sí, Editar</button>
+                    <app-form-requisitos [tipoForm]="'editar'" [requisito]="data" (cancelarForm)="onNoClick()" (enviarForm)="enviarForm($event)"></app-form-requisitos>
                 </div>
             </div>
         </div>

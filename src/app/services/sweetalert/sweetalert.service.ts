@@ -10,8 +10,8 @@ export class SweetalertService {
 
   private swalConfirmar = Swal.mixin({
     customClass: {
-      confirmButton: 'mat-button mat-button-base mat-success',
-      cancelButton: 'mat-button mat-button-base mat-danger'
+      confirmButton: 'mat-button mat-button-base mat-danger',
+      cancelButton: 'mat-button mat-button-base mat-success'
     },
     buttonsStyling: false
   });
@@ -56,3 +56,6 @@ export class SweetalertService {
   }
 
 }
+
+const admiracion = '<div class="swal2-icon swal2-warning swal2-icon-show" style="display: flex;"><div class="swal2-icon-content">!</div></div>';
+const success = '<div class="swal2-icon swal2-success swal2-icon-show" style="display: flex;"> <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div> <span class="swal2-success-line-tip"></span> <span class="swal2-success-line-long"></span> <div class="swal2-success-ring"></div> <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div> <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div> </div>';

@@ -6,9 +6,12 @@ const LANDINPAGE = new NavigationLink("Inicio", "", "home", "Landingpage");
 const LOGIN = new NavigationLink("Login", "/login", "account_circle", "Inicio de sesión");
 
 //HOME
-const HOME = new NavigationLink("Inicio", "/app/", "home", "Recepción de documentos necesarios para el registro");
+const HOME = new NavigationLink("Inicio", "/app/", "home");
 export const BC_HOME = new Breadcrumb(HOME);
 
+/**
+ * Lins para administradores
+ */
 //DOCUMENTACION
 const DOCUMENTACION = new NavigationLink("Documentación", "/app/documentacion", "folder_open", "Recepción de documentos necesarios para el registro");
 const ADMINISTRAR_DOCUMENTACION = new NavigationLink("Administrar", "/app/documentacion/administrar", "folder_shared", "Agrega, edita o elimina los documentos necesarios para el registro");
@@ -39,8 +42,14 @@ export const BC_ETAPAS = new Breadcrumb(ETAPAS, [HOME]);
 const USUARIOS = new NavigationLink("Gestión Usuarios", "/app/usuarios", "people_outline", "Generación los usuarios y grupos de la aplicacion");
 export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
 
+/**
+ * Links para los aspirantes
+ */
 //Nomenclatura de breadcrums BC_Name_Component
 export const linksPage: NavigationLink[] = [LANDINPAGE, LOGIN];
-export const linksAdmin: NavigationLink[] = [HOME, DOCUMENTACION, EVALUACION, CONVOCATORIA, PAGOS, ETAPAS, USUARIOS];
+export const linksAspirante: NavigationLink[] = [DOCUMENTACION, EVALUACION];
+export const linksAdmin: NavigationLink[] = [HOME, DOCUMENTACION, EVALUACION, PAGOS];
+export const linksRoot: NavigationLink[] = [HOME, DOCUMENTACION, EVALUACION, CONVOCATORIA, PAGOS, ETAPAS, USUARIOS];
+
 export const linksDocumentacionAdmin: NavigationLink[] = [VALIDAR_DOCUMENTACION, SUBIR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION];
-export const linksDocumentacionAspirante: NavigationLink[] = [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION];
+export const linksDocumentacionAspirante: NavigationLink[] = [SUBIR_DOCUMENTACION];

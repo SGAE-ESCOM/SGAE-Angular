@@ -3,26 +3,26 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UsuarioInterface } from '@models/persona/usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdministrarDocumentacionService {
 
-  private documentosCollection: AngularFirestoreCollection<TipoDato>;
+  private requisitosCollection: AngularFirestoreCollection<TipoDato>;
 
   constructor(private firestore: AngularFirestore) {
-    this.documentosCollection = firestore.collection<TipoDato>('RecepcionDocumentos');
+    this.requisitosCollection = firestore.collection<TipoDato>('RecepcionDocumentos');
   }
 
   //
-
   saveDocumento(documento: TipoDato) {
-    return this.documentosCollection.add(documento);
+    return this.requisitosCollection.add(documento);
   }
 
   getDocumentos(): Observable<TipoDato[]> {
-    return this.documentosCollection
+    return this.requisitosCollection
       .snapshotChanges()
       .pipe(
         map(actions =>
@@ -35,13 +35,17 @@ export class AdministrarDocumentacionService {
       );
   }
 
-  updateDocumento(documento: TipoDato) {
-    delete documento.nombre;
-    this.firestore.doc('policies/' + documento.nombre).update(documento);
+  updateDocumento(id:any, requisito: TipoDato) {
+    return this.requisitosCollection.doc(id).set(requisito);
   }
 
+  /*updateDocumento(documento: TipoDato) {
+    delete documento.nombre;
+    this.firestore.doc('policies/' + documento.nombre).update(documento);
+  }*/
+
   public deleteDocumento(id: any) {
-    return this.documentosCollection.doc(id).delete();
+    return this.requisitosCollection.doc(id).delete();
   }
 
 }
