@@ -17,8 +17,8 @@ export class SidenavComponent implements OnInit {
 
   usuario: UsuarioInterface = { nombres: '-', roles: null };
   mobileQuery: MediaQueryList;
-  navigationLinks = linksAdmin; // linksAdmin; DEBUG //CAMBIAR A linksPage EN PRODUCCION
-  isLoggedIn: boolean = false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
+  navigationLinks = linksRoot; // linksRoot; DEBUG //CAMBIAR A linksPage EN PRODUCCION
+  isLoggedIn: boolean = true; //true; DEBUG //CAMBIAR A false EN PRODUCCION
 
   private _mobileQueryListener: () => void;
 
@@ -37,7 +37,7 @@ export class SidenavComponent implements OnInit {
   shouldRun = true;
 
   ngOnInit() {
-    this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
+    //this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
   }
 
   getUsuarioActual() {

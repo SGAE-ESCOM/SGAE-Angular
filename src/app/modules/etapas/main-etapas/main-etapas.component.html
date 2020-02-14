@@ -1,6 +1,11 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+            <app-calendario></app-calendario>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <mat-vertical-stepper [disableRipple]="true" [linear]="isLinear" #stepper>
                 <!-- PASO 1 -->
                 <mat-step [stepControl]="fgEtapaUsar">

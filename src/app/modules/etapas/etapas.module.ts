@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EtapasRoutingModule } from './etapas-routing.module';
 import { AngularMaterialModule } from '@template/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarioModule } from '@shared/components/calendario/calendario.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -21,6 +22,7 @@ import { MainEtapasComponent } from './main-etapas/main-etapas.component';
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    CalendarioModule,
     DragDropModule,
     MatStepperModule,
     MatDatepickerModule,
