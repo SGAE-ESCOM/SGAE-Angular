@@ -11,7 +11,8 @@ interface CalendarData extends CalendarDataSourceElement {
 }
 
 interface Day {
-  name: string;
+  value: any;
+  class?: string;
 }
 
 interface Month {
@@ -21,6 +22,7 @@ interface Month {
   firstDate?: Date;
   currentDate?: Date;
   lastDate?: Date;
+  totalDays?: number;
 }
 
 @Component({
@@ -33,90 +35,203 @@ export class CalendarioComponent implements OnInit {
   /**
    * 
    */
+  currentYear = new Date().getFullYear();
   startYear = new Date().getFullYear();
   weekdays: string[] = ['Dom', 'Lun', 'Mar', 'Mir', 'Jue', 'Vie', 'Sab'];
-
   months: Month[] = [
     { name: 'Enero' }, { name: 'Febrero' }, { name: 'Marzo' }, { name: 'Abril' },
     { name: 'Mayo' }, { name: 'Junio' }, { name: 'Julio' }, { name: 'Agosto' },
     { name: 'Septiembre' }, { name: 'Octubre' }, { name: 'Noviembre' }, { name: 'Diciembre' }
   ];
 
-  elemento: any;
+  dataSource: CalendarData[] = [
+    {
+      id: 0,
+      name: 'Google I/O',
+      location: 'San Francisco, CA',
+      startDate: new Date(this.currentYear, 4, 14),
+      endDate: new Date(this.currentYear, 4, 29)
+    },
+    {
+      id: 1,
+      name: 'Microsoft Convergence',
+      location: 'New Orleans, LA',
+      startDate: new Date(this.currentYear, 2, 16),
+      endDate: new Date(this.currentYear, 2, 19)
+    },
+    {
+      id: 2,
+      name: 'Microsoft Build Developer Conference',
+      location: 'San Francisco, CA',
+      startDate: new Date(this.currentYear, 5, 29),
+      endDate: new Date(this.currentYear, 6, 15)
+    },
+    {
+      id: 3,
+      name: 'Microsoft Build Developer Conference',
+      location: 'San Francisco, CA',
+      startDate: new Date(this.currentYear, 7, 15),
+      endDate: new Date(this.currentYear, 10, 15)
+    },
+  ];
+
+  // Other variables 
+  element: any;
   calendarData: CalendarDataSourceElement[];
   opciones: CalendarOptions<CalendarData>;
   calendar: Calendar<CalendarData>;
 
-
   constructor(@Inject(DOCUMENT) document) {
+
   }
 
   ngOnInit(): void {
-    this.initMonths();
+    this.initCalendar();
+    this.renderData();
   }
 
-  initMonths() {
+  //
+  getTotalDays(firstDate: Date, lastDate: Date) {
+    let diffreenceTime = lastDate.getTime() - firstDate.getTime();
+    return diffreenceTime / (1000 * 3600 * 24);
+  }
+
+  selectEvent(startDate: Date, endDate: Date) {
+    let startDay = startDate.getDate();
+    let endDay = endDate.getDate();
+    let startMonth = startDate.getMonth();
+    let weeks: any[] = this.months[startMonth].weeks;
+    let rangeDays = endDay - startDay;
+    let firstDay = new Date(this.currentYear, startMonth, startDay);
+    let weekday = firstDay.getDay();
+    let startWeek;
+    for (let i = 0; i < weeks.length; i++) {
+      if (weeks[i][weekday].value == firstDay.getDate()) {
+        startWeek = i;
+        break;
+      }
+    }
+    //console.log(firstDay);
+    //console.log(weekday);
+    //console.log(startWeek);
+    console.log(weeks[startWeek][weekday]);
+    console.log('----' + rangeDays)
+    for (let currentWeek = startWeek, currentWeekday = weekday, r = 0; r <= rangeDays; r++ , currentWeekday++) {
+      weeks[currentWeek][currentWeekday].class = 'event';
+      if (currentWeekday == 6) {
+        currentWeekday = -1;
+        currentWeek++;
+      }
+    }
+  }
+
+  //Other implementation
+  renderData() {
+    if (this.dataSource != null && this.dataSource.length > 0) {
+      this.dataSource.forEach((data: CalendarData) => {
+        let startMonth = data.startDate.getMonth();
+        let endMonth = data.endDate.getMonth();
+        //Same month
+        console.log("==========>");
+        console.log(`startMonth ${startMonth}`);
+        //console.log(`startDay ${startDay}`);
+        console.log(`endMonth ${endMonth}`);
+        //console.log(`endDay ${endDay}`);
+
+        if (startMonth == endMonth) {
+          this.selectEvent(data.startDate, data.endDate);
+        } else {
+          let months = endMonth - startMonth;
+          console.log('Total Months = ' + months);
+          let currentMonth = data.startDate;
+          let endCurrentMonth = new Date(this.currentYear, startMonth, this.months[startMonth].totalDays );
+          for (let i = 0; i <= months; i++) {
+            //console.log(this.months[startMonth+i]);
+            console.log(currentMonth);
+            console.log(endCurrentMonth);
+            if (currentMonth.getMonth() != endMonth) {
+              this.selectEvent(currentMonth, endCurrentMonth);
+              currentMonth.setDate(endCurrentMonth.getDate()+1);
+              endCurrentMonth = new Date(this.currentYear, startMonth+i+1, this.months[startMonth+i+1].totalDays );
+            } else {
+              console.log(currentMonth);
+              console.log(data.endDate);
+              this.selectEvent(currentMonth, data.endDate);
+            }
+          }
+          //this.selectEvent(data.startDate, data.endDate);
+        }
+      });
+    }
+  }
+
+  initCalendar() {
     this.months.forEach((month, currentMonth) => {
       /*Logic*/
       let firstDate = new Date(this.startYear, currentMonth, 1);
       let lastDate = new Date(this.startYear, currentMonth + 1, 1);
-      let diffreenceTime = lastDate.getTime() - firstDate.getTime();
-      let totalDays = diffreenceTime / (1000 * 3600 * 24);
+      let totalDays = this.getTotalDays(firstDate, lastDate);
 
       //First week
-      let firstDay = firstDate.getDay();
+      var firstDay = firstDate.getDay();
       let currentDay = 1;
       let auxWeekday = 0;
       let weeks = [];
-      let week = [];
+      let week: Day[] = [];
 
-      console.log(`Total days: ${totalDays}`);
-      console.log(`First day: ${firstDay}`);
+      //console.log(`Total days: ${totalDays}`);
+      //console.log(`First day: ${firstDay}`);
       if (firstDay != 0) {
         for (let empty = 0; empty != firstDay; empty++) {
-          week.push('');
+          week.push({ value: '' });
         }
-        for (auxWeekday = firstDay; auxWeekday <= 6; auxWeekday++, currentDay++) {
-          week.push(currentDay);
+        for (auxWeekday = firstDay; auxWeekday <= 6; auxWeekday++ , currentDay++) {
+          week.push({ value: currentDay });
         }
         weeks.push(week);
         week = [];
       }
-      
-      console.log(`First day before first week: ${currentDay}`);
-      let beforeLastWeek = totalDays -7 ;
-      for(;currentDay <= beforeLastWeek; currentDay+=7){
+      //console.log(`First day before first week: ${currentDay}`);
+      let beforeLastWeek = totalDays - 7;
+      for (; currentDay <= beforeLastWeek; currentDay += 7) {
         weeks.push(
-          [(currentDay), (currentDay+1), (currentDay+2), (currentDay+3),
-           (currentDay+4), (currentDay+5), (currentDay+6),
+          [
+            { value: currentDay }, { value: currentDay + 1 }, { value: currentDay + 2 },
+            { value: currentDay + 3 }, { value: currentDay + 4 }, { value: currentDay + 5 },
+            { value: currentDay + 6 }
           ]
         )
       }
-
-      console.log(`First day before last week: ${currentDay}`);
-      if(currentDay <= totalDays){
+      //console.log(`First day before last week: ${currentDay}`);
+      if (currentDay <= totalDays) {
         let someDay = 0;
-        for (;currentDay <= totalDays; currentDay++) {
-          week.push(currentDay);
+        for (; currentDay <= totalDays; currentDay++) {
+          week.push({ value: currentDay });
           someDay++;
         }
-        someDay = 7-someDay;
+        someDay = 7 - someDay;
         for (let empty = 0; empty != someDay; empty++) {
-          week.push('');
+          week.push({ value: '' });
         }
         weeks.push(week);
         week = [];
       }
-      console.log("=========");
+      //console.log("=========");
       month['weekdays'] = this.weekdays;
       month['firstDate'] = firstDate;
       month['lastDate'] = lastDate;
       month['weeks'] = weeks;
+      month['totalDays'] = totalDays;
     });
   }
 
+
+
+  /**
+   * Other implementacion
+   */
   renderCalendar() {
-    this.elemento = document.getElementById('divCalendario');
+    this.element = document.getElementById('divCalendario');
     var currentYear = new Date().getFullYear();
 
     function editEvent(event) {
@@ -135,9 +250,9 @@ export class CalendarioComponent implements OnInit {
     }
 
 
-    this.calendar = new Calendar(this.elemento,
+    this.calendar = new Calendar(this.element,
       {
-        loadingTemplate: this.elemento,
+        loadingTemplate: this.element,
         enableContextMenu: true,
         enableRangeSelection: true,
         contextMenuItems: [
@@ -164,9 +279,6 @@ export class CalendarioComponent implements OnInit {
                 + '<div class="event-location">' + e.events[i].location + '</div>'
                 + '</div>';
             }
-            console.log("===========> ")
-            console.log(e);
-            console.log(e.element);
             /*$(e.element).popover({
               trigger: 'manual',
               container: 'body',

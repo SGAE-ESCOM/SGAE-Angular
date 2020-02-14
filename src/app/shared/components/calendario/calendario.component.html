@@ -4,12 +4,12 @@
             <table class="month">
                 <thead>
                     <tr><th class="month-title" colspan="7">{{month.name}}</th></tr>
-                    <tr><th *ngFor="let weekday of month.weekdays"> {{ weekday }} </th> </tr>
+                    <tr><th *ngFor="let weekday of weekdays"> {{ weekday }} </th> </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let week of month.weeks">
-                        <td  class="day" *ngFor="let day of week">
-                            <div class="day-content">{{ day }}</div>
+                        <td [className]="(day.class) != null ? 'day evento' : 'day'" *ngFor="let day of week">
+                            <div class="day-content">{{ day.value }}</div>
                         </td>
                     </tr>
                 </tbody>
