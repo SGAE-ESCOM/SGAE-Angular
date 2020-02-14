@@ -12,7 +12,7 @@ interface CalendarData extends CalendarDataSourceElement {
 
 interface Day {
   value: any;
-  class?: string;
+  idEvent?: string;
 }
 
 interface Month {
@@ -49,6 +49,7 @@ export class CalendarioComponent implements OnInit {
       id: 0,
       name: 'Google I/O',
       location: 'San Francisco, CA',
+      color: 'primary',
       startDate: new Date(this.currentYear, 4, 14),
       endDate: new Date(this.currentYear, 4, 29)
     },
@@ -56,6 +57,7 @@ export class CalendarioComponent implements OnInit {
       id: 1,
       name: 'Microsoft Convergence',
       location: 'New Orleans, LA',
+      color: 'success',
       startDate: new Date(this.currentYear, 2, 16),
       endDate: new Date(this.currentYear, 2, 19)
     },
@@ -63,6 +65,7 @@ export class CalendarioComponent implements OnInit {
       id: 2,
       name: 'Microsoft Build Developer Conference',
       location: 'San Francisco, CA',
+      color: 'warning',
       startDate: new Date(this.currentYear, 5, 29),
       endDate: new Date(this.currentYear, 6, 15)
     },
@@ -70,9 +73,10 @@ export class CalendarioComponent implements OnInit {
       id: 3,
       name: 'Microsoft Build Developer Conference',
       location: 'San Francisco, CA',
+      color: 'danger',
       startDate: new Date(this.currentYear, 7, 15),
       endDate: new Date(this.currentYear, 10, 15)
-    },
+    }
   ];
 
   // Other variables 
@@ -90,13 +94,17 @@ export class CalendarioComponent implements OnInit {
     this.renderData();
   }
 
+  getEvent(idEvent){
+    return this.dataSource.filter( event => event.id == idEvent )[0];
+  }
+
   //
   getTotalDays(firstDate: Date, lastDate: Date) {
     let diffreenceTime = lastDate.getTime() - firstDate.getTime();
     return diffreenceTime / (1000 * 3600 * 24);
   }
 
-  selectEvent(startDate: Date, endDate: Date) {
+  selectEvent(startDate: Date, endDate: Date, idEvent) {
     let startDay = startDate.getDate();
     let endDay = endDate.getDate();
     let startMonth = startDate.getMonth();
@@ -111,13 +119,8 @@ export class CalendarioComponent implements OnInit {
         break;
       }
     }
-    //console.log(firstDay);
-    //console.log(weekday);
-    //console.log(startWeek);
-    console.log(weeks[startWeek][weekday]);
-    console.log('----' + rangeDays)
     for (let currentWeek = startWeek, currentWeekday = weekday, r = 0; r <= rangeDays; r++ , currentWeekday++) {
-      weeks[currentWeek][currentWeekday].class = 'event';
+      weeks[currentWeek][currentWeekday].idEvent = idEvent;
       if (currentWeekday == 6) {
         currentWeekday = -1;
         currentWeek++;
@@ -132,34 +135,24 @@ export class CalendarioComponent implements OnInit {
         let startMonth = data.startDate.getMonth();
         let endMonth = data.endDate.getMonth();
         //Same month
-        console.log("==========>");
-        console.log(`startMonth ${startMonth}`);
-        //console.log(`startDay ${startDay}`);
-        console.log(`endMonth ${endMonth}`);
-        //console.log(`endDay ${endDay}`);
-
         if (startMonth == endMonth) {
-          this.selectEvent(data.startDate, data.endDate);
+          this.selectEvent(data.startDate, data.endDate, data.id);
         } else {
           let months = endMonth - startMonth;
           console.log('Total Months = ' + months);
           let currentMonth = data.startDate;
           let endCurrentMonth = new Date(this.currentYear, startMonth, this.months[startMonth].totalDays );
           for (let i = 0; i <= months; i++) {
-            //console.log(this.months[startMonth+i]);
-            console.log(currentMonth);
-            console.log(endCurrentMonth);
             if (currentMonth.getMonth() != endMonth) {
-              this.selectEvent(currentMonth, endCurrentMonth);
+              this.selectEvent(currentMonth, endCurrentMonth, data.id);
               currentMonth.setDate(endCurrentMonth.getDate()+1);
               endCurrentMonth = new Date(this.currentYear, startMonth+i+1, this.months[startMonth+i+1].totalDays );
             } else {
               console.log(currentMonth);
               console.log(data.endDate);
-              this.selectEvent(currentMonth, data.endDate);
+              this.selectEvent(currentMonth, data.endDate, data.id);
             }
           }
-          //this.selectEvent(data.startDate, data.endDate);
         }
       });
     }
