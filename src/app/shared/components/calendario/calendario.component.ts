@@ -49,7 +49,7 @@ export class CalendarioComponent implements OnInit {
       id: 0,
       name: 'Google I/O',
       location: 'San Francisco, CA',
-      color: 'primary',
+      color: 'info',
       startDate: new Date(this.currentYear, 4, 14),
       endDate: new Date(this.currentYear, 4, 29)
     },

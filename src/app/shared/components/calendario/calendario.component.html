@@ -8,8 +8,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let week of month.weeks">
-                        <td [className]="(day.idEvent) != null ? 'day evento-primary' : 'day'" *ngFor="let day of week">
-                            <div [matTooltip]="(day.idEvent) != null ? 'Evento' : ''" [matTooltipClass]="(day.idEvent) != null ? 'tooltip-primary' : ''" class="day-content">{{ day.value }}</div>
+                        <td [className]="(day.idEvent) != null ? 'day evento-'+getEvent(day.idEvent).color : 'day'" *ngFor="let day of week">
+                            <div [matTooltip]="(day.idEvent) != null ? getEvent(day.idEvent).name : ''" [matTooltipClass]="(day.idEvent) != null ? 'tooltip-primary' : ''" class="day-content">{{ day.value }}</div>
                         </td>
                     </tr>
                 </tbody>
@@ -17,4 +17,4 @@
         </div>
     </div>
 </div>
-<div id="divCalendario" #divCalendario></div>
+<!--<div id="divCalendario" #divCalendario></div>-->

@@ -22,16 +22,16 @@
   box-shadow: $primary 0px -4px 0px 0px inset;
 }
 .evento-sucess {
-  box-shadow: rgb(255, 74, 50) 0px -4px 0px 0px inset;
+  box-shadow: $success 0px -4px 0px 0px inset;
 }
 .evento-info {
-  box-shadow: rgb(255, 74, 50) 0px -4px 0px 0px inset;
+  box-shadow: $info 0px -4px 0px 0px inset;
 }
 .evento-warning {
-  box-shadow: rgb(255, 74, 50) 0px -4px 0px 0px inset;
+  box-shadow: $warning 0px -4px 0px 0px inset;
 }
 .evento-danger {
-  box-shadow: rgb(255, 74, 50) 0px -4px 0px 0px inset;
+  box-shadow: $danger 0px -4px 0px 0px inset;
 }
 
 .tooltip-primary {

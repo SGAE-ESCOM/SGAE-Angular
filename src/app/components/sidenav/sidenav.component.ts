@@ -37,21 +37,21 @@ export class SidenavComponent implements OnInit {
   shouldRun = true;
 
   ngOnInit() {
-    //this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
+    this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
   }
 
   getUsuarioActual() {
     this._authService.isAuth().subscribe(auth => {
       if (auth) {
-        this._authService.getUsuario(auth.uid).subscribe((data: UsuarioInterface) => {
-          if (data) {
-            this.usuario = data;
+        this._authService.getUsuario(auth.uid).subscribe((usaurio: UsuarioInterface) => {
+          if (usaurio) {
+            this.usuario = usaurio;
             this.isLoggedIn = true;
-            console.log(data.roles);
-            if (data.roles.aspirante != null) {
+            console.log(usaurio.roles);
+            if (usaurio.roles.aspirante != null) {
               this.navigationLinks = linksAspirante;
             } else {
-              if (data.roles.root != null ) {
+              if (usaurio.roles.root != null ) {
                 this.navigationLinks = linksRoot;
               }else{
                 this.navigationLinks = linksAdmin;
