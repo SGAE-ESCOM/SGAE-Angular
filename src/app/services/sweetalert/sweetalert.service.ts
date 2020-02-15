@@ -8,10 +8,18 @@ export class SweetalertService {
   
   constructor() { }
 
-  private swalConfirmar = Swal.mixin({
+  private swalEliminar = Swal.mixin({
     customClass: {
       confirmButton: 'mat-button mat-button-base mat-danger',
       cancelButton: 'mat-button mat-button-base mat-success'
+    },
+    buttonsStyling: false
+  });
+
+  private swalConfirmar = Swal.mixin({
+    customClass: {
+      confirmButton: 'mat-button mat-button-base mat-success',
+      cancelButton: 'mat-button mat-button-base mat-danger'
     },
     buttonsStyling: false
   });
@@ -24,7 +32,7 @@ export class SweetalertService {
   });
 
   confirmarEliminar(titulo: string, texto?: string){
-    return this.swalConfirmar.fire({
+    return this.swalEliminar.fire({
       title: titulo,
       text: texto,
       icon: 'warning',

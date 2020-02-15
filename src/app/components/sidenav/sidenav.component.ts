@@ -37,7 +37,7 @@ export class SidenavComponent implements OnInit {
   shouldRun = true;
 
   ngOnInit() {
-    this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
+    //this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
   }
 
   getUsuarioActual() {
