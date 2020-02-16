@@ -9,7 +9,7 @@
                         <p>Selecciona las etapas que tendra el proceso de admisión.</p>
                     </div>
                     <form [formGroup]="fgEtapaUsar">
-                        <div class="col-12 col-sm-6 col-md-6">
+                        <div class="col-12 col-sm-12 col-md-6">
                             <div class="card border-info">
                                 <div class="card-header bg-info text-white">
                                     <b>Etapas</b>
@@ -22,7 +22,7 @@
                                 </mat-selection-list>
                             </div>
                         </div>
-                        <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
+                        <div class="col-12 col-sm-12 col-md-6 text-right pt-2">
                             <button mat-flat-button color="info" (click)="definirEtapas()"
                                 [disabled]="fgEtapaUsar.invalid" matStepperNext>Siguiente<mat-icon>navigate_next
                                 </mat-icon></button>
@@ -35,7 +35,7 @@
                     <div class="col-12">
                         <p>Arrastra y ordena las etapas según el orden en que quieras que se lleven a cabo.</p>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-6 py-1">
+                    <div class="col-12 col-sm-12 col-md-6 py-1">
                         <div class="card border-info">
                             <div class="card-header bg-info text-white">
                                 Etapas
@@ -46,7 +46,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
+                    <div class="col-12 col-sm-12 col-md-6 text-right pt-2">
                         <button mat-flat-button matStepperPrevious>
                             <mat-icon> navigate_before </mat-icon> Anterior
                         </button>
@@ -58,64 +58,70 @@
         </div>
     </div>
 
-    <div class="row my-1">
-        <!-- PASO 3 -->
+    <div class="row">
         <div class="col-12">
-            <div class="col-12">
-                <p>Define las fechas de inicio y termino para cada etapa.</p>
+            <div class="card no-border mat-elevation-z3">
+                <div class="card-header text-center">
+                    <h5 class="m-0">Formulario para definir etapas</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="fgEtapasFechas">
+                        <div class="row" *ngFor="let etapa of etapas; let i = index" formGroupName="{{etapa.valor}}">
+                            <hr>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <mat-label>{{etapa.nombre}}</mat-label>
+                                    <input matInput formControlName="nombre" placeholder="Filtrar por palabra" readonly>
+                                    <mat-icon class="material-icons-outlined" matSuffix>assignment</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <input matInput formControlName="fechaInicio" [min]="fechaActual"
+                                        [matDatepicker]="fechaInicio" placeholder="Elige una fecha de inicio" required>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaInicio">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaInicio></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <input matInput formControlName="fechaTermino"
+                                        [min]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value"
+                                        [matDatepicker]="fechaTermino" placeholder="Elige una fecha de termino"
+                                        required>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaTermino">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaTermino></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <mat-label>Color</mat-label>
+                                    <mat-select formControlName="color">
+                                        <mat-option *ngFor="let color of colores" [value]="color.valor">
+                                            {{color.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="material-icons-outlined" matSuffix>color_lens</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right pt-2">
+                            <button mat-flat-button>
+                                <mat-icon> navigate_before </mat-icon> Anterior
+                            </button>
+                            <button mat-flat-button color="info" (click)="saveFechas()">Definir <mat-icon>navigate_next
+                                </mat-icon></button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form [formGroup]="fgEtapasFechas">
-                <div class="col-12 py-1">
-                    <div class="table-responsive mat-elevation-z3">
-                        <table class="table">
-                            <thead class="bg-info text-white">
-                                <tr>
-                                    <th scope="col">Etapa</th>
-                                    <th scope="col">Fecha de Inicio</th>
-                                    <th scope="col">Fecha de Termino</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let etapa of etapas; let i = index" formGroupName="{{etapa.valor}}">
-                                    <td class="align-items-center"> {{ etapa.nombre }} </td>
-                                    <td>
-                                        <mat-form-field>
-                                            <input matInput formControlName="fechaInicio" [min]="fechaActual"
-                                                [matDatepicker]="fechaInicio"
-                                                placeholder="Elige una fecha de inicio" required>
-                                            <mat-datepicker-toggle matSuffix [for]="fechaInicio">
-                                            </mat-datepicker-toggle>
-                                            <mat-datepicker #fechaInicio></mat-datepicker>
-                                        </mat-form-field>
-                                    </td>
-                                    <td>
-                                        <mat-form-field>
-                                            <input matInput formControlName="fechaTermino"
-                                                [min]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value"
-                                                [matDatepicker]="fechaTermino"
-                                                placeholder="Elige una fecha de termino" required>
-                                            <mat-datepicker-toggle matSuffix [for]="fechaTermino">
-                                            </mat-datepicker-toggle>
-                                            <mat-datepicker #fechaTermino></mat-datepicker>
-                                        </mat-form-field>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-8 col-sm-6 col-md-6 text-right pt-2">
-                    <button mat-flat-button>
-                        <mat-icon> navigate_before </mat-icon> Anterior
-                    </button>
-                    <button mat-flat-button color="info" (click)="saveFechas()" >Definir <mat-icon>navigate_next
-                        </mat-icon></button>
-                </div>
-            </form>
-            
         </div>
         <div class="col-12">
             <app-calendario [dataSource]="dataSource"></app-calendario>
         </div>
     </div>
+
 </div>

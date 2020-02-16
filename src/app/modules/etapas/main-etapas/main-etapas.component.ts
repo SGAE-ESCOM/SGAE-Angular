@@ -23,6 +23,7 @@ export class MainEtapasComponent implements OnInit {
   fechaActual = new Date();
   dataSource: CalendarData[];
   etapas = [];
+  colores = [{nombre: 'Verde', valor: 'success' }, {nombre: 'Azul', valor: 'info' }, {nombre: 'Amarillo', valor: 'warning' }, {nombre: 'Rojo', valor: 'danger' }];
 
   constructor(private _fb: FormBuilder, private _toast: ToastrService, private _swal: SweetalertService) {
     BreadcrumbComponent.update(BC_ETAPAS);
@@ -33,15 +34,15 @@ export class MainEtapasComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.fechaActual);
   }
 
   definirFechas(){
     this.fgEtapasFechas = new FormGroup({});
     this.etapas.forEach(etapa => this.fgEtapasFechas.addControl( etapa.valor, this._fb.group({
+      nombre: [etapa.valor],
       fechaInicio: ['', Validators.required],
       fechaTermino: ['', Validators.required],
-      nombre: [etapa.valor]
+      color: ['', Validators.required],
     })));
     
   }
@@ -64,7 +65,7 @@ export class MainEtapasComponent implements OnInit {
           name: valor.nombre,
           startDate: valor.fechaInicio,
           endDate: valor.fechaTermino,
-          color: 'info'
+          color: valor.color
         }
       });
       console.log(this.dataSource);

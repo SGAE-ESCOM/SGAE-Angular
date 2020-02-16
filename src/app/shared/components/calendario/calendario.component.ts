@@ -13,13 +13,13 @@ interface Month {
   totalDays?: number;
 }
 
-const ESPACES =  [
-  {add: (week) => { week.push({value:''})}}, 
-  {add: (week) => { week.push({value:''}); week.push({value:''})}}, 
-  {add: (week) => { week.push({value:''}); week.push({value:''}); week.push({value:''})}}, 
-  {add: (week) => { week.push({value:''}); week.push({value:''}); week.push({value:''}); week.push({value:''})}},
-  {add: (week) => { week.push({value:''}); week.push({value:''}); week.push({value:''}); week.push({value:''}); week.push({value:''})}},
-  {add: (week) => { week.push({value:''}); week.push({value:''}); week.push({value:''}); week.push({value:''}); week.push({value:''}); week.push({value:''})}},
+const ESPACES = [
+  { add: (week) => { week.push({ value: '' }) } },
+  { add: (week) => { week.push({ value: '' }); week.push({ value: '' }) } },
+  { add: (week) => { week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }) } },
+  { add: (week) => { week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }) } },
+  { add: (week) => { week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }) } },
+  { add: (week) => { week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }); week.push({ value: '' }) } },
 ]
 
 @Component({
@@ -27,7 +27,7 @@ const ESPACES =  [
   templateUrl: './calendario.component.html',
   styleUrls: ['./calendario.component.scss']
 })
-export class CalendarioComponent implements OnInit, OnChanges{
+export class CalendarioComponent implements OnInit, OnChanges {
 
   currentYear = new Date().getFullYear();
   weekdays: string[] = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
@@ -39,15 +39,15 @@ export class CalendarioComponent implements OnInit, OnChanges{
 
   @Input() dataSource: CalendarData[];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.initCalendar();
     this.renderData();
   }
 
-  ngOnChanges(changes: SimpleChanges) : void {
-    if(changes['dataSource']  && this.dataSource != null ){
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['dataSource'] && this.dataSource != null) {
       this.initCalendar();
       this.renderData();
     }
@@ -117,22 +117,22 @@ export class CalendarioComponent implements OnInit, OnChanges{
       /*Logic*/
       let firstDate = new Date(this.currentYear, currentMonth, 1);
       let lastDate = new Date(this.currentYear, currentMonth + 1, 1);
-      let totalDays = this.getTotalDays(firstDate, lastDate);
+      let totalDays = Math.round(this.getTotalDays(firstDate, lastDate));
       //First week
       var firstDay = firstDate.getDay();
       let currentDay = 1;
       let weeks = [];
       let week: Day[] = [];
-      
+
       if (firstDay != 0) {
-        ESPACES[firstDay-1].add(week);
+        ESPACES[firstDay - 1].add(week);
         for (let auxWeekday = firstDay; auxWeekday <= 6; auxWeekday++ , currentDay++) {
           week.push({ value: currentDay });
         }
         weeks.push(week);
         week = [];
       }
-      
+
       let beforeLastWeek = totalDays - 7;
       for (; currentDay <= beforeLastWeek; currentDay += 7) {
         weeks.push(
@@ -143,12 +143,17 @@ export class CalendarioComponent implements OnInit, OnChanges{
           ]
         )
       }
-      
+
       if (currentDay <= totalDays) {
         for (; currentDay <= totalDays; currentDay++)
           week.push({ value: currentDay });
         weeks.push(week);
-      }      
+      }
+      //DEBUG
+      //console.log("================>")
+      //console.log(`totalDays ${totalDays}`);
+      //console.log(`currentDay ${currentDay}`);
+      //console.log(weeks);
       month['weeks'] = weeks;
       month['totalDays'] = totalDays;
     });

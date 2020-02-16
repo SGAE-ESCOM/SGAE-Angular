@@ -36,80 +36,103 @@
   padding-bottom: 1.8rem;
 }
 
-.mat-calendar-table-header-divider {
-  height: 1px !important;
-  border-top: 1px rgba(0, 0, 0, 0.12) solid !important;
-  height: 1px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Main */
+/* New Theme */
 .calendar {
-  table {
+  table.calendar-table {
     margin: auto;
+
     td,
     th {
       text-align: center;
-      width: 20px;
-      height: 20px;
-      font-size: 13px;
+      width: 20px !important;
+      height: 24px !important;
+      font-size: 13px !important;
     }
 
-    &.mat-calendar-table {
-      th {
-        &.month-title {
-          font-size: 16px !important;
-          color: rgba(0, 0, 0, 0.87);
-        }
+    .calendar-header {
+      .month-title {
+        font-size: 16px !important;
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      .day-header {
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.38);
+      }
+
+      .calendar-header-divider {
+        height: 1px !important;
+        border-top: 1px rgba(0, 0, 0, 0.12) solid !important;
+        height: 1px !important;
+        margin: 0 !important;
+        padding-bottom: 7px !important;
       }
     }
 
-    tr td.mat-calendar-body-cell {
+    .calendar-body {
       padding: 0;
 
-      .mat-calendar-body-cell-content {
+      .calendar-body-cell-content {
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius: 20px;
         cursor: pointer;
         padding: 4px 5px;
       }
-    }
-  }
 
-  .year-title {
-    font-weight: bold;
-    text-align: center;
-    padding: 8px 0;
+      .calendar-body-cell-content:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
   }
 }
 
 @media screen and (max-width: 992px) /* Tablet */ {
+  /* New Theme */
   .calendar {
-    table {
+    table.calendar-table {
       td,
       th {
-        width: 12px;
-        height: 12px;
-        font-size: 11px;
+        width: 11px !important;
+        height: 10px !important;
+        font-size: 11px !important;
       }
-
-      tr td.mat-calendar-body-cell .mat-calendar-body-cell-content {
-        padding: 3px 4px !important;
+      
+      .calendar-body .calendar-body-cell-content {
+        padding: 3px 3px;
       }
-    }
+    } 
   }
 }
 
 @media screen and (max-width: 767px) /* Mobile */ {
-  .calendar table tr td.mat-calendar-body-cell .mat-calendar-body-cell-content {
-    padding: 3px 3px !important;
+  .calendar {
+    table.calendar-table {
+      td,
+      th {
+        width: 11px !important;
+        height: 10px !important;
+        font-size: 11px !important;
+      }
+      
+      .calendar-body .calendar-body-cell-content {
+        padding: 3px 2px;
+      }
+    } 
   }
 }
 
 @media screen and (max-width: 500px) /* Mobile */ {
-  .calendar table tr td.mat-calendar-body-cell .mat-calendar-body-cell-content {
-    padding: 2px 3px !important;
+  .calendar {
+    table.calendar-table {
+      td,
+      th {
+        font-size: 10px !important;
+      }
+      
+      .calendar-body .calendar-body-cell-content {
+        padding: 2px 1px;
+      }
+    } 
   }
 }

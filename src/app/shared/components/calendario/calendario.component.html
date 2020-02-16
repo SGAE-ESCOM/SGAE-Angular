@@ -4,10 +4,11 @@
     </div>
     <div class="card-body">
         <div class="calendar row">
-            <div class="mat-calendar col-6 col-sm-4 col-md-3 col-lg-3" *ngFor="let month of months">
-                <div class="mat-calendar-content">
-                    <table class="mat-calendar-table">
-                        <thead class="mat-calendar-table-header">
+            <!-- New Theme -->
+            <div class="calendar col-6 col-sm-4 col-md-3 col-lg-3" *ngFor="let month of months">
+                <div class="calendar-content">
+                    <table class="calendar-table">
+                        <thead class="calendar-header">
                             <tr>
                                 <th class="month-title" colspan="7">{{month.name}}</th>
                             </tr>
@@ -15,16 +16,16 @@
                                 <th class="day-header" *ngFor="let weekday of weekdays"> {{ weekday }} </th>
                             </tr>
                             <tr>
-                                <th colspan="7" aria-hidden="true" class="mat-calendar-table-header-divider"></th>
+                                <th colspan="7" aria-hidden="true" class="calendar-header-divider"></th>
                             </tr>
                         </thead>
-                        <tbody class="mat-calendar-body">
+                        <tbody class="calendar-body">
                             <tr class="ng-star-inserted" *ngFor="let week of month.weeks">
-                                <td [className]="(day.idEvent) != null ? 'mat-calendar-body-cell evento-'+getEvent(day.idEvent).color : 'mat-calendar-body-cell'"
+                                <td [className]="(day.idEvent) != null ? 'calendar-body-cell evento-'+getEvent(day.idEvent).color : 'calendar-body-cell'"
                                     [matTooltip]="(day.idEvent) != null ? getEvent(day.idEvent).name : ''"
                                     [matTooltipClass]="(day.idEvent) != null ? 'tooltip-primary' : ''"
                                     *ngFor="let day of week">
-                                    <div class="mat-calendar-body-cell-content">
+                                    <div class="calendar-body-cell-content">
                                         {{ day.value }}</div>
                                 </td>
                             </tr>
