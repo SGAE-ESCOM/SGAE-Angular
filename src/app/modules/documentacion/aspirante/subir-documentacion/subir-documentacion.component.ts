@@ -37,7 +37,7 @@ export class SubirDocumentacionComponent implements OnInit {
   constructor(private _toast: ToastrService, private _swal: SweetalertService, private _subirDoc: SubirDocumentacionService, private _authService: AuthService) {
     BreadcrumbComponent.update(BC_SUBIR_DOCUMENTACION);
     //this.usuario = { id: 'kigHobwLkyZNYs9BXx0mJnvgaFA3', roles: { aspirante: true } }; //DEBUG
-    this.usuario = this._authService.getUsuario();
+    this.usuario = this._authService.getUsuarioC();
   }
 
   /**
