@@ -11,9 +11,11 @@ import { UsuarioInterface } from '@models/persona/usuario';
 })
 export class AuthService {
 
-  private usuario:UsuarioInterface;
+  private static usuario:firebase.User;
+  private static usuarioC:UsuarioInterface;
 
   public userData$: Observable<firebase.User>;
+
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.userData$ = afsAuth.authState;
   }
@@ -45,10 +47,6 @@ export class AuthService {
     return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
 
-  isNewUsuarioGoogle(){
-    
-  }
-
   logoutUser() {
     return this.afsAuth.auth.signOut();
   }
@@ -64,9 +62,7 @@ export class AuthService {
       nombres: usuario.nombres,
       apellidos: usuario.apellidos,
       email: usuarioRegistrado.email,
-      roles: {
-        aspirante: true
-      }
+      rol: 'aspirante'
     }
     return userRef.set(data, { merge: true });
   }
@@ -78,11 +74,23 @@ export class AuthService {
   /**
    * 
    */
-  getUsuario( uid ) {
-    return this.afs.doc(`Usuarios/${uid}`).valueChanges();
+  findUsuario( uid ) {
+    return this.afs.doc<UsuarioInterface>(`Usuarios/${uid}`).valueChanges();
   }
 
   setUsuario(usuario){
-    this.usuario = usuario;
+    AuthService.usuario = usuario;
+  }
+
+  getUsuario(){
+    return AuthService.usuario;
+  }
+
+  setUsuarioC(usuario){
+    AuthService.usuarioC = usuario;
+  }
+
+  getUsuarioC(){
+    return AuthService.usuarioC;
   }
 }

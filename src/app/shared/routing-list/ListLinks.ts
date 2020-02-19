@@ -17,6 +17,8 @@ const DOCUMENTACION = new NavigationLink("Documentación", "/app/documentacion",
 const ADMINISTRAR_DOCUMENTACION = new NavigationLink("Administrar", "/app/documentacion/administrar", "folder_shared", "Agrega, edita o elimina los documentos necesarios para el registro");
 const VALIDAR_DOCUMENTACION = new NavigationLink("Validar", "/app/documentacion/validar", "check_box", "Valida la información de los aspirantes que ya han llenado su información");
 const SUBIR_DOCUMENTACION = new NavigationLink("Subir Documentación", "/app/documentacion/subir", "cloud_upload", "Llena información de los requisitos.");
+
+
 export const BC_DOCUMENTACION = new Breadcrumb(DOCUMENTACION, [HOME]);
 export const BC_ADMINISTRAR_DOCUMENTACION = new Breadcrumb(ADMINISTRAR_DOCUMENTACION, [HOME, DOCUMENTACION]);
 export const BC_VALIDAR_DOCUMENTACION = new Breadcrumb(VALIDAR_DOCUMENTACION, [HOME, DOCUMENTACION]);
@@ -45,11 +47,17 @@ export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
 /**
  * Links para los aspirantes
  */
-//Nomenclatura de breadcrums BC_Name_Component
-export const linksPage: NavigationLink[] = [LANDINPAGE, LOGIN];
-export const linksAspirante: NavigationLink[] = [DOCUMENTACION, EVALUACION];
-export const linksAdmin: NavigationLink[] = [HOME, DOCUMENTACION, EVALUACION, PAGOS];
-export const linksRoot: NavigationLink[] = [HOME, DOCUMENTACION, EVALUACION, CONVOCATORIA, PAGOS, ETAPAS, USUARIOS];
+export const LINKS_PAGE: NavigationLink[] = [LANDINPAGE, LOGIN];
 
-export const linksDocumentacionAdmin: NavigationLink[] = [VALIDAR_DOCUMENTACION, SUBIR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION];
-export const linksDocumentacionAspirante: NavigationLink[] = [SUBIR_DOCUMENTACION];
+export const LINKS_HOME = {
+    page: [LANDINPAGE, LOGIN],
+    aspirante: [HOME, DOCUMENTACION, EVALUACION, PAGOS],
+    admin: [HOME, DOCUMENTACION, EVALUACION, PAGOS],
+    root: [HOME, DOCUMENTACION, EVALUACION, CONVOCATORIA, PAGOS, ETAPAS, USUARIOS]
+}
+
+export const LINKS_DOCUMENTACION = {
+    aspirante: [SUBIR_DOCUMENTACION],
+    admin: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION],
+    root: [VALIDAR_DOCUMENTACION, SUBIR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION]
+}

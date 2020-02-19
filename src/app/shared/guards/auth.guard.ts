@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from '@services/auth.service';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
+import { PermisosAccesoGuard } from './permisos-acceso.guard';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router:Router){}
+  constructor(private authService: AuthService, private router:Router, private permisosAccesoGuard:PermisosAccesoGuard){}
   
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -18,11 +19,24 @@ export class AuthGuard implements CanActivate {
       map(user => {
         if(!user){
           this.router.navigate(['/login']);
-          return false;
+          return user;
         }
-        return true;
+        return user;
+      }),
+      mergeMap( res => {
+        return this.authService.findUsuario(res.uid).pipe( map( usuarioCompleto => {
+          if(usuarioCompleto){
+            this.authService.setUsuarioC(usuarioCompleto);
+            this.authService.setUsuario(res);
+            return true;
+          }
+          return false;
+        }))
       })
     );
   }
   
+  private getUsuario(): boolean{
+    return false;
+  }
 }

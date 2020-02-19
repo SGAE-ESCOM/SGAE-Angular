@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { linksPage, linksAdmin, linksRoot, linksAspirante } from '@routing/ListLinks';
+import { LINKS_HOME } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
@@ -17,8 +17,8 @@ export class SidenavComponent implements OnInit {
 
   usuario: UsuarioInterface = { nombres: '-', roles: null };
   mobileQuery: MediaQueryList;
-  navigationLinks = linksRoot; // linksRoot; DEBUG //CAMBIAR A linksPage EN PRODUCCION
-  isLoggedIn: boolean = true; //true; DEBUG //CAMBIAR A false EN PRODUCCION
+  navigationLinks = LINKS_HOME['aspirante']; // admin; DEBUG //CAMBIAR A page EN PRODUCCION
+  isLoggedIn: boolean = false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
 
   private _mobileQueryListener: () => void;
 
@@ -37,26 +37,18 @@ export class SidenavComponent implements OnInit {
   shouldRun = true;
 
   ngOnInit() {
-    //this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
+    this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
   }
 
   getUsuarioActual() {
     this._authService.isAuth().subscribe(auth => {
       if (auth) {
-        this._authService.getUsuario(auth.uid).subscribe((usaurio: UsuarioInterface) => {
+        this._authService.findUsuario(auth.uid).subscribe((usaurio: UsuarioInterface) => {
           if (usaurio) {
+            //this._authService.setUsuarioC(usaurio);
             this.usuario = usaurio;
             this.isLoggedIn = true;
-            console.log(usaurio.roles);
-            if (usaurio.roles.aspirante != null) {
-              this.navigationLinks = linksAspirante;
-            } else {
-              if (usaurio.roles.root != null ) {
-                this.navigationLinks = linksRoot;
-              }else{
-                this.navigationLinks = linksAdmin;
-              }
-            }
+            this.navigationLinks = LINKS_HOME[usaurio.rol]
           } else {
             const infoUsuario = {
               uid: auth.uid,
@@ -67,7 +59,7 @@ export class SidenavComponent implements OnInit {
         }, error => { });
       } else {
         this.isLoggedIn = false;
-        this.navigationLinks = linksPage;
+        this.navigationLinks = LINKS_HOME['page'];
       }
     });
   }

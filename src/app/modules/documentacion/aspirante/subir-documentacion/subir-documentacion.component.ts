@@ -7,6 +7,7 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { SubirDocumentacionService } from '@services/documentacion/subir-documentacion.service';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { TipoDato } from '@models/documentacion/tipo-dato';
+import { AuthService } from '@services/auth.service';
 
 
 @Component({
@@ -33,9 +34,10 @@ export class SubirDocumentacionComponent implements OnInit {
     { "id": "pgYSsgwBCrQh2CDK16ry", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú0-9" }, "max": 100, "min": 15, "nombre": "Calle", "requerido": true, "subtipo": "texto", "tipo": "campo" }
   ];
 
-  constructor(private _toast: ToastrService, private _swal: SweetalertService, private _subirDoc: SubirDocumentacionService) {
+  constructor(private _toast: ToastrService, private _swal: SweetalertService, private _subirDoc: SubirDocumentacionService, private _authService: AuthService) {
     BreadcrumbComponent.update(BC_SUBIR_DOCUMENTACION);
-    this.usuario = { id: 'kigHobwLkyZNYs9BXx0mJnvgaFA3', roles: { aspirante: true } }; //DEBUG
+    //this.usuario = { id: 'kigHobwLkyZNYs9BXx0mJnvgaFA3', roles: { aspirante: true } }; //DEBUG
+    this.usuario = this._authService.getUsuario();
   }
 
   /**

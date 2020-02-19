@@ -46,7 +46,7 @@
 
     <!-- MAIN CONTENT  -->
     <mat-sidenav-content>
-      <div [className]="isLoggedIn ? 'container pt-2 pb-4' : 'animated'">
+      <div [class]="isLoggedIn ? 'container pt-2 pb-4' : 'animated'">
         <app-breadcrumb *ngIf="isLoggedIn"></app-breadcrumb>
         <ng-content></ng-content>
       </div>

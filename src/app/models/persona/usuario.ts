@@ -10,5 +10,6 @@ export interface UsuarioInterface {
     apellidos?: string;
     email?: string;
     password?: string;
-    roles: Roles;
+    roles?: Roles;
+    rol?: string;
 }

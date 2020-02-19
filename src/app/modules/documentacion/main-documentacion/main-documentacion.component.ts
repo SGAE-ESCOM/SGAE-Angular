@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_DOCUMENTACION, linksDocumentacionAdmin } from "@routing/ListLinks";
+import { BC_DOCUMENTACION, LINKS_DOCUMENTACION } from "@routing/ListLinks";
 import { fallIn } from '@shared/animations/router.animations';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-main-documentacion',
@@ -11,10 +12,13 @@ import { fallIn } from '@shared/animations/router.animations';
 })
 export class MainDocumentacionComponent implements OnInit {
 
-  cards = linksDocumentacionAdmin;
+  private usuario;
+  cards;
 
-  constructor() {
+  constructor(private _authServices: AuthService) {
     BreadcrumbComponent.update(BC_DOCUMENTACION);
+    this.usuario = this._authServices.getUsuarioC();
+    this.cards = LINKS_DOCUMENTACION[this.usuario.rol];
   }
 
   ngOnInit() {
