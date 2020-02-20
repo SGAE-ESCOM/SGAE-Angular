@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center" mat-dialog-title>Nombre: '{{data.nombre}}' </h1>
+        <hr>
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-12">
+                    <div style="display: flex;align-items: center;justify-content: center;">
+                        <iframe width="800" height="500" [src]="sanitizer.bypassSecurityTrustResourceUrl(data.archivo)"  type="application/pdf"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

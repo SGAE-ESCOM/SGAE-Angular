@@ -1,1 +1,34 @@
-<p>validar-aspirante works!</p>
+<div class="container animated-row pb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive mat-elevation-z3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Requisito</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Valido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let requisito of requisitosTabla">
+                            <th>{{ requisito.nombre }}</th>
+                            <td [ngSwitch]="requisito.tipo">
+                                <div *ngSwitchCase="'texto'">
+                                    {{ requisito.valor }}
+                                </div>
+                                <div *ngSwitchCase="'archivo'">
+                                    <a (click)="abrirArchivo(requisito.valor)">{{ requisito.valor.nombre }}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <mat-checkbox [(ngModel)]="requisitosAspirante[requisito.nombre].valido">{{ requisitosAspirante[requisito.nombre].valido }}</mat-checkbox>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 30, 50]"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,7 @@ import { ValidarAspiranteComponent } from './validar-aspirante/validar-aspirante
 
 const routes: Routes = [
   { path: 'validar', component: ValidarDocumentacionComponent },
-  { path: 'validar-aspirante:id', component: ValidarAspiranteComponent },
+  { path: 'validar/:id', component: ValidarAspiranteComponent },
   { path: 'administrar', component: AdministrarDocumentacionComponent },
 ];
 
