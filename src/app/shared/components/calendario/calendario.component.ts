@@ -53,8 +53,37 @@ export class CalendarioComponent implements OnInit, OnChanges {
     }
   }
 
-  getEvent(idEvent) {
-    return this.dataSource.filter(event => event.id == idEvent)[0];
+  getEvents(events: []) {
+    let nameEvents = [];
+    events.forEach(id => {
+      nameEvents.push(this.dataSource[id].name);
+    });
+    return '' + nameEvents;
+  }
+
+  getEventClass(events: any[]) {
+    let clase = '';
+    let weight = 0;
+    if (events.length == 1) {
+      weight = 4;
+    }
+    else if (events.length <= 3) {
+      weight = 2;
+    }
+    else {
+      clase+='inset 0 -4px 0 0 black';
+    }
+    if (weight > 0) {
+      var boxShadow = '';
+      for (let i = 0; i < events.length; i++) {
+        if (boxShadow != '') {
+          boxShadow += ",";
+        }
+        boxShadow += 'inset 0 -' + (i + 1) * weight + 'px 0 0 #' +  this.dataSource[events[i]].color;
+      }
+      clase+=boxShadow;
+    }
+    return clase;
   }
 
   getTotalDays(firstDate: Date, lastDate: Date) {
@@ -77,7 +106,10 @@ export class CalendarioComponent implements OnInit, OnChanges {
       }
     }
     for (let currentWeek = startWeek, currentWeekday = weekday, r = 0; r <= rangeDays; r++ , currentWeekday++) {
-      weeks[currentWeek][currentWeekday].idEvent = idEvent;
+      if (weeks[currentWeek][currentWeekday].idEvent != null)
+        weeks[currentWeek][currentWeekday].idEvent.push(idEvent);
+      else
+        weeks[currentWeek][currentWeekday].idEvent = [idEvent];
       if (currentWeekday == 6) {
         currentWeekday = -1;
         currentWeek++;
@@ -149,11 +181,6 @@ export class CalendarioComponent implements OnInit, OnChanges {
           week.push({ value: currentDay });
         weeks.push(week);
       }
-      //DEBUG
-      //console.log("================>")
-      //console.log(`totalDays ${totalDays}`);
-      //console.log(`currentDay ${currentDay}`);
-      //console.log(weeks);
       month['weeks'] = weeks;
       month['totalDays'] = totalDays;
     });

@@ -30,7 +30,7 @@ export class MainEtapasComponent implements OnInit {
   
   etapasDisponibles = ETAPAS;
   etapas = [];
-  colores = [{nombre: 'Verde', valor: 'success' }, {nombre: 'Azul', valor: 'info' }, {nombre: 'Amarillo', valor: 'warning' }, {nombre: 'Rojo', valor: 'danger' }, {nombre: 'Azul', valor: 'primary' },];
+  colores = [{nombre: 'Verde', valor: '28a745' }, {nombre: 'Azul', valor: '17a2b8' }, {nombre: 'Amarillo', valor: 'ffc107' }, {nombre: 'Rojo', valor: 'dc3545' }, {nombre: 'Azul', valor: '007bff' },];
 
   constructor(private _fb: FormBuilder, private _toast: ToastrService, private _swal: SweetalertService) {
     BreadcrumbComponent.update(BC_ETAPAS);

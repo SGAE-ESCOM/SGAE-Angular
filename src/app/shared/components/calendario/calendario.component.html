@@ -21,8 +21,9 @@
                         </thead>
                         <tbody class="calendar-body">
                             <tr class="ng-star-inserted" *ngFor="let week of month.weeks">
-                                <td [className]="(day.idEvent) != null ? 'calendar-body-cell evento-'+getEvent(day.idEvent).color : 'calendar-body-cell'"
-                                    [matTooltip]="(day.idEvent) != null ? getEvent(day.idEvent).name : ''"
+                                <td 
+                                    [style.box-shadow]="(day.idEvent) != null ? getEventClass(day.idEvent) : ''"
+                                    [matTooltip]="(day.idEvent) != null ? getEvents(day.idEvent) : ''"
                                     [matTooltipClass]="(day.idEvent) != null ? 'tooltip-primary' : ''"
                                     *ngFor="let day of week">
                                     <div class="calendar-body-cell-content">
