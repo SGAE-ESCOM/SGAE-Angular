@@ -7,23 +7,30 @@ import { ETAPAS } from '@models/etapas/etapa.enum';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
 import { CalendarData } from '@shared/components/calendario/interfaces/calendar-data';
+import { fadeInOutDown } from '@shared/animations/router.animations';
 
 @Component({
   selector: 'app-main-etapas',
   templateUrl: './main-etapas.component.html',
-  styleUrls: ['./main-etapas.component.scss']
+  styleUrls: ['./main-etapas.component.scss'],
+  animations: [fadeInOutDown()]
 })
 export class MainEtapasComponent implements OnInit {
 
+  //Variables de logica de Frontend
   isLinear = true;
+  isTerminadoStepper = false;
+
+  //Formularios
   fgEtapaUsar: FormGroup;
   fgEtapasFechas: FormGroup;
-
-  etapasDisponibles = ETAPAS;
+  
   fechaActual = new Date();
   dataSource: CalendarData[];
+  
+  etapasDisponibles = ETAPAS;
   etapas = [];
-  colores = [{nombre: 'Verde', valor: 'success' }, {nombre: 'Azul', valor: 'info' }, {nombre: 'Amarillo', valor: 'warning' }, {nombre: 'Rojo', valor: 'danger' }];
+  colores = [{nombre: 'Verde', valor: 'success' }, {nombre: 'Azul', valor: 'info' }, {nombre: 'Amarillo', valor: 'warning' }, {nombre: 'Rojo', valor: 'danger' }, {nombre: 'Azul', valor: 'primary' },];
 
   constructor(private _fb: FormBuilder, private _toast: ToastrService, private _swal: SweetalertService) {
     BreadcrumbComponent.update(BC_ETAPAS);
@@ -38,13 +45,17 @@ export class MainEtapasComponent implements OnInit {
 
   definirFechas(){
     this.fgEtapasFechas = new FormGroup({});
-    this.etapas.forEach(etapa => this.fgEtapasFechas.addControl( etapa.valor, this._fb.group({
-      nombre: [etapa.valor],
+    this.etapas.forEach( (etapa, index) => this.fgEtapasFechas.addControl( etapa.valor, this._fb.group({
+      nombre: [etapa.nombre],
       fechaInicio: ['', Validators.required],
       fechaTermino: ['', Validators.required],
-      color: ['', Validators.required],
-    })));
-    
+      color: [ this.colores[index].valor, Validators.required],
+    })));  
+  }
+
+  finalizarStepper(){
+    this.isTerminadoStepper = true;
+    //this._swal.confirmarFinalizar('¿Deseas definir las etapas?');
   }
 
   // HTTPS
@@ -63,12 +74,15 @@ export class MainEtapasComponent implements OnInit {
         return {
           id: index,
           name: valor.nombre,
-          startDate: valor.fechaInicio,
-          endDate: valor.fechaTermino,
+          startDate: new Date(valor.fechaInicio),
+          endDate: new Date(valor.fechaTermino),
           color: valor.color
         }
       });
-      console.log(this.dataSource);
+      console.log("===============>")
+      console.table(this.fgEtapasFechas.value);
+      console.table(this.dataSource);
+
     /*}else{
       this._toast.error("Invalido", "Llena todos los elementos requeridos")
     }*/

@@ -50,7 +50,21 @@
                         <button mat-flat-button matStepperPrevious>
                             <mat-icon> navigate_before </mat-icon> Anterior
                         </button>
-                        <button mat-flat-button color="success" (click)="saveEtapas()" matStepperNext>Finalizar
+                        <button mat-flat-button color="info" matStepperNext>Siguiente
+                            <mat-icon>navigate_next</mat-icon></button>
+                    </div>
+                </mat-step>
+                <!-- PASO 3 -->
+                <mat-step>
+                    <ng-template matStepLabel>Finalizar</ng-template>
+                    <div class="col-12">
+                        <p>A continuación define las fechas de las etapas.</p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 text-right pt-2">
+                        <button mat-flat-button matStepperPrevious>
+                            <mat-icon> navigate_before </mat-icon> Anterior
+                        </button>
+                        <button mat-flat-button color="success" (click)="finalizarStepper()" matStepperNext>Finalizar
                             <mat-icon>check</mat-icon></button>
                     </div>
                 </mat-step>
@@ -58,7 +72,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row"  @fadeInOutDown>
         <div class="col-12">
             <div class="card no-border mat-elevation-z3">
                 <div class="card-header text-center">
@@ -70,22 +84,24 @@
                             <hr>
                             <div class="col-12 col-sm-6 col-md-3 form-group">
                                 <mat-form-field>
-                                    <mat-label>{{etapa.nombre}}</mat-label>
+                                    <mat-label>Etapa</mat-label>
                                     <input matInput formControlName="nombre" placeholder="Filtrar por palabra" readonly>
                                     <mat-icon class="material-icons-outlined" matSuffix>assignment</mat-icon>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3 form-group">
                                 <mat-form-field>
+                                    <mat-label>Fecha de Inicio</mat-label>
                                     <input matInput formControlName="fechaInicio" [min]="fechaActual"
                                         [matDatepicker]="fechaInicio" placeholder="Elige una fecha de inicio" required>
                                     <mat-datepicker-toggle matSuffix [for]="fechaInicio">
                                     </mat-datepicker-toggle>
-                                    <mat-datepicker #fechaInicio></mat-datepicker>
+                                    <mat-datepicker #fechaInicio startView="year" [startAt]="fechaActual"></mat-datepicker>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3 form-group">
                                 <mat-form-field>
+                                    <mat-label>Fecha de Termino</mat-label>
                                     <input matInput formControlName="fechaTermino"
                                         [min]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value"
                                         [matDatepicker]="fechaTermino" placeholder="Elige una fecha de termino"
@@ -116,6 +132,10 @@
                                 </mat-icon></button>
                         </div>
                     </form>
+                    <!-- DIV de prueba -->
+                    <!--<div class="col-12">
+                        {{ fgEtapasFechas.value | json }}
+                    </div>-->
                 </div>
             </div>
         </div>

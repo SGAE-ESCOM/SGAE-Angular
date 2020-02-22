@@ -15,14 +15,14 @@ import { MatPaginatorModule } from "@angular/material";
 import { MatSortModule } from "@angular/material";
 import { MatDialogModule } from '@angular/material/dialog';
 import { AdministrarDocumentacionComponent, ModalEditarRequisito } from './administrar-documentacion/administrar-documentacion.component';
-import { ValidarDocumentacionComponent } from './validar-documentacion/validar-documentacion.component';
+import { ValidarDocumentacionComponent, } from './validar-documentacion/validar-documentacion.component';
 import { PipesModule } from '@shared/pipes/pipes.module';
 import { FormularioModule } from '../formulario/formulario.module';
-import { ValidarAspiranteComponent } from './validar-aspirante/validar-aspirante.component';
+import { ValidarAspiranteComponent, ModalVerDocumentoRequisito } from './validar-aspirante/validar-aspirante.component';
 import { FormRequisitosComponent } from './form-requisitos/form-requisitos.component';
 
 @NgModule({
-  declarations: [AdministrarDocumentacionComponent, ModalEditarRequisito, ValidarDocumentacionComponent, ValidarAspiranteComponent, FormRequisitosComponent],
+  declarations: [AdministrarDocumentacionComponent, ModalEditarRequisito, ValidarDocumentacionComponent, ModalVerDocumentoRequisito, ValidarAspiranteComponent, FormRequisitosComponent],
   imports: [
     CommonModule,
     DocumentacionAdminRoutingModule,

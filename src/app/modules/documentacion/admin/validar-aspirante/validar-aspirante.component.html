@@ -22,12 +22,33 @@
                                 </div>
                             </td>
                             <td>
-                                <mat-checkbox [(ngModel)]="requisitosAspirante[requisito.nombre].valido">{{ requisitosAspirante[requisito.nombre].valido }}</mat-checkbox>
+                                <mat-checkbox [(ngModel)]="requisitosAspirante[requisito.nombre].valido">
+                                    {{ requisitosAspirante[requisito.nombre].valido | boolean  }}</mat-checkbox>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <mat-paginator [pageSizeOptions]="[5, 30, 50]"></mat-paginator>
+            </div>
+        </div>
+        <div class="col-12 my-3">
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field>
+                        <mat-label>Comentarios</mat-label>
+                        <textarea matInput placeholder="Agrega lo que se debe corregir en los requisios"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 text-right">
+                    <button mat-button color="info">Enviar correcciones</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 text-right">
+                    <button mat-button color="success">Finalizar</button>
+                </div>
             </div>
         </div>
     </div>
