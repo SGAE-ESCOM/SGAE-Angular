@@ -39,9 +39,20 @@ o en Windows descargar instalable en su página oficial [Git](https://git-scm.co
 
 ### Dependencias para correr el proyecto
 
-1. Instalar @angular-devkit/build-angular como dev dependency.
+1. Instalar dependencias
 ```
-npm install --save-dev @angular-devkit/build-angular
+npm install
+```
+## Actualizar el CLI y Proyecto
+
+1. Actualizar CLI de manera globlal
+```
+npm uninstall -g @angular/cli
+npm cache verify
+```
+1. Actualizar dependencias del proyecto
+```
+ng update @angular/core @angular/cli
 ```
 
 ### Configurar alias para git
