@@ -43,22 +43,19 @@ export class CalendarioComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.initCalendar();
-    this.renderData();
+    //this.renderData();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['dataSource'] && this.dataSource != null) {
+      console.log("=== ESTOY EN EL CHANGE ===");
       this.initCalendar();
       this.renderData();
     }
   }
 
   getEvents(events: []) {
-    let nameEvents = [];
-    events.forEach(id => {
-      nameEvents.push(this.dataSource[id].name);
-    });
-    return '' + nameEvents;
+    return '' + events.map(id => ' '+this.dataSource[id].name);
   }
 
   getEventClass(events: any[]) {
@@ -76,9 +73,8 @@ export class CalendarioComponent implements OnInit, OnChanges {
     if (weight > 0) {
       var boxShadow = '';
       for (let i = 0; i < events.length; i++) {
-        if (boxShadow != '') {
+        if (boxShadow != '') 
           boxShadow += ",";
-        }
         boxShadow += 'inset 0 -' + (i + 1) * weight + 'px 0 0 #' +  this.dataSource[events[i]].color;
       }
       clase+=boxShadow;
@@ -120,13 +116,15 @@ export class CalendarioComponent implements OnInit, OnChanges {
   //Other implementation
   renderData() {
     if (this.dataSource != null && this.dataSource.length > 0) {
+      console.table(this.dataSource);
       this.dataSource.forEach((data: CalendarData) => {
         let startMonth = data.startDate.getMonth();
         let endMonth = data.endDate.getMonth();
-        //Same month
         if (startMonth == endMonth) {
+          console.log("Mismo mes")
           this.selectEvent(data.startDate, data.endDate, data.id);
         } else {
+          console.log("Distinto mes")
           let months = endMonth - startMonth;
           let currentMonth = data.startDate;
           let endCurrentMonth = new Date(this.currentYear, startMonth, this.months[startMonth].totalDays);

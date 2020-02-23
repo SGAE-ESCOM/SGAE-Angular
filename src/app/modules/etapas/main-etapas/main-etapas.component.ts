@@ -32,14 +32,30 @@ export class MainEtapasComponent implements OnInit {
   etapas = [];
   colores = [{nombre: 'Verde', valor: '28a745' }, {nombre: 'Azul', valor: '17a2b8' }, {nombre: 'Amarillo', valor: 'ffc107' }, {nombre: 'Rojo', valor: 'dc3545' }, {nombre: 'Azul', valor: '007bff' },];
 
+  /**
+   * PRUEBA PARA IPN
+   */
+  fechasIPNJSON = { "convocatoria": { "nombre": "Publicación de Convocatoria", "fechaInicio": "2020-02-23T06:00:00.000Z", "fechaTermino": "2020-03-26T06:00:00.000Z", "color": "28a745" }, "documentacion": { "nombre": "Documentación", "fechaInicio": "2020-07-10T05:00:00.000Z", "fechaTermino": "2020-07-17T05:00:00.000Z", "color": "17a2b8" }, "evaluacionConocimientos": { "nombre": "Evaluación de conocimientos", "fechaInicio": "2020-05-25T05:00:00.000Z", "fechaTermino": "2020-06-08T05:00:00.000Z", "color": "17a2b8" }, "publicacionResultados": { "nombre": "Publicación de Resultados", "fechaInicio": "2020-07-10T05:00:00.000Z", "fechaTermino": "2020-07-10T05:00:00.000Z", "color": "dc3545" }, "pagos": { "nombre": "Pagos", "fechaInicio": "2020-05-04T05:00:00.000Z", "fechaTermino": "2020-05-24T05:00:00.000Z", "color": "ffc107" }};
+  fechasIPN;
+
   constructor(private _fb: FormBuilder, private _toast: ToastrService, private _swal: SweetalertService) {
     BreadcrumbComponent.update(BC_ETAPAS);
+    this.fechasIPN = Object.entries(this.fechasIPNJSON).map( ([atributo, valor]:any, index) => {
+      return {
+        id: index,
+        name: valor.nombre,
+        startDate: new Date(valor.fechaInicio),
+        endDate: new Date(valor.fechaTermino),
+        color: valor.color
+      }
+    });
+    console.table(this.fechasIPN);
     this.fgEtapaUsar = this._fb.group({
       etapas: ['', Validators.required],
     });
     this.fgEtapasFechas = this._fb.group({});
   }
-
+  
   ngOnInit() {
   }
 
@@ -79,9 +95,9 @@ export class MainEtapasComponent implements OnInit {
           color: valor.color
         }
       });
-      console.log("===============>")
-      console.table(this.fgEtapasFechas.value);
-      console.table(this.dataSource);
+      //console.log("===============>")
+      //console.table(this.fgEtapasFechas.value);
+      //console.table(this.dataSource);
 
     /*}else{
       this._toast.error("Invalido", "Llena todos los elementos requeridos")
