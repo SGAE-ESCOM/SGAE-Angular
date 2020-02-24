@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_VALIDAR_DOC_ASPIRANTE } from '@shared/routing-list/ListLinks';
+import { ActivatedRoute } from "@angular/router";
 import { MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { SubirDocumentacionService } from '@services/documentacion/subir-documentacion.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -28,9 +29,11 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
     { "id": "4", "nombres": "Christian Andres", "apellidos": "Cervantes Moreno", "estado": "SIN_REVISION" },
   ];
 
-  constructor(private _subirDocService: SubirDocumentacionService, public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private _subirDocService: SubirDocumentacionService, private route: ActivatedRoute) {
     BreadcrumbComponent.update(BC_VALIDAR_DOC_ASPIRANTE);
-    this.usuario = { id: 'DlYkWcPFFfX8ZXpPdv1sFrtGRRv2' };
+    //this.usuario = { id: 'DlYkWcPFFfX8ZXpPdv1sFrtGRRv2' };
+    this.usuario = {id: this.route.snapshot.paramMap.get("id")};
+    console.log(this.usuario);
   }
 
   ngOnInit(): void {

@@ -220,5 +220,10 @@ Indicara los comando de ng para actualizar las dependencias correspondientes.
 1. Validar formilarios [Validators](https://www.positronx.io/angular-7-reactive-forms-validation-tutorial/)
 1. Validación dinámica [Three Ways to Dynamically Alter your Form Validation in Angular](https://netbasal.com/three-ways-to-dynamically-alter-your-form-validation-in-angular-e5fd15f1e946)
 1. Obtener valores dentro de FormGroup  [Angular Form Fundamentals: Reactive Forms](https://ultimatecourses.com/blog/angular-2-forms-reactive)
+1. Ciclos de vida en Angular [Ciclos de vida en Angular: La guía definitiva](http://blog.enriqueoriol.com/2018/10/ciclos-de-vida-en-angular-la-guia-definitiva.html)
+
+## Firebase Avanzado
+1. Realiza consultas simples y compuestas en Cloud Firestore [Realiza consultas simples y compuestas en Cloud Firestore](https://firebase.google.com/docs/firestore/query-data/queries?hl=es)
+1. Querying Collections in AngularFirestore [Querying Collections in AngularFirestore](https://github.com/angular/angularfire/blob/master/docs/firestore/querying-collections.md)
 
 # angular-bootstrap-template

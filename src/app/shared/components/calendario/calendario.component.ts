@@ -42,8 +42,9 @@ export class CalendarioComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.initCalendar();
-    //this.renderData();
+    if(this.dataSource == null){
+      this.initCalendar();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -121,10 +122,8 @@ export class CalendarioComponent implements OnInit, OnChanges {
         let startMonth = data.startDate.getMonth();
         let endMonth = data.endDate.getMonth();
         if (startMonth == endMonth) {
-          console.log("Mismo mes")
           this.selectEvent(data.startDate, data.endDate, data.id);
         } else {
-          console.log("Distinto mes")
           let months = endMonth - startMonth;
           let currentMonth = data.startDate;
           let endCurrentMonth = new Date(this.currentYear, startMonth, this.months[startMonth].totalDays);
