@@ -12,34 +12,23 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./validar-aspirante.component.scss']
 })
 export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
-
-  private usuario;
+  
   //Variables para las tablas
   requisitosTabla;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   //Variables de logica validacion
   requisitosAspirante;
-
-  //Varibale DEBUG
-  listaUsuarios: any[] = [ //DEBUG
-    { "id": "1", "nombres": "Gustavo Andres", "apellidos": "Lopez Sanchez", "estado": "SIN_REVISION" },
-    { "id": "2", "nombres": "Aiko Dallane", "apellidos": "López Rivera", "estado": "SIN_REVISION" },
-    { "id": "3", "nombres": "Edgar", "apellidos": "Flores Altamirano", "estado": "SIN_REVISION" },
-    { "id": "4", "nombres": "Christian Andres", "apellidos": "Cervantes Moreno", "estado": "SIN_REVISION" },
-  ];
+  private usuario;
 
   constructor(public dialog: MatDialog, private _subirDocService: SubirDocumentacionService, private route: ActivatedRoute) {
     BreadcrumbComponent.update(BC_VALIDAR_DOC_ASPIRANTE);
-    //this.usuario = { id: 'DlYkWcPFFfX8ZXpPdv1sFrtGRRv2' };
     this.usuario = {id: this.route.snapshot.paramMap.get("id")};
     console.log(this.usuario);
   }
 
   ngOnInit(): void {
-    //this._ads.getDocumentos().subscribe( (documentos:TipoDato[]) => this.documentos.data = documentos ); //PRODUCCION
     this._subirDocService.getDocumentacion(this.usuario).subscribe(requisitos => { this.formatearRequisitos(requisitos) }); //PRODUCCION
-    //this.requisitos.data = this.listaUsuarios; // DEBUG
   }
 
   ngAfterViewInit() {
@@ -52,8 +41,6 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
       let requistoAux = { nombre: requisito, valor: json.valor, valido: json.valido, tipo: 'texto' };
       if (typeof requistoAux.valor == 'object') {
         requistoAux.tipo = 'archivo';
-        //requistoAux['url'] = requistoAux.valor.archivo;
-        //requistoAux.valor = requistoAux.valor.nombre;
       }
       return requistoAux;
     });
@@ -90,10 +77,6 @@ export class ModalVerDocumentoRequisito {
 
   onNoClick(): void {
     this.dialogRef.close();
-  }
-
-  enviarForm() {
-
   }
 
 }

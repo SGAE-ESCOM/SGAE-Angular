@@ -5,6 +5,7 @@ import { UsuarioInterface } from '@models/persona/usuario';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatSort } from '@angular/material';
 import { UsuarioService } from '@services/usuario/usuario.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-validar-documentacion',
@@ -27,26 +28,25 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
     { "id": "4", "nombres": "Christian Andres", "apellidos": "Cervantes Moreno", "estado": "SIN_REVISION" },
   ];
 
-  filtros: string[] = [
-    "Sin revision",
-    "Pendiente de correccion",
-    "Validado"
+  filtros: any[] = [
+    { nombre: "Sin revision", valor: "revision" },
+    { nombre: "Pendiente de correccion", valor: "correccion" },
+    { nombre: "Validado", valor: "validado" }
   ]
 
-  constructor(private _usuarioService: UsuarioService) {
+  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService) {
     BreadcrumbComponent.update(BC_VALIDAR_DOCUMENTACION);
   }
 
   ngOnInit() {
-    //this._usuarioService.getAspirantes().then((aspirantes: UsuarioInterface[]) => this.usuarios.data = aspirantes ); //PROD
     //this.usuarios.data = this.listaUsuarios; // DEBUG
-    this._usuarioService.getAspirantes().then( (querySnapshot) => {
+    this._usuarioService.getAspirantesParaRevision().then((querySnapshot) => {
       let usuarios = [];
-      querySnapshot.forEach( (doc) => {        
-        usuarios.push( doc.data() );
+      querySnapshot.forEach((doc) => {
+        usuarios.push(doc.data());
       });
       this.usuarios.data = usuarios;
-    });
+    }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
   }
 
   ngAfterViewInit() {
@@ -60,7 +60,41 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
 
   //Eventos
   onChangeFiltroUsuario(filtro) {
-    alert(filtro);
+    console.log(filtro);
+    switch (filtro) {
+      case this.filtros[0].valor:
+        this._usuarioService.getAspirantesParaRevision().then((querySnapshot) => {
+          let usuarios = [];
+          querySnapshot.forEach((doc) => {
+            usuarios.push(doc.data());
+          });
+          this.usuarios.data = usuarios;
+        }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
+        break;
+      case this.filtros[1].valor:
+        this._usuarioService.getAspirantesEnCorreccion().then((querySnapshot) => {
+          let usuarios = [];
+          querySnapshot.forEach((doc) => {
+            usuarios.push(doc.data());
+          });
+          this.usuarios.data = usuarios;
+        }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
+        break;
+      case this.filtros[2].valor:
+        this._usuarioService.getAspirantesValidados().then((querySnapshot) => {
+          let usuarios = [];
+          querySnapshot.forEach((doc) => {
+            usuarios.push(doc.data());
+          });
+          this.usuarios.data = usuarios;
+        }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
+        break;
+      default:
+        break;
+    }
+    if(this.usuarios.data.length == 0)
+      this._toast.info("No hay usuarios para mostrar");
+    this.updateTablaUsuarios();
   }
 
   buscarUsuario(filterValue: string) {

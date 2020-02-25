@@ -35,4 +35,16 @@ export class UsuarioService {
   getAspirantes(): Promise<any> {
     return this.usuariosCollection.where('rol', '==', 'aspirante').get();
   }
+
+  getAspirantesParaRevision(): Promise<any> {
+    return this.usuariosCollection.where('estado.documentacion', '==', 'revision').get();
+  }
+  
+  getAspirantesEnCorreccion(): Promise<any> {
+    return this.usuariosCollection.where('estado.documentacion', '==', 'editando').get();
+  }
+
+  getAspirantesValidados(): Promise<any> {
+    return this.usuariosCollection.where('estado.documentacion', '==', 'valido').get();
+  }
 }
