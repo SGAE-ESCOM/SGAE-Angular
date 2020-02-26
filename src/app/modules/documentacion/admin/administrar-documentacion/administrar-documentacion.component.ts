@@ -92,7 +92,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         this._ads.updateDocumento(documento.id, result).then(data =>
-          this.toast.info("El requisito se actualizo exitosamente")
+          this.toast.info("El requisito se actualizó exitosamente")
         ).catch(error => this.toast.error(error))
       }
     });
@@ -107,9 +107,9 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   //FormGroup y FormControl getters
   finalizarFormulario(formularioRecivido: FormGroup) {
     if (formularioRecivido.invalid) {
-      this.toast.error("El formulario no es valido", "Mensaje de prueba");
+      this.toast.error("El formulario no es válido", "Mensaje de prueba");
     } else {
-      this.toast.success("El formulario es valido", "Mensaje de prueba");
+      this.toast.success("El formulario es válido", "Mensaje de prueba");
     }
   }
 

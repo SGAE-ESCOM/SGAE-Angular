@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_VALIDAR_DOCUMENTACION } from '@shared/routing-list/ListLinks';
-import { UsuarioInterface } from '@models/persona/usuario';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatSort } from '@angular/material';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-validar-documentacion',
@@ -29,10 +29,11 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
   ];
 
   filtros: any[] = [
-    { nombre: "Sin revision", valor: "revision" },
-    { nombre: "Pendiente de correccion", valor: "correccion" },
+    { nombre: "Sin revisión", valor: "revision" },
+    { nombre: "Pendiente de corrección", valor: "correccion" },
     { nombre: "Validado", valor: "validado" }
   ]
+  fcFiltro = new FormControl(this.filtros[0].valor);
 
   constructor(private _usuarioService: UsuarioService, private _toast:ToastrService) {
     BreadcrumbComponent.update(BC_VALIDAR_DOCUMENTACION);
@@ -46,7 +47,7 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
         usuarios.push(doc.data());
       });
       this.usuarios.data = usuarios;
-    }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
+    }).catch( err =>  this.mensajeError());
   }
 
   ngAfterViewInit() {
@@ -60,7 +61,6 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
 
   //Eventos
   onChangeFiltroUsuario(filtro) {
-    console.log(filtro);
     switch (filtro) {
       case this.filtros[0].valor:
         this._usuarioService.getAspirantesParaRevision().then((querySnapshot) => {
@@ -68,8 +68,8 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
           querySnapshot.forEach((doc) => {
             usuarios.push(doc.data());
           });
-          this.usuarios.data = usuarios;
-        }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
+          this.definirUsuarios(usuarios);
+        }).catch( err =>  this.mensajeError());
         break;
       case this.filtros[1].valor:
         this._usuarioService.getAspirantesEnCorreccion().then((querySnapshot) => {
@@ -77,23 +77,21 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
           querySnapshot.forEach((doc) => {
             usuarios.push(doc.data());
           });
-          this.usuarios.data = usuarios;
-        }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
+          this.definirUsuarios(usuarios);
+        }).catch( err =>  this.mensajeError());
         break;
-      case this.filtros[2].valor:
+      case this.filtros[2].valor:  
         this._usuarioService.getAspirantesValidados().then((querySnapshot) => {
           let usuarios = [];
           querySnapshot.forEach((doc) => {
             usuarios.push(doc.data());
           });
-          this.usuarios.data = usuarios;
-        }).catch( err =>  this._toast.error("Hubo un error al cargar información"));
+          this.definirUsuarios(usuarios);
+        }).catch( err =>  this.mensajeError());
         break;
       default:
         break;
     }
-    if(this.usuarios.data.length == 0)
-      this._toast.info("No hay usuarios para mostrar");
     this.updateTablaUsuarios();
   }
 
@@ -102,6 +100,16 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
     if (this.usuarios.paginator) {
       this.usuarios.paginator.firstPage();
     }
+  }
+
+  private mensajeError():void{
+    this._toast.error("Hubo un error al cargar información");
+  }
+
+  private definirUsuarios(usuarios: any[]): void{
+    if(!usuarios.length)
+      this._toast.info("No se han encontrado resultados");
+    this.usuarios.data = usuarios;
   }
 
 }

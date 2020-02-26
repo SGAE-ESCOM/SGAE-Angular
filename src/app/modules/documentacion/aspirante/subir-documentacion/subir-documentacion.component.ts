@@ -57,7 +57,7 @@ export class SubirDocumentacionComponent implements OnInit {
   //Peticiones REST
   finalizarFormulario(formularioRecivido: FormGroup) {
     if (formularioRecivido.invalid) {
-      this._toast.error("El formulario no es valido", "Mensaje de prueba");
+      this._toast.error("El formulario no es válido", "Mensaje de prueba");
     } else {
       this._swal.confirmarFinalizar('¿Deseas finalizar la documentación?');
     }

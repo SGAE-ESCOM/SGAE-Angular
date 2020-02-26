@@ -46,7 +46,7 @@ export class RegistroComponent implements OnInit {
 
   getErrorMessage() {
     return this.fgUsuario.get('email').hasError('required') ? 'Debes ingresar un valor' :
-      this.fgUsuario.get('email').hasError('email') ? 'Email no valido' :
+      this.fgUsuario.get('email').hasError('email') ? 'Email no válido' :
         '';
   }
 
