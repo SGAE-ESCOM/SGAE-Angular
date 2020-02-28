@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, CollectionReference } from '@angular/fire/firestore';
-import { TipoDato } from '@models/documentacion/tipo-dato';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { UsuarioInterface } from '@models/persona/usuario';
 
 @Injectable({
@@ -32,6 +30,10 @@ export class UsuarioService {
     );*/
   }
 
+  updateEstadoDocumentacion(usuario: UsuarioInterface, estado: string) {
+    this.usuariosCollection.doc(usuario.id).update({"estado.documentacion": estado});
+  }
+
   getAspirantes(): Promise<any> {
     return this.usuariosCollection.where('rol', '==', 'aspirante').get();
   }
@@ -39,12 +41,12 @@ export class UsuarioService {
   getAspirantesParaRevision(): Promise<any> {
     return this.usuariosCollection.where('estado.documentacion', '==', 'revision').get();
   }
-  
+
   getAspirantesEnCorreccion(): Promise<any> {
-    return this.usuariosCollection.where('estado.documentacion', '==', 'editando').get();
+    return this.usuariosCollection.where('estado.documentacion', '==', 'correccion').get();
   }
 
   getAspirantesValidados(): Promise<any> {
-    return this.usuariosCollection.where('estado.documentacion', '==', 'valido').get();
+    return this.usuariosCollection.where('estado.documentacion', '==', 'validado').get();
   }
 }
