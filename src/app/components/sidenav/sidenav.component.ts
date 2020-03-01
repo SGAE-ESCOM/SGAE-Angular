@@ -45,7 +45,7 @@ export class SidenavComponent implements OnInit {
       if (auth) {
         this._authService.findUsuario(auth.uid).subscribe((usaurio: UsuarioInterface) => {
           if (usaurio) {
-            //this._authService.setUsuarioC(usaurio);
+            this._authService.setUsuarioC(usaurio);
             this.usuario = usaurio;
             this.isLoggedIn = true;
             this.navigationLinks = LINKS_HOME[usaurio.rol]

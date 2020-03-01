@@ -57,6 +57,8 @@ export class FormularioComponent implements OnInit, OnChanges {
   private setValores(){
     Object.entries(this.valoresDefault).forEach( ([nombre,requisito]:any) => {
       this.fgFormulario.get(nombre).setValue(requisito.valor);
+      if(requisito.valido)
+        this.fgFormulario.get(nombre).disable();
     });
   }
 

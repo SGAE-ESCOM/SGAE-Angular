@@ -8,7 +8,9 @@ import { SubirDocumentacionService } from '@services/documentacion/subir-documen
 import { UsuarioInterface } from '@models/persona/usuario';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { AuthService } from '@services/auth.service';
-
+import { EstadoDocumentacion } from "@models/documentacion/enums/estado-documentacion.enum";
+import { UsuarioService } from '@services/usuario/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subir-documentacion',
@@ -18,26 +20,21 @@ import { AuthService } from '@services/auth.service';
 export class SubirDocumentacionComponent implements OnInit {
 
   private usuario: UsuarioInterface;
+  estadoDocUsuario: string;
+  estadosDoc = EstadoDocumentacion;
+  mostrarFormulario = false;
   formularioRequisito: FormGroup;
   requisitosValidos: any;
   tituloFormulario = 'Formulario de requisitos';
   requisitos: any[];
   requisitosGuardados: any;
-  //getAtributos = Object.entries;
 
-  listaRequisitos: Array<any> = [
-    { "id": "JqFqP8AhC4PmfY4zLRrp", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" }, "max": 50, "nombre": "Nombres", "requerido": true, "subtipo": "texto", "tipo": "campo" },
-    { "id": "9alPjAsQmUfUAVYqK6r2", "descripcion": "Sin tachaduras ni enmendaras", "nombre": "Acta de Nacimiento", "requerido": true, "subtipo": "pdf", "tipo": "archivo" },
-    { "id": "MOBJdY7vaN50cNUE962g", "min": 18, "nombre": "Edad", "requerido": true, "subtipo": "número", "tipo": "campo" },
-    { "id": "QKrSvodcGlR9QrnVw1Xo", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" }, "max": 50, "min": 10, "nombre": "Apellidos", "requerido": true, "subtipo": "texto", "tipo": "campo" },
-    { "id": "oUS6gWm9fItBkznvMFwU", "expresionRegular": { "espacios": false, "valor": "0-9A-ZÁ-Ú" }, "max": 18, "min": "18", "nombre": "CURP", "requerido": true, "subtipo": "texto", "tipo": "campo" },
-    { "id": "pgYSsgwBCrQh2CDK16ry", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú0-9" }, "max": 100, "min": 15, "nombre": "Calle", "requerido": true, "subtipo": "texto", "tipo": "campo" }
-  ];
-
-  constructor(private _toast: ToastrService, private _swal: SweetalertService, private _subirDoc: SubirDocumentacionService, private _authService: AuthService) {
+  constructor(private _toast: ToastrService, private _swal: SweetalertService, 
+    private _subirDoc: SubirDocumentacionService, private _authService: AuthService,
+    private _usuarioService: UsuarioService, private router: Router) {
     BreadcrumbComponent.update(BC_SUBIR_DOCUMENTACION);
-    //this.usuario = { id: 'kigHobwLkyZNYs9BXx0mJnvgaFA3', roles: { aspirante: true } }; //DEBUG
     this.usuario = this._authService.getUsuarioC();
+    this.estadoDocUsuario = this.usuario.estado.documentacion;
   }
 
   /**
@@ -48,47 +45,68 @@ export class SubirDocumentacionComponent implements OnInit {
    * 4. Pintar y continuar con el valor.
    */
   ngOnInit() {
-    /* */
-    this._subirDoc.getRequisitos().subscribe((documentos: TipoDato[]) => this.requisitos = documentos ); //PRODUCCION
-    this._subirDoc.getDocumentacion(this.usuario).subscribe( requisito => {this.requisitosGuardados = requisito;}); //PRODUCCION
-    //this.requisitos = this.listaRequisitos; //DEBUG
+    if (this.estadoDocUsuario === this.estadosDoc.INVALIDA || this.estadoDocUsuario === this.estadosDoc.CORRECCION) {
+      this.mostrarFormulario = true;
+      this._subirDoc.getRequisitos().subscribe((documentos: TipoDato[]) => {
+        this.requisitos = documentos;
+        this._subirDoc.getDocumentacion(this.usuario).subscribe(requisito => this.requisitosGuardados = requisito, err => { console.error(err) }); //PRODUCCION
+      }); //PRODUCCION
+    }
   }
 
   //Peticiones REST
   finalizarFormulario(formularioRecivido: FormGroup) {
-    if (formularioRecivido.invalid) {
-      this._toast.error("El formulario no es válido", "Mensaje de prueba");
+    if (formularioRecivido.valid) {
+      this._swal.confirmarFinalizar('¿Deseas finalizar la documentación?').then(result => {
+        if (result.value) {
+          if (this.estadoDocUsuario === EstadoDocumentacion.INVALIDA) {
+            this.requisitosValidos = this.saveRequisitos(formularioRecivido);
+          } else {
+            this.requisitosValidos = this.updateRequisitos(formularioRecivido);
+          }
+          this._subirDoc.saveDocumentacion(this.usuario, this.requisitosValidos)
+            .then(result => {
+              this._toast.info("La información se guardo correctamente");
+              this._usuarioService.updateEstadoDocumentacion(this.usuario, EstadoDocumentacion.REVISION);
+              this.router.navigate([BC_SUBIR_DOCUMENTACION.links[0].url]);
+            })
+            .catch(error => this._toast.error(error));
+        }
+      });
     } else {
-      this._swal.confirmarFinalizar('¿Deseas finalizar la documentación?');
+      this._toast.error("El formulario no es válido", "Mensaje de prueba");
     }
   }
 
   guardarFormulario(formularioRecivido: FormGroup) {
-    this.requisitosValidos = this.getRequisitosValidos(formularioRecivido);
-    this.requisitosValidos = this.addAtributoValidacion(this.requisitosValidos);
-    if (Object.keys(this.requisitosValidos).length)
+    if (this.estadoDocUsuario === EstadoDocumentacion.INVALIDA) {
+      this.requisitosValidos = this.saveRequisitos(formularioRecivido);
+    } else {
+      this.requisitosValidos = this.updateRequisitos(formularioRecivido);
+    }
+    if (Object.keys(this.requisitosValidos).length) {
       this._subirDoc.saveDocumentacion(this.usuario, this.requisitosValidos)
         .then(result => this._toast.info("La información se guardo correctamente"))
         .catch(error => this._toast.error(error));
-    else {
+    } else {
       this._toast.error("Debe existir por lo menos un valor para guardar", "Valor invalido");
     }
   }
 
-  private getRequisitosValidos(formulario: FormGroup) {
+  private saveRequisitos(formulario: FormGroup) {
     let listaRequisitosValidos = {};
     for (let [nombre, requisito] of Object.entries(formulario.controls)) {
       if (!requisito.invalid)
-        listaRequisitosValidos[nombre] = requisito.value;
+        listaRequisitosValidos[nombre] = { valor: requisito.value, valido: false };
     }
     return listaRequisitosValidos;
   }
 
-  private addAtributoValidacion(requisitos){
-    let requisitosConValidacion = {};
-    for (let [nombre, requisito] of Object.entries(requisitos)) {
-      requisitosConValidacion[nombre] = { valor: requisito, valido: false}
+  private updateRequisitos(formulario: FormGroup) {
+    for (let [nombre, requisito] of Object.entries(formulario.controls)) {
+      if (requisito.valid)
+        this.requisitosGuardados[nombre].valor = requisito.value;
     }
-    return requisitosConValidacion;
+    return Object.assign({}, this.requisitosGuardados);
   }
 }
