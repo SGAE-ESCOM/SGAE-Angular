@@ -39,7 +39,12 @@ export const BC_PAGOS = new Breadcrumb(PAGOS, [HOME]);
 
 //ETAPAS
 const ETAPAS = new NavigationLink("Gestión Etapas", "/app/etapas", "dynamic_feed", "Gestiona el orden y fecha de las etapas");
+const DEFINIR_ETAPAS = new NavigationLink("Definir Etapas", "/app/etapas/definir-etapas", "dynamic_feed", "Gestiona el orden y las etapas a usar");
+const DEFINIR_FECHAS = new NavigationLink("Definir Fechas", "/app/etapas/definir-fechas", "event_note", "Gestiona el orden y las etapas a usar");
+
 export const BC_ETAPAS = new Breadcrumb(ETAPAS, [HOME]);
+export const BC_DEFINIR_ETAPAS = new Breadcrumb(DEFINIR_ETAPAS,[HOME, ETAPAS]);
+export const BC_DEFINIR_FECHAS = new Breadcrumb(DEFINIR_FECHAS,[HOME, ETAPAS]);
 
 //USUARIOS
 const USUARIOS = new NavigationLink("Gestión Usuarios", "/app/usuarios", "people_outline", "Generación los usuarios y grupos de la aplicacion");
@@ -62,3 +67,5 @@ export const LINKS_DOCUMENTACION = {
     admin: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION],
     root: [VALIDAR_DOCUMENTACION, SUBIR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION]
 }
+
+export const LINKS_ETAPAS = [DEFINIR_ETAPAS ,DEFINIR_FECHAS];

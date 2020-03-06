@@ -1,0 +1,74 @@
+<div class="container animated-row pb-4">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card no-border mat-elevation-z3">
+                <div class="card-header text-center">
+                    <h5 class="m-0">Formulario para definir etapas</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="fgEtapasFechas" *ngIf="etapas.length != 0">
+                        <div class="row" *ngFor="let etapa of etapas; let i = index" formGroupName="{{etapa.valor}}">
+                            <hr>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <mat-label>Etapa</mat-label>
+                                    <input matInput formControlName="nombre" placeholder="Filtrar por palabra" readonly>
+                                    <mat-icon class="material-icons-outlined" matSuffix>assignment</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <mat-label>Fecha de Inicio</mat-label>
+                                    <input matInput formControlName="fechaInicio" [min]="fechaActual"
+                                        [matDatepicker]="fechaInicio" placeholder="Elige una fecha de inicio" required>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaInicio">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaInicio startView="year" [startAt]="fechaActual">
+                                    </mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <mat-label>Fecha de Termino</mat-label>
+                                    <input matInput formControlName="fechaTermino"
+                                        [min]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value"
+                                        [matDatepicker]="fechaTermino" placeholder="Elige una fecha de termino"
+                                        required>
+                                    <mat-datepicker-toggle matSuffix [for]="fechaTermino">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaTermino></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3 form-group">
+                                <mat-form-field>
+                                    <mat-label>Color</mat-label>
+                                    <mat-select formControlName="color">
+                                        <mat-option *ngFor="let color of colores" [value]="color.valor">
+                                            {{color.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="material-icons-outlined" matSuffix>color_lens</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right pt-2">
+                            <button mat-button color="info" (click)="definirFechas()">
+                                Pintar en calendario <mat-icon class="material-icons-outlined"> event_note </mat-icon>
+                            </button>
+                            <button mat-button color="success" (click)="saveFechas()">Definir <mat-icon
+                                    class="material-icons-outlined">event_available
+                                </mat-icon></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="col-12">
+            <app-calendario [dataSource]="dataSource"></app-calendario>
+        </div>
+    </div>
+
+</div>

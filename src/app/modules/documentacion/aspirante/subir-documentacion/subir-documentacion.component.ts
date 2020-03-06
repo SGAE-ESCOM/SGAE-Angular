@@ -29,7 +29,7 @@ export class SubirDocumentacionComponent implements OnInit {
   requisitos: any[];
   requisitosGuardados: any;
 
-  constructor(private _toast: ToastrService, private _swal: SweetalertService, 
+  constructor(private _toast: ToastrService, private _swal: SweetalertService,
     private _subirDoc: SubirDocumentacionService, private _authService: AuthService,
     private _usuarioService: UsuarioService, private router: Router) {
     BreadcrumbComponent.update(BC_SUBIR_DOCUMENTACION);
@@ -45,11 +45,13 @@ export class SubirDocumentacionComponent implements OnInit {
    * 4. Pintar y continuar con el valor.
    */
   ngOnInit() {
+    console.log(this.estadoDocUsuario);
     if (this.estadoDocUsuario === this.estadosDoc.INVALIDA || this.estadoDocUsuario === this.estadosDoc.CORRECCION) {
       this.mostrarFormulario = true;
       this._subirDoc.getRequisitos().subscribe((documentos: TipoDato[]) => {
         this.requisitos = documentos;
-        this._subirDoc.getDocumentacion(this.usuario).subscribe(requisito => this.requisitosGuardados = requisito, err => { console.error(err) }); //PRODUCCION
+        this._subirDoc.getDocumentacion(this.usuario).subscribe(
+          requisito => this.requisitosGuardados = requisito, err => this._toast.error("Ha ocurrido un error"));
       }); //PRODUCCION
     }
   }
@@ -66,7 +68,7 @@ export class SubirDocumentacionComponent implements OnInit {
           }
           this._subirDoc.saveDocumentacion(this.usuario, this.requisitosValidos)
             .then(result => {
-              this._toast.info("La información se guardo correctamente");
+              this._toast.success("La información se envió correctamente");
               this._usuarioService.updateEstadoDocumentacion(this.usuario, EstadoDocumentacion.REVISION);
               this.router.navigate([BC_SUBIR_DOCUMENTACION.links[0].url]);
             })
@@ -94,10 +96,10 @@ export class SubirDocumentacionComponent implements OnInit {
   }
 
   private saveRequisitos(formulario: FormGroup) {
-    let listaRequisitosValidos = {};
+    let listaRequisitosValidos = { comentarios: '', documentacion: {} };
     for (let [nombre, requisito] of Object.entries(formulario.controls)) {
       if (!requisito.invalid)
-        listaRequisitosValidos[nombre] = { valor: requisito.value, valido: false };
+        listaRequisitosValidos.documentacion[nombre] = { valor: requisito.value, valido: false };
     }
     return listaRequisitosValidos;
   }
@@ -105,7 +107,7 @@ export class SubirDocumentacionComponent implements OnInit {
   private updateRequisitos(formulario: FormGroup) {
     for (let [nombre, requisito] of Object.entries(formulario.controls)) {
       if (requisito.valid)
-        this.requisitosGuardados[nombre].valor = requisito.value;
+        this.requisitosGuardados.documentacion[nombre].valor = requisito.value;
     }
     return Object.assign({}, this.requisitosGuardados);
   }

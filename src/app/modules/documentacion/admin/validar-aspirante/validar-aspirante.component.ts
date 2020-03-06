@@ -9,6 +9,7 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { ValidarDocumentacionService } from '@services/documentacion/validar-documentacion.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
+import { EstadoDocumentacion } from "@models/documentacion/enums/estado-documentacion.enum";
 
 @Component({
   selector: 'app-validar-aspirante',
@@ -19,17 +20,18 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
 
   //Variables para las tablas
   requisitosTabla;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   //Variables de logica validacion
-  requisitosAspirante;
+  documentacionObject: any = { comentarios: '', documentacion: {} };
+  requisitosAspirante: any;
+  comentarios = '';
   requisitosValidados: any[] = [];
   private usuario: UsuarioInterface;
 
   constructor(public dialog: MatDialog,
     private _subirDocService: ValidarDocumentacionService, private _personaService: UsuarioService,
     private route: ActivatedRoute, private router: Router,
-    private _toast: ToastrService, private _swal: SweetalertService ) {
+    private _toast: ToastrService, private _swal: SweetalertService) {
     BreadcrumbComponent.update(BC_VALIDAR_DOC_ASPIRANTE);
     this.usuario = { id: this.route.snapshot.paramMap.get("id") };
   }
@@ -43,40 +45,53 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
   }
 
   //HTTP
-  onEnviarCorrecciones(){
-    this._toast.success("Se han enviado las correcciones");
-    console.log(this.usuario);
-    console.log(this.requisitosAspirante);
-    this._subirDocService.updateDocumentacion(this.usuario, this.requisitosAspirante).then( response => {
-      this._personaService.updateEstadoDocumentacion(this.usuario, 'editando');
-      this.router.navigate([BC_VALIDAR_DOC_ASPIRANTE.links[2].url]);
-    }).catch( err => this._toast.error("Ha ocurrido un error"));
+  onEnviarCorrecciones() {
+    let todosValidos = this.todosValidos();
+    if (!todosValidos) {
+      this._subirDocService.updateDocumentacion(this.usuario, this.documentacionObject).then(response => {
+        this._personaService.updateEstadoDocumentacion(this.usuario, EstadoDocumentacion.CORRECCION);
+        this._toast.success("Se han enviado las correcciones");
+        this.router.navigate([BC_VALIDAR_DOC_ASPIRANTE.links[2].url]);
+      }).catch(err => this._toast.error("Ha ocurrido un error"));
+    } else {
+      this._toast.warning("Ya todos los requisitos son validos");
+    }
   }
 
   onFinalizar() {
-    let todosValidos = true;
-    for (let i = 0; i < this.requisitosValidados.length; i++) {
-      if (todosValidos && this.requisitosValidados[i][1].valido)
-        continue;
-      else {
-        todosValidos = false;
-        break
-      }
-    }
-    if(todosValidos){
+    let todosValidos = this.todosValidos();
+    if (todosValidos) {
       this._swal.confirmarFinalizar("¿Finalizar validación de aspirante?", "No podras cambiar el estado del aspirante después.")
-      .then( valor => {
-        //console.log(BC_VALIDAR_DOC_ASPIRANTE.links[2].url);
-        this.router.navigate([BC_VALIDAR_DOC_ASPIRANTE.links[2].url]);
-      }).catch( err => this._toast.error("Ha ocurrido un error"));
-    }else{
+        .then(result => {
+          if (result.value) {
+            //let documentacionFinal = this.formatRequisitosFinal();
+            this._subirDocService.updateDocumentacion(this.usuario, this.documentacionObject).then(response => {
+              this._personaService.updateEstadoDocumentacion(this.usuario, EstadoDocumentacion.VALIDADA);
+              this._toast.success("Se han enviado las correcciones");
+              this.router.navigate([BC_VALIDAR_DOC_ASPIRANTE.links[2].url]);
+            }).catch(err => this._toast.error("Ha ocurrido un error"));
+          }
+        }).catch(err => this._toast.error("Ha ocurrido un error" + err));
+    } else {
       this._toast.error("Todos los requisitos deben ser válidos para poder finalizar");
     }
   }
 
+  private todosValidos(): boolean {
+    let todosValidos = true;
+    for (let i = 0; i < this.requisitosValidados.length; i++) {
+      if (todosValidos && this.requisitosValidados[i][1].valido)
+        continue;
+      return false;
+    }
+    return true;
+  }
+
   //Logica del frontend
   private formatearRequisitos(requisitosSinFormato) {
-    this.requisitosAspirante = requisitosSinFormato;
+    this.documentacionObject = requisitosSinFormato;
+    this.comentarios = this.documentacionObject.comentarios;
+    this.requisitosAspirante = this.documentacionObject.documentacion;
     this.requisitosValidados = Object.entries(this.requisitosAspirante);
     this.requisitosTabla = this.requisitosValidados.map(([requisito, json]: any) => {
       let requistoAux = { nombre: requisito, valor: json.valor, tipo: 'texto' };
@@ -87,21 +102,22 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
     });
   }
 
+  private formatRequisitosFinal() {
+    let documnetacionFinal = Object.assign({}, this.requisitosAspirante);
+    Object.entries(documnetacionFinal).forEach(([requisito, valor]:any) => {
+      documnetacionFinal[requisito] = valor.valor;
+    });
+    return documnetacionFinal;
+  }
+
   abrirArchivo(archivo) {
-    
     const dialogRef = this.dialog.open(ModalVerDocumentoRequisito, {
       width: '1000px',
       data: archivo
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('Cerrado')
     });
-  }
-
-  //
-  private updateTablaUsuarios(): void {
-    this.requisitosTabla = this.paginator;
   }
 }
 

@@ -1,31 +1,36 @@
 <div class="container animated-row pb-4">
     <div class="row">
-        <div class="col-12 mb-3">
-            <div class="card no-border mat-elevation-z3">
-                <div class="card-header text-center">
-                    <h5 class="m-0">Estado de mi documentación</h5>
+        <div class="col-12">
+            <div class="alert " [ngClass]="{ 'alert-danger': estadoDocUsuario === estadosDoc.INVALIDA,
+                'alert-info': estadoDocUsuario === estadosDoc.REVISION,
+                'alert-warning': estadoDocUsuario === estadosDoc.CORRECCION,
+                'alert-success': estadoDocUsuario === estadosDoc.VALIDADA  }" role="alert" [ngSwitch]="estadoDocUsuario">
+                <div class="col-12 pt-2">
+                    <h4 class="alert-heading">Estado de mi documentación</h4>
+                    <p *ngSwitchCase="estadosDoc.INVALIDA">
+                        No has subido aún información
+                    </p>
+                    <p *ngSwitchCase="estadosDoc.REVISION">
+                        Tu información está siendo validada
+                    </p>
+                    <p *ngSwitchCase="estadosDoc.CORRECCION">
+                        Debes actualizar la información que no fue validada
+                    </p>
+                    <p *ngSwitchCase="estadosDoc.VALIDADA">
+                        Tu información fue validada
+                    </p>
                 </div>
-                <div class="card-body">
-                    <div class="row" [ngSwitch]="estadoDocUsuario">
-                        <div class="col-12 text-center" *ngSwitchCase="estadosDoc.INVALIDA">
-                            <h4>No has subido aún información <span class="badge badge-danger"> {{ estadoDocUsuario | titlecase }} </span></h4>
-                        </div>
-                        <div class="col-12 text-center" *ngSwitchCase="estadosDoc.REVISION">
-                            <h4>Tu información está siendo validada <span class="badge badge-info"> {{ estadoDocUsuario | titlecase }} </span></h4>
-                        </div>
-                        <div class="col-12 text-center" *ngSwitchCase="estadosDoc.CORRECCION">
-                            <h4>Debes actualizar tu información que no fue validada <span class="badge badge-warning"> {{ estadoDocUsuario | titlecase }} </span></h4>
-                        </div>
-                        <div class="col-12 text-center" *ngSwitchCase="estadosDoc.VALIDADA">
-                            <h4>Tu información fue validada <span class="badge badge-success"> {{ estadoDocUsuario | titlecase }} </span></h4>
-                        </div>
-                    </div>
+                <div class="col-12" *ngSwitchCase="estadosDoc.CORRECCION">
+                    <hr>
+                    <p class="mb-0">{{ requisitosGuardados?.comentarios }}</p>
                 </div>
             </div>
+            <br>
         </div>
         <div class="col-12" *ngIf="mostrarFormulario">
-            <app-formulario [titulo]='tituloFormulario' [documentos]="requisitos" [valoresDefault]='requisitosGuardados'
-                (finalizarForm)="finalizarFormulario($event)" (guardarForm)="guardarFormulario($event)">
+            <app-formulario [titulo]='tituloFormulario' [documentos]="requisitos"
+                [valoresDefault]='requisitosGuardados?.documentacion' (finalizarForm)="finalizarFormulario($event)"
+                (guardarForm)="guardarFormulario($event)">
             </app-formulario>
         </div>
     </div>

@@ -47,6 +47,6 @@ export class UsuarioService {
   }
 
   getAspirantesValidados(): Promise<any> {
-    return this.usuariosCollection.where('estado.documentacion', '==', 'validado').get();
+    return this.usuariosCollection.where('estado.documentacion', '==', 'validada').get();
   }
 }
