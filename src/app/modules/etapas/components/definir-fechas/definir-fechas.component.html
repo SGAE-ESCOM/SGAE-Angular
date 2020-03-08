@@ -1,6 +1,16 @@
 <div class="container animated-row pb-4">
-
     <div class="row">
+        <div class="col-12" *ngIf="!existDefinirEtapas">
+            <div class="alert alert-warning" role="alert">
+                <div class="col-12 pt-2">
+                    <h4 class="alert-heading">No se han definido aún las etapas</h4>
+                    <a mat-flat-button color="warning" [routerLink]="linkDefinirEtapas" >Definir etapas <mat-icon>navigate_next</mat-icon></a>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="row" *ngIf="existDefinirEtapas">
         <div class="col-12">
             <div class="card no-border mat-elevation-z3">
                 <div class="card-header text-center">

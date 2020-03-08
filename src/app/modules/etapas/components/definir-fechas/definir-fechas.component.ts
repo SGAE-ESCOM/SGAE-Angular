@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_DEFINIR_FECHAS } from "@routing/ListLinks";
+import { BC_DEFINIR_FECHAS, BC_DEFINIR_ETAPAS } from "@routing/ListLinks";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
@@ -23,9 +23,9 @@ export class DefinirFechasComponent implements OnInit {
   dataSource: CalendarData[];
   etapas = [];
   colores = [{ nombre: 'Verde', valor: '28a745' }, { nombre: 'Azul', valor: '17a2b8' }, { nombre: 'Amarillo', valor: 'ffc107' }, { nombre: 'Rojo', valor: 'dc3545' }, { nombre: 'Morado', valor: 'BB8FCE' }, { nombre: 'Naranja', valor: 'F5B041' }];
-
-  //PRUEBA
-  estadoAspirante = { documentacion: "invalida", evaluacionConocimientos: "invalida", publicacionResultados: "invalida", pagos: "invalida" };
+  //Logica
+  existDefinirEtapas = true;
+  linkDefinirEtapas = BC_DEFINIR_ETAPAS.title.url;
 
   constructor(private _fb: FormBuilder, private _etapaService: EtapasService,
     private _toast: ToastrService, private _swal: SweetalertService) {
@@ -33,13 +33,13 @@ export class DefinirFechasComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.etapas = this.getEtapasSeleccionadas(this.estadoAspirante);
     this._etapaService.getEstadosAspirante().then(estadosAspirante => {
       if (estadosAspirante.exists) {
         this.etapas = this.getEtapasSeleccionadas(estadosAspirante.data());
         this.etapas.unshift( ETAPAS[0] );
         this.llenarFormulario();
       } else {
+        this.existDefinirEtapas = false;
         this._toast.warning("Aún no se han definido las etapas que se usaran");
       }
     });
