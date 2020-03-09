@@ -48,8 +48,12 @@ export const BC_DEFINIR_FECHAS = new Breadcrumb(DEFINIR_FECHAS,[HOME, ETAPAS]);
 
 //USUARIOS
 const USUARIOS = new NavigationLink("Gestión Usuarios", "/app/usuarios", "people_outline", "Generación los usuarios y grupos de la aplicacion");
-export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
+const GESTION_ADMON = new NavigationLink("Gestión Administradores", "/app/usuarios/gestion-admon", "people_outline", "Gestión de los administradores de la institución");
+const GESTION_ASPIRANTES = new NavigationLink("Gestión Aspirantes", "/app/usuarios/gestion-aspirantes", "people_outline", "Gestión de los aspirantes registrados");
 
+export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
+export const BC_GESTION_ADMON = new Breadcrumb(GESTION_ADMON, [HOME, USUARIOS]);
+export const BC_GESTION_ASPIRANTES = new Breadcrumb(GESTION_ASPIRANTES, [HOME, USUARIOS]);
 /**
  * Links para los aspirantes
  */
@@ -69,3 +73,5 @@ export const LINKS_DOCUMENTACION = {
 }
 
 export const LINKS_ETAPAS = [DEFINIR_ETAPAS ,DEFINIR_FECHAS];
+
+export const LINKS_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
