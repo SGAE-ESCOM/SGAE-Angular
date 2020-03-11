@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Etapa } from '@models/etapas/etapa';
 
 @Injectable({
   providedIn: 'root'
@@ -8,28 +9,54 @@ import { map } from 'rxjs/operators';
 export class EtapasService {
 
   private etapasCollection: AngularFirestoreCollection<any>;
-  
-  constructor(private firestore: AngularFirestore) {
-    this.etapasCollection = firestore.collection<any>('EstadosAspirante');
+  private fechasEtapasCollection: AngularFirestoreCollection<any>;
+  private batch: firebase.firestore.WriteBatch;
+
+  constructor(private db: AngularFirestore, private data: AngularFireDatabase) {
+    this.etapasCollection = db.collection<any>('EstadosAspirante');
+    this.fechasEtapasCollection = db.collection<any>('FechasEstapas');
   }
 
-  //CRUD
+  //CRUD EESTADOS_ASPIRANTE
   saveEstadosAspirante(estadosAspirante: any) {
     return this.etapasCollection.doc('estado').set( estadosAspirante );
   }
 
   getEstadosAspirante() {
     return this.etapasCollection.doc('estado').get().toPromise();
-    /*return this.etapasCollection
-      .snapshotChanges()
-      .pipe(
-        map(actions =>
-          actions.map(a => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          })
-        )
-    );*/
+  }
+
+  //CRUD FECHAS
+  saveFechasEtapas(fechas:any[]): Promise<any>{
+    this.batch = this.db.firestore.batch();
+    let fechasFormateada = this.convertFecha(fechas);    
+    Object.entries(fechas).forEach( ([nombre, etapa]:any) => {
+      const etapaRef: any = this.db.collection("FechasEstapas").doc<any>(nombre).ref;
+      this.batch.set(etapaRef, etapa);
+    });
+    return this.batch.commit();
+  }
+
+  getFechasEtapas(){
+    return this.fechasEtapasCollection.get().toPromise();
+  }
+
+  deleteAllFechas(etapas: Etapa[]){
+    this.batch = this.db.firestore.batch();
+    etapas.forEach( etapa => {
+      const etapaRef: any = this.db.collection("FechasEstapas").doc<any>(etapa.valor).ref;
+      this.batch.delete(etapaRef);
+    });
+    return this.batch.commit();
+  }
+
+  //LOGICA DEL SERVICE
+  private convertFecha( fechas:any ){
+    return Object.entries(fechas).map( ([nombre, etapa]:any) => {
+      etapa.fechaInicio = new Date(etapa.fechaInicio).getTime();
+      etapa.fechaTermino = new Date(etapa.fechaTermino).getTime();
+      etapa.color = etapa.color.nombre;
+      return etapa;
+    });
   }
 }

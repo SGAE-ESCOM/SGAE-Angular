@@ -6,7 +6,8 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
 import { CalendarData } from '@shared/components/calendario/interfaces/calendar-data';
 import { fadeInOutDown } from '@shared/animations/router.animations';
-import { ETAPAS_BUSCAR, ETAPAS } from '@models/etapas/etapa.enum';
+import { ETAPAS, ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
+import { COLORES_ETAPAS, BUSCAR_COLOR_ETAPAS } from "@models/etapas/colores-etapa.enum";
 import { EtapasService } from '@services/etapas/etapas.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class DefinirFechasComponent implements OnInit {
   fechaActual = new Date();
   dataSource: CalendarData[];
   etapas = [];
-  colores = [{ nombre: 'Verde', valor: '28a745' }, { nombre: 'Azul', valor: '17a2b8' }, { nombre: 'Amarillo', valor: 'ffc107' }, { nombre: 'Rojo', valor: 'dc3545' }, { nombre: 'Morado', valor: 'BB8FCE' }, { nombre: 'Naranja', valor: 'F5B041' }];
+  colores = COLORES_ETAPAS
+
   //Logica
   existDefinirEtapas = true;
   linkDefinirEtapas = BC_DEFINIR_ETAPAS.title.url;
@@ -38,6 +40,13 @@ export class DefinirFechasComponent implements OnInit {
         this.etapas = this.getEtapasSeleccionadas(estadosAspirante.data());
         this.etapas.unshift( ETAPAS[0] );
         this.llenarFormulario();
+        this._etapaService.getFechasEtapas().then( querySnapshot => {
+          console.log(querySnapshot);
+          if (!querySnapshot.empty){
+            querySnapshot.forEach( doc => this.llenarDatos(doc.id, doc.data()) );
+            this.definirFechas();
+          }
+        }).catch(err =>  err);
       } else {
         this.existDefinirEtapas = false;
         this._toast.warning("Aún no se han definido las etapas que se usaran");
@@ -53,9 +62,10 @@ export class DefinirFechasComponent implements OnInit {
           name: valor.nombre,
           startDate: new Date(valor.fechaInicio),
           endDate: new Date(valor.fechaTermino),
-          color: valor.color
+          color: valor.color.valor
         }
       });
+      console.log(this.dataSource);
     } else {
       this._toast.error("Llena todos los elementos requeridos")
     }
@@ -67,22 +77,18 @@ export class DefinirFechasComponent implements OnInit {
       nombre: [etapa.nombre],
       fechaInicio: ['', Validators.required],
       fechaTermino: ['', Validators.required],
-      color: [this.colores[index+1].valor, Validators.required],
+      color: [this.colores[index+1], Validators.required],
     })));
   }
 
   // HTTPS
   saveFechas() {
     if (this.fgEtapasFechas.valid) {
-      this.dataSource = Object.entries(this.fgEtapasFechas.value).map(([atributo, valor]: any, index) => {
-        return {
-          id: index,
-          name: valor.nombre,
-          startDate: new Date(valor.fechaInicio),
-          endDate: new Date(valor.fechaTermino),
-          color: valor.color
-        }
-      });
+      this.definirFechas();
+      console.log(this.fgEtapasFechas.value);
+      this._etapaService.saveFechasEtapas(this.fgEtapasFechas.value).then( res => {
+        this._toast.success("Fechas establecidas correctamente");
+      }).catch( err => { this._toast.error("Ha ocurrido un error")});
     } else {
       this._toast.error("Invalido", "Llena todos los elementos requeridos")
     }
@@ -90,5 +96,11 @@ export class DefinirFechasComponent implements OnInit {
 
   private getEtapasSeleccionadas(etapas) {
     return Object.entries(etapas).map(([nombre]: any) => ETAPAS_BUSCAR[nombre]);
+  }
+
+  private llenarDatos(nombre: string, etapa:any){
+    this.fgEtapasFechas.get(nombre).get('fechaInicio').setValue(new Date(etapa.fechaInicio));
+    this.fgEtapasFechas.get(nombre).get('fechaTermino').setValue(new Date(etapa.fechaTermino));    
+    this.fgEtapasFechas.get(nombre).get('color').patchValue( BUSCAR_COLOR_ETAPAS[etapa.color]);
   }
 }

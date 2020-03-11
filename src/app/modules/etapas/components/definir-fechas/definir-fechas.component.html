@@ -54,8 +54,8 @@
                                 <mat-form-field>
                                     <mat-label>Color</mat-label>
                                     <mat-select formControlName="color">
-                                        <mat-option *ngFor="let color of colores" [value]="color.valor">
-                                            {{color.nombre}}
+                                        <mat-option *ngFor="let color of colores" [value]="color">
+                                            {{color.nombre | titlecase }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="material-icons-outlined" matSuffix>color_lens</mat-icon>

@@ -3,22 +3,26 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_DEFINIR_ETAPAS } from "@routing/ListLinks";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ETAPAS_ESTADO_ASPIRANTE, ETAPAS } from '@models/etapas/etapa.enum';
+import { ETAPAS_ESTADO_ASPIRANTE, ETAPAS, ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
 import { EtapasService } from '@services/etapas/etapas.service';
 import { Router } from '@angular/router';
+import { fadeInDown } from '@shared/animations/router.animations';
 
 @Component({
   selector: 'app-definir-etapas',
   templateUrl: './definir-etapas.component.html',
-  styleUrls: ['./definir-etapas.component.scss']
+  styleUrls: ['./definir-etapas.component.scss'],
+  animations: [ fadeInDown() ],
 })
 export class DefinirEtapasComponent implements OnInit {
 
   //Variables del Stepper
   isLinear = true;
-
+  //Variables para EtapasPrevias
+  existDefinirEtapas = false;
+  etapasPrevias = [];
   //Formularios
   fgEtapaUsar: FormGroup;
   etapasDisponibles = ETAPAS_ESTADO_ASPIRANTE;
@@ -32,14 +36,17 @@ export class DefinirEtapasComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
-
-  // HTTPS
-  saveEtapas() {
-
+  ngOnInit() {
+    this._etapaService.getEstadosAspirante().then(estadosAspirante => {
+      if (estadosAspirante.exists) {
+        this.etapasPrevias = this.getEtapasSeleccionadas(estadosAspirante.data());
+        this.etapasPrevias.unshift( ETAPAS[0] );
+        this.existDefinirEtapas = true;
+      }
+    });
   }
 
-  //Logica del Frontend
+  // HTTPS 
   finalizarStepper() {
     this._swal.confirmarFinalizar('¿Estás seguro de finalizar la gestión de etapas?').then(
       result => {
@@ -48,6 +55,10 @@ export class DefinirEtapasComponent implements OnInit {
           this._etapaService.saveEstadosAspirante(estadoParaAspirantes).then( result =>{
             this.router.navigate([BC_DEFINIR_ETAPAS.links[1].url]);
           }).catch( err => this._toast.error("Ha ocurrido un error"));
+          if(this.existDefinirEtapas){
+            this._etapaService.deleteAllFechas(this.etapasPrevias).then(result => result)
+            .catch( err => this._toast.error("Ha ocurrido un error"));
+          }
         }
       }
     );
@@ -73,5 +84,9 @@ export class DefinirEtapasComponent implements OnInit {
       estadoAspirante[etapa.valor] = "invalida";
     });
     return estadoAspirante;
+  }
+
+  private getEtapasSeleccionadas(etapas) {
+    return Object.entries(etapas).map(([nombre]: any) => ETAPAS_BUSCAR[nombre]);
   }
 }

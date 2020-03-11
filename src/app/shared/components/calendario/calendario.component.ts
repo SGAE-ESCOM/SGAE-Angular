@@ -49,7 +49,6 @@ export class CalendarioComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['dataSource'] && this.dataSource != null) {
-      console.log("=== ESTOY EN EL CHANGE ===");
       this.initCalendar();
       this.renderData();
     }
@@ -117,7 +116,6 @@ export class CalendarioComponent implements OnInit, OnChanges {
   //Other implementation
   renderData() {
     if (this.dataSource != null && this.dataSource.length > 0) {
-      console.table(this.dataSource);
       this.dataSource.forEach((data: CalendarData) => {
         let startMonth = data.startDate.getMonth();
         let endMonth = data.endDate.getMonth();
