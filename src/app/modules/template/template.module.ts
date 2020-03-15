@@ -1,13 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-/* Routing */
 import { TemplateRoutingModule } from './template-routing.module';
-import { MatIconModule } from '@angular/material/icon';
-import { AngularMaterialModule } from './angular-material.module';
-
-/* Components */
+import { CardsModule } from '@shared/cards/cards.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
@@ -16,11 +10,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     CommonModule,
-    MatIconModule,
-    AngularMaterialModule,
     TemplateRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
+    CardsModule
   ]
 })
 export class TemplateModule { }

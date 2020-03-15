@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { ALPHANUMERICO_CON_ESPACIOS } from '@shared/validators/regex';
+import { ALPHANUMERICO_CON_ESPACIOS, REGEX_MAYUSCULAS, REGEX_MINUSCULAS, REGEX_NUMEROS } from '@shared/validators/regex';
 import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/animations/router.animations';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
@@ -42,11 +42,6 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   nombreOpcion = new FormControl('', Validators.required);
   objectKeys = Object.keys;
 
-  //Variables para expresiones regulares
-  private readonly REGEX_MAYUSCULAS = 'A-ZÁ-Ú';
-  private readonly REGEX_MINUSCULAS = 'a-zá-ú';
-  private readonly REGEX_NUMEROS = '0-9';
-
   constructor(private _fb: FormBuilder) {
     this.initForm();
   }
@@ -54,9 +49,9 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.opcMin.valueChanges.subscribe(valor => valor ? this.min.enable() : this.min.disable());
     this.opcMax.valueChanges.subscribe(valor => valor ? this.max.enable() : this.max.disable());
-    this.opcLetraMayuscula.valueChanges.subscribe(valor => valor ? this.addExpresion(this.REGEX_MAYUSCULAS) : this.removeExpresion(this.REGEX_MAYUSCULAS));
-    this.opcLetraMinuscula.valueChanges.subscribe(valor => valor ? this.addExpresion(this.REGEX_MINUSCULAS) : this.removeExpresion(this.REGEX_MINUSCULAS));
-    this.opcNumeros.valueChanges.subscribe(valor => valor ? this.addExpresion(this.REGEX_NUMEROS) : this.removeExpresion(this.REGEX_NUMEROS));
+    this.opcLetraMayuscula.valueChanges.subscribe(valor => valor ? this.addExpresion(REGEX_MAYUSCULAS) : this.removeExpresion(REGEX_MAYUSCULAS));
+    this.opcLetraMinuscula.valueChanges.subscribe(valor => valor ? this.addExpresion(REGEX_MINUSCULAS) : this.removeExpresion(REGEX_MINUSCULAS));
+    this.opcNumeros.valueChanges.subscribe(valor => valor ? this.addExpresion(REGEX_NUMEROS) : this.removeExpresion(REGEX_NUMEROS));
     this.opcExpresionRegular.valueChanges.subscribe(
       valor => valor ?
         this.disableControles([this.opcEspacios]) : this.enableControles([this.opcEspacios]));
@@ -196,8 +191,6 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
     console.log(this.requisito);
     this.fgGeneral.get('nombre').setValue(requisito.nombre);
     this.fgGeneral.get('requerido').setValue(requisito.requerido);
-    //this.fgGeneral.get('tipo').setValue(requisito.tipo);
-    //this.fgGeneral.get('subtipo').setValue(requisito.subtipo);
     this.tipo.patchValue(requisito.tipo);
     this.onChangeTipo(requisito.tipo);
     this.subtipo.patchValue(requisito.subtipo);
@@ -206,18 +199,19 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
       case OPC_TIPO_DATO.CAMPO: {
         if (requisito.min != null) {
           this.opcMin.setValue(true); this.min.enable(); this.min.setValue(requisito.min);
-        } if (requisito.max != null) {
+        }
+        if (requisito.max != null) {
           this.opcMax.setValue(true); this.max.enable(); this.max.setValue(requisito.max);
         }
         if (requisito.subtipo == OPC_CAMPO.TEXTO) {
           this.offToggels([this.opcLetraMayuscula, this.opcLetraMinuscula, this.opcNumeros]);
           let expresion: string = requisito.expresionRegular.valor;
           if (requisito.expresionRegular.espacios != null) {
-            if (expresion.includes(this.REGEX_MAYUSCULAS)) {
+            if (expresion.includes(REGEX_MAYUSCULAS)) {
               this.opcLetraMayuscula.setValue(true);
-            } if (expresion.includes(this.REGEX_MINUSCULAS)) {
+            } if (expresion.includes(REGEX_MINUSCULAS)) {
               this.opcLetraMinuscula.setValue(true);
-            } if (expresion.includes(this.REGEX_NUMEROS)) {
+            } if (expresion.includes(REGEX_NUMEROS)) {
               this.opcNumeros.setValue(true);
             }
             if (requisito.expresionRegular.espacios) {

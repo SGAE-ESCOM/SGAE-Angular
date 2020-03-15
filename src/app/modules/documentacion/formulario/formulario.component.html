@@ -15,7 +15,7 @@
                                 Este campo es requerido
                             </mat-error>
                             <mat-error *ngIf="fgFormulario.get(documento.nombre).hasError('pattern')">
-                                No se permiten espacios al inicio ni al final
+                                {{ getErrorPattern( fgFormulario.get(documento.nombre), documento ) }}
                             </mat-error>
                             <mat-error *ngIf="fgFormulario.get(documento.nombre).touched && fgFormulario.get(documento.nombre).hasError('minlength')">
                                 El mínimo número de caracteres es de {{ documento.min }}

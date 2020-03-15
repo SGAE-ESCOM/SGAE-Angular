@@ -53,6 +53,7 @@ export class DefinirEtapasComponent implements OnInit {
         if (result.value) {
           let estadoParaAspirantes = this.createEstadoAspirante();
           this._etapaService.saveEstadosAspirante(estadoParaAspirantes).then( result =>{
+            this._toast.success("Etapas definidas y seleccionadas correctamente");
             this.router.navigate([BC_DEFINIR_ETAPAS.links[1].url]);
           }).catch( err => this._toast.error("Ha ocurrido un error"));
           if(this.existDefinirEtapas){

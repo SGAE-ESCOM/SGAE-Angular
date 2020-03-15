@@ -6,11 +6,7 @@ import { OPC_ARCHIVO } from '@models/documentacion/enums/enum-tipo-archivo.enum'
 import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.enum'
 import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-
-interface KeyValue{
-  key: any;
-  value: any;
-}
+import { REGEX_MAYUSCULAS, REGEX_NUMEROS, REGEX_MINUSCULAS } from '@shared/validators/regex';
 
 @Component({
   selector: 'app-formulario',
@@ -50,6 +46,46 @@ export class FormularioComponent implements OnInit, OnChanges {
     }
   }
 
+  enviarFormulario(formulario) {
+    this.finalizarForm.emit(formulario);
+  }
+
+  guardarFormulario(formulario){
+    this.guardarForm.emit(formulario);
+  }
+
+  /* Eventos */
+  handleUpload(event: any, documento) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let jsonFile = {
+          nombre: file.name,
+          archivo: reader.result
+        };
+        this.fgFormulario.get(documento).patchValue(jsonFile);
+      };
+    }
+  }
+
+  getErrorPattern( formControl : FormControl, documento: any){
+    let error = '';
+    let patron = formControl.validator( formControl ).pattern.requiredPattern;
+    if( documento.expresionRegular.espacios == null ){
+      error+=`Debe coincidir con la expresion ${documento.expresionRegular.valor}`;
+    }else{
+      error = 'Sólo ';
+      if(patron.includes(REGEX_MAYUSCULAS)){ error+='mayúsculas, ' }
+      if(patron.includes(REGEX_MINUSCULAS)){ error+='minúsculas, ' }
+      if(patron.includes(REGEX_NUMEROS)){ error+='números, ' }
+      if(patron.includes(' ')){ error+= 'y sin espacios al inicio y final' }else { error+= 'y sin espacios' }  
+    }
+    return error;
+  }
+
+  /* Logica Formularios */
   initForm() {
     this.fgFormulario = this.fg.group({});
   }
@@ -62,7 +98,7 @@ export class FormularioComponent implements OnInit, OnChanges {
     });
   }
 
-  validarFormulario(documento): FormControl {
+  private validarFormulario(documento): FormControl {
     let validadores = [];
     if (documento.requerido)
       validadores.push(Validators.required);
@@ -104,29 +140,6 @@ export class FormularioComponent implements OnInit, OnChanges {
       }
     }
     return new FormControl('', validadores);
-  }
-
-  enviarFormulario(formulario) {
-    this.finalizarForm.emit(formulario);
-  }
-
-  guardarFormulario(formulario){
-    this.guardarForm.emit(formulario);
-  }
-
-  handleUpload(event: any, documento) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        let jsonFile = {
-          nombre: file.name,
-          archivo: reader.result
-        };
-        this.fgFormulario.get(documento).patchValue(jsonFile);
-      };
-    }
   }
   
 }

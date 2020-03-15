@@ -9,6 +9,7 @@ import { fadeInOutDown } from '@shared/animations/router.animations';
 import { ETAPAS, ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
 import { COLORES_ETAPAS, BUSCAR_COLOR_ETAPAS } from "@models/etapas/colores-etapa.enum";
 import { EtapasService } from '@services/etapas/etapas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-definir-fechas',
@@ -30,7 +31,7 @@ export class DefinirFechasComponent implements OnInit {
   linkDefinirEtapas = BC_DEFINIR_ETAPAS.title.url;
 
   constructor(private _fb: FormBuilder, private _etapaService: EtapasService,
-    private _toast: ToastrService, private _swal: SweetalertService) {
+    private _toast: ToastrService, private _swal: SweetalertService, private router: Router) {
     BreadcrumbComponent.update(BC_DEFINIR_FECHAS);
   }
 
@@ -64,8 +65,7 @@ export class DefinirFechasComponent implements OnInit {
           endDate: new Date(valor.fechaTermino),
           color: valor.color.valor
         }
-      });
-      console.log(this.dataSource);
+      });      
     } else {
       this._toast.error("Llena todos los elementos requeridos")
     }
@@ -85,10 +85,14 @@ export class DefinirFechasComponent implements OnInit {
   saveFechas() {
     if (this.fgEtapasFechas.valid) {
       this.definirFechas();
-      console.log(this.fgEtapasFechas.value);
-      this._etapaService.saveFechasEtapas(this.fgEtapasFechas.value).then( res => {
-        this._toast.success("Fechas establecidas correctamente");
-      }).catch( err => { this._toast.error("Ha ocurrido un error")});
+      this._swal.confirmarFinalizar('¿Está seguro de finalizar las fechas de cada una de las etapas?').then( result =>{
+        if(result.value){
+          this._etapaService.saveFechasEtapas(this.fgEtapasFechas.value).then( res => {
+            this._toast.success("Fechas establecidas correctamente");
+            this.router.navigate([BC_DEFINIR_ETAPAS.links[1].url]);
+          }).catch( err => { this._toast.error("Ha ocurrido un error")});
+        }
+      });
     } else {
       this._toast.error("Invalido", "Llena todos los elementos requeridos")
     }

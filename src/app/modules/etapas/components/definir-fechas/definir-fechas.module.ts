@@ -17,9 +17,8 @@ import { DefinirFechasComponent } from './definir-fechas.component';
   imports: [
     CommonModule,
     DefinirFechasRoutingModule,
+    FormsModule, ReactiveFormsModule,
     AngularMaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
     CalendarioModule,
     MatDatepickerModule,
     MatDatepickerModule,
