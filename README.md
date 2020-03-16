@@ -1,14 +1,12 @@
 # Sistema de Gestión de Admisión Escolar
 
-Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
-
-Actualizado a la version 9.0.5.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3. Actualizado a la version 9.0.5.
 
 ## Indice
 
 1. [Entorno](#entorno)
 1. [Uso del proyecto](#uso-del-proyecto)
-1. 
+1. [Deploy del proyecto](#deploy)
 1. [Guia de Github](#guia-de-Github)
 
 ## Entorno
