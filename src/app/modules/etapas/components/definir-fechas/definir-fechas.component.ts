@@ -45,7 +45,7 @@ export class DefinirFechasComponent implements OnInit {
           console.log(querySnapshot);
           if (!querySnapshot.empty){
             querySnapshot.forEach( doc => this.llenarDatos(doc.id, doc.data()) );
-            this.definirFechas();
+            this.pintarFechas();
           }
         }).catch(err =>  err);
       } else {
@@ -55,7 +55,33 @@ export class DefinirFechasComponent implements OnInit {
     });
   }
 
-  definirFechas() {
+  // HTTPS
+  saveFechas() {
+    if (this.fgEtapasFechas.valid) {
+      if( this.menoresConvocatoria() ){
+        this.pintarFechas();
+        this._swal.confirmarFinalizar('¿Está seguro de finalizar las fechas de cada una de las etapas?').then( result =>{
+          if(result.value){
+            this._etapaService.saveFechasEtapas(this.fgEtapasFechas.value).then( res => {
+              this._toast.success("Fechas establecidas correctamente");
+              this.router.navigate([BC_DEFINIR_ETAPAS.links[1].url]);
+            }).catch( err => { this._toast.error("Ha ocurrido un error")});
+          }
+        });
+      }
+    } else {
+      this._toast.error("Invalido", "Llena todos los elementos requeridos")
+    }
+  }
+
+  definirFechas(){
+    if( this.menoresConvocatoria() ){
+      this.pintarFechas();
+    }
+  }
+
+  //Lógica del componente
+  pintarFechas() {
     if (this.fgEtapasFechas.valid) {
       this.dataSource = Object.entries(this.fgEtapasFechas.value).map(([atributo, valor]: any, index) => {
         return {
@@ -65,13 +91,13 @@ export class DefinirFechasComponent implements OnInit {
           endDate: new Date(valor.fechaTermino),
           color: valor.color.valor
         }
-      });      
+      });
     } else {
       this._toast.error("Llena todos los elementos requeridos")
     }
   }
 
-  llenarFormulario() {
+  private llenarFormulario() {
     this.fgEtapasFechas = new FormGroup({});
     this.etapas.forEach((etapa, index) => this.fgEtapasFechas.addControl(etapa.valor, this._fb.group({
       nombre: [etapa.nombre],
@@ -81,21 +107,17 @@ export class DefinirFechasComponent implements OnInit {
     })));
   }
 
-  // HTTPS
-  saveFechas() {
-    if (this.fgEtapasFechas.valid) {
-      this.definirFechas();
-      this._swal.confirmarFinalizar('¿Está seguro de finalizar las fechas de cada una de las etapas?').then( result =>{
-        if(result.value){
-          this._etapaService.saveFechasEtapas(this.fgEtapasFechas.value).then( res => {
-            this._toast.success("Fechas establecidas correctamente");
-            this.router.navigate([BC_DEFINIR_ETAPAS.links[1].url]);
-          }).catch( err => { this._toast.error("Ha ocurrido un error")});
-        }
-      });
-    } else {
-      this._toast.error("Invalido", "Llena todos los elementos requeridos")
-    }
+  private menoresConvocatoria(){
+    let inicioConvocatoria = (new Date(this.fgEtapasFechas.value['convocatoria'].fechaInicio)).getTime();
+    let estatus = true;
+    Object.entries(this.fgEtapasFechas.value).slice(1).forEach(([atributo, etapa]: any) => {
+      let inicioEtapa = (new Date(etapa.fechaInicio) ).getTime();
+      if(inicioEtapa < inicioConvocatoria ){
+        this._toast.error(`La etapa ${etapa.nombre} no debe iniciar antes de convocatoria`);
+        estatus = false;
+      }
+    });
+    return estatus;
   }
 
   private getEtapasSeleccionadas(etapas) {
