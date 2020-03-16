@@ -28,15 +28,6 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
 
   //Variables para Vista previa
   tituloVistaPrevia = 'Prueba de formulario para aspirante';
-  listaRequisitos = [ //DEBUG
-    { "id": "1", "nombre": "Nombres", "requerido": true, "tipo": "campo", "subtipo": "texto", "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" } },
-    { "id": "2", "nombre": "Nickname", "requerido": true, "tipo": "campo", "subtipo": "texto", "max": 5, "expresionRegular": { "espacios": false, "valor": "a-zá-úA-ZÁ-Ú0-9" } },
-    { "id": "3", "nombre": "CURP", "requerido": true, "tipo": "campo", "subtipo": "texto", "min": 18, "max": 18, "expresionRegular": { "espacios": false, "valor": "0-9A-ZÁ-Ú" } },
-    { "id": "4", "nombre": "Edad", "requerido": true, "tipo": "campo", "subtipo": "número", "min": 18 },
-    { "id": "5", "nombre": "Genero", "requerido": true, "tipo": "seleccion", "subtipo": "unica", "opciones": { "Hombre": "Hombre", "Mujer": "Mujer", "Otro": "Otro" } },
-    { "id": "6", "nombre": "Acta de Nacimiento PDF", "requerido": true, "tipo": "archivo", "subtipo": "pdf", "descripcion": "Archivos menores a 215 KB" },
-    { "id": "7", "nombre": "Fecha egreso Min-Max", "requerido": true, "tipo": "fecha", "subtipo": "rango", "fechaMin": "2020-01-09T06:00:00.000Z", "fechaMax": "2020-01-23T06:00:00.000Z" },
-  ];
 
   constructor(private _fb: FormBuilder, private toast: ToastrService, private _swal: SweetalertService, private _ads: AdministrarDocumentacionService,
     public dialog: MatDialog) {
@@ -45,7 +36,6 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
 
   ngOnInit() {
     this._ads.getDocumentos().subscribe((documentos: TipoDato[]) => this.documentos.data = documentos); //PRODUCCION
-    //this.documentos.data = this.listaRequisitos; // DEBUG
   }
 
   ngAfterViewInit() {
@@ -62,14 +52,26 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
 
   //Peticiones HTTP
   addTipoDato(formulario: FormGroup) {
-    if (formulario.valid) {
-      this._ads.saveDocumento(formulario.value).then(() => {
-        this.toast.success("Se agrego correctamente")
-        this.updateTablaRequerimiento();
-      }).catch(err => this.toast.error(err, 'Error'));
+    if (formulario.valid) { 
+      if(formulario.get('opciones').status === 'DISABLED'){
+        this.saveRequisito(formulario.value);
+      }else{
+        if( Object.keys( formulario.get('opciones').value ).length != 0 ){
+          this.saveRequisito(formulario.value);
+        }else{
+          this.toast.error("Debe existir al menos una opción");
+        }
+      }
     } else {
       this.toast.error("Llena todos los campos requeridos");
     }
+  }
+
+  private saveRequisito( requisito ){
+    this._ads.saveDocumento( requisito ).then(() => {
+      this.toast.success("Se agrego correctamente")
+      this.updateTablaRequerimiento();
+    }).catch(err => this.toast.error(err, 'Error'));
   }
 
   deleteDocumento(elemento: any) {
