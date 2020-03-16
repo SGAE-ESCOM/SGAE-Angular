@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DefinirEtapasRoutingModule } from './definir-etapas-routing.module';
 import { AngularMaterialButtonModule } from '@modules/template/angular-material-button.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatStepperModule } from '@angular/material/stepper';
 
@@ -17,6 +18,7 @@ import { DefinirEtapasComponent } from './definir-etapas.component';
     DefinirEtapasRoutingModule,
     FormsModule, ReactiveFormsModule,
     AngularMaterialButtonModule,
+    MatListModule,
     DragDropModule,
     MatStepperModule
   ]
