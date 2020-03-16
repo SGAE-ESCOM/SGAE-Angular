@@ -50,10 +50,12 @@ npm install
 npm uninstall -g @angular/cli
 npm cache verify
 ```
-1. Actualizar dependencias del proyecto
+1. Actualizar CLI dependencias del proyecto
 ```
 ng update @angular/core @angular/cli
+ng update @angular/cdk @angular/material
 ```
+
 
 ### Configurar alias para git
 
