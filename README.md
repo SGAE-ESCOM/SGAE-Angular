@@ -2,7 +2,7 @@
 
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
 
-Actualisado a la version 8.3.19.
+Actualizado a la version 9.0.5.
 
 ## Indice
 

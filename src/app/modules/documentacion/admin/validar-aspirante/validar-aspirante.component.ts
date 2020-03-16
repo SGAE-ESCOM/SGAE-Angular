@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/co
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_VALIDAR_DOC_ASPIRANTE } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute, Router } from "@angular/router";
-import { MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';

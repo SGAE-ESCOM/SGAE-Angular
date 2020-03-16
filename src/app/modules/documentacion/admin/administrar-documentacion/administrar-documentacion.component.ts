@@ -10,7 +10,7 @@ import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/animations/rou
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { AdministrarDocumentacionService } from '@services/documentacion/administrar-documentacion.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-administrar-documentacion',
