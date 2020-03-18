@@ -11,6 +11,7 @@ import { AuthService } from '@services/auth.service';
 import { EstadoDocumentacion } from "@models/documentacion/enums/estado-documentacion.enum";
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { Router } from '@angular/router';
+import { heapsort } from "@shared/utilerias/heapsort";
 
 @Component({
   selector: 'app-subir-documentacion',
@@ -49,7 +50,7 @@ export class SubirDocumentacionComponent implements OnInit {
     if (this.estadoDocUsuario === this.estadosDoc.INVALIDA || this.estadoDocUsuario === this.estadosDoc.CORRECCION) {
       this.mostrarFormulario = true;
       this._subirDoc.getRequisitos().subscribe((documentos: TipoDato[]) => {
-        this.requisitos = documentos;
+        this.requisitos = heapsort(documentos);
         this._subirDoc.getDocumentacion(this.usuario).subscribe(
           requisito => this.requisitosGuardados = requisito, err => this._toast.error("Ha ocurrido un error"));
       }); //PRODUCCION

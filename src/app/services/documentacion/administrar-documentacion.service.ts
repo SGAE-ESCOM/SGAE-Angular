@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UsuarioInterface } from '@models/persona/usuario';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,11 @@ import { UsuarioInterface } from '@models/persona/usuario';
 export class AdministrarDocumentacionService {
 
   private requisitosCollection: AngularFirestoreCollection<TipoDato>;
+  private batch: firebase.firestore.WriteBatch;
 
-  constructor(private firestore: AngularFirestore) {
-    this.requisitosCollection = firestore.collection<TipoDato>('RecepcionDocumentos');
+  constructor(private db: AngularFirestore, private af: AngularFireDatabase) {
+    this.requisitosCollection = db.collection<TipoDato>('RecepcionDocumentos');
+
   }
 
   //
@@ -35,14 +37,18 @@ export class AdministrarDocumentacionService {
       );
   }
 
-  updateDocumento(id:any, requisito: TipoDato) {
+  updateDocumento(id: any, requisito: TipoDato) {
     return this.requisitosCollection.doc(id).set(requisito);
   }
 
-  /*updateDocumento(documento: TipoDato) {
-    delete documento.nombre;
-    this.firestore.doc('policies/' + documento.nombre).update(documento);
-  }*/
+  ordenarRequisitos(requisitos: TipoDato[]): Promise<any> {
+    this.batch = this.db.firestore.batch();
+    requisitos.forEach((requisito, index) => {
+      const requisitoRef: any = this.requisitosCollection.doc<any>(requisito.id).ref;
+      this.batch.update(requisitoRef, { num: index });
+    });
+    return this.batch.commit();
+  }
 
   public deleteDocumento(id: any) {
     return this.requisitosCollection.doc(id).delete();
