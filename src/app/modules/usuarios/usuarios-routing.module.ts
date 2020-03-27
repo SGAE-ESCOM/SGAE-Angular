@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainUsuariosComponent } from './main-usuarios/main-usuarios.component';
+import { GestionAdmonComponent } from './components/gestion-admon/gestion-admon.component';
+import { GestionAspirantesComponent } from './components/gestion-aspirantes/gestion-aspirantes.component';
 
 const routes: Routes = [
   { path: '', component: MainUsuariosComponent },
-  { path: 'gestion-admon', loadChildren: () => import('./components/gestion-admon/gestion-admon.module').then( m => m.GestionAdmonModule ) },
-  { path: 'gestion-aspirantes', loadChildren: () => import('./components/gestion-aspirantes/gestion-aspirantes.module').then( m => m.GestionAspirantesModule ) }
+  { path: 'gestion-admon', component: GestionAdmonComponent },
+  { path: 'gestion-aspirantes', component: GestionAspirantesComponent }
 ];
 
 @NgModule({

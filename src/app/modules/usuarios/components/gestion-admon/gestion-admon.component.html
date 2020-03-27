@@ -1,1 +1,70 @@
-<p>gestion-admon works!</p>
+<div class="container animated-row pb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <!-- <div class="col-12 col-sm-3 offset-md-5 form-group"> -->
+                    <!-- <mat-form-field appearance="outline"> -->
+                        <!-- <mat-label>Filtrar administradores por permisos </mat-label>
+                        <mat-select [formControl]="fcFiltro" (selectionChange)="onChangeFiltroUsuario($event.value)" required>
+                            <mat-option *ngFor="let filtro of filtros" [value]="filtro.valor">
+                                {{ filtro.nombre }}
+                            </mat-option>
+                        </mat-select> -->
+                    <!-- </mat-form-field>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <mat-form-field id="bucar" appearance="outline"> -->
+                        <!-- <mat-label>Buscar</mat-label>
+                        <input matInput (keyup)="buscarUsuario($event.target.value)" placeholder="Filtrar por palabra">
+                        <mat-icon matSuffix>search </mat-icon> -->
+                    <!-- </mat-form-field>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="table-responsive mat-elevation-z3">
+                <table mat-table class="table" [dataSource]="usuarios" matSort>
+                    <!-- Nombre Column -->
+                    <ng-container matColumnDef="nombres">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                        <td mat-cell *matCellDef="let row"> {{row.nombres}} </td>
+                    </ng-container>
+
+                    <!-- Requerido Column -->
+                    <ng-container matColumnDef="apellidos">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+                        <td mat-cell *matCellDef="let row"> {{row.apellidos }} </td>
+                    </ng-container>
+
+                    <!-- Tipo Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo electrónico </th>
+                        <td mat-cell *matCellDef="let row"> {{row.email }} </td>
+                    </ng-container>
+
+                    <!-- Tipo Column -->
+                    <ng-container matColumnDef="permisos">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Permisos </th>
+                        <td mat-cell *matCellDef="let row"> permisos </td>
+                    </ng-container>
+
+                    <!-- TipoArchivo Column -->
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+                        <td mat-cell *matCellDef="let row">
+                            <!-- <a mat-button matTooltip="Validar aspirante" color="info" [routerLink]="[ '/app/documentacion/validar/', row.id ]">
+                                <mat-icon class="material-icons-outlined">visibility</mat-icon>
+                            </a> -->
+                            Acciones
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row class="table-warning" *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[100, 200, 500]"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
