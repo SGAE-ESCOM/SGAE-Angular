@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_ADMINISTRAR_DOCUMENTACION } from "@routing/ListLinks";
+import { BC_ADMINISTRAR_DOCUMENTACION, BC_ORDENAR_REQUISITOS } from "@routing/ListLinks";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,6 +11,7 @@ import { TipoDato } from '@models/documentacion/tipo-dato';
 import { AdministrarDocumentacionService } from '@services/documentacion/administrar-documentacion.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { heapsort } from "@shared/utilerias/heapsort";
 
 @Component({
   selector: 'app-administrar-documentacion',
@@ -21,21 +22,21 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit {
 
   //Variables para las tablas
-  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'min', 'max', 'tipoArchivo', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'requerido', 'tipo', 'subtipo', 'acciones'];
   documentos: MatTableDataSource<TipoDato> = new MatTableDataSource();;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   //Variables para Vista previa
   tituloVistaPrevia = 'Prueba de formulario para aspirante';
+  urlOrdenarEtapas = BC_ORDENAR_REQUISITOS.title.url;
 
-  constructor(private _fb: FormBuilder, private toast: ToastrService, private _swal: SweetalertService, private _ads: AdministrarDocumentacionService,
+  constructor(private toast: ToastrService, private _swal: SweetalertService, private _ads: AdministrarDocumentacionService,
     public dialog: MatDialog) {
     BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
   }
 
   ngOnInit() {
-    this._ads.getDocumentos().subscribe((documentos: TipoDato[]) => this.documentos.data = documentos); //PRODUCCION
+    this._ads.getDocumentos().subscribe((documentos: TipoDato[]) => this.documentos.data = heapsort(documentos) ); //PRODUCCION
   }
 
   ngAfterViewInit() {
@@ -68,6 +69,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   }
 
   private saveRequisito( requisito ){
+    requisito.num = this.documentos.data[ this.documentos.data.length -1 ].num+1;
     this._ads.saveDocumento( requisito ).then(() => {
       this.toast.success("Se agrego correctamente")
       this.updateTablaRequerimiento();

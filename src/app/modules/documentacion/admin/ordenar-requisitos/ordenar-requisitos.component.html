@@ -1,0 +1,48 @@
+<div class="container animated-row pb-4">
+    <div class="row mat-elevation-z3 pb-3">
+        <div class="col-12 px-0">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número</th>
+                            <th scope="col">Requisito</th>
+                            <th scope="col">Requerido</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Subipo</th>
+                        </tr>
+                    </thead>
+                    <tbody cdkDropList (cdkDropListDropped)="onDrop($event)">
+                        <tr *ngFor="let requisito of requisitos; let i= index" class="list-group-item" cdkDrag>
+                            <div class="list-group list-group-flush" *cdkDragPreview>
+                                <table class="table">
+                                    <tbody>
+                                        <td>{{ (i + 1) }}</td>
+                                        <td>{{ requisito.nombre }}</td>
+                                        <td>{{ requisito.requerido | boolean}}</td>
+                                        <td>{{ requisito.tipo }}</td>
+                                        <td>{{ requisito.subtipo }}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <td>{{ (i + 1) }}</td>
+                            <td>{{ requisito.nombre }}</td>
+                            <td>{{ requisito.requerido | boolean}}</td>
+                            <td>{{ requisito.tipo }}</td>
+                            <td>{{ requisito.subtipo }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12 my-1">
+            <div class="row">
+                <div class="col-12 text-right">
+                    <a mat-button [routerLink]="regresar" routerLinkActive="router-link-active" ><mat-icon>arrow_back_ios </mat-icon> Regresar</a>
+                    <button mat-button color="success" (click)="onGuardarOrdenRequisitos()">Guardar orden requisitos <mat-icon>format_list_numbered_rtl
+                    </mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

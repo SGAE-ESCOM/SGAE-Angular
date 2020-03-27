@@ -28,8 +28,6 @@ export class SubirDocumentacionService {
     .snapshotChanges()
     .pipe(
       map(change =>{
-          //const data = change.payload.data() as any;
-          //const id = change.payload.id;
           return change.payload.data() as any;
       })
     );
