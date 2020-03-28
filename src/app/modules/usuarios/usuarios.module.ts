@@ -39,8 +39,7 @@ import { GestionAspirantesComponent } from './components/gestion-aspirantes/gest
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
-    PipesModule
+    MatSortModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-MX' }]
 })
