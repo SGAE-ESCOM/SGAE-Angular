@@ -74,6 +74,10 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
     // }
   }
 
+  registrarNuevoAdmin(){
+    
+  }
+
   private updateTablaUsuarios(): void {
     this.usuarios.paginator = this.paginator;
     this.usuarios.sort = this.sort;

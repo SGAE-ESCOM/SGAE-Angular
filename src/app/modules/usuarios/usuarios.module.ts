@@ -19,10 +19,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GestionAdmonComponent } from './components/gestion-admon/gestion-admon.component';
 import { GestionAspirantesComponent } from './components/gestion-aspirantes/gestion-aspirantes.component';
+import { RegistrarAdmonComponent } from './components/registrar-admon/registrar-admon.component';
 
 
 @NgModule({
-  declarations: [MainUsuariosComponent, GestionAdmonComponent, GestionAspirantesComponent],
+  declarations: [MainUsuariosComponent, GestionAdmonComponent, GestionAspirantesComponent, RegistrarAdmonComponent],
   imports: [
     CommonModule,
     UsuariosRoutingModule,
