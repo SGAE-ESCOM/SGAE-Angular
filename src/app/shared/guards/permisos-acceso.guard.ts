@@ -16,7 +16,6 @@ export class PermisosAccesoGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean >  {
     let user: firebase.User = this._authService.getUsuario();
     return this._authService.findUsuario(user.uid).pipe(map(usuario => {
-      console.log(usuario);
       if (!usuario) {
         this.router.navigate(['/login']);
         return true;

@@ -116,9 +116,7 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
       width: '1000px',
       data: archivo
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Cerrado')
-    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 }
 

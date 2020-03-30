@@ -38,15 +38,7 @@ export class SubirDocumentacionComponent implements OnInit {
     this.estadoDocUsuario = this.usuario.estado.documentacion;
   }
 
-  /**
-   * Para llevar otro tipo de control, crear una funcion en cadena. 
-   * 1. Se piden los requisitos
-   * 2. Se piden los valores previos guardados
-   * 3. Si es null termina, si existen valores hacer una funcion para anexar el valor en el valor que se le envia al componente.
-   * 4. Pintar y continuar con el valor.
-   */
   ngOnInit() {
-    console.log(this.estadoDocUsuario);
     if (this.estadoDocUsuario === this.estadosDoc.INVALIDA || this.estadoDocUsuario === this.estadosDoc.CORRECCION) {
       this.mostrarFormulario = true;
       this._subirDoc.getRequisitos().subscribe((documentos: TipoDato[]) => {

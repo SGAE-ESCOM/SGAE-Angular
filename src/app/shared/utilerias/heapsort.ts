@@ -29,7 +29,7 @@ export function heapsort(a): any[] {
     heapify(a, a.length);
     for (var i = a.length - 1; i > 0; i--) {
         swap(a, i, 0);
-        max_heapify(a, 0, i - 1);
+        max_heapify(a, 0, i);
     }
     return a;
 }

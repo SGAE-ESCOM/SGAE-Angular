@@ -106,7 +106,6 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   verificarRegex(expresion: string) {
     try {
       let regex = new RegExp(expresion);
-      console.log(regex);
     } catch (error) {
       this.expresionValor.setErrors({ 'incorrect': true });
     }
@@ -188,7 +187,6 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   }
 
   llenarFormulario(requisito) {
-    console.log(this.requisito);
     this.fgGeneral.get('nombre').setValue(requisito.nombre);
     this.fgGeneral.get('requerido').setValue(requisito.requerido);
     this.tipo.patchValue(requisito.tipo);

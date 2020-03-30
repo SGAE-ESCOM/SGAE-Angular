@@ -21,13 +21,12 @@ export class AuthService {
   }
 
   registrarUsuario( usuario: UsuarioInterface ) {
-    console.log(usuario);
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
         .then(userData => {
           resolve(userData),
             this.updateInformacionUsuairo(userData.user, usuario)
-        }).catch(err => console.log(reject(err)))
+        }).catch(err => console.log(reject(err)));
     });
   }
 

@@ -42,7 +42,6 @@ export class DefinirFechasComponent implements OnInit {
         this.etapas.unshift( ETAPAS[0] );
         this.llenarFormulario();
         this._etapaService.getFechasEtapas().then( querySnapshot => {
-          console.log(querySnapshot);
           if (!querySnapshot.empty){
             querySnapshot.forEach( doc => this.llenarDatos(doc.id, doc.data()) );
             this.pintarFechas();

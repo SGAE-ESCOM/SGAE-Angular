@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     this.authService.loginEmailUser(this.fgUsuario.get('email').value, this.fgUsuario.get('password').value)
       .then((res) => {
-        console.log(res);
         this.onLoginRedirect();
       }).catch(err => this.showError(err));
   }
@@ -54,7 +53,6 @@ export class LoginComponent implements OnInit {
           else
             this.onLoginRedirect();
         });
-        console.log(result)
       }).catch(err => this.showError(err));
   }
 

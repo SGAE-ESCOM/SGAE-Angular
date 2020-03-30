@@ -19,6 +19,7 @@ export class SidenavComponent implements OnInit {
   mobileQuery: MediaQueryList;
   navigationLinks = LINKS_HOME['aspirante']; // admin; DEBUG //CAMBIAR A page EN PRODUCCION
   isLoggedIn: boolean = false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
+  shouldRun = true;
 
   private _mobileQueryListener: () => void;
 
@@ -33,8 +34,6 @@ export class SidenavComponent implements OnInit {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-
-  shouldRun = true;
 
   ngOnInit() {
     this.getUsuarioActual(); //QUITAR COMENTARIO EN PRODUCCION
