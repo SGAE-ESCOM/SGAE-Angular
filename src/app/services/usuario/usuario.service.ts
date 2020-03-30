@@ -49,4 +49,9 @@ export class UsuarioService {
   getAspirantesValidados(): Promise<any> {
     return this.usuariosCollection.where('estado.documentacion', '==', 'validada').get();
   }
+
+  //Funciones Gestion Administradores
+  getAdministradores(): Promise<any> {
+    return this.usuariosCollection.where('rol', '==', "admin").get();
+  }
 }
