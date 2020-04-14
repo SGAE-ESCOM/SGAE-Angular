@@ -1,18 +1,86 @@
-<div class="container animated-row pb-4">
-    <div class="row">
-        <div class="col-12">
-            <p>Agrega la información y permisos del nuevo administrador.</p>
-        </div>
+<div class="row">
+    <div class="col-12">
+        <p>Agrega la información y permisos del nuevo administrador.</p>
     </div>
-    <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-            <div class="card no-border mat-elevation-z3">
-                <div class="card-header text-center">
-                    <h5 class="m-0">Formulario para registrar nuevo administrador</h5>
-                </div>
-                <div class="card-body">
-                <!-- <app-form-requisitos [tipoForm]="'agregar'" (enviarForm)="addTipoDato($event)"></app-form-requisitos> -->
+</div>
+<div class="card no-border mat-elevation-z3">
+    <div class="card-header text-center">
+        <h5 class="m-0">Formulario para registrar nuevo administrador</h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="fgAdmin">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-12">
+                    <div class="form-group">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Nombre(s)</mat-label>
+                            <input matInput formControlName="nombres" type="nombres" id="nombres" name="nombres" placeholder="Introduce su(s) nombre(s)" required>
+                            <mat-icon matSuffix>text_fields</mat-icon>
+                            <mat-error *ngIf="fgAdmin.get('nombres').invalid">{{getErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Apellido(s)</mat-label>
+                            <input matInput formControlName="apellidos" type="apellidos" id="apellidos" name="apellidos" placeholder="Introduce su(s) apellido(s)" required>
+                            <mat-icon matSuffix>text_fields</mat-icon>
+                            <mat-error *ngIf="fgAdmin.get('apellidos').invalid">{{getErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email" type="email" id="email"
+                                name="email" placeholder="Introduce tu correo" required>
+                            <mat-icon matSuffix>mail</mat-icon>
+                            <mat-error *ngIf="fgAdmin.get('email').invalid">{{getErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput id="password" formControlName="password" name="password"
+                                placeholder="****" [type]="hide ? 'password' : 'text'" required>
+                            <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="fgAdmin.get('password').hasError('required')"> Debes ingresar un valor </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Repetir Contraseña</mat-label>
+                            <input matInput id="passwordRepeat" formControlName="passwordRepeat" name="passwordRepeat"
+                                placeholder="****" [type]="hide ? 'password' : 'text'" required>
+                            <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="fgAdmin.get('passwordRepeat').invalid">{{getErrorNotMatch()}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    
+                    <mat-label class="label-toggle"> Permisos de la cuenta </mat-label>
+                    <br><br>
+                    <div class="form-group">
+                        <section class="example-section">
+                            <mat-slide-toggle formControlName="permiso" color="accent">
+                                permiso de administracion</mat-slide-toggle>
+                        </section>
+                        <mat-hint class="toggle-hint">Permiso que permitira la manipulacion de la seccion de administracion y otras cosas mas</mat-hint>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <button type="submit" type="submit" (click)="enviarFormulario(fgAdmin)" mat-button
+                        color="success"> Finalizar <mat-icon>done</mat-icon> </button>
+                </div>
+            </div>
+        </form>
     </div>
+    <!-- <div class="card-footer text-muted text-center">
+        {{ fgFormulario.value | json }}
+    </div>-->
+</div>
