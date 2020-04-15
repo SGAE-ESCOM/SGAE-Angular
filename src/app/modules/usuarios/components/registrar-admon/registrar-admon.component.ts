@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_REGISTRAR_ADMON } from '@shared/routing-list/ListLinks';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { AuthService } from '@services/auth.service';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
 import { passwordMatchValidator } from '@shared/validators/passwordValidators';
+import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION } from '@shared/admin-permissions/permissions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-admon',
@@ -13,9 +16,16 @@ import { passwordMatchValidator } from '@shared/validators/passwordValidators';
 export class RegistrarAdmonComponent implements OnInit {
 
   hide: boolean = true;
+  gusuarios: boolean = false;
+  getapas: boolean = false;
+  gpagos: boolean = false;
+  gconvocatoria: boolean = false;
+  gevaluacion: boolean = false;
+  gdocumentacion: boolean = false;
   fgAdmin: FormGroup;
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private _authService: AuthService,
+    private router: Router) { 
     BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
   }
 
@@ -26,7 +36,7 @@ export class RegistrarAdmonComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       passwordRepeat: ['', [Validators.required ]],
-      permiso: [false, Validators.required]
+      permisos: [0, Validators.required]
     },{
       validators: passwordMatchValidator
     });
@@ -45,7 +55,17 @@ export class RegistrarAdmonComponent implements OnInit {
   }
 
   enviarFormulario(formulario) {
-    console.log(formulario);
+    let permisos = 0; 
+    permisos += this.gusuarios ? GESTION_USUARIOS : 0;
+    permisos += this.getapas ? GESTION_ETAPAS : 0;
+    permisos += this.gpagos ? PAGOS : 0;
+    permisos += this.gconvocatoria ? CONVOCATORIA : 0;
+    permisos += this.gevaluacion ? EVALUACION : 0;
+    permisos += this.gdocumentacion ? DOCUMENTACION : 0;
+    formulario.get('permisos').setValue(permisos);
+    this._authService.registrarUsuario( formulario )
+    .then( res => this.router.navigate(['/app/usuarios/gestion-admon'])
+    ).catch(err => console.error(err));
   }
 
 }

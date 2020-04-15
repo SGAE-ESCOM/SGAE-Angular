@@ -4,13 +4,13 @@
     </div>
 </div>
 <div class="card no-border mat-elevation-z3">
-    <div class="card-header text-center">
-        <h5 class="m-0">Formulario para registrar nuevo administrador</h5>
-    </div>
-    <div class="card-body">
-        <form [formGroup]="fgAdmin">
+    <form [formGroup]="fgAdmin">
+        <div class="card-header text-center">
+            <h5 class="m-0">Formulario para registrar nuevo administrador</h5>
+        </div>
+        <div class="card-body">
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-12">
+                <div class="col-9 mx-auto">
                     <div class="form-group">
                         <mat-form-field appearance="legacy">
                             <mat-label>Nombre(s)</mat-label>
@@ -61,25 +61,59 @@
                         </mat-form-field>
                     </div>
                     
-                    <mat-label class="label-toggle"> Permisos de la cuenta </mat-label>
-                    <br><br>
-                    <div class="form-group">
-                        <section class="example-section">
-                            <mat-slide-toggle formControlName="permiso" color="accent">
-                                permiso de administracion</mat-slide-toggle>
-                        </section>
-                        <mat-hint class="toggle-hint">Permiso que permitira la manipulacion de la seccion de administracion y otras cosas mas</mat-hint>
-                    </div>
+                    
                 </div>
             </div>
+        </div>
+
+        <div class="card-header text-center">
+            <h5 class="m-0">Permisos del administrador</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-9 mx-auto" >
+                    <section class="example-section mt-3">
+                        <!-- <mat-slide-toggle formControlName="permiso" color="accent"> permiso de administracion </mat-slide-toggle> -->
+                        <mat-slide-toggle [(ngModel)]="gusuarios" [ngModelOptions]="{standalone: true}" color="accent">Gestión de usuarios</mat-slide-toggle>
+                    </section>
+                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                    
+                    <section class="example-section mt-3">
+                        <mat-slide-toggle [(ngModel)]="getapas" [ngModelOptions]="{standalone: true}" color="accent">Gestión de etapas</mat-slide-toggle>
+                    </section>
+                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                    
+                    <section class="example-section mt-3">
+                        <mat-slide-toggle [(ngModel)]="gpagos" [ngModelOptions]="{standalone: true}" color="accent">Gestión de pagos</mat-slide-toggle>
+                    </section>
+                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+
+                    <section class="example-section mt-3">
+                        <mat-slide-toggle [(ngModel)]="gconvocatoria" [ngModelOptions]="{standalone: true}" color="accent">Gestión de convocatoria</mat-slide-toggle>
+                    </section>
+                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+
+                    <section class="example-section mt-3">
+                        <mat-slide-toggle [(ngModel)]="gevaluacion" [ngModelOptions]="{standalone: true}" color="accent">Gestión de evaluación</mat-slide-toggle>
+                    </section>
+                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+
+                    <section class="example-section mt-3">
+                        <mat-slide-toggle [(ngModel)]="gdocumentacion" [ngModelOptions]="{standalone: true}" color="accent">Gestión de documentación</mat-slide-toggle>
+                    </section>
+                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col-12 text-right">
                     <button type="submit" type="submit" (click)="enviarFormulario(fgAdmin)" mat-button
                         color="success"> Finalizar <mat-icon>done</mat-icon> </button>
                 </div>
             </div>
-        </form>
-    </div>
+
+        </div>
+    </form>
     <!-- <div class="card-footer text-muted text-center">
         {{ fgFormulario.value | json }}
     </div>-->
