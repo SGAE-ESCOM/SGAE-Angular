@@ -17,4 +17,5 @@ export interface UsuarioInterface {
     estado?: Estados;
     roles?: Roles;
     rol?: string;
+    permisos?: number;
 }

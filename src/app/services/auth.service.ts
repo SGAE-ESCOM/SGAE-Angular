@@ -5,6 +5,7 @@ import { auth } from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
+import { AngularFireModule } from '@angular/fire';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AuthService {
 
   public userData$: Observable<firebase.User>;
 
+  
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.userData$ = afsAuth.authState;
   }
@@ -26,6 +28,24 @@ export class AuthService {
         .then(userData => {
           resolve(userData),
             this.updateInformacionUsuairo(userData.user, usuario)
+        }).catch(err => console.log(reject(err)));
+    });
+  }
+
+  //Se creo una segunda conexion para que no se cambiara la sesion al crear un nuevo usuario
+  registrarAdministrador( usuario: UsuarioInterface ) {
+    var secondaryApp = require("firebase/app").initializeApp({
+      apiKey: "AIzaSyDB-mxqZtA7XDPebNg4KGLkcnZJRY3lb8w",
+      authDomain: "sgae-escom.firebaseapp.com",
+      databaseURL: "https://sgae-escom.firebaseio.com"
+    }, "Secondary");
+
+    return new Promise((resolve, reject) => {
+      secondaryApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
+        .then(userData => {
+          resolve(userData),
+            this.updateInformacionAdministrador(userData.user, usuario);
+            secondaryApp.auth().signOut();
         }).catch(err => console.log(reject(err)));
     });
   }
@@ -62,6 +82,19 @@ export class AuthService {
       apellidos: usuario.apellidos,
       email: usuarioRegistrado.email,
       rol: 'aspirante'
+    }
+    return userRef.set(data, { merge: true });
+  }
+
+  private updateInformacionAdministrador(usuarioRegistrado, usuario) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Usuarios/${usuarioRegistrado.uid}`);
+    const data: UsuarioInterface = {
+      id: usuarioRegistrado.uid,
+      nombres: usuario.nombres,
+      apellidos: usuario.apellidos,
+      email: usuarioRegistrado.email,
+      permisos: usuario.permisos,
+      rol: 'administrador'
     }
     return userRef.set(data, { merge: true });
   }
