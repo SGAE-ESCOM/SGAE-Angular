@@ -34,7 +34,8 @@ export class AuthService {
 
   //Se creo una segunda conexion para que no se cambiara la sesion al crear un nuevo usuario
   registrarAdministrador( usuario: UsuarioInterface ) {
-    var secondaryApp = require("firebase/app").initializeApp({
+    var firebase = require("firebase/app");
+    var secondaryApp = firebase.initializeApp({
       apiKey: "AIzaSyDB-mxqZtA7XDPebNg4KGLkcnZJRY3lb8w",
       authDomain: "sgae-escom.firebaseapp.com",
       databaseURL: "https://sgae-escom.firebaseio.com"
