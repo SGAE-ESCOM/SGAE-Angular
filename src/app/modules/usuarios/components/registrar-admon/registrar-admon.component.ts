@@ -7,6 +7,7 @@ import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
 import { passwordMatchValidator } from '@shared/validators/passwordValidators';
 import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION } from '@shared/admin-permissions/permissions';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registrar-admon',
@@ -25,19 +26,19 @@ export class RegistrarAdmonComponent implements OnInit {
   fgAdmin: FormGroup;
 
   constructor(private fb: FormBuilder, private _authService: AuthService,
-    private router: Router) { 
+    private router: Router, private _toas: ToastrService) {
     BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
   }
 
   ngOnInit() {
     this.fgAdmin = this.fb.group({
-      nombres: ['', [Validators.required, Validators.pattern( TEXTO_CON_ESPACIOS ) ]],
-      apellidos: ['', [Validators.required, Validators.pattern( TEXTO_CON_ESPACIOS ) ]],
+      nombres: ['', [Validators.required, Validators.pattern(TEXTO_CON_ESPACIOS)]],
+      apellidos: ['', [Validators.required, Validators.pattern(TEXTO_CON_ESPACIOS)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-      passwordRepeat: ['', [Validators.required ]],
+      passwordRepeat: ['', [Validators.required]],
       permisos: [0, Validators.required]
-    },{
+    }, {
       validators: passwordMatchValidator
     });
   }
@@ -54,18 +55,22 @@ export class RegistrarAdmonComponent implements OnInit {
         '';
   }
 
-  enviarFormulario(formulario) {
-    let permisos = 0; 
-    permisos += this.gusuarios ? GESTION_USUARIOS : 0;
-    permisos += this.getapas ? GESTION_ETAPAS : 0;
-    permisos += this.gpagos ? PAGOS : 0;
-    permisos += this.gconvocatoria ? CONVOCATORIA : 0;
-    permisos += this.gevaluacion ? EVALUACION : 0;
-    permisos += this.gdocumentacion ? DOCUMENTACION : 0;
-    formulario.get('permisos').setValue(permisos);
-    this._authService.registrarAdministrador( formulario.value )
-    .then( res => this.router.navigate(['/app/usuarios/gestion-admon'])
-    ).catch(err => console.error(err));
+  enviarFormulario(formulario: FormGroup) {
+    if (formulario.valid) {
+      let permisos = 0;
+      permisos += this.gusuarios ? GESTION_USUARIOS : 0;
+      permisos += this.getapas ? GESTION_ETAPAS : 0;
+      permisos += this.gpagos ? PAGOS : 0;
+      permisos += this.gconvocatoria ? CONVOCATORIA : 0;
+      permisos += this.gevaluacion ? EVALUACION : 0;
+      permisos += this.gdocumentacion ? DOCUMENTACION : 0;
+      formulario.get('permisos').setValue(permisos);
+      this._authService.registrarAdministrador(formulario.value)
+        .then(res => this.router.navigate(['/app/usuarios/gestion-admon'])
+        ).catch(err => console.error(err));
+    }else{
+      this._toas.error("Formulario invalido")
+    }
   }
 
 }
