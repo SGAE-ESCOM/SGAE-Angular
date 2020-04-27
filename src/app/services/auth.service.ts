@@ -95,7 +95,7 @@ export class AuthService {
       apellidos: usuario.apellidos,
       email: usuarioRegistrado.email,
       permisos: usuario.permisos,
-      rol: 'administrador'
+      rol: 'admin'
     }
     return userRef.set(data, { merge: true });
   }
