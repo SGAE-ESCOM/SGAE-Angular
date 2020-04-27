@@ -117,6 +117,7 @@ export class ModalVisualizarPermisos {
   gevaluacion: boolean = false;
   gdocumentacion: boolean = false;
 
+
   constructor(
     public dialogRef: MatDialogRef<ModalVisualizarPermisos>, public sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any) {

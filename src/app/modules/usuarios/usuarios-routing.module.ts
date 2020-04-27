@@ -9,7 +9,7 @@ import { EditarAdmonComponent } from './components/editar-admon/editar-admon.com
 const routes: Routes = [
   { path: '', component: MainUsuariosComponent },
   { path: 'gestion-admon', component: GestionAdmonComponent },
-  { path: 'editar-admon/:id', component:  EditarAdmonComponent},
+  { path: 'gestion-admon/editar/:id', component:  EditarAdmonComponent},
   { path: 'gestion-aspirantes', component: GestionAspirantesComponent },
   { path: 'gestion-admon/registrar', component: RegistrarAdmonComponent}
 ];

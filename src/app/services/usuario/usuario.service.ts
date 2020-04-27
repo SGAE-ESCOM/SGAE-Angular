@@ -54,4 +54,12 @@ export class UsuarioService {
   getAdministradores(): Promise<any> {
     return this.usuariosCollection.where('rol', '==', "admin").get();
   }
+
+  getAdministrador(usuario: UsuarioInterface): Promise<any>{
+    return this.usuariosCollection.where('id', '==', usuario.id).get();
+  }
+
+  updatePermisosAdministrador(usuario: UsuarioInterface, permisos: number){
+    this.usuariosCollection.doc(usuario.id).update({"permisos": permisos});
+  }
 }
