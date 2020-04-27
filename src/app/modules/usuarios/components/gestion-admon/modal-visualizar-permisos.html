@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-12">
+        <h4 class="text-center" mat-dialog-title>Permisos del administrador: {{data.nombres}} {{data.apellidos}}  </h4>
+        <hr>
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="card no-border col-12">
+                    <div class="card no-border mat-elevation-z3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-4 form-group">
+                                    <section class="example-section mt-3">
+                                        <h5>
+                                            <div *ngIf="gusuarios; then gusuariosT else gusuariosF"></div>
+                                            <ng-template #gusuariosT><mat-icon class="material-icons-outlined permited">check_circle</mat-icon></ng-template>
+                                            <ng-template #gusuariosF><mat-icon class="material-icons-outlined not-permited">lock</mat-icon></ng-template>
+                                            &nbsp;Gestión de usuarios
+                                        </h5>
+                                    </section>
+                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <section class="example-section mt-3">
+                                        <h5>
+                                            <div *ngIf="getapas; then getapasT else getapasF"></div>
+                                            <ng-template #getapasT><mat-icon class="material-icons-outlined permited">check_circle</mat-icon></ng-template>
+                                            <ng-template #getapasF><mat-icon class="material-icons-outlined not-permited">lock</mat-icon></ng-template>
+                                            &nbsp;Gestión de etapas
+                                        </h5>
+                                    </section>
+                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <section class="example-section mt-3">
+                                        <h5>
+                                            <div *ngIf="gpagos; then gpagosT else gpagosF"></div>
+                                            <ng-template #gpagosT><mat-icon class="material-icons-outlined permited">check_circle</mat-icon></ng-template>
+                                            <ng-template #gpagosF><mat-icon class="material-icons-outlined not-permited">lock</mat-icon></ng-template>
+                                            &nbsp;Gestión de pagos
+                                        </h5>
+                                    </section>
+                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <section class="example-section mt-3">
+                                        <h5>
+                                            <div *ngIf="gconvocatoria; then gconvocatoriaT else gconvocatoriaF"></div>
+                                            <ng-template #gconvocatoriaT><mat-icon class="material-icons-outlined permited">check_circle</mat-icon></ng-template>
+                                            <ng-template #gconvocatoriaF><mat-icon class="material-icons-outlined not-permited">lock</mat-icon></ng-template>
+                                            &nbsp;Gestión de convocatoria
+                                        </h5>
+                                    </section>
+                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <section class="example-section mt-3">
+                                        <h5>
+                                            <div *ngIf="gevaluacion; then gevaluacionT else gevaluacionF"></div>
+                                            <ng-template #gevaluacionT><mat-icon class="material-icons-outlined permited">check_circle</mat-icon></ng-template>
+                                            <ng-template #gevaluacionF><mat-icon class="material-icons-outlined not-permited">lock</mat-icon></ng-template>
+                                            &nbsp;Gestión de evaluación
+                                        </h5>
+                                    </section>
+                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <section class="example-section mt-3">
+                                        <h5>
+                                            <div *ngIf="gdocumentacion; then gdocumentacionT else gdocumentacionF"></div>
+                                            <ng-template #gdocumentacionT><mat-icon class="material-icons-outlined permited">check_circle</mat-icon></ng-template>
+                                            <ng-template #gdocumentacionF><mat-icon class="material-icons-outlined not-permited">lock</mat-icon></ng-template>
+                                            &nbsp;Gestión de documentación
+                                        </h5>
+                                    </section>
+                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-right pt-2" >
+                    <button mat-button (click)="onNoClick()" [routerLink]="[ '/app/usuarios/editar-admon/', data.id ]">Editar <mat-icon class="material-icons-outlined">create</mat-icon></button>
+                    <button mat-button (click)="onNoClick()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
