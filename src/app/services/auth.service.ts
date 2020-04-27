@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firesto
 import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { AngularFireModule } from '@angular/fire';
+import * as firebase from "firebase/app";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class AuthService {
   private static usuarioC:UsuarioInterface;
 
   public userData$: Observable<firebase.User>;
+  private secondaryApp:any = firebase.initializeApp({
+    apiKey: "AIzaSyDB-mxqZtA7XDPebNg4KGLkcnZJRY3lb8w",
+    authDomain: "sgae-escom.firebaseapp.com",
+    databaseURL: "https://sgae-escom.firebaseio.com"
+  }, "Secondary");
 
   
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
@@ -34,19 +40,13 @@ export class AuthService {
 
   //Se creo una segunda conexion para que no se cambiara la sesion al crear un nuevo usuario
   registrarAdministrador( usuario: UsuarioInterface ) {
-    var firebase = require("firebase/app");
-    var secondaryApp = firebase.initializeApp({
-      apiKey: "AIzaSyDB-mxqZtA7XDPebNg4KGLkcnZJRY3lb8w",
-      authDomain: "sgae-escom.firebaseapp.com",
-      databaseURL: "https://sgae-escom.firebaseio.com"
-    }, "Secondary");
 
     return new Promise((resolve, reject) => {
-      secondaryApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
+      this.secondaryApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
         .then(userData => {
           resolve(userData),
             this.updateInformacionAdministrador(userData.user, usuario);
-            secondaryApp.auth().signOut();
+            this.secondaryApp.auth().signOut();
         }).catch(err => console.log(reject(err)));
     });
   }

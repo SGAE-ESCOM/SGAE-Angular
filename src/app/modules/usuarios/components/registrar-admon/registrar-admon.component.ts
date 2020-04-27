@@ -55,19 +55,13 @@ export class RegistrarAdmonComponent implements OnInit {
   }
 
   enviarFormulario(formulario) {
-    if(formulario.valid){
-
-    }
     let permisos = 0; 
-    // let usuario = formulario.value;
     permisos += this.gusuarios ? GESTION_USUARIOS : 0;
     permisos += this.getapas ? GESTION_ETAPAS : 0;
     permisos += this.gpagos ? PAGOS : 0;
     permisos += this.gconvocatoria ? CONVOCATORIA : 0;
     permisos += this.gevaluacion ? EVALUACION : 0;
     permisos += this.gdocumentacion ? DOCUMENTACION : 0;
-    // usuario.permisos = permisos;
-    // console.log(usuario);
     formulario.get('permisos').setValue(permisos);
     this._authService.registrarAdministrador( formulario.value )
     .then( res => this.router.navigate(['/app/usuarios/gestion-admon'])
