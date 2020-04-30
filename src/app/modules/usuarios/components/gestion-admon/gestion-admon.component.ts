@@ -20,7 +20,7 @@ import { AuthService } from '@services/auth.service';
 })
 export class GestionAdmonComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['nombres', 'apellidos', 'email', 'permisos', 'editar'];
+  displayedColumns: string[] = ['nombres', 'apellidos', 'email', 'permisos', 'acciones'];
   usuarios: MatTableDataSource<any> = new MatTableDataSource();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //Preguntar su funcion
   @ViewChild(MatSort, { static: true }) sort: MatSort; //Preguntar su funcion
