@@ -63,6 +63,46 @@ export class SweetalertService {
     });
   }
 
+  adminEliminadoCorrectamente(){
+    this.swalFinalizar.fire({
+      title: 'Eliminado',
+      text: 'El administrador ha sido eliminado',
+      icon: 'success'
+    });
+  }
+
+  informacionAdminActualizada(){
+    this.swalFinalizar.fire({
+      title: 'Actualizado',
+      text: 'Información actualizada correctamente',
+      icon: 'success'
+    });
+  }
+
+  errorActualizarAdmin(){
+    this.swalFinalizar.fire({
+      title: 'Error',
+      text: 'Error al actualizar la información, intentelo mas tarde.',
+      icon: 'error'
+    });
+  }
+
+  adminRegistrado(){
+    this.swalFinalizar.fire({
+      title: 'Registrado',
+      text: 'Administrador registrado correctamente',
+      icon: 'success'
+    });
+  }
+
+  errorRegistroAdmin(){
+    this.swalFinalizar.fire({
+      title: 'Error',
+      text: 'Error al registrar al nuevo administrador, intente mas tarde.',
+      icon: "error"
+    });
+  }
+
 }
 
 const admiracion = '<div class="swal2-icon swal2-warning swal2-icon-show" style="display: flex;"><div class="swal2-icon-content">!</div></div>';

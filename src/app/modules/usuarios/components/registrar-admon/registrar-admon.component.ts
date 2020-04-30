@@ -8,6 +8,7 @@ import { passwordMatchValidator } from '@shared/validators/passwordValidators';
 import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION } from '@shared/admin-permissions/permissions';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 
 @Component({
   selector: 'app-registrar-admon',
@@ -26,7 +27,7 @@ export class RegistrarAdmonComponent implements OnInit {
   fgAdmin: FormGroup;
 
   constructor(private fb: FormBuilder, private _authService: AuthService,
-    private router: Router, private _toas: ToastrService) {
+    private router: Router, private _toas: ToastrService, private _swal: SweetalertService) {
     BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
   }
 
@@ -43,9 +44,21 @@ export class RegistrarAdmonComponent implements OnInit {
     });
   }
 
-  getErrorMessage() {
+  getEmailErrorMessage() {
     return this.fgAdmin.get('email').hasError('required') ? 'Debes ingresar un valor' :
       this.fgAdmin.get('email').hasError('email') ? 'Email no válido' :
+        '';
+  }
+
+  getNombreErrorMessage(){
+    return this.fgAdmin.get('nombres').hasError('required') ? 'Debes ingresar un valor' :
+      this.fgAdmin.get('nombres').hasError('pattern') ? 'Nombre no valido' :
+        '';
+  }
+
+  getApellidoErrorMessage(){
+    return this.fgAdmin.get('apellidos').hasError('required') ? 'Debes ingresar un valor' :
+      this.fgAdmin.get('apellidos').hasError('pattern') ? 'Apellido no valido' :
         '';
   }
 
@@ -66,8 +79,14 @@ export class RegistrarAdmonComponent implements OnInit {
       permisos += this.gdocumentacion ? DOCUMENTACION : 0;
       formulario.get('permisos').setValue(permisos);
       this._authService.registrarAdministrador(formulario.value)
-        .then(res => this.router.navigate(['/app/usuarios/gestion-admon'])
-        ).catch(err => console.error(err));
+        .then(res => {
+          this._swal.adminRegistrado();
+          this.router.navigate(['/app/usuarios/gestion-admon'])
+        }
+        ).catch(err => {
+          console.error(err);
+          this._swal.errorRegistroAdmin();
+        });
     }else{
       this._toas.error("Formulario invalido")
     }

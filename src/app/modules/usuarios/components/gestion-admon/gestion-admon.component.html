@@ -65,6 +65,9 @@
                             <a mat-button matTooltip="Editar cuenta" color="info" [routerLink]="[ '/app/usuarios/gestion-admon/editar/', row.id ]">
                                 <mat-icon class="material-icons-outlined">create</mat-icon>
                             </a>
+                            <a mat-button (click)="eliminarUsuario(row)"  color="danger">
+                                <mat-icon>delete</mat-icon>
+                            </a>
                         </td>
                     </ng-container>
 

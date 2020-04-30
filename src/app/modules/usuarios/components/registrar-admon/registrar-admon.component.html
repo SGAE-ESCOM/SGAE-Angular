@@ -19,7 +19,7 @@
                                     <input matInput formControlName="nombres" type="nombres" id="nombres" name="nombres"
                                         placeholder="Introduce su(s) nombre(s)" required>
                                     <mat-icon matSuffix>text_fields</mat-icon>
-                                    <mat-error *ngIf="fgAdmin.get('nombres').invalid">{{getErrorMessage()}}</mat-error>
+                                    <mat-error *ngIf="fgAdmin.get('nombres').invalid">{{getNombreErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-md-4 form-group">
@@ -28,8 +28,7 @@
                                     <input matInput formControlName="apellidos" type="apellidos" id="apellidos"
                                         name="apellidos" placeholder="Introduce su(s) apellido(s)" required>
                                     <mat-icon matSuffix>text_fields</mat-icon>
-                                    <mat-error *ngIf="fgAdmin.get('apellidos').invalid">{{getErrorMessage()}}
-                                    </mat-error>
+                                    <mat-error *ngIf="fgAdmin.get('apellidos').invalid">{{getApellidoErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-md-4 form-group">
@@ -38,7 +37,7 @@
                                     <input matInput formControlName="email" type="email" id="email" name="email"
                                         placeholder="Introduce tu correo" required>
                                     <mat-icon matSuffix>mail</mat-icon>
-                                    <mat-error *ngIf="fgAdmin.get('email').invalid">{{getErrorMessage()}}</mat-error>
+                                    <mat-error *ngIf="fgAdmin.get('email').invalid">{{getEmailErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-md-4 form-group">

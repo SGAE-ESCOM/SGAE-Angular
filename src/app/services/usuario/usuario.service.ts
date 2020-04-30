@@ -60,6 +60,17 @@ export class UsuarioService {
   }
 
   updatePermisosAdministrador(usuario: UsuarioInterface, permisos: number){
-    this.usuariosCollection.doc(usuario.id).update({"permisos": permisos});
+    return this.usuariosCollection.doc(usuario.id).update({"permisos": permisos});
+  }
+
+  updateInformacionAdministrador(usuario: UsuarioInterface, data: UsuarioInterface){
+    return this.usuariosCollection.doc(usuario.id).update({
+      'nombres': data.nombres,
+      'apellidos': data.apellidos
+    });
+  }
+
+  deleteInfoAdministrador(usuario: UsuarioInterface){
+    this.usuariosCollection.doc(usuario.id).delete();
   }
 }

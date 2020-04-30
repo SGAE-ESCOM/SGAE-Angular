@@ -10,6 +10,8 @@ import { UsuarioService } from '@services/usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-gestion-admon',
@@ -36,7 +38,8 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, public dialog: MatDialog) {
+  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, public dialog: MatDialog, 
+      private _swal: SweetalertService, private _authService: AuthService,) {
     BreadcrumbComponent.update(BC_GESTION_ADMON);
   }
 
@@ -94,13 +97,25 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
   }
 
   visualizarPermisos(row){
-    console.log(row)
     const dialogRef = this.dialog.open(ModalVisualizarPermisos, {
       width: '1000px',
       data: row
     });
     dialogRef.afterClosed().subscribe(result => {});
   }
+
+  eliminarUsuario(row){
+    // this._swal.confirmarEliminar(`¿Deseas eliminar al administrador '${row.nombres}' '${row.apellidos}'?`, 'No se podrá revertir esta acción')
+    // .then((result) => {
+    //   if (result.value) {
+    //     this._authService.
+    //     this._usuarioService.deleteInfoAdministrador(row.id).then(() => {
+    //       this._swal.adminEliminadoCorrectamente();
+    //     }).catch(err => this.toast.error(err));
+    //   }
+    // });
+  }
+ 
 }
 
 @Component({

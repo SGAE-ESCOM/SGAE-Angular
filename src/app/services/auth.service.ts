@@ -51,6 +51,10 @@ export class AuthService {
     });
   }
 
+  eliminadorAdministrador(usuario: UsuarioInterface){
+    // this.afsAuth.auth.deleteUser()
+  }
+
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.signInWithEmailAndPassword(email, pass)

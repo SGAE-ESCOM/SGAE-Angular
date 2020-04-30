@@ -12,31 +12,32 @@
                 </div>
                 <div class="card-body">
                     <h5>Información del administrador</h5>
-                    <div class="row">
-                        <div class="col-12 col-md-4 form-group">
-                            <mat-form-field appearance="legacy">
-                                <mat-label>Nombre(s)</mat-label>
-                                <input matInput type="nombres" id="nombres" name="nombres" (change)="btnIDisable = false;" [value]="usuario.nombres" required>
-                                <mat-icon matSuffix>text_fields</mat-icon>
-                                <!-- <mat-error *ngIf="fgAdmin.get('nombres').invalid">{{getErrorMessage()}}</mat-error> -->
-                            </mat-form-field>
+                    <form [formGroup]="fgAdmin">
+                        <div class="row">
+                            <div class="col-12 col-md-4 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Nombre(s)</mat-label>
+                                    <input matInput formControlName="nombres" type="nombres" id="nombres" name="nombres" (change)="btnIDisable = false;" required>
+                                    <mat-icon matSuffix>text_fields</mat-icon>
+                                    <mat-error *ngIf="fgAdmin.get('nombres').invalid">{{getNombreErrorMessage()}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Apellido(s)</mat-label>
+                                    <input matInput formControlName="apellidos" type="apellidos" id="apellidos" name="apellidos" (change)="btnIDisable = false;" required>
+                                    <mat-icon matSuffix>text_fields</mat-icon>
+                                    <mat-error *ngIf="fgAdmin.get('apellidos').invalid">{{getApellidoErrorMessage()}}</mat-error>
+                                </mat-form-field>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-4 form-group">
-                            <mat-form-field appearance="legacy">
-                                <mat-label>Apellido(s)</mat-label>
-                                <input matInput type="apellidos" id="apellidos" name="apellidos" (change)="btnIDisable = false;" [value]="usuario.apellidos" required>
-                                <mat-icon matSuffix>text_fields</mat-icon>
-                                <!-- <mat-error *ngIf="fgAdmin.get('apellidos').invalid">{{getErrorMessage()}}</mat-error> -->
-                            </mat-form-field>
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button type="submit" type="submit" mat-button color="info" (click)="actualizarInformacion(fgAdmin)" [disabled]="btnIDisable"> Actualizar <mat-icon>cached</mat-icon> 
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 text-right">
-                            <button type="submit" type="submit" mat-button color="info" [disabled]="btnIDisable">
-                                    Actualizar <mat-icon>cached</mat-icon> 
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                     <hr>
                     <h5>Permisos del administrador</h5>
                     <div class="row">
