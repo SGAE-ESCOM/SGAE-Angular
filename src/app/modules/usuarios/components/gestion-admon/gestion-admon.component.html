@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-3 offset-md-5 form-group">
                     <mat-form-field appearance="outline">
                         <mat-label>Filtrar administradores por permisos </mat-label>
-                        <mat-select [formControl]="fcFiltro" (selectionChange)="onChangeFiltroUsuario($event.value)" required>
+                        <mat-select name="SelectFiltro" [formControl]="fcFiltro" (selectionChange)="onChangeFiltroUsuario($event.value)" required>
                             <mat-option *ngFor="let filtro of filtros" [value]="filtro.valor">
                                 {{ filtro.nombre }}
                             </mat-option>
@@ -56,10 +56,10 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                         
                         <td mat-cell *matCellDef="let row">
-                            <a mat-button matTooltip="Editar cuenta" color="info" [routerLink]="[ '/app/usuarios/gestion-admon/editar/', row.id ]">
+                            <a mat-button name="btnEditarAdmin" matTooltip="Editar cuenta" color="info" [routerLink]="[ '/app/usuarios/gestion-admon/editar/', row.id ]">
                                 <mat-icon class="material-icons-outlined">create</mat-icon>
                             </a>
-                            <a mat-button (click)="eliminarUsuario(row)"  color="danger">
+                            <a mat-button name="btnEliminarAdmin" (click)="eliminarAdministrador(row)"  color="danger">
                                 <mat-icon>delete</mat-icon>
                             </a>
                         </td>
@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-12 text-right pt-2">
-            <button mat-flat-button color="info"  [routerLink]="['/app/usuarios/gestion-admon/registrar']" >Dar de alta nuevo administrador <mat-icon>perm_identity</mat-icon></button>
+            <button mat-flat-button color="info" name="btnRegistrarAdmin" [routerLink]="['/app/usuarios/gestion-admon/registrar']" >Dar de alta nuevo administrador <mat-icon>perm_identity</mat-icon></button>
         </div>
     </div>
 </div>

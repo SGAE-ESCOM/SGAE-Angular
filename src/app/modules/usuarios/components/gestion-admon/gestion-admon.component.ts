@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_GESTION_ADMON } from '@shared/routing-list/ListLinks';
-import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION } from '@shared/admin-permissions/permissions';
+import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, PermisosAdministrador } from '@shared/admin-permissions/permissions';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
-import { UsuarioService } from '@services/usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { AuthService } from '@services/auth.service';
+import { AdminService } from '@services/admin/admin.service';
 
 @Component({
   selector: 'app-gestion-admon',
@@ -38,7 +38,7 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, public dialog: MatDialog, 
+  constructor(private _adminService: AdminService, private _toast:ToastrService, public dialog: MatDialog, 
       private _swal: SweetalertService, private _authService: AuthService,) {
     BreadcrumbComponent.update(BC_GESTION_ADMON);
   }
@@ -46,7 +46,7 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     //this.usuarios.data = this.listaUsuarios; // DEBUG
-    this._usuarioService.getAdministradores().then((querySnapshot) => {
+    this._adminService.getAdministradores().then((querySnapshot) => {
       let usuarios = [];
       querySnapshot.forEach((doc) => {
         usuarios.push(doc.data());
@@ -61,7 +61,7 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
 
   //Eventos
   onChangeFiltroUsuario(filtro) {
-    this._usuarioService.getAdministradores().then((querySnapshot) => {
+    this._adminService.getAdministradores().then((querySnapshot) => {
       let usuarios = [];
       querySnapshot.forEach((doc) => {
         let user: any[] = doc.data();
@@ -104,16 +104,16 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {});
   }
 
-  eliminarUsuario(row){
-    // this._swal.confirmarEliminar(`¿Deseas eliminar al administrador '${row.nombres}' '${row.apellidos}'?`, 'No se podrá revertir esta acción')
-    // .then((result) => {
-    //   if (result.value) {
-    //     this._authService.
-    //     this._usuarioService.deleteInfoAdministrador(row.id).then(() => {
-    //       this._swal.adminEliminadoCorrectamente();
-    //     }).catch(err => this.toast.error(err));
-    //   }
-    // });
+  eliminarAdministrador(row){
+    this._swal.confirmarEliminar(`¿Deseas eliminar al administrador '${row.nombres}' '${row.apellidos}'?`, 'No se podrá revertir esta acción')
+    .then((result) => {
+      if (result.value) {
+        this._adminService.deleteAdministrador(row).then(() => {
+          this._swal.adminEliminadoCorrectamente();
+          this.onChangeFiltroUsuario(this.fcFiltro.value);
+        }).catch(err => this._toast.error(err));
+      }
+    });
   }
  
 }

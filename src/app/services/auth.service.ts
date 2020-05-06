@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { AngularFireModule } from '@angular/fire';
 import * as firebase from "firebase/app";
+import * as admin from "firebase-admin";
+import * as sdkparams from "@services/admin/sdk-credential-params"
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +19,17 @@ export class AuthService {
   private static usuarioC:UsuarioInterface;
 
   public userData$: Observable<firebase.User>;
-  private secondaryApp:any = firebase.initializeApp({
+  private adminRegistryApp:any = firebase.initializeApp({
     apiKey: "AIzaSyDB-mxqZtA7XDPebNg4KGLkcnZJRY3lb8w",
     authDomain: "sgae-escom.firebaseapp.com",
     databaseURL: "https://sgae-escom.firebaseio.com"
   }, "Secondary");
 
+
+  // private adminApp: any = admin.initializeApp({
+  //   credential: admin.credential.cert(sdkparams.ADMIN_PARAMS),
+  //   databaseURL: "https://sgae-escom.firebaseio.com"
+  // });
   
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.userData$ = afsAuth.authState;
@@ -33,7 +40,7 @@ export class AuthService {
       this.afsAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
         .then(userData => {
           resolve(userData),
-            this.updateInformacionUsuairo(userData.user, usuario)
+            this.updateInformacionUsuario(userData.user, usuario)
         }).catch(err => console.log(reject(err)));
     });
   }
@@ -42,19 +49,15 @@ export class AuthService {
   registrarAdministrador( usuario: UsuarioInterface ) {
 
     return new Promise((resolve, reject) => {
-      this.secondaryApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
+      this.adminRegistryApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
         .then(userData => {
           resolve(userData),
             this.updateInformacionAdministrador(userData.user, usuario);
-            this.secondaryApp.auth().signOut();
+            this.adminRegistryApp.auth().signOut();
         }).catch(err => console.log(reject(err)));
     });
   }
-
-  eliminadorAdministrador(usuario: UsuarioInterface){
-    // this.afsAuth.auth.deleteUser()
-  }
-
+  
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.signInWithEmailAndPassword(email, pass)
@@ -64,7 +67,7 @@ export class AuthService {
   }
 
   finalizarRegistroGoogle(usuario, infoComplemento){
-    return this.updateInformacionUsuairo(usuario, infoComplemento);
+    return this.updateInformacionUsuario(usuario, infoComplemento);
   }
 
   loginGoogleUser() {
@@ -79,7 +82,7 @@ export class AuthService {
     return this.afsAuth.authState.pipe(map(auth => auth));
   }
 
-  private updateInformacionUsuairo(usuarioRegistrado, usuario) {
+  private updateInformacionUsuario(usuarioRegistrado, usuario) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Usuarios/${usuarioRegistrado.uid}`);
     const data: UsuarioInterface = {
       id: usuarioRegistrado.uid,

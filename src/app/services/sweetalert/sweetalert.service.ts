@@ -58,7 +58,15 @@ export class SweetalertService {
   eliminadoCorrectamente(){
     this.swalFinalizar.fire({
       title: 'Eliminado',
-      text: 'El elemento ha sido eliminado',
+      text: 'El elemento ha sido eliminado.',
+      icon: 'success'
+    });
+  }
+
+  aspiranteEliminadoCorrectamente(){
+    this.swalFinalizar.fire({
+      title: 'Eliminado',
+      text: 'El aspirante ha sido eliminado.',
       icon: 'success'
     });
   }
@@ -66,7 +74,7 @@ export class SweetalertService {
   adminEliminadoCorrectamente(){
     this.swalFinalizar.fire({
       title: 'Eliminado',
-      text: 'El administrador ha sido eliminado',
+      text: 'El administrador ha sido eliminado.',
       icon: 'success'
     });
   }
@@ -74,7 +82,7 @@ export class SweetalertService {
   informacionAdminActualizada(){
     this.swalFinalizar.fire({
       title: 'Actualizado',
-      text: 'Información actualizada correctamente',
+      text: 'Información actualizada correctamente.',
       icon: 'success'
     });
   }
@@ -90,7 +98,7 @@ export class SweetalertService {
   adminRegistrado(){
     this.swalFinalizar.fire({
       title: 'Registrado',
-      text: 'Administrador registrado correctamente',
+      text: 'Administrador registrado correctamente.',
       icon: 'success'
     });
   }

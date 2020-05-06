@@ -33,7 +33,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-right">
-                                <button type="submit" type="submit" mat-button color="info" (click)="actualizarInformacion(fgAdmin)" [disabled]="btnIDisable"> Actualizar <mat-icon>cached</mat-icon> 
+                                <button name="btnActualizarInfoAdmin" type="submit" type="submit" mat-button color="info" (click)="actualizarInformacion(fgAdmin)" [disabled]="btnIDisable"> Actualizar <mat-icon>cached</mat-icon> 
                                 </button>
                             </div>
                         </div>
@@ -43,44 +43,44 @@
                     <div class="row">
                         <div class="col-12 col-md-4 form-group">
                             <section class="example-section mt-3">
-                                <mat-slide-toggle [(ngModel)]="gusuarios" (change)="btnPDisable = false;" color="accent">Gestión de usuarios</mat-slide-toggle>
+                                <mat-slide-toggle name="toogleUsuarios" [(ngModel)]="gusuarios" (change)="btnPDisable = false;" color="accent">Gestión de usuarios</mat-slide-toggle>
                             </section>
-                            <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                            <mat-hint class="toggle-hint">Permite gestionar las cuentas de los administradores de la institución y revisar los aspirantes registrados.</mat-hint>
                         </div>
                         <div class="col-12 col-md-4 form-group">
                             <section class="example-section mt-3">
-                                <mat-slide-toggle [(ngModel)]="getapas" (change)="btnPDisable = false;" color="accent">Gestión de etapas</mat-slide-toggle>
+                                <mat-slide-toggle  name="toogleEtapas" [(ngModel)]="getapas" (change)="btnPDisable = false;" color="accent">Gestión de etapas</mat-slide-toggle>
                             </section>
-                            <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                            <mat-hint class="toggle-hint">Permite gestionar el orden y fechas de las etapas de la convocatoria.</mat-hint>
                         </div>
                         <div class="col-12 col-md-4 form-group">
                             <section class="example-section mt-3">
-                                <mat-slide-toggle [(ngModel)]="gpagos" (change)="btnPDisable = false;" color="accent">Gestión de pagos</mat-slide-toggle>
+                                <mat-slide-toggle name="tooglePagos" [(ngModel)]="gpagos" (change)="btnPDisable = false;" color="accent">Gestión de pagos</mat-slide-toggle>
                             </section>
-                            <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                            <mat-hint class="toggle-hint">Permite revisar el área de pagos.</mat-hint>
                         </div>
                         <div class="col-12 col-md-4 form-group">
                             <section class="example-section mt-3">
-                                <mat-slide-toggle [(ngModel)]="gconvocatoria" (change)="btnPDisable = false;" color="accent">Gestión de convocatoria</mat-slide-toggle>
+                                <mat-slide-toggle name="toogleConvocatoria" [(ngModel)]="gconvocatoria" (change)="btnPDisable = false;" color="accent">Gestión de convocatoria</mat-slide-toggle>
                             </section>
-                            <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                            <mat-hint class="toggle-hint">Permite revisar y editar el área de convocatoria.</mat-hint>
                         </div>
                         <div class="col-12 col-md-4 form-group">
                             <section class="example-section mt-3">
-                                <mat-slide-toggle [(ngModel)]="gevaluacion" (change)="btnPDisable = false;" color="accent">Gestión de evaluación</mat-slide-toggle>
+                                <mat-slide-toggle name="toogleEvaluacion" [(ngModel)]="gevaluacion" (change)="btnPDisable = false;" color="accent">Gestión de evaluación</mat-slide-toggle>
                             </section>
-                            <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                            <mat-hint class="toggle-hint">Permite revisar y editar el área de evaluación.</mat-hint>
                         </div>
                         <div class="col-12 col-md-4 form-group">
                             <section class="example-section mt-3">
-                                <mat-slide-toggle [(ngModel)]="gdocumentacion" (change)="btnPDisable = false;" color="accent">Gestión de documentación</mat-slide-toggle>
+                                <mat-slide-toggle name="toogleDocumentacion" [(ngModel)]="gdocumentacion" (change)="btnPDisable = false;" color="accent">Gestión de documentación</mat-slide-toggle>
                             </section>
-                            <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                            <mat-hint class="toggle-hint">Permite validar y administrar la información solicitada a los aspirantes.</mat-hint>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <button type="submit" type="submit" (click)="actualizarPermisos()" mat-button color="info" [disabled]="btnPDisable">
+                            <button name="btnActualizarPermisosAdmin" type="submit" type="submit" (click)="actualizarPermisos()" mat-button color="info" [disabled]="btnPDisable">
                                     Actualizar <mat-icon>cached</mat-icon> 
                             </button>
                         </div>
@@ -88,7 +88,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <button type="submit" type="submit" [routerLink]="['/app/usuarios/gestion-admon']" mat-button color="warning">
+                            <button name="btnRegresar" type="submit" type="submit" [routerLink]="['/app/usuarios/gestion-admon']" mat-button color="warning">
                                     Regresar <mat-icon>undo</mat-icon> 
                             </button>
                         </div>
