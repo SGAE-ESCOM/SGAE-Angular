@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 /* Components view examples */
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AccesoRestringidoComponent } from './acceso-restringido/acceso-restringido.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -11,7 +12,9 @@ const routes: Routes = [
   { path: 'pagos', loadChildren: () => import('@modules/pagos/pagos.module').then( m=> m.PagosModule) },
   { path: 'convocatoria', loadChildren: () => import('@modules/convocatoria/convocatoria.module').then( m=> m.ConvocatoriaModule) },
   { path: 'etapas', loadChildren: () => import('@modules/etapas/etapas.module').then( m=> m.EtapasModule) },
-  { path: 'usuarios', loadChildren: () => import('@modules/usuarios/usuarios.module').then( m=> m.UsuariosModule) }
+  { path: 'usuarios', loadChildren: () => import('@modules/usuarios/usuarios.module').then( m=> m.UsuariosModule) },
+  { path: 'acceso-restringido', component: AccesoRestringidoComponent }
+  //Agregar SinPermisos
 ];
 
 @NgModule({

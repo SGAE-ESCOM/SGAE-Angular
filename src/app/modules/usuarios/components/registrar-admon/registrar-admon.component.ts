@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_REGISTRAR_ADMON } from '@shared/routing-list/ListLinks';
+import { BC_REGISTRAR_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '@services/auth.service';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
 import { passwordMatchValidator } from '@shared/validators/passwordValidators';
-import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION } from '@shared/admin-permissions/permissions';
+import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, AccesosAdministrador } from '@shared/admin-permissions/permissions';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -26,9 +26,12 @@ export class RegistrarAdmonComponent implements OnInit {
   gdocumentacion: boolean = false;
   fgAdmin: FormGroup;
 
-  constructor(private fb: FormBuilder, private _authService: AuthService,
-    private router: Router, private _toas: ToastrService, private _swal: SweetalertService) {
-    BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
+  constructor(private fb: FormBuilder, private _authService: AuthService, private accesosAdministrador: AccesosAdministrador,
+        private router: Router, private _toas: ToastrService, private _swal: SweetalertService) {
+    BreadcrumbComponent.update(BC_USUARIOS);
+    if(this.accesosAdministrador.accesoUsuarios()){
+      BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
+    }
   }
 
   ngOnInit() {

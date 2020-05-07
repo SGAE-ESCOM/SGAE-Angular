@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_GESTION_ADMON } from '@shared/routing-list/ListLinks';
-import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, PermisosAdministrador } from '@shared/admin-permissions/permissions';
+import { BC_GESTION_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
+import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, AccesosAdministrador } from '@shared/admin-permissions/permissions';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -10,7 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { AuthService } from '@services/auth.service';
 import { AdminService } from '@services/admin/admin.service';
 
 @Component({
@@ -39,8 +38,11 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
 
 
   constructor(private _adminService: AdminService, private _toast:ToastrService, public dialog: MatDialog, 
-      private _swal: SweetalertService, private _authService: AuthService,) {
-    BreadcrumbComponent.update(BC_GESTION_ADMON);
+      private _swal: SweetalertService, private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_USUARIOS);
+    if(this.accesosAdministrador.accesoUsuarios()){
+      BreadcrumbComponent.update(BC_GESTION_ADMON);
+    }
   }
 
 

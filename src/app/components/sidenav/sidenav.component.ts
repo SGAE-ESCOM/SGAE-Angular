@@ -47,6 +47,7 @@ export class SidenavComponent implements OnInit {
             this._authService.setUsuarioC(usaurio);
             this.usuario = usaurio;
             this.isLoggedIn = true;
+            if(this.usuario.rol == 'admin')
             this.navigationLinks = LINKS_HOME[usaurio.rol]
           } else {
             const infoUsuario = {

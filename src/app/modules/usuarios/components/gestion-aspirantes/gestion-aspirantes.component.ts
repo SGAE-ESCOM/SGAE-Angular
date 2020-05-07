@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_GESTION_ASPIRANTES } from '@shared/routing-list/ListLinks';
+import { BC_GESTION_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-gestion-aspirantes',
@@ -30,8 +31,12 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   ];
   fcFiltro = new FormControl(this.filtros[0].valor);
 
-  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService) {
-    BreadcrumbComponent.update(BC_GESTION_ASPIRANTES);
+  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
+        private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_USUARIOS);
+    if(this.accesosAdministrador.accesoUsuarios()){
+      BreadcrumbComponent.update(BC_GESTION_ASPIRANTES);
+    }
   }
 
   ngOnInit(): void {

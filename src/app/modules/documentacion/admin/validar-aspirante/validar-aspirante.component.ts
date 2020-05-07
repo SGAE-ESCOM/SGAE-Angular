@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_VALIDAR_DOC_ASPIRANTE } from '@shared/routing-list/ListLinks';
+import { BC_VALIDAR_DOC_ASPIRANTE, BC_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,6 +11,7 @@ import { UsuarioInterface } from '@models/persona/usuario';
 import { ValidarDocumentacionService } from '@services/documentacion/validar-documentacion.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { EstadoDocumentacion } from "@models/documentacion/enums/estado-documentacion.enum";
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-validar-aspirante',
@@ -29,12 +30,15 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
   requisitosValidados: any[] = [];
   private usuario: UsuarioInterface;
 
-  constructor(public dialog: MatDialog,
-    private _subirDocService: ValidarDocumentacionService, private _personaService: UsuarioService,
-    private route: ActivatedRoute, private router: Router,
-    private _toast: ToastrService, private _swal: SweetalertService) {
-    BreadcrumbComponent.update(BC_VALIDAR_DOC_ASPIRANTE);
-    this.usuario = { id: this.route.snapshot.paramMap.get("id") };
+  constructor(public dialog: MatDialog, private _subirDocService: ValidarDocumentacionService, 
+        private _personaService: UsuarioService, private route: ActivatedRoute, 
+        private router: Router, private _toast: ToastrService, 
+        private _swal: SweetalertService, private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_DOCUMENTACION);
+    if(this.accesosAdministrador.accesoDocumentacion()){
+      BreadcrumbComponent.update(BC_VALIDAR_DOC_ASPIRANTE);
+      this.usuario = { id: this.route.snapshot.paramMap.get("id") };
+    }
   }
 
   ngOnInit(): void {

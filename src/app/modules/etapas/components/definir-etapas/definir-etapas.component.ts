@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_DEFINIR_ETAPAS } from "@routing/ListLinks";
+import { BC_DEFINIR_ETAPAS, BC_ETAPAS } from "@routing/ListLinks";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ETAPAS_ESTADO_ASPIRANTE, ETAPAS, ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { EtapasService } from '@services/etapas/etapas.service';
 import { Router } from '@angular/router';
 import { fadeInDown } from '@shared/animations/router.animations';
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-definir-etapas',
@@ -29,11 +30,15 @@ export class DefinirEtapasComponent implements OnInit {
   etapas = [];
 
   constructor(private _fb: FormBuilder, private _etapaService: EtapasService, private router: Router,
-    private _toast: ToastrService, private _swal: SweetalertService) {
-    BreadcrumbComponent.update(BC_DEFINIR_ETAPAS);
-    this.fgEtapaUsar = this._fb.group({
-      etapas: ['', Validators.required],
-    });
+        private _toast: ToastrService, private _swal: SweetalertService, private accesosAdministrador: AccesosAdministrador) {
+
+    BreadcrumbComponent.update(BC_ETAPAS);
+    if(this.accesosAdministrador.accesoEtapas()){
+      BreadcrumbComponent.update(BC_DEFINIR_ETAPAS);
+      this.fgEtapaUsar = this._fb.group({
+        etapas: ['', Validators.required],
+      });
+    }
   }
 
   ngOnInit() {

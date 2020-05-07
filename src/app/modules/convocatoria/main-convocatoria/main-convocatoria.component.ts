@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_CONVOCATORIA } from "@routing/ListLinks";
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-main-convocatoria',
@@ -9,8 +10,9 @@ import { BC_CONVOCATORIA } from "@routing/ListLinks";
 })
 export class MainConvocatoriaComponent implements OnInit {
 
-  constructor() {
+  constructor(private accesosAdministrador: AccesosAdministrador) {
     BreadcrumbComponent.update(BC_CONVOCATORIA);
+    this.accesosAdministrador.accesoConvocatoria();
   }
 
   ngOnInit() {

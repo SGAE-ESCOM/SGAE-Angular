@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_DEFINIR_FECHAS, BC_DEFINIR_ETAPAS } from "@routing/ListLinks";
+import { BC_DEFINIR_FECHAS, BC_DEFINIR_ETAPAS, BC_ETAPAS } from "@routing/ListLinks";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,7 @@ import { ETAPAS, ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
 import { COLORES_ETAPAS, BUSCAR_COLOR_ETAPAS } from "@models/etapas/colores-etapa.enum";
 import { EtapasService } from '@services/etapas/etapas.service';
 import { Router } from '@angular/router';
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-definir-fechas',
@@ -30,9 +31,12 @@ export class DefinirFechasComponent implements OnInit {
   existDefinirEtapas = true;
   linkDefinirEtapas = BC_DEFINIR_ETAPAS.title.url;
 
-  constructor(private _fb: FormBuilder, private _etapaService: EtapasService,
-    private _toast: ToastrService, private _swal: SweetalertService, private router: Router) {
-    BreadcrumbComponent.update(BC_DEFINIR_FECHAS);
+  constructor(private _fb: FormBuilder, private _etapaService: EtapasService, private accesosAdministrador: AccesosAdministrador,
+        private _toast: ToastrService, private _swal: SweetalertService, private router: Router) {
+    BreadcrumbComponent.update(BC_ETAPAS);
+    if(this.accesosAdministrador.accesoEtapas()){
+      BreadcrumbComponent.update(BC_DEFINIR_FECHAS);
+    }
   }
 
   ngOnInit() {

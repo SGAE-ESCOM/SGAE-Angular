@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_EDITAR_ADMON } from '@shared/routing-list/ListLinks';
+import { BC_EDITAR_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { ToastrService } from 'ngx-toastr';
-import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION } from '@shared/admin-permissions/permissions';
+import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, AccesosAdministrador } from '@shared/admin-permissions/permissions';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
@@ -30,9 +30,12 @@ export class EditarAdmonComponent implements OnInit {
   btnIDisable = true;
 
   constructor(private route: ActivatedRoute, private _adminService: AdminService, private _toast:ToastrService,
-      private _swal: SweetalertService, private fb: FormBuilder) {
-    BreadcrumbComponent.update(BC_EDITAR_ADMON);
-    this.usuario = { id: this.route.snapshot.paramMap.get("id") };
+      private _swal: SweetalertService, private fb: FormBuilder, private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_USUARIOS);
+    if(this.accesosAdministrador.accesoUsuarios()){
+      BreadcrumbComponent.update(BC_EDITAR_ADMON);
+      this.usuario = { id: this.route.snapshot.paramMap.get("id") };
+    }
   }
 
   ngOnInit(): void {

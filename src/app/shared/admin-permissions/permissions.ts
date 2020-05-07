@@ -1,5 +1,9 @@
 //PERMISOS ADMINISTRADOR
 import { Injectable } from '@angular/core';
+import { UsuarioInterface } from '@models/persona/usuario';
+import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
+import { UsuarioService } from '@services/usuario/usuario.service';
 
 export const GESTION_USUARIOS:number = 1;   //000001
 export const GESTION_ETAPAS:number = 2;     //000010
@@ -20,31 +24,60 @@ export const PERMISOS_ADMIN: any[] = [
 
 @Injectable({
     providedIn: 'root'
-  })
-export class PermisosAdministrador {
+})
+export class AccesosAdministrador {
+
+    private usuario;
+
+    constructor(private _authServices: AuthService, private router: Router) { 
+        this.usuario = this._authServices.getUsuarioC();
+    }
+
+    private acceso(PERMISO){
+        let user = this.usuario;
+        switch(user.rol){
+            case 'root':
+                return true;
+            case 'admin':
+                if((user.permisos & PERMISO) > 0)
+                    return true;
+                this.router.navigate(['/app/acceso-restringido']);
+                return false;
+            case 'aspirante':
+                this.router.navigate(['/app']);
+                return false;
+            default:
+                this.router.navigate(['/app']);
+                return false;
+        }
+    }
     
-    accesoUsuarios(permisos:number){
-        return (permisos & GESTION_USUARIOS) > 0 ? true : false; 
+    accesoUsuarios(){
+        return this.acceso(GESTION_USUARIOS);
     }
 
-    accesoEtapas(permisos:number){
-        return (permisos & GESTION_ETAPAS) > 0 ? true : false; 
+    accesoEtapas(){
+        return this.acceso(GESTION_ETAPAS);
     }
 
-    accesoPagos(permisos:number){
-        return (permisos & PAGOS) > 0 ? true : false; 
+    accesoPagos(){
+        return this.acceso(PAGOS);
     }
 
-    accesoConvocatoria(permisos:number){
-        return (permisos & CONVOCATORIA) > 0 ? true : false; 
+    accesoConvocatoria(){
+        return this.acceso(CONVOCATORIA);
     }
 
-    accesoEvaluacion(permisos:number){
-        return (permisos & EVALUACION) > 0 ? true : false; 
+    accesoEvaluacion(){
+        return this.acceso(EVALUACION);
     }
 
-    accesoDocumentacion(permisos:number){
-        return (permisos & DOCUMENTACION) > 0 ? true : false; 
+    accesoDocumentacion(){
+        return this.acceso(DOCUMENTACION);
+    }
+
+    isAdministrador(rol: string){
+        return rol == 'admin' || rol == 'root' ? true : false;
     }
     
 }
