@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_VALIDAR_DOC_ASPIRANTE } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -27,14 +26,20 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
   requisitosAspirante: any;
   comentarios = '';
   requisitosValidados: any[] = [];
-  private usuario: UsuarioInterface;
+  usuario: UsuarioInterface;
 
   constructor(public dialog: MatDialog,
     private _subirDocService: ValidarDocumentacionService, private _personaService: UsuarioService,
     private route: ActivatedRoute, private router: Router,
     private _toast: ToastrService, private _swal: SweetalertService) {
     BreadcrumbComponent.update(BC_VALIDAR_DOC_ASPIRANTE);
-    this.usuario = { id: this.route.snapshot.paramMap.get("id") };
+    const navigation = this.router.getCurrentNavigation();
+    if( navigation.extras.state ){
+      this.usuario = JSON.parse(navigation.extras.state.usuario);
+    }else{
+      this.router.navigate(['/app/documentacion/validar/'])  
+    }
+    //this.usuario = { id: this.route.snapshot.paramMap.get("id") };
   }
 
   ngOnInit(): void {
@@ -68,7 +73,7 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
             //let documentacionFinal = this.formatRequisitosFinal();
             this._subirDocService.updateDocumentacion(this.usuario, this.documentacionObject).then(response => {
               this._personaService.updateEstadoDocumentacion(this.usuario, EstadoDocumentacion.VALIDADA);
-              this._toast.success("Se han enviado las correcciones");
+              this._toast.success("Se ha finalizado la validación del aspirante");
               this.router.navigate([BC_VALIDAR_DOC_ASPIRANTE.links[2].url]);
             }).catch(err => this._toast.error("Ha ocurrido un error"));
           }

@@ -3,7 +3,6 @@
   ============================-->
 <section id="intro" class="clearfix">
     <div class="container">
-
         <div class="intro-img">
             <img src="assets/img/intro-img.svg" alt="" class="img-fluid">
         </div>
@@ -11,11 +10,12 @@
         <div class="intro-info">
             <h2>Sistema de Gestión de Admisión Escolar<br><span>solución</span><br>a tu negocio!</h2>
             <div>
-                <a href="#about" class="btn-get-started scrollto">Comenzar</a>
+                <a routerLink="login" class="btn-get-started scrollto">
+                    Comenzar
+                </a>
                 <a href="#services" class="btn-services scrollto">Convocatoria</a>
             </div>
         </div>
-
     </div>
 </section><!-- #intro -->
 
@@ -163,23 +163,28 @@
     <!--==========================
       Calendario
     ============================-->
-    <section id="team">
+    <section id="why-us" class="wow">
         <div class="container">
-          <div class="section-header">
-            <h3>Calendario proceso de admisión </h3>
-            <p></p>
+          <header class="section-header">
+            <h3>Calendario proceso de admisión</h3>
+            <!--<p></p>-->
+          </header>
+          <div class="row row-eq-height">
+                <div class="col-12" *ngIf="(fechasEtapas != null) && (fechasEtapas.length != 0 ); else proximamente">
+                    <app-calendario [dataSource]="fechasEtapas"></app-calendario>
+                </div>
+                <ng-template #proximamente>
+                    <div class="col-12 text-center text-white">
+                        <h1><span class="badge badge-warning">Próximamente</span></h1>
+                    </div>
+                </ng-template>
           </div>
-          <div class="row">
-              <div class="col-12">
-                <app-calendario [dataSource]="fechasEtapas"></app-calendario>
-              </div>
-          </div>
-  
         </div>
     </section>
     <!--==========================
       Why Us Section
     ============================-->
+    <!--
     <section id="why-us" class="wow fadeIn">
         <div class="container">
             <header class="section-header">
@@ -254,7 +259,7 @@
 
         </div>
     </section>
-
+    -->
     <!--==========================
       Contact Section
     ============================-->

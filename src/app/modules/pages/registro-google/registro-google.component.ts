@@ -30,7 +30,7 @@ export class RegistroGoogleComponent implements OnInit {
           this.router.navigate(['/login']);
         }
       });
-    }
+  }
 
   ngOnInit() {
     this.fgUsuario = this.fb.group({

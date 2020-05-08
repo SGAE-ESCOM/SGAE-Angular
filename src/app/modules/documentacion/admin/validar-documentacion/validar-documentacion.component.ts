@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-validar-documentacion',
@@ -36,7 +37,7 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
   ]
   fcFiltro = new FormControl(this.filtros[0].valor);
 
-  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService) {
+  constructor(private _usuarioService: UsuarioService, private _router:Router, private _toast:ToastrService) {
     BreadcrumbComponent.update(BC_VALIDAR_DOCUMENTACION);
   }
 
@@ -101,6 +102,10 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
     if (this.usuarios.paginator) {
       this.usuarios.paginator.firstPage();
     }
+  }
+
+  goto( infoUsuario: any ){
+    this._router.navigate(['/app/documentacion/validar/aspirante'], { state: { usuario: JSON.stringify(infoUsuario) } });
   }
 
   private mensajeError():void{

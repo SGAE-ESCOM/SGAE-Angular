@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-12 text-right">
                     <button mat-button color="info" (click)="onEnviarCorrecciones()">Enviar correcciones</button>
-                    <button mat-button color="success" (click)="onFinalizar()">Validar</button>
+                    <button mat-button color="success" *ngIf="usuario.estado.documentacion !== 'validada'" (click)="onFinalizar()">Validar</button>
                 </div>
             </div>
         </div>
