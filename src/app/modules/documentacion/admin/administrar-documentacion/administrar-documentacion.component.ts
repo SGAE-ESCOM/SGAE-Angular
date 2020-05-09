@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
-import { BC_ADMINISTRAR_DOCUMENTACION, BC_ORDENAR_REQUISITOS } from "@routing/ListLinks";
+import { BC_ADMINISTRAR_DOCUMENTACION, BC_ORDENAR_REQUISITOS, BC_DOCUMENTACION } from "@routing/ListLinks";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -12,6 +12,7 @@ import { AdministrarDocumentacionService } from '@services/documentacion/adminis
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { heapsort } from "@shared/utilerias/heapsort";
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-administrar-documentacion',
@@ -31,8 +32,11 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   urlOrdenarEtapas = BC_ORDENAR_REQUISITOS.title.url;
 
   constructor(private toast: ToastrService, private _swal: SweetalertService, private _ads: AdministrarDocumentacionService,
-    public dialog: MatDialog) {
-    BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
+        public dialog: MatDialog, private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_DOCUMENTACION);
+    if(this.accesosAdministrador.accesoDocumentacion()){
+      BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
+    }
   }
 
   ngOnInit() {
@@ -69,7 +73,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   }
 
   private saveRequisito( requisito ){
-    requisito.num = this.documentos.data[ this.documentos.data.length -1 ].num+1;
+    requisito.num = ( this.documentos.data.length != 0 ) ? this.documentos.data[ this.documentos.data.length -1 ].num+1: 1;
     this._ads.saveDocumento( requisito ).then(() => {
       this.toast.success("Se agrego correctamente")
       this.updateTablaRequerimiento();

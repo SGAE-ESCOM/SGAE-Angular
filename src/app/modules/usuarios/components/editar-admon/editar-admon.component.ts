@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_EDITAR_ADMON } from '@shared/routing-list/ListLinks';
+import { BC_EDITAR_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioInterface } from '@models/persona/usuario';
-import { UsuarioService } from '@services/usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION } from '@shared/admin-permissions/permissions';
+import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, AccesosAdministrador } from '@shared/admin-permissions/permissions';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
+import { AdminService } from '@services/admin/admin.service';
 
 @Component({
   selector: 'app-editar-admon',
@@ -29,10 +29,13 @@ export class EditarAdmonComponent implements OnInit {
   btnPDisable = true;
   btnIDisable = true;
 
-  constructor(private route: ActivatedRoute, private _personaService: UsuarioService, private _toast:ToastrService,
-      private _swal: SweetalertService, private fb: FormBuilder) {
-    BreadcrumbComponent.update(BC_EDITAR_ADMON);
-    this.usuario = { id: this.route.snapshot.paramMap.get("id") };
+  constructor(private route: ActivatedRoute, private _adminService: AdminService, private _toast:ToastrService,
+      private _swal: SweetalertService, private fb: FormBuilder, private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_USUARIOS);
+    if(this.accesosAdministrador.accesoUsuarios()){
+      BreadcrumbComponent.update(BC_EDITAR_ADMON);
+      this.usuario = { id: this.route.snapshot.paramMap.get("id") };
+    }
   }
 
   ngOnInit(): void {
@@ -41,7 +44,7 @@ export class EditarAdmonComponent implements OnInit {
       apellidos: ['', [Validators.required, Validators.pattern(TEXTO_CON_ESPACIOS)]]
     });
 
-    this._personaService.getAdministrador(this.usuario).then((querySnapshot) => {
+    this._adminService.getAdministrador(this.usuario).then((querySnapshot) => {
       let usuario;
       querySnapshot.forEach((user) => {
         usuario = user.data();
@@ -72,7 +75,7 @@ export class EditarAdmonComponent implements OnInit {
     permisos += this.gconvocatoria ? CONVOCATORIA : 0;
     permisos += this.gevaluacion ? EVALUACION : 0;
     permisos += this.gdocumentacion ? DOCUMENTACION : 0;
-    this._personaService.updatePermisosAdministrador(this.usuario, permisos).then(() => {
+    this._adminService.updatePermisosAdministrador(this.usuario, permisos).then(() => {
       this._swal.informacionAdminActualizada();
     }).catch( err => {
       this._swal.errorActualizarAdmin();
@@ -84,7 +87,7 @@ export class EditarAdmonComponent implements OnInit {
   actualizarInformacion(formulario: FormGroup){
     if(formulario.valid){
       let data = formulario.value;
-      this._personaService.updateInformacionAdministrador(this.usuario, data).then(() => {
+      this._adminService.updateInformacionAdministrador(this.usuario, data).then(() => {
         this._swal.informacionAdminActualizada();
         this.usuario.nombres = data.nombres;
         this.usuario.apellidos = data.apellidos;

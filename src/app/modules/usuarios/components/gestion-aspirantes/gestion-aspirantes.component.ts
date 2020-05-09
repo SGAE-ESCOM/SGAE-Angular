@@ -1,12 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_GESTION_ASPIRANTES } from '@shared/routing-list/ListLinks';
+import { BC_GESTION_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-gestion-aspirantes',
@@ -22,14 +24,19 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['nombres', 'apellidos', 'email', 'estadoDoc', 'acciones'];
 
   filtros: any[] = [
-    {nombre: 'Ambos', valor: 'true'},
+    {nombre: 'Todos', valor: 'true'},
+    {nombre: 'Sin Estado', valor: 'Sin Estado'},
     {nombre: 'Validada', valor: 'validada'},
     {nombre: 'Invalida', valor: 'invalida'}
   ];
   fcFiltro = new FormControl(this.filtros[0].valor);
 
-  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService) {
-    BreadcrumbComponent.update(BC_GESTION_ASPIRANTES);
+  constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
+        private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_USUARIOS);
+    if(this.accesosAdministrador.accesoUsuarios()){
+      BreadcrumbComponent.update(BC_GESTION_ASPIRANTES);
+    }
   }
 
   ngOnInit(): void {
@@ -38,7 +45,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
       querySnapshot.forEach((doc) => {
         let user = doc.data();
         if(user.estado === undefined || user.estado.documentacion === undefined){
-          user['estado'] = {'documentacion' : 'invalida'};
+          user['estado'] = {'documentacion' : 'Sin Estado'};
         }
         usuarios.push(user);
       });
@@ -59,7 +66,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
       querySnapshot.forEach((doc) => {
         let user = doc.data();
         if(user.estado === undefined || user.estado.documentacion === undefined){
-          user['estado'] = {'documentacion' : 'invalida'};
+          user['estado'] = {'documentacion' : 'Sin Estado'};
         }
         if(filtro === 'true' || user.estado.documentacion === filtro){
           usuarios.push(user);
@@ -86,8 +93,16 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  eliminarUsuario(row){
-    console.log('eliminando usuario')
+  eliminarAspirante(row){
+    this._swal.confirmarEliminar(`¿Deseas eliminar al aspirante '${row.nombres}' '${row.apellidos}'?`, 'No se podrá revertir esta acción')
+    .then((result) => {
+      if (result.value) {
+        this._usuarioService.deleteAspirante(row).then(() => {
+          this._swal.aspiranteEliminadoCorrectamente();
+          this.onChangeFiltroUsuario(this.fcFiltro.value);
+        }).catch(err => this._toast.error(err));
+      }
+    });
   }
 
   private updateTablaUsuarios(): void {

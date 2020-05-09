@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_VALIDAR_DOCUMENTACION } from '@shared/routing-list/ListLinks';
+import { BC_VALIDAR_DOCUMENTACION, BC_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,6 +8,7 @@ import { UsuarioService } from '@services/usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-validar-documentacion',
@@ -36,9 +37,12 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
     { nombre: "Validado", valor: "validado" }
   ]
   fcFiltro = new FormControl(this.filtros[0].valor);
-
-  constructor(private _usuarioService: UsuarioService, private _router:Router, private _toast:ToastrService) {
-    BreadcrumbComponent.update(BC_VALIDAR_DOCUMENTACION);
+  
+  constructor(private _router:Router, private _usuarioService: UsuarioService, private _toast:ToastrService, private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_DOCUMENTACION);
+    if(this.accesosAdministrador.accesoDocumentacion()){
+      BreadcrumbComponent.update(BC_VALIDAR_DOCUMENTACION);
+    }
   }
 
   ngOnInit() {

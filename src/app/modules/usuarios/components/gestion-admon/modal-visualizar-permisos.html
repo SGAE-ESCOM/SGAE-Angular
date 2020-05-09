@@ -17,7 +17,7 @@
                                             &nbsp;Gestión de usuarios
                                         </h5>
                                     </section>
-                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                    <mat-hint class="toggle-hint">Permite gestionar las cuentas de los administradores de la institución y revisar los aspirantes registrados.</mat-hint>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
                                     <section class="example-section mt-3">
@@ -28,7 +28,7 @@
                                             &nbsp;Gestión de etapas
                                         </h5>
                                     </section>
-                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                    <mat-hint class="toggle-hint">Permite gestionar el orden y fechas de las etapas de la convocatoria.</mat-hint>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
                                     <section class="example-section mt-3">
@@ -39,7 +39,7 @@
                                             &nbsp;Gestión de pagos
                                         </h5>
                                     </section>
-                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                    <mat-hint class="toggle-hint">Permite revisar el área de pagos.</mat-hint>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
                                     <section class="example-section mt-3">
@@ -50,7 +50,7 @@
                                             &nbsp;Gestión de convocatoria
                                         </h5>
                                     </section>
-                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                    <mat-hint class="toggle-hint">Permite revisar y editar el área de convocatoria.</mat-hint>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
                                     <section class="example-section mt-3">
@@ -61,7 +61,7 @@
                                             &nbsp;Gestión de evaluación
                                         </h5>
                                     </section>
-                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                    <mat-hint class="toggle-hint">Permite revisar y editar el área de evaluación.</mat-hint>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
                                     <section class="example-section mt-3">
@@ -72,15 +72,15 @@
                                             &nbsp;Gestión de documentación
                                         </h5>
                                     </section>
-                                    <mat-hint class="toggle-hint">Descripción - Lorem ipsum dolor sit amet, consectetur adipiscing elit, ut labore et dolore magna aliqua</mat-hint>
+                                    <mat-hint class="toggle-hint">Permite validar y administrar la información solicitada a los aspirantes.</mat-hint>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 text-right pt-2" >
-                    <button mat-button (click)="onNoClick()" [routerLink]="[ '/app/usuarios/gestion-admon/editar/', data.id ]">Editar <mat-icon class="material-icons-outlined">create</mat-icon></button>
-                    <button mat-button (click)="onNoClick()">Cerrar</button>
+                    <button mat-button name="btnEditarAdmin" (click)="onNoClick()" [routerLink]="[ '/app/usuarios/gestion-admon/editar/', data.id ]">Editar <mat-icon class="material-icons-outlined">create</mat-icon></button>
+                    <button mat-button name="btnCerrarPermisos" (click)="onNoClick()">Cerrar</button>
                 </div>
             </div>
         </div>

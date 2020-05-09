@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, CollectionReference } from '@angular/fire/firestore';
+import { AngularFirestore, CollectionReference, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class UsuarioService {
 
   private usuariosCollection: CollectionReference;
 
-  constructor(private firestore: AngularFirestore) {
-    this.usuariosCollection = firestore.firestore.collection('Usuarios');
+  constructor(private afs: AngularFirestore) {
+    this.usuariosCollection = afs.firestore.collection('Usuarios');
   }
 
   //CRUD
@@ -50,27 +51,16 @@ export class UsuarioService {
     return this.usuariosCollection.where('estado.documentacion', '==', 'validada').get();
   }
 
-  //Funciones Gestion Administradores
-  getAdministradores(): Promise<any> {
-    return this.usuariosCollection.where('rol', '==', "admin").get();
+  deleteAspirante(user: UsuarioInterface){
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`DeletedUsers/${user.id}`);
+    const data: UsuarioInterface = {
+      id: user.id,
+      nombres: user.nombres,
+      apellidos: user.apellidos,
+      email: user.email,
+      rol: 'aspirante',
+    }
+    return userRef.set(data, { merge: true }).then(() => this.usuariosCollection.doc(user.id).delete());
   }
 
-  getAdministrador(usuario: UsuarioInterface): Promise<any>{
-    return this.usuariosCollection.where('id', '==', usuario.id).get();
-  }
-
-  updatePermisosAdministrador(usuario: UsuarioInterface, permisos: number){
-    return this.usuariosCollection.doc(usuario.id).update({"permisos": permisos});
-  }
-
-  updateInformacionAdministrador(usuario: UsuarioInterface, data: UsuarioInterface){
-    return this.usuariosCollection.doc(usuario.id).update({
-      'nombres': data.nombres,
-      'apellidos': data.apellidos
-    });
-  }
-
-  deleteInfoAdministrador(usuario: UsuarioInterface){
-    this.usuariosCollection.doc(usuario.id).delete();
-  }
 }

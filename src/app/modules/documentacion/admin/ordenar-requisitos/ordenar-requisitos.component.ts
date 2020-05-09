@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
-import { BC_ORDENAR_REQUISITOS } from '@shared/routing-list/ListLinks';
+import { BC_ORDENAR_REQUISITOS, BC_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 import { AdministrarDocumentacionService } from '@services/documentacion/administrar-documentacion.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { heapsort } from "@shared/utilerias/heapsort";
+import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-ordenar-requisitos',
@@ -18,8 +19,12 @@ export class OrdenarRequisitosComponent implements OnInit {
   requisitos: TipoDato[];
   regresar = BC_ORDENAR_REQUISITOS.links[2].url;
 
-  constructor(private _toast: ToastrService, private _swal: SweetalertService, private _ads: AdministrarDocumentacionService) {
-    BreadcrumbComponent.update(BC_ORDENAR_REQUISITOS);
+  constructor(private _toast: ToastrService, private _swal: SweetalertService, 
+        private _ads: AdministrarDocumentacionService, private accesosAdministrador: AccesosAdministrador) {
+    BreadcrumbComponent.update(BC_DOCUMENTACION);
+    if(this.accesosAdministrador.accesoDocumentacion()){
+      BreadcrumbComponent.update(BC_ORDENAR_REQUISITOS);
+    }
   }
 
   ngOnInit(): void {
