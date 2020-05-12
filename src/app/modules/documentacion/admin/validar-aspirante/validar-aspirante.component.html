@@ -40,13 +40,13 @@
                 <div class="col-12">
                     <mat-form-field appearance="outline">
                         <mat-label>Comentarios</mat-label>
-                        <textarea matInput rows="4" placeholder="Agrega lo que se debe corregir en los requisios" [(ngModel)]="documentacionObject.comentarios"></textarea>
+                        <textarea matInput name="txtComentarios" id="txtComentarios" rows="4" placeholder="Agrega lo que se debe corregir en los requisios" [(ngModel)]="documentacionObject.comentarios"></textarea>
                         <mat-icon matSuffix>message</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-12 text-right">
-                    <button mat-button color="info" (click)="onEnviarCorrecciones()">Enviar correcciones</button>
-                    <button mat-button color="success" *ngIf="usuario.estado.documentacion !== 'validada'" (click)="onFinalizar()">Validar</button>
+                    <button mat-button color="info" name="btnEnviarCorrecciones" id="btnEnviarCorrecciones" (click)="onEnviarCorrecciones()">Enviar correcciones</button>
+                    <button mat-button color="success" name="btnValidar" id="btnValidar" *ngIf="usuario.estado.documentacion !== 'validada'" (click)="onFinalizar()">Validar</button>
                 </div>
             </div>
         </div>

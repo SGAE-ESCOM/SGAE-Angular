@@ -3,7 +3,7 @@
         <div class="col-12 col-md-4 form-group">
             <mat-form-field appearance="legacy">
                 <mat-label>Nombre del requisito</mat-label>
-                <input formControlName="nombre" matInput placeholder="Escribe nombre del requisito" required>
+                <input formControlName="nombre" name="nombreRequisito" id="nombreRequisito" matInput placeholder="Escribe nombre del requisito" required>
                 <mat-error *ngIf="fgGeneral.get('nombre').hasError('required')">Por favor escribe un
                     nombre
                 </mat-error>
@@ -16,7 +16,7 @@
         <div class="col-12 col-md-3 form-group">
             <mat-form-field>
                 <mat-label>Tipo de Dato</mat-label>
-                <mat-select formControlName="tipo" (selectionChange)="onChangeTipo($event.value)" required>
+                <mat-select formControlName="tipo" name="tipoDato" id="tipoDato" (selectionChange)="onChangeTipo($event.value)" required>
                     <mat-option *ngFor="let tipoDato of tipos" [value]="tipoDato.nombre">
                         {{tipoDato.nombre | titlecase}}
                     </mat-option>
@@ -30,7 +30,7 @@
         <div class="col-12 col-md-3 form-group">
             <mat-form-field>
                 <mat-label> Tipo de {{ tipo.value }}</mat-label>
-                <mat-select formControlName="subtipo" (selectionChange)="onChangeSubtipo($event.value)" required>
+                <mat-select formControlName="subtipo" name="tipoSubdato" id="tipoSubdato" (selectionChange)="onChangeSubtipo($event.value)" required>
                     <mat-option *ngFor="let subtipoDato of subtipos" [value]="subtipoDato.nombre">
                         {{subtipoDato.nombre | titlecase}}
                     </mat-option>
@@ -67,7 +67,7 @@
                         <div class="col-6 col-md-2 pr-0 form-group">
                             <mat-label class="label-toggle"> Mínimo </mat-label>
                             <section class="example-section">
-                                <mat-slide-toggle [formControl]="opcMin" color="accent">
+                                <mat-slide-toggle [formControl]="opcMin" name="toggleMinCampo" id="toggleMinCampo" color="accent">
                                     {{ opcMin.value | boolean }}
                                 </mat-slide-toggle>
                             </section>
@@ -75,7 +75,7 @@
                         <div class="col-6 col-md-2 pr-0 form-group">
                             <mat-label class="label-toggle"> Máximo </mat-label>
                             <section class="example-section">
-                                <mat-slide-toggle [formControl]="opcMax" color="accent">
+                                <mat-slide-toggle [formControl]="opcMax" name="toggleMaxCampo" id="toggleMaxCampo" color="accent">
                                     {{ opcMax.value | boolean }}
                                 </mat-slide-toggle>
                             </section>
@@ -83,14 +83,14 @@
                         <div class="col-6 col-md-3 form-group" *ngIf="opcMin.value" @fadeInOutDown>
                             <mat-form-field appearance="legacy">
                                 <mat-label>Mínimo</mat-label>
-                                <input formControlName="min" type="number" matInput placeholder="Escribe un mínimo">
+                                <input formControlName="min" name="minCampo" id="minCampo" type="number" matInput placeholder="Escribe un mínimo">
                                 <mat-icon matSuffix>trending_down</mat-icon>
                             </mat-form-field>
                         </div>
                         <div class="col-6 col-md-3 form-group" *ngIf="opcMax.value" @fadeInOutDown>
                             <mat-form-field appearance="legacy">
                                 <mat-label>Máximo</mat-label>
-                                <input formControlName="max" type="number" matInput placeholder="Escribe un máximo">
+                                <input formControlName="max" name="maxCampo" id="maxCampo" type="number" matInput placeholder="Escribe un máximo">
                                 <mat-icon matSuffix>trending_up</mat-icon>
                             </mat-form-field>
                         </div>
@@ -103,25 +103,25 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group form-check-inline">
-                                <mat-checkbox [formControl]="opcLetraMayuscula" class="example-margin">Letras
+                                <mat-checkbox [formControl]="opcLetraMayuscula" name="opcLetraMayuscula" id="opcLetraMayuscula" class="example-margin">Letras
                                     mayúsculas
                                 </mat-checkbox>
                             </div>
                             <div class="form-group form-check-inline">
-                                <mat-checkbox [formControl]="opcLetraMinuscula" class="example-margin">Letras
+                                <mat-checkbox [formControl]="opcLetraMinuscula" name="opcLetraMinuscula" id="opcLetraMinuscula" class="example-margin">Letras
                                     minúsculas
                                 </mat-checkbox>
                             </div>
                             <div class="form-group form-check-inline">
-                                <mat-checkbox [formControl]="opcNumeros" class="example-margin">
+                                <mat-checkbox [formControl]="opcNumeros" name="opcNumeros" id="opcNumeros" class="example-margin">
                                     Numeros</mat-checkbox>
                             </div>
                             <div class="form-group form-check-inline">
-                                <mat-checkbox [formControl]="opcEspacios" class="example-margin">
+                                <mat-checkbox [formControl]="opcEspacios" name="opcEspacios" id="opcEspacios" class="example-margin">
                                     Espacios</mat-checkbox>
                             </div>
                             <div class="form-group form-check-inline">
-                                <mat-checkbox [formControl]="opcExpresionRegular" class="example-margin">
+                                <mat-checkbox [formControl]="opcExpresionRegular" name="opcExpresionRegular" id="opcExpresionRegular" class="example-margin">
                                     Eexpresión regular</mat-checkbox>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                             <div class="form-group">
                                 <mat-form-field appearance="legacy">
                                     <mat-label>Eexpresión regular</mat-label>
-                                    <input formControlName="valor" type="text" matInput
+                                    <input formControlName="valor" name="expresionRegular" id="expresionRegular" type="text" matInput
                                         (keyup)="verificarRegex($event.target.value)"
                                         placeholder="Escribe una expresión regular"
                                         readonly="{{ !this.opcExpresionRegular.value }}" required>
@@ -158,7 +158,7 @@
                 <div class="col-12 col-md-8 form-group">
                     <mat-form-field class="form">
                         <mat-label>Descripción</mat-label>
-                        <textarea matInput formControlName="descripcion"
+                        <textarea matInput formControlName="descripcion" name="descripcionArchivo" id="descripcionArchivo"
                             placeholder="Escribe una descripción o deja en blanco"></textarea>
                     </mat-form-field>
                 </div>
@@ -214,7 +214,7 @@
                 </div>
                 <div class="col-6 col-sm-4 col-md-3 form-group">
                     <mat-form-field class="example-full-width">
-                        <input matInput formControlName="fechaMin" [matDatepicker]="fechaMin"
+                        <input matInput formControlName="fechaMin" [matDatepicker]="fechaMin" name="fechaMin" id="fechaMin"
                             placeholder="Elige una fecha mínima" required>
                         <mat-datepicker-toggle matSuffix [for]="fechaMin"></mat-datepicker-toggle>
                         <mat-datepicker #fechaMin></mat-datepicker>
@@ -222,7 +222,7 @@
                 </div>
                 <div class="col-6 col-sm-4 col-md-3 form-group">
                     <mat-form-field class="example-full-width">
-                        <input matInput formControlName="fechaMax" [matDatepicker]="fechaMax"
+                        <input matInput formControlName="fechaMax" [matDatepicker]="fechaMax" name="fechaMax" id="fechaMax"
                             placeholder="Elige una decha máxima" required>
                         <mat-datepicker-toggle matSuffix [for]="fechaMax"></mat-datepicker-toggle>
                         <mat-datepicker #fechaMax></mat-datepicker>

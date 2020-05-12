@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-3 offset-md-5 form-group">
                     <mat-form-field appearance="outline">
                         <mat-label>Filtrar por estado del aspirante </mat-label>
-                        <mat-select [formControl]="fcFiltro" (selectionChange)="onChangeFiltroUsuario($event.value)" required>
+                        <mat-select [formControl]="fcFiltro" name="txtFiltro" id="txtFiltro" (selectionChange)="onChangeFiltroUsuario($event.value)" required>
                             <mat-option *ngFor="let filtro of filtros" [value]="filtro.valor">
                                 {{ filtro.nombre }}
                             </mat-option>
@@ -15,7 +15,7 @@
                 <div class="col-12 col-sm-4">
                     <mat-form-field id="bucar" appearance="outline">
                         <mat-label>Buscar</mat-label>
-                        <input matInput (keyup)="buscarUsuario($event.target.value)" placeholder="Filtrar por palabra">
+                        <input matInput name="txtBuscar" id="txtBuscar" (keyup)="buscarUsuario($event.target.value)" placeholder="Filtrar por palabra">
                         <mat-icon matSuffix>search </mat-icon>
                     </mat-form-field>
                 </div>
@@ -46,7 +46,7 @@
                     <ng-container matColumnDef="acciones">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                         <td mat-cell *matCellDef="let row">
-                            <a mat-button matTooltip="Validar aspirante" color="info" (click)="goto(row)">
+                            <a mat-button matTooltip="Validar aspirante" color="info" name="btnValidarAspirante" (click)="goto(row)">
                                 <mat-icon class="material-icons-outlined">visibility</mat-icon>
                             </a>
                         </td>

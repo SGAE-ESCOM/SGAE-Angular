@@ -22,13 +22,13 @@
             <div class="row justify-content-end">
                 <div class="col-12 col-sm-4">
                     <div class="text-right pt-3" style="margin: auto;">
-                        <a mat-raised-button class="btn-lg" color="info" [routerLink]="urlOrdenarEtapas">Ordenar requisitos <mat-icon>format_list_numbered</mat-icon></a>
+                        <a mat-raised-button class="btn-lg" name="btnOrdenarRequisitos" id="btnOrdenarRequisitos" color="info" [routerLink]="urlOrdenarEtapas">Ordenar requisitos <mat-icon>format_list_numbered</mat-icon></a>
                     </div>
                 </div>
                 <div class="col-12 col-sm-4">
                     <mat-form-field id="bucar" appearance="outline">
                         <mat-label>Buscar</mat-label>
-                        <input matInput (keyup)="buscarEnTabla($event.target.value)" placeholder="Filtrar por palabra">
+                        <input matInput name="txtBuscar" id="txtBuscar" (keyup)="buscarEnTabla($event.target.value)" placeholder="Filtrar por palabra">
                         <mat-icon matSuffix>search </mat-icon>
                     </mat-form-field>
                 </div>

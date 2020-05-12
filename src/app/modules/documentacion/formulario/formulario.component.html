@@ -9,7 +9,7 @@
                     <div class="form-group" *ngSwitchCase="OPC.CAMPO">
                         <mat-form-field appearance="legacy" *ngIf="documento.subtipo == OPC_CAMPO.TEXTO">
                             <mat-label>{{ documento.nombre }}</mat-label>
-                            <input type="{{ documento.subtipo | tipo }}" formControlName="{{ documento.nombre }}"
+                            <input type="{{ documento.subtipo | tipo }}" formControlName="{{ documento.nombre }}" name="{{ documento.nombre }}"
                                 matInput placeholder="" [required]="documento.requerido">
                             <mat-error *ngIf="fgFormulario.get(documento.nombre).hasError('required')">
                                 Este campo es requerido
@@ -26,7 +26,7 @@
                         </mat-form-field>
                         <mat-form-field appearance="legacy" *ngIf="documento.subtipo == OPC_CAMPO.NUMERO">
                             <mat-label>{{ documento.nombre }}</mat-label>
-                            <input type="{{ documento.subtipo | tipo }}" formControlName="{{ documento.nombre }}"
+                            <input type="{{ documento.subtipo | tipo }}" formControlName="{{ documento.nombre }}" name="{{ documento.nombre }}"
                                 min="{{ documento.min }}" max="{{ documento.max }}" matInput placeholder=""
                                 [required]="documento.requerido">
                             <mat-error *ngIf="fgFormulario.get(documento.nombre).hasError('required')">
@@ -43,7 +43,7 @@
 
                     <div class="form-group" *ngSwitchCase="OPC.ARCHIVO">
                         <mat-form-field>
-                            <ngx-mat-file-input formControlName="{{ documento.nombre }}"
+                            <ngx-mat-file-input formControlName="{{ documento.nombre }}" name="{{ documento.nombre }}"
                                 placeholder="{{ documento.nombre }}"
                                 [accept]=" documento.subtipo == OPC_ARCHIVO.PDF ? '.pdf' : '.jpg, .png, .jpeg'"
                                 [valuePlaceholder]="( fgFormulario.get(documento.nombre).invalid ) ? 'Archivo no seleccionado': fgFormulario.get(documento.nombre).value.nombre "
@@ -59,7 +59,7 @@
                     <div class="form-group" *ngSwitchCase="OPC.SELECCION">
                         <mat-form-field>
                             <mat-label>{{ documento.nombre}} </mat-label>
-                            <mat-select formControlName="{{ documento.nombre }}" [required]="documento.requerido">
+                            <mat-select formControlName="{{ documento.nombre }}" name="{{ documento.nombre }}" [required]="documento.requerido">
                                 <mat-option *ngFor="let opcion of objectKeys(documento.opciones)" [value]="opcion">
                                     {{opcion}}
                                 </mat-option>
@@ -72,7 +72,7 @@
 
                     <div class="form-group" *ngSwitchCase="OPC.FECHA">
                         <mat-form-field class="example-full-width">
-                            <input matInput formControlName="{{ documento.nombre }}" [min]="documento.fechaMin"
+                            <input matInput formControlName="{{ documento.nombre }}" name="{{ documento.nombre }}" [min]="documento.fechaMin"
                                 [max]="documento.fechaMax" [matDatepicker]="picker" placeholder="{{ documento.nombre }}"
                                 [required]="documento.requerido">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -83,9 +83,9 @@
             </div>
             <div class="row">
                 <div class="col-12 text-right">
-                    <button type="submit" type="button" (click)="guardarFormulario(fgFormulario)" mat-button
+                    <button type="submit" type="button" name="btnGuardarRequisitos" id="btnGuardarRequisitos" (click)="guardarFormulario(fgFormulario)" mat-button
                         color="info"> Guardar <mat-icon>save</mat-icon> </button>
-                    <button type="submit" type="submit" (click)="enviarFormulario(fgFormulario)" mat-button
+                    <button type="submit" type="submit" name="btnFinalizarRequisitos" id="btnFinalizarRequisitos" (click)="enviarFormulario(fgFormulario)" mat-button
                         color="success"> Finalizar <mat-icon>done</mat-icon> </button>
                 </div>
             </div>

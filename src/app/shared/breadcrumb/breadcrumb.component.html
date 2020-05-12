@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb" @fadeInDown>
     <ol class="breadcrumb">
         <li class="breadcrumb-item" *ngFor="let link of classReference.breadcrumb.links">
-            <a href="#" mat-button routerLink="{{link.url}}"> {{link.name}} </a>
+            <a href="#" name="btnOpcBreadcrumb" mat-button routerLink="{{link.url}}"> {{link.name}} </a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
             <a mat-button disabled>{{ classReference.breadcrumb.title.name }}</a>

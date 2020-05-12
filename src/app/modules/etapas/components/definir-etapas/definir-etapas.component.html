@@ -27,16 +27,16 @@
                                 <div class="card-header bg-info text-white">
                                     <b>Etapas</b>
                                 </div>
-                                <mat-selection-list formControlName="etapas">
+                                <mat-selection-list formControlName="etapas" name="etapasDisponibles" id="etapasDisponibles">
                                     <mat-list-option *ngFor="let etapa of etapasDisponibles; let i = index"
-                                        [value]="etapa">
+                                        [value]="etapa" name="boxEtapa">
                                         {{ etapa.nombre }}
                                     </mat-list-option>
                                 </mat-selection-list>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 text-right pt-2">
-                            <button mat-flat-button color="info" (click)="definirEtapas()"
+                            <button mat-flat-button color="info" name="btnPaso2" id="btnPaso2" (click)="definirEtapas()"
                                 [disabled]="fgEtapaUsar.invalid" matStepperNext>Siguiente<mat-icon>navigate_next
                                 </mat-icon></button>
                         </div>
@@ -60,10 +60,10 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 text-right pt-2">
-                        <button mat-flat-button matStepperPrevious>
+                        <button mat-flat-button name="btnRegPaso1" id="btnRegPaso1" matStepperPrevious>
                             <mat-icon> navigate_before </mat-icon> Anterior
                         </button>
-                        <button mat-flat-button color="info" matStepperNext>Siguiente
+                        <button mat-flat-button color="info" name="btnPaso3" id="btnPaso3" matStepperNext>Siguiente
                             <mat-icon>navigate_next</mat-icon></button>
                     </div>
                 </mat-step>
@@ -74,10 +74,10 @@
                         <p>A continuación define las fechas de las etapas.</p>
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 text-right pt-2">
-                        <button mat-flat-button matStepperPrevious>
+                        <button mat-flat-button name="btnRegPaso2" id="btnRegPaso2" matStepperPrevious>
                             <mat-icon> navigate_before </mat-icon> Anterior
                         </button>
-                        <button mat-flat-button color="success" (click)="finalizarStepper()" matStepperNext>Finalizar
+                        <button mat-flat-button color="success" name="btnFinalizar" id="btnFinalizar" (click)="finalizarStepper()" matStepperNext>Finalizar
                             <mat-icon>check</mat-icon></button>
                     </div>
                 </mat-step>
