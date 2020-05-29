@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_USUARIOS, LINKS_USUARIOS } from "@routing/ListLinks";
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_USUARIOS } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,9 +15,10 @@ export class MainUsuariosComponent implements OnInit {
 
   cards;
 
-  constructor(private accesosAdministrador: AccesosAdministrador) { 
+  constructor(private _authServices: AuthService, private router: Router) { 
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(this.accesosAdministrador.accesoUsuarios()){
+    if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
       this.cards = LINKS_USUARIOS;
     }
   }

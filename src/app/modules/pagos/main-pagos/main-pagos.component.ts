@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_PAGOS } from "@routing/ListLinks";
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_PAGOS } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-pagos',
@@ -10,9 +12,11 @@ import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
 })
 export class MainPagosComponent implements OnInit {
 
-  constructor(private accesosAdministrador: AccesosAdministrador) { 
+  constructor(private _authServices: AuthService, private router: Router) { 
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_PAGOS);
-    this.accesosAdministrador.accesoPagos();
+    comprobarPermisos(usuario, GESTION_PAGOS, router);
+    //Agregar Cards de pagos cuando esten listas
   }
 
   ngOnInit() {

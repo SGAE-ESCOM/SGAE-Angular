@@ -1,16 +1,15 @@
 //PERMISOS ADMINISTRADOR
 import { Injectable } from '@angular/core';
-import { UsuarioInterface } from '@models/persona/usuario';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { UsuarioService } from '@services/usuario/usuario.service';
+import { HOME, DOCUMENTACION, EVALUACION, PAGOS, ETAPAS, USUARIOS, CONVOCATORIA } from '@routing/ListLinks';
 
 export const GESTION_USUARIOS:number = 1;   //000001
 export const GESTION_ETAPAS:number = 2;     //000010
-export const PAGOS:number = 4;              //000100
-export const CONVOCATORIA:number = 8;       //001000
-export const EVALUACION:number = 16;        //010000
-export const DOCUMENTACION:number = 32;     //100000
+export const GESTION_PAGOS:number = 4;              //000100
+export const GESTION_CONV:number = 8;       //001000
+export const GESTION_EVAL:number = 16;        //010000
+export const GESTION_DOC:number = 32;     //100000
 
 export const PERMISOS_ADMIN: any[] = [
     { nombre: "Todos", valor: 63},          //111111
@@ -22,62 +21,35 @@ export const PERMISOS_ADMIN: any[] = [
     { nombre: "Gestión de documentación", valor: 32 }
 ];
 
-@Injectable({
-    providedIn: 'root'
-})
-export class AccesosAdministrador {
-
-    private usuario;
-
-    constructor(private _authServices: AuthService, private router: Router) { 
-        this.usuario = this._authServices.getUsuarioC();
-    }
-
-    private acceso(PERMISO){
-        let user = this.usuario;
-        switch(user.rol){
-            case 'root':
+export function comprobarPermisos(user, permiso, router){
+    switch(user.rol){
+        case 'root':
+            return true;
+        case 'admin':
+            if((user.permisos & permiso) > 0)
                 return true;
-            case 'admin':
-                if((user.permisos & PERMISO) > 0)
-                    return true;
-                this.router.navigate(['/app/acceso-restringido']);
-                return false;
-            case 'aspirante':
-                this.router.navigate(['/app']);
-                return false;
-            default:
-                this.router.navigate(['/app']);
-                return false;
-        }
+            router.navigate(['/app/acceso-restringido']);
+            return false;
+        case 'aspirante':
+            router.navigate(['/app']);
+            return false;
+        default:
+            router.navigate(['/app']);
+            return false;
     }
-    
-    accesoUsuarios(){
-        return this.acceso(GESTION_USUARIOS);
-    }
+}
 
-    accesoEtapas(){
-        return this.acceso(GESTION_ETAPAS);
-    }
+export function isAdministrador(rol: string){
+    return rol == 'admin' || rol == 'root' ? true : false;
+}
 
-    accesoPagos(){
-        return this.acceso(PAGOS);
-    }
-
-    accesoConvocatoria(){
-        return this.acceso(CONVOCATORIA);
-    }
-
-    accesoEvaluacion(){
-        return this.acceso(EVALUACION);
-    }
-
-    accesoDocumentacion(){
-        return this.acceso(DOCUMENTACION);
-    }
-
-    isAdministrador(rol: string){
-        return rol == 'admin' || rol == 'root' ? true : false;
-    }
-    
+export function getNavigationLinksAdmin(permisos){
+    let navigationLinks = [HOME];
+    if((permisos & GESTION_DOC) > 0) navigationLinks.push(DOCUMENTACION);
+    if((permisos & GESTION_EVAL) > 0) navigationLinks.push(EVALUACION);
+    if((permisos & GESTION_PAGOS) > 0) navigationLinks.push(PAGOS);
+    if((permisos & GESTION_ETAPAS) > 0) navigationLinks.push(ETAPAS);
+    if((permisos & GESTION_CONV) > 0) navigationLinks.push(CONVOCATORIA);
+    if((permisos & GESTION_USUARIOS) > 0) navigationLinks.push(USUARIOS);
+    return navigationLinks;
 }

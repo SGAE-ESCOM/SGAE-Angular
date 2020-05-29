@@ -43,6 +43,18 @@ export class SweetalertService {
     });
   }
 
+  cancelarRegistroAdmin(titulo: string){
+    return this.swalEliminar.fire({
+      title: titulo,
+      icon: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonText: '<span class="mat-button-wrapper"> Si </span> <div class="mat-button-focus-overlay"></div>',
+      cancelButtonText: '<span class="mat-button-wrapper"> No </span> <div class="mat-button-focus-overlay"></div>'
+      
+    });
+  }
+
   confirmarFinalizar(titulo: string, texto?: string){
     return this.swalConfirmar.fire({
       title: titulo,
@@ -74,7 +86,7 @@ export class SweetalertService {
   adminEliminadoCorrectamente(){
     this.swalFinalizar.fire({
       title: 'Eliminado',
-      text: 'El administrador ha sido eliminado.',
+      text: 'El usuario ha sido eliminado.',
       icon: 'success'
     });
   }
@@ -82,7 +94,7 @@ export class SweetalertService {
   informacionAdminActualizada(){
     this.swalFinalizar.fire({
       title: 'Actualizado',
-      text: 'Información actualizada correctamente.',
+      text: 'El administrador se actualizó exitosamente.',
       icon: 'success'
     });
   }
@@ -98,7 +110,7 @@ export class SweetalertService {
   adminRegistrado(){
     this.swalFinalizar.fire({
       title: 'Registrado',
-      text: 'Administrador registrado correctamente.',
+      text: 'Registro finalizado exitosamente.',
       icon: 'success'
     });
   }
@@ -111,6 +123,13 @@ export class SweetalertService {
     });
   }
 
+  errorAccesoRestringido(){
+    return this.swalFinalizar.fire({
+      title: 'Acceso Restringido',
+      text: 'No tienes permisos para entrar en esta sección, consulte a un administrador del sistema.',
+      icon: "warning"
+    });
+  }
 }
 
 const admiracion = '<div class="swal2-icon swal2-warning swal2-icon-show" style="display: flex;"><div class="swal2-icon-content">!</div></div>';

@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { AuthService } from '@services/auth.service';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
 import { passwordMatchValidator } from '@shared/validators/passwordValidators';
-import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, comprobarPermisos } from '@shared/admin-permissions/permissions';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -26,10 +26,11 @@ export class RegistrarAdmonComponent implements OnInit {
   gdocumentacion: boolean = false;
   fgAdmin: FormGroup;
 
-  constructor(private fb: FormBuilder, private _authService: AuthService, private accesosAdministrador: AccesosAdministrador,
+  constructor(private fb: FormBuilder, private _authService: AuthService, private _authServices: AuthService,
         private router: Router, private _toas: ToastrService, private _swal: SweetalertService) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(this.accesosAdministrador.accesoUsuarios()){
+    if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
       BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
     }
   }
@@ -48,27 +49,34 @@ export class RegistrarAdmonComponent implements OnInit {
   }
 
   getEmailErrorMessage() {
-    return this.fgAdmin.get('email').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgAdmin.get('email').hasError('required') ? 'Este campo es requerido' :
       this.fgAdmin.get('email').hasError('email') ? 'Email no válido' :
         '';
   }
 
   getNombreErrorMessage(){
-    return this.fgAdmin.get('nombres').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgAdmin.get('nombres').hasError('required') ? 'Este campo es requerido' :
       this.fgAdmin.get('nombres').hasError('pattern') ? 'Nombre no valido' :
         '';
   }
 
   getApellidoErrorMessage(){
-    return this.fgAdmin.get('apellidos').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgAdmin.get('apellidos').hasError('required') ? 'Este campo es requerido' :
       this.fgAdmin.get('apellidos').hasError('pattern') ? 'Apellido no valido' :
         '';
   }
 
   getErrorNotMatch() {
-    return this.fgAdmin.get('passwordRepeat').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgAdmin.get('passwordRepeat').hasError('required') ? 'Este campo es requerido' :
       this.fgAdmin.get('passwordRepeat').hasError('mustMatch') ? 'Debe coincidir la contraseña' :
         '';
+  }
+
+  cancelarRegistro(){
+    this._swal.cancelarRegistroAdmin(`¿Desea cancelar el registro?`)
+    .then((result) => {
+      if (result.value) this.router.navigate(['/app/usuarios/gestion-admon']);
+    });
   }
 
   enviarFormulario(formulario: FormGroup) {
@@ -76,22 +84,27 @@ export class RegistrarAdmonComponent implements OnInit {
       let permisos = 0;
       permisos += this.gusuarios ? GESTION_USUARIOS : 0;
       permisos += this.getapas ? GESTION_ETAPAS : 0;
-      permisos += this.gpagos ? PAGOS : 0;
-      permisos += this.gconvocatoria ? CONVOCATORIA : 0;
-      permisos += this.gevaluacion ? EVALUACION : 0;
-      permisos += this.gdocumentacion ? DOCUMENTACION : 0;
-      formulario.get('permisos').setValue(permisos);
-      this._authService.registrarAdministrador(formulario.value)
-        .then(res => {
-          this._swal.adminRegistrado();
-          this.router.navigate(['/app/usuarios/gestion-admon'])
-        }
-        ).catch(err => {
-          console.error(err);
-          this._swal.errorRegistroAdmin();
-        });
+      permisos += this.gpagos ? GESTION_PAGOS : 0;
+      permisos += this.gconvocatoria ? GESTION_CONV : 0;
+      permisos += this.gevaluacion ? GESTION_EVAL : 0;
+      permisos += this.gdocumentacion ? GESTION_DOC : 0;
+
+      if(permisos != 0){
+        formulario.get('permisos').setValue(permisos);
+        this._authService.registrarAdministrador(formulario.value)
+          .then(res => {
+            this._swal.adminRegistrado();
+            this.router.navigate(['/app/usuarios/gestion-admon'])
+          }
+          ).catch(err => {
+            console.error(err);
+            this._swal.errorRegistroAdmin();
+          });
+      }else{
+        this._toas.error("Asigne al menos un permiso");
+      }
     }else{
-      this._toas.error("Formulario invalido")
+      this._toas.error("Llena todos los campos requeridos");
     }
   }
 

@@ -9,7 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 import { EtapasService } from '@services/etapas/etapas.service';
 import { Router } from '@angular/router';
 import { fadeInDown } from '@shared/animations/router.animations';
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_ETAPAS } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-definir-etapas',
@@ -30,10 +31,10 @@ export class DefinirEtapasComponent implements OnInit {
   etapas = [];
 
   constructor(private _fb: FormBuilder, private _etapaService: EtapasService, private router: Router,
-        private _toast: ToastrService, private _swal: SweetalertService, private accesosAdministrador: AccesosAdministrador) {
-
+        private _toast: ToastrService, private _swal: SweetalertService, private _authServices: AuthService) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_ETAPAS);
-    if(this.accesosAdministrador.accesoEtapas()){
+    if(comprobarPermisos(usuario, GESTION_ETAPAS, router)){
       BreadcrumbComponent.update(BC_DEFINIR_ETAPAS);
       this.fgEtapaUsar = this._fb.group({
         etapas: ['', Validators.required],
