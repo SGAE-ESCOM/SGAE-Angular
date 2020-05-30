@@ -65,6 +65,7 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
 
   //Envio de datos
   enviarFormulario() {
+    this.setFormatoDateTime(this.fgGeneral.value);
     this.enviarForm.emit(this.fgGeneral);
   }
 
@@ -151,8 +152,8 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
         break;
       }
       case this.OPC.FECHA: {
-        this.subtipos = EnumTipoDato.FECHA.subtipos;
-        this.tipoDescripcion = EnumTipoDato.FECHA.descripcion;
+        //this.subtipos = EnumTipoDato.FECHA.subtipos;
+        //this.tipoDescripcion = EnumTipoDato.FECHA.descripcion;
         this.enableControles([this.fechaMin, this.fechaMax]);
         this.disableControles([this.descripcion, this.min, this.max, this.expresionRegular, this.opciones]);
         this.offToggels([this.opcMin, this.opcMax, this.opcEspacios, this.opcExpresionRegular]);
@@ -187,8 +188,8 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   }
 
   llenarFormulario(requisito) {
-    this.fgGeneral.get('nombre').setValue(requisito.nombre);
-    this.fgGeneral.get('requerido').setValue(requisito.requerido);
+    this.nombre.setValue(requisito.nombre);
+    this.requerido.setValue(requisito.requerido);
     this.tipo.patchValue(requisito.tipo);
     this.onChangeTipo(requisito.tipo);
     this.subtipo.patchValue(requisito.subtipo);
@@ -234,6 +235,8 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
         break;
       }
       case OPC_TIPO_DATO.FECHA: {
+        this.fechaMin.setValue( new Date( requisito.fechaMin ) );
+        this.fechaMax.setValue( new Date( requisito.fechaMax ) );
         break;
       }
       default: {
@@ -243,6 +246,7 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   }
 
   /* Getters de FormControls */
+  get nombre() { return this.fgGeneral.get('nombre') as FormControl; }
   get requerido() { return this.fgGeneral.get('requerido') as FormControl; }
   get tipo() { return this.fgGeneral.get('tipo') as FormControl; }
   get subtipo() { return this.fgGeneral.get('subtipo') as FormControl; }
@@ -254,5 +258,17 @@ export class FormRequisitosComponent implements OnInit, OnChanges {
   get fechaMax() { return this.fgGeneral.get('fechaMax') as FormControl; }
   get descripcion() { return this.fgGeneral.get('descripcion') as FormControl; }
   get opciones() { return this.fgGeneral.get('opciones') as FormGroup; }
-
+  
+  /* Utilerias */
+  /**
+   * Cambia el valor por default del mat-datepicker a un 
+   * new Date().getTime()
+   * @param requisito 
+   */
+  private setFormatoDateTime(requisito: any){
+    if(requisito.tipo === this.OPC.FECHA){
+      requisito.fechaMin = new Date(requisito.fechaMin).getTime();
+      requisito.fechaMax = new Date(requisito.fechaMax).getTime();
+    }
+  }
 }

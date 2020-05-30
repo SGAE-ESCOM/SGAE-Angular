@@ -20,6 +20,7 @@ export class FormularioComponent implements OnInit, OnChanges {
   OPC_ARCHIVO = OPC_ARCHIVO;
   objectKeys = Object.keys;
   fgFormulario: FormGroup;
+  documentosAux = {};
 
   @Input() titulo = '';
   @Input() documentos: TipoDato[];
@@ -37,8 +38,12 @@ export class FormularioComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['documentos'] && this.documentos != null) {
+      this.documentosAux = {};
       this.documentos.forEach(
-        documento => this.fgFormulario.addControl(documento.nombre, this.validarFormulario(documento))
+        (documento:any) => {
+          this.fgFormulario.addControl(documento.nombre, this.validarFormulario(documento));
+          this.documentosAux[documento.nombre] = documento.tipo;
+        }
       );
     }
     if (changes['valoresDefault'] && this.valoresDefault != null) {
@@ -92,7 +97,10 @@ export class FormularioComponent implements OnInit, OnChanges {
 
   private setValores(){
     Object.entries(this.valoresDefault).forEach( ([nombre,requisito]:any) => {
-      this.fgFormulario.get(nombre).setValue(requisito.valor);
+      if(this.documentosAux[nombre] === this.OPC.FECHA )
+        this.fgFormulario.get(nombre).setValue(new Date(requisito.valor));
+      else
+        this.fgFormulario.get(nombre).setValue(requisito.valor);
       if(requisito.valido)
         this.fgFormulario.get(nombre).disable();
     });
@@ -133,6 +141,8 @@ export class FormularioComponent implements OnInit, OnChanges {
         break;
       }
       case OPC_FECHA.RANGO: {
+        documento.fechaMin = new Date(documento.fechaMin);
+        documento.fechaMax = new Date(documento.fechaMax);
         break;
       }
       default: {
@@ -141,5 +151,5 @@ export class FormularioComponent implements OnInit, OnChanges {
     }
     return new FormControl('', validadores);
   }
-  
+
 }

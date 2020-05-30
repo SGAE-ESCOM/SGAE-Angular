@@ -5,9 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from "@template/angular-material.module";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { PipesModule } from "@shared/pipes/pipes.module";
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { ES_FORMAT } from '@shared/traduccion/calendario-es';
 
 @NgModule({
   declarations: [FormularioComponent],
@@ -23,6 +25,9 @@ import { PipesModule } from "@shared/pipes/pipes.module";
   ],
   exports: [FormularioComponent],
   entryComponents: [FormularioComponent],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }]
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_FORMATS, useValue: ES_FORMAT }  
+  ]
 })
 export class FormularioModule { }

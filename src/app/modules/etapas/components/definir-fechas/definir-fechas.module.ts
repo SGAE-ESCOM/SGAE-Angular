@@ -23,7 +23,6 @@ import { DefinirFechasComponent } from './definir-fechas.component';
     AngularMaterialModule,
     CalendarioModule,
     MatDatepickerModule,
-    MatDatepickerModule,
     MatNativeDateModule
   ],
   providers: [

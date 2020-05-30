@@ -29,7 +29,6 @@ export class EtapasService {
   //CRUD FECHAS
   saveFechasEtapas(fechas:any[]): Promise<any>{
     this.batch = this.db.firestore.batch();
-    let fechasFormateada = this.convertFecha(fechas);    
     Object.entries(fechas).forEach( ([nombre, etapa]:any) => {
       const etapaRef: any = this.db.collection("FechasEstapas").doc<any>(nombre).ref;
       this.batch.set(etapaRef, etapa);

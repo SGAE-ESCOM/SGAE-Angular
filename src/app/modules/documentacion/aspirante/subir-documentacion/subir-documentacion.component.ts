@@ -91,17 +91,29 @@ export class SubirDocumentacionComponent implements OnInit {
   private saveRequisitos(formulario: FormGroup) {
     let listaRequisitosValidos = { comentarios: '', documentacion: {} };
     for (let [nombre, requisito] of Object.entries(formulario.controls)) {
-      if (!requisito.invalid)
-        listaRequisitosValidos.documentacion[nombre] = { valor: requisito.value, valido: false };
+      if (requisito.valid){
+        if(requisito.value._d == null){
+          listaRequisitosValidos.documentacion[nombre] = { valor: requisito.value, valido: false };
+        }else{
+          console.log(requisito.value );
+          listaRequisitosValidos.documentacion[nombre] = { valor: requisito.value.toDate().getTime(), valido: false };
+        }
+      }
     }
     return listaRequisitosValidos;
   }
 
   private updateRequisitos(formulario: FormGroup) {
     for (let [nombre, requisito] of Object.entries(formulario.controls)) {
-      if (requisito.valid)
-        this.requisitosGuardados.documentacion[nombre].valor = requisito.value;
+      if (requisito.valid){
+        if(requisito.value._d == null){
+          this.requisitosGuardados.documentacion[nombre].valor = requisito.value;
+        }else{
+          this.requisitosGuardados.documentacion[nombre].valor = requisito.value.toDate().getTime();
+        }
+      }
     }
     return Object.assign({}, this.requisitosGuardados);
   }
+
 }

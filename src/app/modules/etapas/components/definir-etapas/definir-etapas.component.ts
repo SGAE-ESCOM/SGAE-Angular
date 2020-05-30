@@ -45,7 +45,8 @@ export class DefinirEtapasComponent implements OnInit {
     this._etapaService.getEstadosAspirante().then(estadosAspirante => {
       if (estadosAspirante.exists) {
         this.etapasPrevias = this.getEtapasSeleccionadas(estadosAspirante.data());
-        this.etapasPrevias.unshift( ETAPAS[0] );
+        console.log(this.etapasPrevias);
+        this.etapasPrevias.unshift( ETAPAS[0], ETAPAS[1]);
         this.existDefinirEtapas = true;
       }
     });
@@ -75,10 +76,16 @@ export class DefinirEtapasComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<string[]>) {
-    if( (event.previousIndex * event.currentIndex) != 0)
+    /* if( (event.previousIndex * event.currentIndex) != 0 )
       moveItemInArray(this.etapas, event.previousIndex, event.currentIndex);
     else
-      this._toast.warning("Primero debe haber una convocatoria");
+      this._toast.warning("Primero debe haber una convocatoria"); */
+    if( (event.previousIndex * event.currentIndex) == 0 )
+      this._toast.warning("No puedes cambiar el orden de la una convocatoria");
+    else if( event.previousIndex == 1 || event.currentIndex == 1)
+      this._toast.warning("No puedes cambiar el orden del registro");
+    else
+      moveItemInArray(this.etapas, event.previousIndex, event.currentIndex);
   }
 
   /**
@@ -86,7 +93,7 @@ export class DefinirEtapasComponent implements OnInit {
    */
   private createEstadoAspirante(): any {
     let estadoAspirante = {};
-    this.etapas.slice(1).forEach(etapa => {
+    this.etapas.slice(2).forEach(etapa => {
       estadoAspirante[etapa.valor] = "invalida";
     });
     return estadoAspirante;

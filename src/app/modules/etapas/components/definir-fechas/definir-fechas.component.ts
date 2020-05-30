@@ -43,7 +43,7 @@ export class DefinirFechasComponent implements OnInit {
     this._etapaService.getEstadosAspirante().then(estadosAspirante => {
       if (estadosAspirante.exists) {
         this.etapas = this.getEtapasSeleccionadas(estadosAspirante.data());
-        this.etapas.unshift( ETAPAS[0] );
+        this.etapas.unshift( ETAPAS[0], ETAPAS[1] );
         this.llenarFormulario();
         this._etapaService.getFechasEtapas().then( querySnapshot => {
           if (!querySnapshot.empty){
@@ -53,7 +53,7 @@ export class DefinirFechasComponent implements OnInit {
         }).catch(err =>  err);
       } else {
         this.existDefinirEtapas = false;
-        this._toast.warning("Aún no se han definido las etapas que se usaran");
+        this._toast.warning("Aún no se han definido las etapas que se usarán");
       }
     });
   }
@@ -86,6 +86,7 @@ export class DefinirFechasComponent implements OnInit {
   //Lógica del componente
   pintarFechas() {
     if (this.fgEtapasFechas.valid) {
+      console.log(this.fgEtapasFechas.value);
       this.dataSource = Object.entries(this.fgEtapasFechas.value).map(([atributo, valor]: any, index) => {
         return {
           id: index,

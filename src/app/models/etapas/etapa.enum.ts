@@ -16,4 +16,4 @@ export const ETAPAS_BUSCAR = {
     pagos: PAGOS
 }
 
-export const ETAPAS = [new Etapa('Convocatoria', 'convocatoria')];
+export const ETAPAS = [new Etapa('Convocatoria', 'convocatoria'), new Etapa('Registro','registro')];
