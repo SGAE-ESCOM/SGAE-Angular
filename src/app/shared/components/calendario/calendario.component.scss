@@ -83,6 +83,10 @@
       .calendar-body-cell-content:hover {
         background: rgba(0, 0, 0, 0.1);
       }
+
+      .calendar-body-cell-disabled-content{
+        background: rgba(0, 0, 0, 0.2);
+      }
     }
   }
 }

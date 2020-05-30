@@ -28,10 +28,11 @@
                             <tr class="ng-star-inserted" *ngFor="let week of month.weeks">
                                 <td 
                                     [style.box-shadow]="(day.idEvent) != null ? getEventClass(day.idEvent) : ''"
-                                    [matTooltip]="(day.idEvent) != null ? getEvents(day.idEvent) : ''"
+                                    [matTooltip]="(day.idDisableDay) != null? getDisableDay(day.idDisableDay) : (day.idEvent) != null ? getEvents(day.idEvent) : ''"
                                     [matTooltipClass]="(day.idEvent) != null ? 'tooltip-primary' : ''"
                                     *ngFor="let day of week">
-                                    <div class="calendar-body-cell-content">
+                                    <div class="calendar-body-cell-content"
+                                        [style.background]="(day.idDisableDay) != null ? 'rgba(0, 0, 0, 0.2)' : '' ">
                                         {{ day.value }}</div>
                                 </td>
                             </tr>

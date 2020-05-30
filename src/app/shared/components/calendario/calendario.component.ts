@@ -38,12 +38,23 @@ export class CalendarioComponent implements OnInit, OnChanges {
   ];
 
   @Input() dataSource: CalendarData[];
+  @Input() dataDisableDays: CalendarData[] = [
+    { id: 0, name: 'Año Nuevo', startDate: new Date(2020,0,1), endDate: new Date(2020,0,1), color: '445566' },
+    { id: 1, name: 'Día de la Constitución', startDate: new Date(2020, 1, 3), endDate: new Date(2020, 1, 3), color: '445566' },
+    { id: 2, name: 'Natalicio de B. Juárez', startDate: new Date(2020, 2, 16), endDate: new Date(2020, 2, 16), color: '445566' },
+    { id: 3, name: 'Viernes Santo', startDate: new Date(2020, 3, 10), endDate: new Date(2020, 3, 10), color: '445566' },
+    { id: 4, name: 'Día del Trabajo', startDate: new Date(2020, 4, 1), endDate: new Date(2020, 4, 1), color: '445566' },
+    { id: 5, name: 'Día de la independencia', startDate: new Date(2020, 8, 16), endDate: new Date(2020, 8, 16), color: '445566' },
+    { id: 6, name: 'Día de la Revolución', startDate: new Date(2020, 10, 16), endDate: new Date(2020, 10, 16), color: '445566' },
+    { id: 7, name: 'Navidad', startDate: new Date(2020, 11, 25), endDate: new Date(2020, 11, 25), color: '445566' }
+  ];
 
   constructor() { }
 
   ngOnInit(): void {
     if(this.dataSource == null){
       this.initCalendar();
+      this.renderDisabledDays();
     }
   }
 
@@ -51,11 +62,16 @@ export class CalendarioComponent implements OnInit, OnChanges {
     if (changes['dataSource'] && this.dataSource != null) {
       this.initCalendar();
       this.renderData();
+      this.renderDisabledDays();
     }
   }
 
   getEvents(events: []) {
     return '' + events.map(id => ' '+this.dataSource[id].name);
+  }
+
+  getDisableDay(events: []) {
+    return '' + events.map(id => ' '+this.dataDisableDays[id].name);
   }
 
   getEventClass(events: any[]) {
@@ -113,6 +129,32 @@ export class CalendarioComponent implements OnInit, OnChanges {
     }
   }
 
+  selectDisabledDays(startDate: Date, endDate: Date, idDisableDay) {
+    let startDay = startDate.getDate();
+    let startMonth = startDate.getMonth();
+    let weeks: any[] = this.months[startMonth].weeks;
+    let rangeDays = endDate.getDate() - startDay;
+    let firstDay = new Date(this.currentYear, startMonth, startDay);
+    let weekday = firstDay.getDay();
+    let startWeek;
+    for (let i = 0; i < weeks.length; i++) {
+      if (weeks[i][weekday].value == firstDay.getDate()) {
+        startWeek = i;
+        break;
+      }
+    }
+    for (let currentWeek = startWeek, currentWeekday = weekday, r = 0; r <= rangeDays; r++ , currentWeekday++) {
+      if (weeks[currentWeek][currentWeekday].idDisableDay != null)
+        weeks[currentWeek][currentWeekday].idDisableDay.push(idDisableDay);
+      else
+        weeks[currentWeek][currentWeekday].idDisableDay = [idDisableDay];
+      if (currentWeekday == 6) {
+        currentWeekday = -1;
+        currentWeek++;
+      }
+    }
+  }
+
   //Other implementation
   renderData() {
     if (this.dataSource != null && this.dataSource.length > 0) {
@@ -134,6 +176,18 @@ export class CalendarioComponent implements OnInit, OnChanges {
               this.selectEvent(currentMonth, data.endDate, data.id);
             }
           }
+        }
+      });
+    }
+  }
+
+  renderDisabledDays() {
+    if (this.dataDisableDays != null && this.dataDisableDays.length > 0) {
+      this.dataDisableDays.forEach((data: CalendarData) => {
+        let startMonth = data.startDate.getMonth();
+        let endMonth = data.endDate.getMonth();
+        if (startMonth == endMonth) {
+          this.selectDisabledDays(data.startDate, data.endDate, data.id);
         }
       });
     }
