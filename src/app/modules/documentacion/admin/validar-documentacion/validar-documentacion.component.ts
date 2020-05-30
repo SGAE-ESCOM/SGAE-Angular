@@ -8,7 +8,8 @@ import { UsuarioService } from '@services/usuario/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_DOC } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-validar-documentacion',
@@ -38,9 +39,11 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
   ]
   fcFiltro = new FormControl(this.filtros[0].valor);
   
-  constructor(private _router:Router, private _usuarioService: UsuarioService, private _toast:ToastrService, private accesosAdministrador: AccesosAdministrador) {
+  constructor(private _router:Router, private _usuarioService: UsuarioService, private _toast:ToastrService, 
+        private _authServices: AuthService) { 
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_DOCUMENTACION);
-    if(this.accesosAdministrador.accesoDocumentacion()){
+    if(comprobarPermisos(usuario, GESTION_DOC, _router)){
       BreadcrumbComponent.update(BC_VALIDAR_DOCUMENTACION);
     }
   }

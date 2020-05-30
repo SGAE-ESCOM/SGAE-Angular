@@ -6,6 +6,7 @@ import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { fadeInDown } from '@shared/animations/router.animations';
 import { UsuarioInterface } from '@models/persona/usuario';
+import { getNavigationLinksAdmin } from '@shared/admin-permissions/permissions';
 
 @Component({
   selector: 'app-sidenav',
@@ -47,8 +48,10 @@ export class SidenavComponent implements OnInit {
             this._authService.setUsuarioC(usaurio);
             this.usuario = usaurio;
             this.isLoggedIn = true;
-            if(this.usuario.rol === 'admin' || this.usuario.rol === 'root')
-            this.navigationLinks = LINKS_HOME[usaurio.rol]
+            if(usaurio.rol === 'root' || usaurio.rol === 'aspirante' )
+              this.navigationLinks = LINKS_HOME[usaurio.rol];
+            else if(usaurio.rol === 'admin')
+              this.navigationLinks = getNavigationLinksAdmin(usaurio.permisos);
           } else {
             const infoUsuario = {
               uid: auth.uid,

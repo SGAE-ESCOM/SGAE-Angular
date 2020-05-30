@@ -8,7 +8,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_USUARIOS } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-aspirantes',
@@ -32,9 +34,10 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   fcFiltro = new FormControl(this.filtros[0].valor);
 
   constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
-        private accesosAdministrador: AccesosAdministrador) {
+      private _authServices: AuthService, private router: Router) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(this.accesosAdministrador.accesoUsuarios()){
+    if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
       BreadcrumbComponent.update(BC_GESTION_ASPIRANTES);
     }
   }
@@ -94,7 +97,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   }
 
   eliminarAspirante(row){
-    this._swal.confirmarEliminar(`¿Deseas eliminar al aspirante '${row.nombres}' '${row.apellidos}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar al aspirante '${row.nombres} ${row.apellidos}'?`, 'No se podrá revertir esta acción')
     .then((result) => {
       if (result.value) {
         this._usuarioService.deleteAspirante(row).then(() => {

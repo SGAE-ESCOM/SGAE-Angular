@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_EDITAR_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { ToastrService } from 'ngx-toastr';
-import { GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, comprobarPermisos } from '@shared/admin-permissions/permissions';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
 import { AdminService } from '@services/admin/admin.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-editar-admon',
@@ -30,9 +31,10 @@ export class EditarAdmonComponent implements OnInit {
   btnIDisable = true;
 
   constructor(private route: ActivatedRoute, private _adminService: AdminService, private _toast:ToastrService,
-      private _swal: SweetalertService, private fb: FormBuilder, private accesosAdministrador: AccesosAdministrador) {
+      private _swal: SweetalertService, private fb: FormBuilder, private _authServices: AuthService, private router: Router) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(this.accesosAdministrador.accesoUsuarios()){
+    if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
       BreadcrumbComponent.update(BC_EDITAR_ADMON);
       this.usuario = { id: this.route.snapshot.paramMap.get("id") };
     }
@@ -61,20 +63,20 @@ export class EditarAdmonComponent implements OnInit {
   configurarPermisos(permisos: number){
     this.gusuarios = GESTION_USUARIOS & permisos ? true : false;
     this.getapas = GESTION_ETAPAS & permisos ? true : false;
-    this.gpagos = PAGOS & permisos ? true : false;
-    this.gconvocatoria = CONVOCATORIA & permisos ? true : false;
-    this.gevaluacion = EVALUACION & permisos ? true : false;
-    this.gdocumentacion = DOCUMENTACION & permisos ? true : false;
+    this.gpagos = GESTION_PAGOS & permisos ? true : false;
+    this.gconvocatoria = GESTION_CONV & permisos ? true : false;
+    this.gevaluacion = GESTION_EVAL & permisos ? true : false;
+    this.gdocumentacion = GESTION_DOC & permisos ? true : false;
   }
 
   actualizarPermisos(){
     let permisos = 0;
     permisos += this.gusuarios ? GESTION_USUARIOS : 0;
     permisos += this.getapas ? GESTION_ETAPAS : 0;
-    permisos += this.gpagos ? PAGOS : 0;
-    permisos += this.gconvocatoria ? CONVOCATORIA : 0;
-    permisos += this.gevaluacion ? EVALUACION : 0;
-    permisos += this.gdocumentacion ? DOCUMENTACION : 0;
+    permisos += this.gpagos ? GESTION_PAGOS : 0;
+    permisos += this.gconvocatoria ? GESTION_CONV : 0;
+    permisos += this.gevaluacion ? GESTION_EVAL : 0;
+    permisos += this.gdocumentacion ? GESTION_DOC : 0;
     this._adminService.updatePermisosAdministrador(this.usuario, permisos).then(() => {
       this._swal.informacionAdminActualizada();
     }).catch( err => {
@@ -105,13 +107,13 @@ export class EditarAdmonComponent implements OnInit {
   }
 
   getNombreErrorMessage(){
-    return this.fgAdmin.get('nombres').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgAdmin.get('nombres').hasError('required') ? 'Este campo es requerido' :
       this.fgAdmin.get('nombres').hasError('pattern') ? 'Nombre no valido' :
         '';
   }
 
   getApellidoErrorMessage(){
-    return this.fgAdmin.get('apellidos').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgAdmin.get('apellidos').hasError('required') ? 'Este campo es requerido' :
       this.fgAdmin.get('apellidos').hasError('pattern') ? 'Apellido no valido' :
         '';
   }

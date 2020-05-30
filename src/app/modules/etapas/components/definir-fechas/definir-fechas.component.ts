@@ -10,7 +10,8 @@ import { ETAPAS, ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
 import { COLORES_ETAPAS, BUSCAR_COLOR_ETAPAS } from "@models/etapas/colores-etapa.enum";
 import { EtapasService } from '@services/etapas/etapas.service';
 import { Router } from '@angular/router';
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_ETAPAS } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-definir-fechas',
@@ -31,10 +32,11 @@ export class DefinirFechasComponent implements OnInit {
   existDefinirEtapas = true;
   linkDefinirEtapas = BC_DEFINIR_ETAPAS.title.url;
 
-  constructor(private _fb: FormBuilder, private _etapaService: EtapasService, private accesosAdministrador: AccesosAdministrador,
+  constructor(private _fb: FormBuilder, private _etapaService: EtapasService, private _authServices: AuthService,
         private _toast: ToastrService, private _swal: SweetalertService, private router: Router) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_ETAPAS);
-    if(this.accesosAdministrador.accesoEtapas()){
+    if(comprobarPermisos(usuario, GESTION_ETAPAS, router)){
       BreadcrumbComponent.update(BC_DEFINIR_FECHAS);
     }
   }

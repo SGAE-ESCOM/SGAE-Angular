@@ -117,7 +117,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-right">
-                                <button type="submit" type="submit" [routerLink]="['/app/usuarios/gestion-admon']" 
+                                <button type="submit" type="submit" (click)="cancelarRegistro()"
                                     mat-button color="danger"> Cancelar <mat-icon>close</mat-icon> </button>
                                 <button type="submit" type="submit" (click)="enviarFormulario(fgAdmin)" mat-button
                                     color="success"> Finalizar <mat-icon>done</mat-icon> </button>

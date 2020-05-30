@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_GESTION_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
-import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, PAGOS, CONVOCATORIA, EVALUACION, DOCUMENTACION, AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, comprobarPermisos } from '@shared/admin-permissions/permissions';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,6 +11,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { DomSanitizer } from '@angular/platform-browser';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { AdminService } from '@services/admin/admin.service';
+import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-admon',
@@ -34,13 +36,14 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
 
   filtros: any[] = PERMISOS_ADMIN;
   fcFiltro = new FormControl(this.filtros[0].valor);
-
+  usuario;
 
 
   constructor(private _adminService: AdminService, private _toast:ToastrService, public dialog: MatDialog, 
-      private _swal: SweetalertService, private accesosAdministrador: AccesosAdministrador) {
+      private _swal: SweetalertService, private _authServices: AuthService, private router: Router) {
+    this.usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(this.accesosAdministrador.accesoUsuarios()){
+    if(comprobarPermisos(this.usuario, GESTION_USUARIOS, router)){
       BreadcrumbComponent.update(BC_GESTION_ADMON);
     }
   }
@@ -51,7 +54,8 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
     this._adminService.getAdministradores().then((querySnapshot) => {
       let usuarios = [];
       querySnapshot.forEach((doc) => {
-        usuarios.push(doc.data());
+        let user: any[] = doc.data();
+        if(user["id"] != this.usuario.id) usuarios.push(doc.data());
       });
       this.usuarios.data = usuarios;
     }).catch( err =>  this.mensajeError());
@@ -68,7 +72,8 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
       querySnapshot.forEach((doc) => {
         let user: any[] = doc.data();
         if((user["permisos"] & filtro) > 0){
-          usuarios.push(doc.data());
+          if(user["id"] != this.usuario.id)
+            usuarios.push(doc.data());
         }
       });
       this.definirUsuarios(usuarios);
@@ -107,7 +112,7 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
   }
 
   eliminarAdministrador(row){
-    this._swal.confirmarEliminar(`¿Deseas eliminar al administrador '${row.nombres}' '${row.apellidos}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar al administrador '${row.nombres} ${row.apellidos}'?`, 'No se podrá revertir esta acción.')
     .then((result) => {
       if (result.value) {
         this._adminService.deleteAdministrador(row).then(() => {
@@ -145,11 +150,10 @@ export class ModalVisualizarPermisos {
     let permisos = this.data.permisos;
     this.gusuarios = GESTION_USUARIOS & permisos ? true : false;
     this.getapas = GESTION_ETAPAS & permisos ? true : false;
-    this.gpagos = PAGOS & permisos ? true : false;
-    this.gconvocatoria = CONVOCATORIA & permisos ? true : false;
-    this.gevaluacion = EVALUACION & permisos ? true : false;
-    this.gdocumentacion = DOCUMENTACION & permisos ? true : false;
-    console.log("Se ejecuto")
+    this.gpagos = GESTION_PAGOS & permisos ? true : false;
+    this.gconvocatoria = GESTION_CONV & permisos ? true : false;
+    this.gevaluacion = GESTION_EVAL & permisos ? true : false;
+    this.gdocumentacion = GESTION_DOC & permisos ? true : false;
   }
 
   onNoClick(): void {

@@ -7,7 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { heapsort } from "@shared/utilerias/heapsort";
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_DOC } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ordenar-requisitos',
@@ -20,9 +22,10 @@ export class OrdenarRequisitosComponent implements OnInit {
   regresar = BC_ORDENAR_REQUISITOS.links[2].url;
 
   constructor(private _toast: ToastrService, private _swal: SweetalertService, 
-        private _ads: AdministrarDocumentacionService, private accesosAdministrador: AccesosAdministrador) {
+        private _ads: AdministrarDocumentacionService, private _authServices: AuthService, private router: Router) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_DOCUMENTACION);
-    if(this.accesosAdministrador.accesoDocumentacion()){
+    if(comprobarPermisos(usuario, GESTION_DOC, router)){
       BreadcrumbComponent.update(BC_ORDENAR_REQUISITOS);
     }
   }

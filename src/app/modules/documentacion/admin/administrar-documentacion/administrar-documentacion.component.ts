@@ -12,7 +12,9 @@ import { AdministrarDocumentacionService } from '@services/documentacion/adminis
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { heapsort } from "@shared/utilerias/heapsort";
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_DOC } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-administrar-documentacion',
@@ -32,9 +34,10 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   urlOrdenarEtapas = BC_ORDENAR_REQUISITOS.title.url;
 
   constructor(private toast: ToastrService, private _swal: SweetalertService, private _ads: AdministrarDocumentacionService,
-        public dialog: MatDialog, private accesosAdministrador: AccesosAdministrador) {
+        public dialog: MatDialog, private _authServices: AuthService, private router: Router) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_DOCUMENTACION);
-    if(this.accesosAdministrador.accesoDocumentacion()){
+    if(comprobarPermisos(usuario, GESTION_DOC, router)){
       BreadcrumbComponent.update(BC_ADMINISTRAR_DOCUMENTACION);
     }
   }

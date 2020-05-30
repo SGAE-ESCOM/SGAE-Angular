@@ -10,7 +10,8 @@ import { UsuarioInterface } from '@models/persona/usuario';
 import { ValidarDocumentacionService } from '@services/documentacion/validar-documentacion.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { EstadoDocumentacion } from "@models/documentacion/enums/estado-documentacion.enum";
-import { AccesosAdministrador } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_DOC } from '@shared/admin-permissions/permissions';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-validar-aspirante',
@@ -32,9 +33,10 @@ export class ValidarAspiranteComponent implements OnInit, AfterViewInit {
   constructor(public dialog: MatDialog, private _subirDocService: ValidarDocumentacionService, 
         private _personaService: UsuarioService, private route: ActivatedRoute, 
         private router: Router, private _toast: ToastrService, 
-        private _swal: SweetalertService, private accesosAdministrador: AccesosAdministrador) {
+        private _swal: SweetalertService, private _authServices: AuthService) {
+    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_DOCUMENTACION);
-    if(this.accesosAdministrador.accesoDocumentacion()){
+    if(comprobarPermisos(usuario, GESTION_DOC, router)){
       BreadcrumbComponent.update(BC_VALIDAR_DOC_ASPIRANTE);
       const navigation = this.router.getCurrentNavigation();
       if( navigation.extras.state ){
