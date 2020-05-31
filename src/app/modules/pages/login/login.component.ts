@@ -6,6 +6,18 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { moveInLeft } from '@shared/animations/router.animations';
 
+const AUTH_ERROR = {
+  "auth/wrong-password" : {
+    message : "La contraseña no es válida o el usuario no tiene una contraseña."
+  },
+  "auth/invalid-email" : {
+    message: "La dirección de correo electrónico no tiene el formato correcto."
+  },
+  "auth/network-request-failed": {
+    message: "Se ha producido un error de red (como tiempo de espera, conexión interrumpida o host inaccesible)."
+  }
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -62,6 +74,7 @@ export class LoginComponent implements OnInit {
 
   showError(err) {
     console.log(err);
+    err = AUTH_ERROR[err.code];
     this._toats.error(err.message);
   }
 

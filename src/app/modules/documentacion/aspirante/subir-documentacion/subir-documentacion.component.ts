@@ -69,7 +69,7 @@ export class SubirDocumentacionComponent implements OnInit {
         }
       });
     } else {
-      this._toast.error("El formulario no es válido", "Mensaje de prueba");
+      this._toast.error("El formulario no es válido");
     }
   }
 

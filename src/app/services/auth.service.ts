@@ -5,10 +5,8 @@ import { auth } from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
-import { AngularFireModule } from '@angular/fire';
+import { EtapasService } from '@services/etapas/etapas.service';
 import * as firebase from "firebase/app";
-import * as admin from "firebase-admin";
-import * as sdkparams from "@services/admin/sdk-credential-params"
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +29,7 @@ export class AuthService {
   //   databaseURL: "https://sgae-escom.firebaseio.com"
   // });
   
-  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) {
+  constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore, private _etapaService: EtapasService) {
     this.userData$ = afsAuth.authState;
   }
 
@@ -83,15 +81,22 @@ export class AuthService {
   }
 
   private updateInformacionUsuario(usuarioRegistrado, usuario) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Usuarios/${usuarioRegistrado.uid}`);
-    const data: UsuarioInterface = {
-      id: usuarioRegistrado.uid,
-      nombres: usuario.nombres,
-      apellidos: usuario.apellidos,
-      email: usuarioRegistrado.email,
-      rol: 'aspirante'
-    }
-    return userRef.set(data, { merge: true });
+    return this._etapaService.getEstadosAspirante().then(estadosAspirante => {
+      if (estadosAspirante.exists) {
+        const estado = estadosAspirante.data()
+        console.log( estado );
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Usuarios/${usuarioRegistrado.uid}`);
+        const data: UsuarioInterface = {
+          id: usuarioRegistrado.uid,
+          nombres: usuario.nombres,
+          apellidos: usuario.apellidos,
+          email: usuarioRegistrado.email,
+          estado: estado,
+          rol: 'aspirante'
+        }
+        return userRef.set(data, { merge: true });
+      }
+    });
   }
 
   private updateInformacionAdministrador(usuarioRegistrado, usuario) {

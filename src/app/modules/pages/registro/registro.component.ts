@@ -6,6 +6,16 @@ import { AuthService } from '@services/auth.service';
 import { passwordMatchValidator } from '@shared/validators/passwordValidators';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
 import { moveInLeft } from '@shared/animations/router.animations';
+import { ToastrService } from 'ngx-toastr';
+
+const AUTH_ERROR = {
+  "auth/weak-password" : {
+    message : "La contraseña debe tener al menos 6 caracteres."
+  },
+  "auth/email-already-in-use" : {
+    message: "La dirección de correo electrónico ya está en uso por otra cuenta."
+  }
+}
 
 @Component({
   selector: 'app-registro',
@@ -21,7 +31,8 @@ export class RegistroComponent implements OnInit {
 
   constructor(
     public afAuth: AngularFireAuth, private router: Router,
-    private _authService: AuthService, private fb: FormBuilder
+    private _authService: AuthService, private fb: FormBuilder, 
+    private _toast: ToastrService
   ) {
     
   }
@@ -40,8 +51,8 @@ export class RegistroComponent implements OnInit {
 
   onRegistrar( usuario ){
     this._authService.registrarUsuario( usuario )
-    .then( res => this.router.navigate(['/login'])
-    ).catch(err => console.error(err));
+    .then( res => this.router.navigate(['/app'] )
+    ).catch(err => this.showError(err));
   }
 
   getErrorMessage() {
@@ -54,5 +65,11 @@ export class RegistroComponent implements OnInit {
     return this.fgUsuario.get('passwordRepeat').hasError('required') ? 'Debes ingresar un valor' :
       this.fgUsuario.get('passwordRepeat').hasError('mustMatch') ? 'Debe coincidir la contraseña' :
         '';
+  }
+
+  showError(err) {
+    console.log(err);
+    err = AUTH_ERROR[err.code];
+    this._toast.error(err.message);
   }
 }
