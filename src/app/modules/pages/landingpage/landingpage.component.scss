@@ -1,12 +1,12 @@
 a {
-  color: #007bff;
+  color: #6db0f8;
   transition: 0.5s;
 }
 
 a:hover,
 a:active,
 a:focus {
-  color: #0b6bd3;
+  color: #4399f5;
   outline: none;
   text-decoration: none;
 }
@@ -22,6 +22,8 @@ h3,
 h4,
 h5,
 h6 {
+  position: relative;
+  text-align: center;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   margin: 0 0 20px 0;
@@ -33,7 +35,7 @@ h6 {
 .back-to-top {
   position: fixed;
   display: none;
-  background: #007bff;
+  background: #2f32df;
   color: #fff;
   width: 44px;
   height: 44px;
@@ -71,7 +73,7 @@ h6 {
   top: calc(50% - 30px);
   left: calc(50% - 30px);
   border: 6px solid #f2f2f2;
-  border-top: 6px solid #007bff;
+  border-top: 6px solid #2a37f3;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -155,20 +157,33 @@ h6 {
 
 #intro {
   width: 100%;
+  height: 700px;
   position: relative;
-  background: url("/assets/img/intro-bg.png") center bottom no-repeat;
+  background: url("/assets/img/pruebafondo2.jpg") center bottom no-repeat;
   background-size: cover;
-  padding: 200px 0 120px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-#intro .intro-img {
-  width: 50%;
-  float: right;
+#intro:before{
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #020203;
+  position: absolute;
+  opacity: 0.4;
 }
+
 
 #intro .intro-info {
-  width: 50%;
+  width: 100%;
   float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #intro .intro-info h2 {
@@ -176,30 +191,31 @@ h6 {
   margin-bottom: 40px;
   font-size: 42px;
   font-weight: 700;
+  
 }
 
 #intro .intro-info h2 span {
-  color: #74b5fc;
-  text-decoration: underline;
+  color: #a0cdfd;
+  border-radius: 10px;
 }
 
 #intro .intro-info .btn-get-started,
 #intro .intro-info .btn-services {
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
-  font-weight: 600;
   letter-spacing: 1px;
-  display: inline-block;
   padding: 10px 32px;
   border-radius: 50px;
   transition: 0.5s;
   margin: 0 20px 20px 0;
   color: #fff;
+  width: 120px;
+  position: relative;
 }
 
 #intro .intro-info .btn-get-started {
-  background: #007bff;
-  border: 2px solid #007bff;
+  background: #6db0f8;
+  border: 2px solid #409afa;
   color: #fff;
 }
 
@@ -214,8 +230,8 @@ h6 {
 }
 
 #intro .intro-info .btn-services:hover {
-  background: #007bff;
-  border-color: #007bff;
+  background: #6db0f8;
+  border-color: #3f9afa;
   color: #fff;
 }
 
@@ -290,7 +306,7 @@ h6 {
 .main-nav .drop-down ul a:hover,
 .main-nav .drop-down ul .active > a,
 .main-nav .drop-down ul li:hover > a {
-  color: #007bff;
+  color: #6db0f8;
 }
 
 .main-nav .drop-down > a:after {
@@ -516,17 +532,17 @@ h6 {
   flex-direction: column;
   text-align: center;
   border-radius: 50%;
-  border: 2px solid #007bff;
+  border: 2px solid #6db0f8;
   transition: all 0.3s ease-in-out;
 }
 
 #about .about-container .icon-box .icon i {
-  color: #007bff;
+  color: #0a5fdf;
   font-size: 24px;
 }
 
 #about .about-container .icon-box:hover .icon {
-  background: #007bff;
+  background: #6db0f8;
 }
 
 #about .about-container .icon-box:hover .icon i {
@@ -607,7 +623,7 @@ h6 {
 }
 
 #services .box:hover .title a {
-  color: #007bff;
+  color: #0c51d1;
 }
 
 #services .description {
@@ -619,7 +635,7 @@ h6 {
 
 #why-us {
   padding: 60px 0;
-  background: #004a99;
+  background: #6db0f8;
 }
 
 #why-us .section-header h3,
@@ -1051,7 +1067,7 @@ h6 {
   font-weight: 300;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #007bff;
+  color: #3e97f7;
 }
 
 #contact .contact-about p {
@@ -1069,7 +1085,7 @@ h6 {
   font-size: 18px;
   display: inline-block;
   background: #fff;
-  color: #007bff;
+  color: #77b2f1;
   line-height: 1;
   padding: 8px 0;
   margin-right: 4px;
@@ -1078,11 +1094,11 @@ h6 {
   width: 36px;
   height: 36px;
   transition: 0.3s;
-  border: 1px solid #007bff;
+  border: 1px solid #66a8ee;
 }
 
 #contact .social-links a:hover {
-  background: #007bff;
+  background: #54a0f1;
   color: #fff;
 }
 
@@ -1145,7 +1161,7 @@ h6 {
 }
 
 #contact .form button[type="submit"] {
-  background: #007bff;
+  background: #6db0f8;
   border: 0;
   border-radius: 20px;
   padding: 8px 30px;
@@ -1163,14 +1179,14 @@ h6 {
   --------------------------------------------------------------*/
 
 #footer {
-  background: #00428a;
+  background: #6db0f8;
   padding: 0 0 30px 0;
   color: #eee;
   font-size: 14px;
 }
 
 #footer .footer-top {
-  background: #004a99;
+  background: #cedcfce0;
   padding: 60px 0 30px 0;
 }
 
@@ -1184,7 +1200,7 @@ h6 {
   padding: 2px 0 2px 0;
   line-height: 1;
   font-family: "Montserrat", sans-serif;
-  color: #fff;
+  color: rgb(14, 13, 13);
   font-weight: 400;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -1195,14 +1211,14 @@ h6 {
   line-height: 24px;
   margin-bottom: 0;
   font-family: "Montserrat", sans-serif;
-  color: #ecf5ff;
+  color: #0b0b0c;
 }
 
 #footer .footer-top .social-links a {
   font-size: 18px;
   display: inline-block;
   background: #007bff;
-  color: #fff;
+  color: #0b0b0c;
   line-height: 1;
   padding: 8px 0;
   margin-right: 4px;
@@ -1215,13 +1231,13 @@ h6 {
 
 #footer .footer-top .social-links a:hover {
   background: #0067d5;
-  color: #fff;
+  color: #0b0b0c;
 }
 
 #footer .footer-top h4 {
   font-size: 14px;
   font-weight: bold;
-  color: #fff;
+  color: #0b0b0c;
   text-transform: uppercase;
   position: relative;
   padding-bottom: 10px;
@@ -1246,7 +1262,7 @@ h6 {
 }
 
 #footer .footer-top .footer-links ul a {
-  color: #ecf5ff;
+  color: #0b0b0c;
 }
 
 #footer .footer-top .footer-links ul a:hover {
@@ -1259,10 +1275,12 @@ h6 {
 
 #footer .footer-top .footer-contact p {
   line-height: 26px;
+  color: black;
 }
 
 #footer .footer-top .footer-newsletter {
   margin-bottom: 30px;
+  color: black;
 }
 
 #footer .footer-top .footer-newsletter input[type="email"] {
@@ -1272,12 +1290,12 @@ h6 {
 }
 
 #footer .footer-top .footer-newsletter input[type="submit"] {
-  background: #007bff;
+  background: #4192e7;
   border: 0;
   width: 35%;
-  padding: 6px 0;
+  padding: 6px 0; 
   text-align: center;
-  color: #fff;
+  color: #f6f6fa;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -1289,20 +1307,21 @@ h6 {
 #footer .copyright {
   text-align: center;
   padding-top: 30px;
+  color: black;
 }
 
 #footer .credits {
   text-align: center;
   font-size: 13px;
-  color: #f1f7ff;
+  color: #0b0b0c;
 }
 
 #footer .credits a {
-  color: #bfddfe;
+  color: #0b0b0c;
 }
 
 #footer .credits a:hover {
-  color: #f1f7ff;
+  color: #0b0b0c;
 }
 
 /*--------------------------------------------------------------
