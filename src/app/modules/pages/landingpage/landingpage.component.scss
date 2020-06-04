@@ -147,17 +147,13 @@ h6 {
   max-height: 26px;
 }
 
-.main-pages {
-  margin-top: 60px;
-}
-
 /*--------------------------------------------------------------
   # Intro Section
   --------------------------------------------------------------*/
 
 #intro {
   width: 100%;
-  height: 700px;
+  height: 600px;
   position: relative;
   background: url("/assets/img/pruebafondo2.jpg") center bottom no-repeat;
   background-size: cover;
@@ -167,22 +163,22 @@ h6 {
   align-items: center;
 }
 
-#intro:before{
+#intro:before{ 
   content: "";
   width: 100%;
   height: 100%;
   background-color: #020203;
   position: absolute;
   opacity: 0.4;
+  top: 0px;
 }
-
 
 #intro .intro-info {
   width: 100%;
   float: left;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
