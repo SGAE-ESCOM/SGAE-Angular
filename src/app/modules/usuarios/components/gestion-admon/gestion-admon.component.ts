@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 import { BC_GESTION_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
-import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, comprobarPermisos } from '@shared/admin-permissions/permissions';
+import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, sinAcceso } from '@shared/admin-permissions/permissions';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -43,9 +43,8 @@ export class GestionAdmonComponent implements OnInit, AfterViewInit {
       private _swal: SweetalertService, private _authServices: AuthService, private router: Router) {
     this.usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(comprobarPermisos(this.usuario, GESTION_USUARIOS, router)){
-      BreadcrumbComponent.update(BC_GESTION_ADMON);
-    }
+    if(this.usuario.rol != 'root') sinAcceso(router);
+    BreadcrumbComponent.update(BC_GESTION_ADMON);
   }
 
 

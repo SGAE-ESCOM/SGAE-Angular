@@ -39,6 +39,11 @@ export function comprobarPermisos(user, permiso, router){
     }
 }
 
+export function sinAcceso(router){
+    router.navigate(['/app']);
+    return false;
+}
+
 export function isAdministrador(rol: string){
     return rol == 'admin' || rol == 'root' ? true : false;
 }

@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { AuthService } from '@services/auth.service';
 import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
 import { passwordMatchValidator } from '@shared/validators/passwordValidators';
-import { GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, comprobarPermisos } from '@shared/admin-permissions/permissions';
+import { GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, sinAcceso } from '@shared/admin-permissions/permissions';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -30,9 +30,8 @@ export class RegistrarAdmonComponent implements OnInit {
         private router: Router, private _toas: ToastrService, private _swal: SweetalertService) {
     let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
-      BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
-    }
+    if(usuario.rol != 'root') sinAcceso(router);
+    BreadcrumbComponent.update(BC_REGISTRAR_ADMON);
   }
 
   ngOnInit() {
