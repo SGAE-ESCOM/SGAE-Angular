@@ -82,7 +82,7 @@ export class DefinirEtapasComponent implements OnInit {
     else
       this._toast.warning("Primero debe haber una convocatoria"); */
     if( (event.previousIndex * event.currentIndex) == 0 )
-      this._toast.warning("No puedes cambiar el orden de la una convocatoria");
+      this._toast.warning("No puedes cambiar el orden de la convocatoria");
     else if( event.previousIndex == 1 || event.currentIndex == 1)
       this._toast.warning("No puedes cambiar el orden del registro");
     else

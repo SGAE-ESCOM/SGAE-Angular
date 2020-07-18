@@ -25,17 +25,18 @@
                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                         </button>
-                                        <mat-error *ngIf="fgUsuario.get('password').hasError('required')"> Debes ingresar un valor </mat-error>
+                                        <mat-error *ngIf="fgUsuario.get('password').hasError('required')"> Este campo es requerido </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <button mat-flat-button color="primary" type="submit" class=" btn-block">Iniciar Sesión</button>                                
-                                <div class="form-group mt-2">
-                                    <p class="pregunta my-1"><b>¿Aún no tienes cuenta?</b></p>
-                                    <a mat-flat-button color="success" routerLink="/registro" class="btn-block">Registrate aquí</a>
-                                </div>
+                                
                             </form>
                             <hr>
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="isEtapasDefinidas">
+                                <p class="pregunta my-1"><b>¿Aún no tienes cuenta?</b></p>
+                                <div class="form-group mt-2">
+                                    <a mat-flat-button color="success" routerLink="/registro" class="btn-block">Registrate aquí</a>
+                                </div>
                                 <p class="pregunta"><b>O</b></p>
                                 <button mat-flat-button class="btn-block btn-social btn-google"
                                     (click)="onLoginGoogle()">

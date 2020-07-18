@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreCollection, AngularFirestore, CollectionReference } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 
 @Injectable({
@@ -7,7 +7,7 @@ import * as firebase from 'firebase/app';
 })
 export class ControlDeEtapaService {
 
-  private fechasEtapasCollection: AngularFirestoreCollection<any>;
+  private fechasEtapasCollection: CollectionReference;
 
   constructor(private db: AngularFirestore) {
     firebase.database().ref('/.info/serverTimeOffset').once('value')
@@ -17,11 +17,11 @@ export class ControlDeEtapaService {
     }, function (err) {
       return err;
     });
-    this.fechasEtapasCollection = db.collection<any>('FechasEstapas');
+    this.fechasEtapasCollection = db.firestore.collection('FechasEstapas');
   }
 
   getFechasEtapas(){
-    return this.fechasEtapasCollection.get().toPromise();
+    return this.fechasEtapasCollection.get();
   }
 
   getHoraServidor(){

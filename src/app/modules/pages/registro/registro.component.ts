@@ -42,8 +42,8 @@ export class RegistroComponent implements OnInit {
       nombres: ['', [Validators.required, Validators.pattern( TEXTO_CON_ESPACIOS ) ]],
       apellidos: ['', [Validators.required, Validators.pattern( TEXTO_CON_ESPACIOS ) ]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      passwordRepeat: ['', [Validators.required ]]
+      password: ['', [Validators.required, Validators.minLength(6) ]],
+      passwordRepeat: ['', [Validators.required, Validators.minLength(6) ]]
     },{
       validators: passwordMatchValidator
     });
@@ -56,13 +56,13 @@ export class RegistroComponent implements OnInit {
   }
 
   getErrorMessage() {
-    return this.fgUsuario.get('email').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgUsuario.get('email').hasError('required') ? 'Este campo es requerido' :
       this.fgUsuario.get('email').hasError('email') ? 'Email no válido' :
         '';
   }
 
   getErrorNotMatch() {
-    return this.fgUsuario.get('passwordRepeat').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgUsuario.get('passwordRepeat').hasError('required') ? 'Este campo es requerido' :
       this.fgUsuario.get('passwordRepeat').hasError('mustMatch') ? 'Debe coincidir la contraseña' :
         '';
   }

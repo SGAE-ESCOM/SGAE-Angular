@@ -5,16 +5,20 @@ import { AuthService } from '@services/auth.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { moveInLeft } from '@shared/animations/router.animations';
+import { ControlDeEtapaService } from '@services/etapas/control-de-etapa.service';
 
 const AUTH_ERROR = {
   "auth/wrong-password" : {
-    message : "La contraseña no es válida o el usuario no tiene una contraseña."
+    message : "La contraseña o usuario no es válida"
   },
   "auth/invalid-email" : {
     message: "La dirección de correo electrónico no tiene el formato correcto."
   },
   "auth/network-request-failed": {
     message: "Se ha producido un error de red (como tiempo de espera, conexión interrumpida o host inaccesible)."
+  },
+  "auth/user-not-found":  {
+    message: "Usuario no registrado en el sistema."
   }
 }
 
@@ -28,10 +32,13 @@ export class LoginComponent implements OnInit {
 
   hide: boolean = true;
   isError: boolean = false;
+  isEtapasDefinidas: boolean = false;
   fgUsuario: FormGroup;
+  private etapas = [];
 
   constructor(
     public afAuth: AngularFireAuth, private router: Router,
+    private _etapaService: ControlDeEtapaService,
     private authService: AuthService, private fb: FormBuilder,
     private _toats: ToastrService, private ngZone: NgZone) {
   }
@@ -41,10 +48,15 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+    this._etapaService.getFechasEtapas().then( querySnapshot => {
+      if (!querySnapshot.empty){
+        this.isEtapasDefinidas = true;
+      }
+    }).catch(err =>  console.error(err));
   }
 
   getErrorMessage() {
-    return this.fgUsuario.get('email').hasError('required') ? 'Debes ingresar un valor' :
+    return this.fgUsuario.get('email').hasError('required') ? 'Este campo es requerido' :
       this.fgUsuario.get('email').hasError('email') ? 'Email no válido' :
         '';
   }
@@ -73,7 +85,6 @@ export class LoginComponent implements OnInit {
   }
 
   showError(err) {
-    console.log(err);
     err = AUTH_ERROR[err.code];
     this._toats.error(err.message);
   }
