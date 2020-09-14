@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup } from '@angular/forms';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_SUBIR_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { SubirDocumentacionService } from '@services/documentacion/subir-documentacion.service';

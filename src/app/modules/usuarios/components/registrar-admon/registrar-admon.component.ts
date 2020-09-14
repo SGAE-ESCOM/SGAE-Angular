@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_REGISTRAR_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '@services/auth.service';

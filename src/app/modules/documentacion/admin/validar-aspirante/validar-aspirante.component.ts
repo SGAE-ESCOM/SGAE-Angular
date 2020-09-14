@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_VALIDAR_DOC_ASPIRANTE, BC_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';

@@ -4,7 +4,7 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 
 /* Components */
 import { MainUsuariosComponent } from './main-usuarios/main-usuarios.component';
-import { CardsModule } from '@shared/cards/cards.module';
+import { CardsModule } from '@shared/components/cards/cards.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
 import { MatTooltipModule } from '@angular/material/tooltip';

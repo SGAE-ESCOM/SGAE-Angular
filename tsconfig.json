@@ -8,7 +8,7 @@
       "@modules/*":["src/app/modules/*"],
       "@services/*":["src/app/services/*"],
       "@shared/*":["src/app/shared/*"],
-      "@breadcrumb/*":["src/app/shared/breadcrumb/*"],
+      "@breadcrumb/*":["src/app/components/breadcrumb/*"],
       "@routing/*":["src/app/shared/routing-list/*"],
       "@template/*":["src/app/modules/template/*"],
       "@environment/*":["src/environments/*"],

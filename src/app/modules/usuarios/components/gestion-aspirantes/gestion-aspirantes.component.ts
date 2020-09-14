@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_GESTION_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { MatTableDataSource } from '@angular/material/table';

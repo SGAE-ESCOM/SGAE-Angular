@@ -23,7 +23,7 @@ import { AuthService } from '@services/auth.service';
 /* COMPONENTS */
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
   
 @NgModule({
   declarations: [

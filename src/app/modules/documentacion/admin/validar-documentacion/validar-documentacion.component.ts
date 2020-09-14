@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_VALIDAR_DOCUMENTACION, BC_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';

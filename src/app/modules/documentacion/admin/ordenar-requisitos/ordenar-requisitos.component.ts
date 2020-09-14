@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_ORDENAR_REQUISITOS, BC_DOCUMENTACION } from '@shared/routing-list/ListLinks';
 import { AdministrarDocumentacionService } from '@services/documentacion/administrar-documentacion.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_GESTION_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { PERMISOS_ADMIN, GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, sinAcceso } from '@shared/admin-permissions/permissions';
 import { MatTableDataSource } from '@angular/material/table';

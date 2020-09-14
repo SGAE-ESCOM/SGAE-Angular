@@ -30,6 +30,8 @@ export const BC_SUBIR_DOCUMENTACION = new Breadcrumb(SUBIR_DOCUMENTACION, [HOME,
 //EVALUACION
 export const EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion", "spellcheck", "Simulador de exámen y publicación de resultados");
 export const BC_EVALUACION = new Breadcrumb(EVALUACION, [HOME]);
+export const GRUPOS = new NavigationLink("Evaluación", "/app/GRUPOS", "spellcheck", "Simulador de exámen y publicación de resultados");
+export const BC_GRUPOS = new Breadcrumb(GRUPOS, [HOME, EVALUACION]);
 
 //CONVOCATORIA
 export const CONVOCATORIA = new NavigationLink("Convocatoria", "/app/convocatoria", "event", "Convocatoria para realizar el proceso de admisión");
@@ -73,6 +75,12 @@ export const LINKS_HOME = {
 }
 
 export const LINKS_DOCUMENTACION = {
+    aspirante: [SUBIR_DOCUMENTACION],
+    admin: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION],
+    root: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION]
+}
+
+export const LINKS_EVALUACION = {
     aspirante: [SUBIR_DOCUMENTACION],
     admin: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION],
     root: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION]

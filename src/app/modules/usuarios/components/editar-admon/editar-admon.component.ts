@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_EDITAR_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioInterface } from '@models/persona/usuario';

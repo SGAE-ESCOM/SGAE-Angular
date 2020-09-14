@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TemplateRoutingModule } from './template-routing.module';
-import { CardsModule } from '@shared/cards/cards.module';
+import { CardsModule } from '@shared/components/cards/cards.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccesoRestringidoComponent } from './acceso-restringido/acceso-restringido.component';
 
