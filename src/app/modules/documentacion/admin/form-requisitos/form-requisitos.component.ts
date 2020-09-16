@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { ALPHANUMERICO_CON_ESPACIOS, REGEX_MAYUSCULAS, REGEX_MINUSCULAS, REGEX_NUMEROS } from '@shared/validators/regex';
-import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/animations/router.animations';
+import { ALPHANUMERICO_CON_ESPACIOS, REGEX_MAYUSCULAS, REGEX_MINUSCULAS, REGEX_NUMEROS } from '@shared/utils/validators/regex';
+import { fadeInDown, fadeInOutDown, fadeInOutLeft } from '@shared/utils/animations/router.animations';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { EnumTipoDato, OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
 import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum';

@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, sinAcceso } from '@shared/admin-permissions/permissions';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
+import { TEXTO_CON_ESPACIOS } from '@shared/utils/validators/regex';
 import { AdminService } from '@services/admin/admin.service';
 import { AuthService } from '@services/auth.service';
 

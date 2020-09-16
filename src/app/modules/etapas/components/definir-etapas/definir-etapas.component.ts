@@ -8,7 +8,7 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
 import { EtapasService } from '@services/etapas/etapas.service';
 import { Router } from '@angular/router';
-import { fadeInDown } from '@shared/animations/router.animations';
+import { fadeInDown } from '@shared/utils/animations/router.animations';
 import { comprobarPermisos, GESTION_ETAPAS } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 

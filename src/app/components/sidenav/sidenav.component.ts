@@ -4,7 +4,7 @@ import { LINKS_HOME } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { fadeInDown } from '@shared/animations/router.animations';
+import { fadeInDown } from '@shared/utils/animations/router.animations';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { getNavigationLinksAdmin } from '@shared/admin-permissions/permissions';
 

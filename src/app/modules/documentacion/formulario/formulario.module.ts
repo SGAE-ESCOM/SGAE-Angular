@@ -9,7 +9,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { PipesModule } from "@shared/pipes/pipes.module";
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { ES_FORMAT } from '@shared/traduccion/calendario-es';
+import { ES_FORMAT } from '@shared/utils/traduccion/calendario-es';
 
 @NgModule({
   declarations: [FormularioComponent],

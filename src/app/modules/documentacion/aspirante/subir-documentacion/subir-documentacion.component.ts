@@ -11,7 +11,7 @@ import { AuthService } from '@services/auth.service';
 import { EstadoDocumentacion } from "@models/documentacion/enums/estado-documentacion.enum";
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { Router } from '@angular/router';
-import { heapsort } from "@shared/utilerias/heapsort";
+import { heapsort } from "@shared/utils/heapsort";
 
 @Component({
   selector: 'app-subir-documentacion',

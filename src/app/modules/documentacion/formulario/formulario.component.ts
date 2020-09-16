@@ -6,7 +6,7 @@ import { OPC_ARCHIVO } from '@models/documentacion/enums/enum-tipo-archivo.enum'
 import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.enum'
 import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { REGEX_MAYUSCULAS, REGEX_NUMEROS, REGEX_MINUSCULAS } from '@shared/validators/regex';
+import { REGEX_MAYUSCULAS, REGEX_NUMEROS, REGEX_MINUSCULAS } from '@shared/utils/validators/regex';
 
 @Component({
   selector: 'app-formulario',

@@ -6,7 +6,7 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
 import { TipoDato } from '@models/documentacion/tipo-dato';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { heapsort } from "@shared/utilerias/heapsort";
+import { heapsort } from "@shared/utils/heapsort";
 import { comprobarPermisos, GESTION_DOC } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';

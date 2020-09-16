@@ -7,7 +7,7 @@ import { AngularMaterialTemplateModule } from '@template/angular-material-templa
 import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { CustomPaginator } from "@shared/traduccion/custom-paginator";
+import { CustomPaginator } from "@shared/utils/traduccion/custom-paginator";
 
 /* FIREBASE MODULES */
 import { AngularFireModule } from '@angular/fire';

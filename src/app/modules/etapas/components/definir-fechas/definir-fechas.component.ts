@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { ToastrService } from 'ngx-toastr';
 import { CalendarData } from '@shared/components/calendario/interfaces/calendar-data';
-import { fadeInOutDown } from '@shared/animations/router.animations';
+import { fadeInOutDown } from '@shared/utils/animations/router.animations';
 import { ETAPAS, ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
 import { COLORES_ETAPAS, BUSCAR_COLOR_ETAPAS } from "@models/etapas/colores-etapa.enum";
 import { EtapasService } from '@services/etapas/etapas.service';

@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
-import { passwordMatchValidator } from '@shared/validators/passwordValidators';
-import { TEXTO_CON_ESPACIOS } from '@shared/validators/regex';
-import { moveInLeft } from '@shared/animations/router.animations';
+import { passwordMatchValidator } from '@shared/utils/validators/passwordValidators';
+import { TEXTO_CON_ESPACIOS } from '@shared/utils/validators/regex';
+import { moveInLeft } from '@shared/utils/animations/router.animations';
 import { ToastrService } from 'ngx-toastr';
 
 const AUTH_ERROR = {

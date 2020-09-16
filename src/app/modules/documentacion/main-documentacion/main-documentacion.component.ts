@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "@breadcrumb/breadcrumb.component";
 import { BC_DOCUMENTACION, LINKS_DOCUMENTACION } from "@routing/ListLinks";
-import { fallIn } from '@shared/animations/router.animations';
+import { fallIn } from '@shared/utils/animations/router.animations';
 import { AuthService } from '@services/auth.service';
 import { comprobarPermisos, GESTION_DOC } from '@shared/admin-permissions/permissions';
 import { Router } from '@angular/router';

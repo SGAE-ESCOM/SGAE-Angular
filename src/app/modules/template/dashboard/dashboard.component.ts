@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LINKS_HOME } from '@routing/ListLinks';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_HOME } from '@routing/ListLinks';
-import { cardAnimation } from '@shared/animations/router.animations';
+import { cardAnimation } from '@shared/utils/animations/router.animations';
 import { AuthService } from '@services/auth.service';
 
 @Component({

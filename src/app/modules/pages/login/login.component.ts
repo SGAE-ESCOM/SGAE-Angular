@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { moveInLeft } from '@shared/animations/router.animations';
+import { moveInLeft } from '@shared/utils/animations/router.animations';
 import { ControlDeEtapaService } from '@services/etapas/control-de-etapa.service';
 
 const AUTH_ERROR = {
