@@ -1,16 +1,14 @@
 <div *ngIf="cards" class="row" [@cardAnimation]="cards.length">
     <div *ngFor="let card of cards; trackBy: trackById" class="col-6 col-sm-4 col-md-3 py-2">
-        <div class="card mat-elevation-z2 bd-callout bd-callout-primary">
+        <div class="card card-hover mat-elevation-z2 bd-callout bd-callout-primary pt-2 pb-4" name="btnIrA" matRipple (click)="gotoSeccion(card.url )">
             <div class="card-body">
                 <h5 class="card-title">
                     <span>
                         <mat-icon class="material-icons-outlined icon-position">{{card.icon}}</mat-icon>
                     </span> {{card.name}}
                 </h5>
+                <hr>
                 <p class="card-text">{{card.description}}</p>
-                <div class="text-right">
-                    <a mat-button class="text-right" color="primary" name="btnIrA" routerLink="/{{ card.url }}">Ir a</a>
-                </div>
             </div>
         </div>
     </div>

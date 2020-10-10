@@ -4,6 +4,7 @@ import { CardsComponent } from './cards.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [CardsComponent],
@@ -11,7 +12,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatRippleModule
   ],
   exports: [CardsComponent],
   entryComponents: [CardsComponent]
