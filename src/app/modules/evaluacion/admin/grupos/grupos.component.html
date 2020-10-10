@@ -17,5 +17,11 @@
             <p>Selecciona {{ this.nombreGrupo.value ? this.nombreGrupo.value : 'Grupo' }}
             </p>
         </div>
+        <div class="col-12">
+            <app-tabla [columnas]="columnas" [datos]="grupos"
+                [isSave]="true" (save)="modalGuardar()"
+                [isUpdate]="true" (update)="modalActualizar($event)"
+                [isDelete]="true" (delete)="modalEliminar($event)" ></app-tabla>
+        </div>
     </div>
 </div>

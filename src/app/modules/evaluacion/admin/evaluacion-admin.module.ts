@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EvaluacionAdminRoutingModule } from './evaluacion-admin-routing.module';
 import { GruposComponent } from './grupos/grupos.component';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
+import { TablasModule } from '@shared/components/tablas/tablas.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AngularMaterialModule } from '@modules/template/angular-material.module
   imports: [
     CommonModule,
     EvaluacionAdminRoutingModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    TablasModule
   ]
 })
 export class EvaluacionAdminModule { }
