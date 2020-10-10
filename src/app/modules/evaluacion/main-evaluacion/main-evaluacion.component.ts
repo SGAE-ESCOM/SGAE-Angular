@@ -15,10 +15,9 @@ export class MainEvaluacionComponent implements OnInit {
   cards;
 
   constructor(private _authServices: AuthService, private router: Router) {
-    let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_EVALUACION);
-    comprobarPermisos(usuario, GESTION_EVAL, router);
-    this.cards = LINKS_EVALUACION;
+    this.cards = LINKS_EVALUACION[this._authServices.getUsuarioC().rol];
+
   }
 
   ngOnInit() {

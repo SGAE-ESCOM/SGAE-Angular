@@ -19,7 +19,7 @@ export class CardsComponent implements OnInit {
   }
 
   gotoSeccion(url: string){
-    this.router.navigate([url])
+    this.router.navigate([url]);
   }
 
   trackById(index, item) {
