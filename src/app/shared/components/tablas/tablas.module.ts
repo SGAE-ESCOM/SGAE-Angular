@@ -7,6 +7,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [MainTablasComponent],
@@ -16,7 +17,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatPaginatorModule,
     MatSortModule,
     AngularMaterialModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   exports: [MainTablasComponent],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-MX' }]

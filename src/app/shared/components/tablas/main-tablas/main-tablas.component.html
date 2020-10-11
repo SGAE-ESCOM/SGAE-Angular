@@ -10,15 +10,15 @@
     <div class="col-12 col-sm-5 col-md-4">
         <div class="d-flex flex-row">
             <div class="p-2 bd-highlight">
-                <button *ngIf="isSave" (click)="onSave()" mat-fab color="success" aria-label="Example icon button with a delete icon">
+                <button *ngIf="isSave" (click)="onSave()" mat-fab color="success" matTooltip="Agregar">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <div class="p-2 bd-highlight">
+            <!--<div class="p-2 bd-highlight">
                 <button *ngIf="isSave" (click)="onSave()" mat-fab color="info" aria-label="Example icon button with a delete icon">
                     <mat-icon>save</mat-icon>
                 </button>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
@@ -42,15 +42,15 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                         <td mat-cell *matCellDef="let row">
                             <a *ngIf="isShow" mat-button matTooltip="Validar aspirante" color="primary"
-                                name="btnValidarAspirante" (click)="onShow(row)">
+                                name="btnDetalles" matTooltip="Detalles" (click)="onShow(row)">
                                 <mat-icon>visibility</mat-icon>
                             </a>
                             <a *ngIf="isUpdate" mat-button matTooltip="Validar aspirante" color="info"
-                                name="btnValidarAspirante" (click)="onUpdate(row)">
+                                name="btnActualizar" matTooltip="Actualizar" (click)="onUpdate(row)">
                                 <mat-icon>edit</mat-icon>
                             </a>
                             <a *ngIf="isDelete" mat-button matTooltip="Validar aspirante" color="danger"
-                                name="btnValidarAspirante" (click)="onDelete(row)">
+                                name="btnEliminar" matTooltip="Eliminar" (click)="onDelete(row)">
                                 <mat-icon>delete</mat-icon>
                             </a>
                         </td>
