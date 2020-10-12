@@ -7,6 +7,7 @@ import { TablasModule } from '@shared/components/tablas/tablas.module';
 import { FormGruposComponent } from './grupos/form-grupos/form-grupos.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormDinamicoModule } from '@shared/components/form-dinamico/form-dinamico.module';
 
 @NgModule({
   declarations: [GruposComponent, FormGruposComponent, ModalGrupos],
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EvaluacionAdminRoutingModule,
     AngularMaterialModule,
     TablasModule,
-    MatDialogModule
+    MatDialogModule,
+    FormDinamicoModule
   ]
 })
 export class EvaluacionAdminModule { }

@@ -15,10 +15,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GruposComponent implements OnInit {
 
+  formulario: any[] = [{ "id": "XCBc0kvetdml1ZwUZSPx", "subtipo": "texto", "tipo": "campo", "num": 0, "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" }, "nombre": "Nombre Completo", "requerido": true }, { "id": "zTIytqXIAxhJM04vYvYf", "min": 18, "requerido": true, "num": 1, "nombre": "Edad", "subtipo": "número", "tipo": "campo" }, { "id": "tt3PDI7TUANyOlKKM9QK", "descripcion": "Sin tachaduras", "num": 2, "tipo": "archivo", "subtipo": "pdf", "nombre": "CURP", "requerido": true }, { "id": "0P9GYf9Ej9x1wYCtIUBl", "num": 3, "subtipo": "unica", "opciones": { "Masculino": "Masculino", "Femenino": "Femenino" }, "requerido": false, "tipo": "seleccion", "nombre": "Género" }];
+
   nombreGrupo: FormControl;
-  columnas: Tabla[] = [ {encabezado:'Nombre', json:'nombre'}, {encabezado: 'Acciones', json:'acciones'}];
-  grupos: Grupo[] = [ { id:"1", nombre: 'Ingeniería en Sistemas'}, {nombre:'Inteligencia Artificial'} ];
-  
+  columnas: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
+  grupos: Grupo[] = [{ id: "1", nombre: 'Ingeniería en Sistemas' }, { nombre: 'Inteligencia Artificial' }];
+
   constructor(private usuario: AuthService, public dialog: MatDialog) {
     BreadcrumbComponent.update(BC_GESTIONAR_GRUPOS);
   }
@@ -26,7 +28,7 @@ export class GruposComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  modalGuardar(){
+  modalGuardar() {
     const dialogRef = this.dialog.open(ModalGrupos, {
       width: '600px',
       data: { isAgregar: true }
@@ -41,12 +43,12 @@ export class GruposComponent implements OnInit {
     });
   }
 
-  modalActualizar(grupo: Grupo){
+  modalActualizar(grupo: Grupo) {
     console.log('Press actualizar')
     console.log(grupo)
   }
 
-  modalEliminar(grupo: Grupo){
+  modalEliminar(grupo: Grupo) {
     console.log('Press eliminar')
     console.log(grupo)
   }
