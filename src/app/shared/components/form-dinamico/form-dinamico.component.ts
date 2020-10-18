@@ -26,8 +26,10 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
   @Input() titulo = '';
   @Input() documentos: TipoDato[];
   @Input() valoresDefault: any;
-  @Output() finalizarForm = new EventEmitter<FormGroup>();
-  @Output() guardarForm = new EventEmitter<FormGroup>();
+  @Input() tema: string = 'outline';
+
+  @Output() agregar = new EventEmitter<FormGroup>();
+  @Output() actualizar = new EventEmitter<FormGroup>();
 
   constructor(private fg: FormBuilder) {
     this.initForm();
@@ -56,14 +58,19 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
     if (changes['valoresDefault'] && this.valoresDefault != null) {
       this.setValores();
     }
+    if (changes['tema'] && this.tema != null) {
+      console.log(this.tema)
+    }
   }
 
-  enviarFormulario(formulario) {
-    this.finalizarForm.emit(formulario);
+  onAgregar(formulario) {
+    console.log("Hola desde Agregar")
+    this.agregar.emit(formulario);
   }
 
-  guardarFormulario(formulario){
-    this.guardarForm.emit(formulario);
+  onActualizar(formulario){
+    console.log("Hola desde Actualuzar")
+    this.actualizar.emit(formulario);
   }
 
   /* Eventos */
