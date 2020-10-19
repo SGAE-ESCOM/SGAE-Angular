@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from '@components/sidenav/sidenav.component';
 import { AngularMaterialTemplateModule } from "@template/angular-material-template.module";
-import { BreadcrumbComponent } from '@shared/breadcrumb/breadcrumb.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -14,8 +13,7 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
-        SidenavComponent,
-        BreadcrumbComponent
+        SidenavComponent
       ],
     }).compileComponents();
   }));

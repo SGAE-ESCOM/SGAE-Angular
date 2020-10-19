@@ -1,10 +1,10 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { TipoDato } from '@models/documentacion/tipo-dato';
-import { OPC_TIPO_DATO } from '@models/documentacion/enums/enum-tipo-dato.enum';
-import { OPC_CAMPO } from '@models/documentacion/enums/enum-tipo-campo.enum'
-import { OPC_ARCHIVO } from '@models/documentacion/enums/enum-tipo-archivo.enum'
-import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.enum'
-import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum'
+import { TipoDato } from './models/tipo-dato';
+import { OPC_TIPO_DATO } from './models/enums/enum-tipo-dato.enum';
+import { OPC_CAMPO } from './models/enums/enum-tipo-campo.enum'
+import { OPC_ARCHIVO } from './models/enums/enum-tipo-archivo.enum'
+import { OPC_SELECCION } from './models/enums/enum-tipo-seleccion.enum'
+import { OPC_FECHA } from './models/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { REGEX_MAYUSCULAS, REGEX_NUMEROS, REGEX_MINUSCULAS } from '@shared/utils/validators/regex';
 
@@ -28,8 +28,13 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
   @Input() valoresDefault: any;
   @Input() tema: string = 'outline';
 
-  @Output() agregar = new EventEmitter<FormGroup>();
-  @Output() actualizar = new EventEmitter<FormGroup>();
+  @Input() cancel: boolean = false;
+  @Input() add: boolean = false;
+  @Input() update: boolean = false;
+
+  @Output() onCancel = new EventEmitter<Boolean>();
+  @Output() onAdd = new EventEmitter<FormGroup>();
+  @Output() onUpdate = new EventEmitter<FormGroup>();
 
   constructor(private fg: FormBuilder) {
     this.initForm();
@@ -37,6 +42,18 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     //this.initForm();
+  }
+
+  onClickCancel(){
+    this.onCancel.emit(true);
+  }
+
+  onClickAdd(formulario) {
+    this.onAdd.emit(formulario);
+  }
+
+  onClickUpdate(formulario){
+    this.onUpdate.emit(formulario);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -49,28 +66,12 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
           this.documentosAux[documento.nombre] = documento.tipo;
         }
       );
-      console.log(this.fgFormulario);
-      console.log(this.fgFormulario.controls);
-      console.log(this.fgFormulario.controls != null);
-      console.log(this.documentosHTML);
       this.documentosHTML = this.documentos;
     }
     if (changes['valoresDefault'] && this.valoresDefault != null) {
+      console.log('Valores default :v')
       this.setValores();
     }
-    if (changes['tema'] && this.tema != null) {
-      console.log(this.tema)
-    }
-  }
-
-  onAgregar(formulario) {
-    console.log("Hola desde Agregar")
-    this.agregar.emit(formulario);
-  }
-
-  onActualizar(formulario){
-    console.log("Hola desde Actualuzar")
-    this.actualizar.emit(formulario);
   }
 
   /* Eventos */
@@ -111,12 +112,14 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
 
   private setValores(){
     Object.entries(this.valoresDefault).forEach( ([nombre,requisito]:any) => {
-      if(this.documentosAux[nombre] === this.OPC.FECHA )
-        this.fgFormulario.get(nombre).setValue(new Date(requisito.valor));
-      else
-        this.fgFormulario.get(nombre).setValue(requisito.valor);
-      if(requisito.valido)
-        this.fgFormulario.get(nombre).disable();
+      console.log("=====================>")
+      console.log(nombre)
+      console.log(requisito)
+      console.log(this.fgFormulario.get(nombre))
+      console.log(this.documentosAux)
+      console.log(this.fgFormulario.get(nombre).setValue(requisito))
+      if(this.documentosAux[nombre] === this.OPC.SELECCION )
+        this.fgFormulario.get(nombre).setValue(requisito);
     });
   }
 
@@ -125,7 +128,7 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
     if (documento.requerido)
       validadores.push(Validators.required);
     switch (documento.subtipo) {
-      case OPC_CAMPO.TEXTO: {
+      case OPC_CAMPO.TEXT: {
         if (documento.min != null)
           validadores.push(Validators.minLength(documento.min));
         if (documento.max != null)
@@ -141,7 +144,7 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
         }
         break;
       }
-      case OPC_CAMPO.NUMERO: {
+      case OPC_CAMPO.NUMBER: {
         if (documento.min != null)
           validadores.push(Validators.min(documento.min));
         if (documento.max != null)

@@ -35,8 +35,4 @@ export class AuthGuard implements CanActivate {
       })
     );
   }
-  
-  private getUsuario(): boolean{
-    return false;
-  }
 }

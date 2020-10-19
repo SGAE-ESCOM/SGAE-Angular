@@ -4,7 +4,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { Grupo } from '@models/evaluacion/Grupo';
 import { Tabla } from '@models/utils/Tabla';
-import { AuthService } from '@services/auth.service';
+import { GruposService } from '@services/evaluacion/grupos.service';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { BC_GESTIONAR_GRUPOS } from '@shared/routing-list/ListLinks';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,23 +16,22 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GruposComponent implements OnInit {
 
-  formulario: any[] = [{ "id": "XCBc0kvetdml1ZwUZSPx", "subtipo": "texto", "tipo": "campo", "num": 0, "expresionRegular": { "espacios": true, "valor": "a-zá-úA-ZÁ-Ú" }, "nombre": "Nombre Completo", "requerido": true }, { "id": "zTIytqXIAxhJM04vYvYf", "min": 18, "requerido": true, "num": 1, "nombre": "Edad", "subtipo": "número", "tipo": "campo" }, { "id": "tt3PDI7TUANyOlKKM9QK", "descripcion": "Sin tachaduras", "num": 2, "tipo": "archivo", "subtipo": "pdf", "nombre": "CURP", "requerido": true }, { "id": "0P9GYf9Ej9x1wYCtIUBl", "num": 3, "subtipo": "unica", "opciones": { "Masculino": "Masculino", "Femenino": "Femenino" }, "requerido": false, "tipo": "seleccion", "nombre": "Género" }];
-
   nombreGrupo: FormControl;
   columnas: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
-  grupos: Grupo[] = [{ id: "1", nombre: 'Ingeniería en Sistemas' }, { nombre: 'Inteligencia Artificial' }];
+  grupos: Grupo[] = [];
 
-  constructor(private usuario: AuthService, public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private _grupos: GruposService, private _swal: SweetalertService, private _toastr:ToastrService) {
     BreadcrumbComponent.update(BC_GESTIONAR_GRUPOS);
   }
 
   ngOnInit(): void {
+    this._grupos.get().subscribe(grupos => { this.grupos = grupos }).remove;
   }
 
   modalGuardar() {
     const dialogRef = this.dialog.open(ModalGrupos, {
       width: '600px',
-      data: { isAgregar: true }
+      data: { opc: 'agregar' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -44,12 +44,30 @@ export class GruposComponent implements OnInit {
   }
 
   modalActualizar(grupo: Grupo) {
-    console.log('Press actualizar')
-    console.log(grupo)
+    const dialogRef = this.dialog.open(ModalGrupos, {
+      width: '600px',
+      data: { opc: 'actualizar', grupo: grupo }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        /*this._ads.updateDocumento(documento.id, result).then(data =>
+          this.toast.info("El requisito se actualizó exitosamente")
+        ).catch(error => this.toast.error(error))*/
+      }
+    });
   }
 
   modalEliminar(grupo: Grupo) {
-    console.log('Press eliminar')
+    this._swal.confirmarEliminar(`¿Deseas eliminar al aspirante '${grupo.nombre}'?`, 'No se podrá revertir esta acción')
+    .then((result) => {
+      if (result.value) {
+        this._grupos.delete(grupo).then(() => {
+          this._swal.aspiranteEliminadoCorrectamente();
+        }).catch(err => this._toastr.error(err));
+      }
+    });
+
     console.log(grupo)
   }
 }
@@ -68,6 +86,10 @@ export class ModalGrupos {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  accion(realizado: boolean) {
+    this.dialogRef.close(realizado);
   }
 
   enviarForm(repuesta) {

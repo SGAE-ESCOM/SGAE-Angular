@@ -18,7 +18,7 @@
             <p>Selecciona {{ this.nombreGrupo.value ? this.nombreGrupo.value : 'Grupo' }} </p>
         </div>
         -->
-        <app-form-dinamico [documentos]="formulario" [tema]="'outline'"></app-form-dinamico>
+
         <div class="col-12">
             <app-tabla [columnas]="columnas" [datos]="grupos"
                 [isSave]="true" (save)="modalGuardar()"

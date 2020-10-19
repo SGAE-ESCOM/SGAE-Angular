@@ -6,9 +6,9 @@
             <mat-icon matSuffix>group</mat-icon>
           </mat-form-field>
     </div>
-    <div class="col-12 text-right">
+    <div class="col-12 text-right" [ngSwitch]="opc">
             <button mat-button (click)="cerrarModal()">Cancelar</button>
-            <button mat-button *ngIf="isAgregar" color="success">Agregar <mat-icon>add</mat-icon></button>
-            <button mat-button *ngIf="!isAgregar" color="info">Actualizar <mat-icon>cached</mat-icon></button>
+            <button mat-button *ngSwitchCase="'agregar'" (click)="save(fgGrupo)" color="success">Agregar <mat-icon>add</mat-icon></button>
+            <button mat-button *ngSwitchCase="'actualizar'" (click)="update(fgGrupo)" color="info">Actualizar <mat-icon>cached</mat-icon></button>
     </div>
 </form>
