@@ -36,18 +36,26 @@ export const BC_EVALUACION = new Breadcrumb(EVALUACION, [HOME]);
 //ADMIN
 export const GESTIONAR_GRUPOS = new NavigationLink("Gestionar Grupos", "/app/evaluacion/gestionar-grupos", "group", "Gestiona los grupos para aplicar evaluacion(es)");
 export const BC_GESTIONAR_GRUPOS = new Breadcrumb(GESTIONAR_GRUPOS, [HOME, EVALUACION]);
-//AS¨PIRANTE
+export const GESTIONAR_EVALUACION = new NavigationLink("Gestionar Evaluación", "/app/evaluacion/gestionar-evaluacion", "spellcheck", "Gestiona la evaluación para aplicar a los aspirantes");
+export const BC_GESTIONAR_EVALUACION = new Breadcrumb(GESTIONAR_EVALUACION, [HOME, EVALUACION]);
+export const ADMIN_EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "description", "Relaciona las preguntas con una evaluación");
+export const BC_ADMIN_EVALUACION = new Breadcrumb(ADMIN_EVALUACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
+export const PREGUNTAS = new NavigationLink("Preguntas", "/app/evaluacion/gestionar-evaluacion/preguntas", "format_list_bulleted", "Gestiona preguntas relacionadas a un tema");
+export const BC_PREGUNTAS = new Breadcrumb(PREGUNTAS, [HOME, EVALUACION, GESTIONAR_EVALUACION])
+export const LINKS_GESTIONAR_EVALUACIONES = [ ADMIN_EVALUACION, PREGUNTAS ];
+
+//ASPIRANTE
 export const GRUPOS = new NavigationLink("Grupos", "/app/grupos", "group", "Grupos para aplicar evaluacion(es)");
 export const BC_GRUPOS = new Breadcrumb(GRUPOS, [HOME, EVALUACION]);
 export const EVALUACIONES = new NavigationLink("Evaluaciones", "/app/evaluaciones", "spellcheck", "Evaluacion de conocimientos");
 export const BC_EVALUACIONES = new Breadcrumb(EVALUACIONES, [HOME, EVALUACION]);
-export const RESULTADOS = new NavigationLink("Resultados", "/app/resultados", "event", "Resultado de evaluacion");
+export const RESULTADOS = new NavigationLink("Publicación de Resultados", "/app/resultados", "event", "Resultado de evaluacion");
 export const BC_RESULTADOS = new Breadcrumb(RESULTADOS, [HOME, EVALUACION]);
 
 export const LINKS_EVALUACION = {
     aspirante: [GRUPOS],
-    admin: [EVALUACIONES, RESULTADOS, GESTIONAR_GRUPOS],
-    root: [EVALUACIONES, RESULTADOS, GESTIONAR_GRUPOS]
+    admin: [GESTIONAR_EVALUACION, RESULTADOS, GESTIONAR_GRUPOS],
+    root: [GESTIONAR_EVALUACION, RESULTADOS, GESTIONAR_GRUPOS]
 }
 
 /************************************************ CONVOCATORIA ********************************************************************************************/
