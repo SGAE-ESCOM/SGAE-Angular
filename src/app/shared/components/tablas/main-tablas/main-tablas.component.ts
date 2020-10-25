@@ -21,7 +21,13 @@ export class MainTablasComponent implements OnInit, OnChanges {
   @Input() isSave: boolean = false;
   @Input() isUpdate: boolean = false;
   @Input() isDelete: boolean = false;
-  
+  //CUSTOM BUTTON
+  @Input() isCustom: boolean = false;
+  @Input() customIcon: string = 'home';
+  @Input() customDesc: string = 'Accion';
+  @Input() customColor: string = 'primary';
+
+  @Output() custom: EventEmitter<any> = new EventEmitter<any>();
   @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() show: EventEmitter<any> = new EventEmitter<any>();
   @Output() update: EventEmitter<any> = new EventEmitter<any>();;

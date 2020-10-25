@@ -69,6 +69,24 @@ export function fadeInOutLeft() {
     ]);
 }
 
+export function fadeInRight() {
+    return trigger('fadeInRight', [
+        transition(':enter', [
+            style({ opacity: '0', transform: 'translateX(-150px)' }),
+            animate('.2s ease-in-out', style({ opacity: '1', transform: 'translateX(0)' }))
+        ])
+    ]);
+}
+
+export function fadeInLeft() {
+    return trigger('fadeInLeft', [
+        transition(':enter', [
+            style({ opacity: '0', transform: 'translateX(150px)' }),
+            animate('.2s ease-in-out', style({ opacity: '1', transform: 'translateX(0)' }))
+        ])
+    ]);
+}
+
 export function moveIn() {
     return trigger('moveIn', [
         state('void', style({ width: '100%' })),

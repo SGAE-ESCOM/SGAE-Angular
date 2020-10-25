@@ -6,14 +6,19 @@ import { MainGestionarEvaluacionComponent } from './main-gestionar-evaluacion/ma
 import { CardsModule } from '@shared/components/cards/cards.module';
 import { AdminEvaluacionComponent } from './admin-evaluacion/admin-evaluacion.component';
 import { PreguntasComponent } from './preguntas/preguntas.component';
-
+import { TablasModule } from '@shared/components/tablas/tablas.module';
+import { AngularMaterialModule } from '@modules/template/angular-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [MainGestionarEvaluacionComponent, AdminEvaluacionComponent, PreguntasComponent],
   imports: [
     CommonModule,
     GestionarEvaluacionRoutingModule,
-    CardsModule
+    FormsModule, ReactiveFormsModule,
+    CardsModule,
+    TablasModule,
+    AngularMaterialModule
   ]
 })
 export class GestionarEvaluacionModule { }
