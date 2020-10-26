@@ -67,8 +67,6 @@ export class GruposComponent implements OnInit {
         }).catch(err => this._toastr.error(err));
       }
     });
-
-    console.log(grupo)
   }
 }
 

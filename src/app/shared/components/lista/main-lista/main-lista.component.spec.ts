@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormGruposComponent } from './form-grupos.component';
+import { MainListaComponent } from './main-lista.component';
 
-describe('FormGruposComponent', () => {
-  let component: FormGruposComponent;
-  let fixture: ComponentFixture<FormGruposComponent>;
+describe('MainListaComponent', () => {
+  let component: MainListaComponent;
+  let fixture: ComponentFixture<MainListaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormGruposComponent ]
+      declarations: [ MainListaComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormGruposComponent);
+    fixture = TestBed.createComponent(MainListaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

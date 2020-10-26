@@ -2,10 +2,10 @@
 export class Tema{
     id?: string;
     tema: string;
-    subtema?: string[];
+    subtemas?: string[];
 
-    constructor(tema: string, subtema?:string[]){
+    constructor(tema: string, subtemas?:string[]){
         this.tema = tema;
-        this.subtema = subtema;
+        this.subtemas = subtemas || [];
     }
 }

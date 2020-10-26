@@ -71,6 +71,10 @@ export class MainTablasComponent implements OnInit, OnChanges {
     this.delete.emit(fila);
   }
 
+  onCustom(fila:any){
+    this.custom.emit(fila);
+  }
+
   buscarEnTabla(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {

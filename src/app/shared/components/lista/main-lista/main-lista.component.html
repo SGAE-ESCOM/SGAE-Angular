@@ -1,0 +1,25 @@
+<div class="row">
+    <form [formGroup]="fgLista" class="col-12">
+        <div class="d-flex flex-row bd-highlight mb-3">
+            <mat-form-field class="" appearance="legacy">
+                <mat-label>Nombre del tema</mat-label>
+                <input formControlName="item" name="item" id="item" matInput placeholder="Escribe un item" required>
+                <mat-error *ngIf="item.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                <mat-error *ngIf="item.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
+                <mat-icon matSuffix>playlist_add_check </mat-icon>
+            </mat-form-field>
+            <button class="" mat-button color="success" (click)="agregar()">Agregar a lista <mat-icon>add</mat-icon></button>
+        </div>
+    </form>
+    <div class="col-12">
+        <table class="table table-sm table-borderless">
+            <tbody cdkDropList [cdkDropListDisabled]="noDraggable" class="list-group" (cdkDropListDropped)="drop($event)">
+                <tr class="list-group-item" *ngFor="let item of value; let i = index" cdkDrag>
+                    <td><button type="button" mat-button color="danger" (click)="eliminar(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button> {{item}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

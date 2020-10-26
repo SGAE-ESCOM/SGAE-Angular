@@ -42,7 +42,7 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                         <td mat-cell *matCellDef="let row">
                             <button type="button" *ngIf="isCustom" mat-button matTooltip="Validar aspirante" [color]="customColor"
-                                name="btnDetalles" [matTooltip]="customDesc" (click)="onShow(row)">
+                                name="btnDetalles" [matTooltip]="customDesc" (click)="onCustom(row)">
                                 <mat-icon>{{ customIcon }}</mat-icon>
                             </button>
                             <button type="button" *ngIf="isShow" mat-button matTooltip="Validar aspirante" color="primary"

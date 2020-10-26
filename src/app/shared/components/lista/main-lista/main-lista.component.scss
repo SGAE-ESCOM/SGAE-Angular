@@ -1,0 +1,19 @@
+.list-group {
+    max-width: 100%;
+    display: block;
+}
+
+.list-group-item {
+    padding: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    
+}
+
+.table th, .table td{
+    padding: 0.45rem 18px !important;
+}
