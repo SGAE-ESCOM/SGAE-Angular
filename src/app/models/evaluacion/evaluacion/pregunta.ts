@@ -2,5 +2,11 @@ export class Pregunta {
     id?: string;
     idTema?: string;
     enunciado: string;
-    respuesta?: any[];
+    opciones: Respuesta[];
+    respuesta?: number;
+}
+
+export class Respuesta {
+    id: number;
+    enunciado: string;
 }

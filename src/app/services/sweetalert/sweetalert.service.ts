@@ -43,18 +43,6 @@ export class SweetalertService {
     });
   }
 
-  cancelarRegistroAdmin(titulo: string){
-    return this.swalEliminar.fire({
-      title: titulo,
-      icon: 'warning',
-      showCancelButton: true,
-      reverseButtons: true,
-      confirmButtonText: '<span class="mat-button-wrapper"> Si </span> <div class="mat-button-focus-overlay"></div>',
-      cancelButtonText: '<span class="mat-button-wrapper"> No </span> <div class="mat-button-focus-overlay"></div>'
-      
-    });
-  }
-
   confirmarFinalizar(titulo: string, texto?: string){
     return this.swalConfirmar.fire({
       title: titulo,
@@ -67,6 +55,31 @@ export class SweetalertService {
     });
   }
 
+  confirmarCancelar(titulo: string, texto?: string){
+    return this.swalConfirmar.fire({
+      title: titulo,
+      text: texto,
+      icon: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      cancelButtonText: '<span class="mat-button-wrapper"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
+      confirmButtonText: '<span class="mat-button-wrapper"> Sí, cancelar </span> <div class="mat-button-focus-overlay"></div>'
+    });
+  }
+
+  /*******************************************   CORREGIR *****************************************************************/
+  cancelarRegistroAdmin(titulo: string){
+    return this.swalEliminar.fire({
+      title: titulo,
+      icon: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonText: '<span class="mat-button-wrapper"> Si </span> <div class="mat-button-focus-overlay"></div>',
+      cancelButtonText: '<span class="mat-button-wrapper"> No </span> <div class="mat-button-focus-overlay"></div>'
+      
+    });
+  }
+  
   eliminadoCorrectamente(){
     this.swalFinalizar.fire({
       title: 'Eliminado',

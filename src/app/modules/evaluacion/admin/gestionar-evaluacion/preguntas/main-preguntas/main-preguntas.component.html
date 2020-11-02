@@ -20,22 +20,21 @@
             <div class="d-flex justify-content-end">
                 <div class="button-bottom">
                     <div class="button-right">
-                        <button mat-raised-button type="button" color="danger" class="btn-lg mx-2" (click)="isMain = !isMain">Cancelar <mat-icon>undo</mat-icon></button>
+                        <button mat-raised-button type="button" color="danger" class="btn-lg mx-2" (click)="cancelarPreguntas()">Regresar <mat-icon>undo</mat-icon></button>
+                        <button mat-raised-button type="button" color="success" class="btn-lg mx-2" (click)="modalAgregarTema()">Agregar pregunta <mat-icon>add</mat-icon></button>
                         <button mat-raised-button type="button" color="success" (click)="isMain = !isMain">Finalizar <mat-icon>done</mat-icon></button>
                     </div>
                 </div>
             </div>
         </div>
-        <form [formGroup]="fgTema" class="row">
+        <form class="row">
             <div class="col-12">
                 <h3>{{titulo}}</h3>
             </div>
             <div class="col-12">
                 <p>Agrega las preguntas relacionadas a este tema precionando el botón de '+'.</p>
-                <app-tabla [columnas]="tablaPreguntas" [datos]="preguntas"
-                    [isSave]="true" (save)="isMain = !isMain"
-                    [isUpdate]="true"
-                    [isDelete]="true"></app-tabla>
+                
+                <app-crear-simulador [preguntas]="preguntas"></app-crear-simulador>
             </div>
             
             <div class="col-12">

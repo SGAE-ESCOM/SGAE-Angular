@@ -11,10 +11,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaModule } from '@shared/components/lista/lista.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormTemasComponent } from './preguntas/form-temas/form-temas.component';
-import { MainPreguntasComponent, ModalTemas } from './preguntas/main-preguntas/main-preguntas.component';
+import { MainPreguntasComponent, ModalPregunta, ModalTemas } from './preguntas/main-preguntas/main-preguntas.component';
+import { FormSimuladorModule } from '@modules/evaluacion/form-simulador/form-simulador.module';
 
 @NgModule({
-  declarations: [MainGestionarEvaluacionComponent, AdminEvaluacionComponent, ModalTemas, FormTemasComponent, MainPreguntasComponent],
+  declarations: [MainGestionarEvaluacionComponent, AdminEvaluacionComponent, ModalTemas, ModalPregunta, FormTemasComponent, MainPreguntasComponent],
   imports: [
     CommonModule,
     GestionarEvaluacionRoutingModule,
@@ -23,7 +24,8 @@ import { MainPreguntasComponent, ModalTemas } from './preguntas/main-preguntas/m
     TablasModule,
     AngularMaterialModule,
     ListaModule,
-    MatDialogModule
+    MatDialogModule,
+    FormSimuladorModule
   ]
 })
 export class GestionarEvaluacionModule { }
