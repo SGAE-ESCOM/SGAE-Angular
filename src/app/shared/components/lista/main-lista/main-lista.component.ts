@@ -23,7 +23,7 @@ export class MainListaComponent implements OnInit, ControlValueAccessor {
   MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
   MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
 
-  value: string[];
+  value: string[] = [];
   isDisabled: boolean;
   fgLista: FormGroup;
 

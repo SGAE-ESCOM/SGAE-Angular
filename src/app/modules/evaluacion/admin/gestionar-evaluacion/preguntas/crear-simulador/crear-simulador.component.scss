@@ -1,0 +1,12 @@
+.button-bottom {
+    position: fixed;
+    bottom: 50px;
+    right: auto;
+    z-index: 1;
+    margin: auto;
+}
+
+.button-right {
+    display: block;
+    justify-content: flex-right;
+}

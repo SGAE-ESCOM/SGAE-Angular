@@ -11,11 +11,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaModule } from '@shared/components/lista/lista.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormTemasComponent } from './preguntas/form-temas/form-temas.component';
-import { MainPreguntasComponent, ModalPregunta, ModalTemas } from './preguntas/main-preguntas/main-preguntas.component';
+import { MainPreguntasComponent, ModalTemas } from './preguntas/main-preguntas/main-preguntas.component';
 import { FormSimuladorModule } from '@modules/evaluacion/form-simulador/form-simulador.module';
+import { FormPreguntasComponent } from './preguntas/form-preguntas/form-preguntas.component';
+import { CrearSimuladorComponent, ModalPregunta } from './preguntas/crear-simulador/crear-simulador.component';
+import { KatexModule } from 'ng-katex';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { ListaOpcionesComponent } from './preguntas/lista-opciones/lista-opciones.component';
 
 @NgModule({
-  declarations: [MainGestionarEvaluacionComponent, AdminEvaluacionComponent, ModalTemas, ModalPregunta, FormTemasComponent, MainPreguntasComponent],
+  declarations: [MainGestionarEvaluacionComponent, AdminEvaluacionComponent, ModalTemas, CrearSimuladorComponent, ModalPregunta, FormTemasComponent, MainPreguntasComponent, FormPreguntasComponent, ListaOpcionesComponent],
   imports: [
     CommonModule,
     GestionarEvaluacionRoutingModule,
@@ -25,7 +30,9 @@ import { FormSimuladorModule } from '@modules/evaluacion/form-simulador/form-sim
     AngularMaterialModule,
     ListaModule,
     MatDialogModule,
-    FormSimuladorModule
+    FormSimuladorModule,
+    MaterialFileInputModule,
+    KatexModule
   ]
 })
 export class GestionarEvaluacionModule { }

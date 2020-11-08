@@ -1,0 +1,72 @@
+
+<form [formGroup]="fgLista" class="row">
+    <div class="col-12">
+        <mat-form-field class="" appearance="legacy">
+            <mat-label>Enunciado</mat-label>
+            <textarea formControlName="item" name="item" id="item" rows="5" matInput placeholder="Escribe un item" required></textarea>
+            <mat-error *ngIf="item.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+            <mat-error *ngIf="item.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
+            <mat-icon matSuffix>playlist_add_check </mat-icon>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="form-group">
+            <ngx-mat-file-input formControlName="img" name="imgEnunciado"
+                placeholder="Imagen del enunciado"
+                [accept]="'.jpg, .png, .jpeg'"
+                [valuePlaceholder]="( img.value ) ? 'Archivo seleccionado': 'ARCHIVO NO SELECCIONADO' "
+                (change)="handleUpload($event, 'img' )"></ngx-mat-file-input>
+                <mat-icon class="material-icons-outlined" matSuffix>folder</mat-icon>
+                <mat-hint class="toggle-hint"> Sólo imagenes y archivos no mayores a 1 MB </mat-hint>
+                <mat-error *ngIf="img.hasError('required')">
+                    Este campo es requerido
+                </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="col-12 text-right" *ngIf="isMain">
+        <button class="" mat-button color="success" (click)="agregar()">Agregar a lista <mat-icon>add</mat-icon></button>
+    </div>
+    <div class="col-12 text-right" *ngIf="!isMain">
+        <button type="button" mat-button color="danger" (click)="cancelarActualizar()">
+            Cancelar <mat-icon>cancel</mat-icon>
+        </button>
+        <button type="button" mat-button color="primary" (click)="editarItem()">
+            Actualizar <mat-icon>cached</mat-icon>
+        </button>
+    </div>
+</form>
+<div class="row" *ngIf="isMain">
+    <div class="col-12">
+        <table class="table table-sm table-borderless">
+            <tbody class="list-group">
+                <tr class="list-group-item" *ngFor="let item of value; let i = index">
+                    <td class="row">
+                        <div class="col-12">
+                            <ng-katex-html [html]="item.enunciado"></ng-katex-html>
+                            <div *ngIf="item.img" class="img-fluid">
+                                <img [src]="item.img"> 
+                            </div>
+                        </div>
+                        <div class="col-12 text-right py-2">
+                            <button type="button" mat-button color="primary" (click)="editar(item)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button type="button" mat-button color="danger" (click)="eliminar(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" *ngIf="!isMain">
+    <div class="col-12">
+        <ng-katex-html [html]="item.value"></ng-katex-html>
+        <div *ngIf="img.value" class="img-fluid">
+            <img [src]="img.value"> 
+        </div>
+    </div>
+
+</div>

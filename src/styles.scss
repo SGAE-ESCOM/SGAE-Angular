@@ -53,6 +53,9 @@ $angular-material-theme: mat-light-theme(
 // Styles for messages
 @import '~ngx-toastr/toastr-bs4-alert';
 
+//LATEX
+@import '~katex/dist/katex.css';
+
 /* You can add global styles to this file, and also import other style files */
 html,
 body {

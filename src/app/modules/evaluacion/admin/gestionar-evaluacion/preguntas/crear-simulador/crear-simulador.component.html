@@ -1,0 +1,33 @@
+<form>
+    <div class="container">
+        <div class="d-flex justify-content-end">
+            <div class="button-bottom">
+                <div class="button-right">
+                    <button mat-raised-button type="button" color="danger" class="btn-lg mx-2" (click)="cancelarPreguntas()">Regresar <mat-icon>undo</mat-icon></button>
+                    <button mat-raised-button type="button" color="success" class="btn-lg mx-2" (click)="modalAgregarPregunta()">Agregar pregunta <mat-icon>add</mat-icon></button>
+                    <button mat-raised-button type="button" color="success" >Finalizar <mat-icon>done</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-3" *ngFor="let pregunta of preguntas; let i = index">
+        <div class="col-12">
+            <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
+        </div>
+        <div class="col-12">
+            <ul>
+                <div *ngIf="pregunta.img">
+                    <img [src]="pregunta.img"> 
+                </div>
+                <li><i class="text-success"><b>Respuesta: <ng-katex-html [html]="pregunta.opciones[pregunta.respuesta]?.enunciado"></ng-katex-html> </b></i></li>
+                <li *ngFor="let opcion of pregunta.opciones"> <ng-katex-html [html]="opcion.enunciado"></ng-katex-html></li>
+            </ul>
+        </div>
+        <div class="col-12">
+            <div class="d-flex justify-content-end">
+                <button mat-button color="info" (click)="modalActualizarPregunta(pregunta)">Editar<mat-icon>edit</mat-icon></button>
+                <button mat-button color="danger" (click)="onEliminar(pregunta)">Eliminar<mat-icon>delete</mat-icon></button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -4,16 +4,17 @@ import { MainSimuladorComponent } from './main-simulador/main-simulador.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
 import { MatRadioModule } from '@angular/material/radio';
-import { CrearSimuladorComponent } from './crear-simulador/crear-simulador.component';
+import { KatexModule } from 'ng-katex';
 
 @NgModule({
-  declarations: [MainSimuladorComponent, CrearSimuladorComponent],
+  declarations: [MainSimuladorComponent],
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,
     AngularMaterialModule,
-    MatRadioModule
+    MatRadioModule,
+    KatexModule
   ],
-  exports: [MainSimuladorComponent, CrearSimuladorComponent]
+  exports: [MainSimuladorComponent]
 })
 export class FormSimuladorModule { }
