@@ -25,10 +25,7 @@ export class MainPreguntasComponent implements OnInit {
   tablaTemas: Tabla[] = [{ encabezado: 'Tema', json: 'tema' }, { encabezado: "Subtemas", json: 'subtemas' }, { encabezado: 'Acciones', json: 'acciones' }];
   tablaPreguntas: Tabla[] = [{ encabezado: 'Enunciado', json: 'enunciado' }, { encabezado: 'Respuestas', json: 'respuestas' }, { encabezado: 'Acciones', json: 'acciones' }];
 
-  temas: Tema[] = [
-    /* { id: '111', tema: 'Matemáticas', subtema: ['Algebra', 'Trigonometria'] },
-    { id: '222', tema: 'Español', subtema: ['Compresión Lectora', 'Reminder'] } */
-  ];
+  temas: Tema[] = [];
 
   prueba: string[] = ['Hola', 'Mundo', 'Amigos'];
 
@@ -88,7 +85,7 @@ export class MainPreguntasComponent implements OnInit {
   }
 
   modalActualizarTema(tema: Tema) {
-    console.log(tema)
+    console.log(tema);
     const dialogRef = this.dialog.open(ModalTemas, {
       width: '600px',
       data: { opc: 'actualizar', tema: tema }

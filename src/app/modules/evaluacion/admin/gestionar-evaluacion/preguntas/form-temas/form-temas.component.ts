@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { TemasService } from '@services/evaluacion/temas.service';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/mensajes';
+import { MJS_ERROR_CONECTAR_SERVIDOR, MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
@@ -25,7 +25,7 @@ export class FormTemasComponent implements OnInit, OnChanges {
   fgTema: FormGroup;
   
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _temas:TemasService) {
     this.initFormTema(new Tema(''));
   }
 
@@ -39,31 +39,31 @@ export class FormTemasComponent implements OnInit, OnChanges {
 
   /***************************** REST ******************************/
   save(form: FormGroup) {
-    /* if (form.valid) {
+    if (form.valid) {
       this._temas.save(form.value).then(caso => {
-        this._toastr.success("Agregado correctamente");
+        this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
-        this._toastr.error("Ha ocurrido un error");
+        this._toastr.error(MJS_ERROR_CONECTAR_SERVIDOR);
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
-    } */
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+    }
   }
 
   update(form: FormGroup) {
-    /* if (form.valid) {
+    if (form.valid) {
       let tema:Tema = form.value;
       tema.id = this.tema.id;
       this._temas.update(tema).then(caso => {
-        this._toastr.success("Actualizado correctamente");
+        this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
-        this._toastr.error("Ha ocurrido un error");
+        this._toastr.error(MJS_ERROR_CONECTAR_SERVIDOR);
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
-    } */
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+    }
   }
 
   cerrarModal() {
