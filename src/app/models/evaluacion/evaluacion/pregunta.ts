@@ -12,7 +12,6 @@ export class Pregunta {
         this.enunciado = '';
         this.img = '';
         this.opciones = [];
-        this.respuesta = -1;
     }
 }
 

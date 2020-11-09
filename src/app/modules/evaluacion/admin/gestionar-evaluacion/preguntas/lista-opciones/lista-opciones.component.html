@@ -42,7 +42,7 @@
                 <tr class="list-group-item" *ngFor="let item of value; let i = index">
                     <td class="row">
                         <div class="col-12">
-                            <ng-katex-html [html]="item.enunciado"></ng-katex-html>
+                            <b>{{ i +1 }}. </b> <ng-katex-html [html]="item.enunciado"></ng-katex-html>
                             <div *ngIf="item.img" class="img-fluid">
                                 <img [src]="item.img"> 
                             </div>

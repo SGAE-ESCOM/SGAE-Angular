@@ -2,9 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
-import { TemasService } from '@services/evaluacion/temas.service';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/mensajes';
-import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
+import { PreguntasService } from '@services/evaluacion/preguntas.service';
+import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_VERIFICAR_FORM } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -16,6 +15,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   
   @Input() opc:string = '';
   @Input() pregunta: Pregunta;
+  @Input() tema: Tema;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
   
@@ -26,7 +26,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   fgPregunta: FormGroup;
   
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _temas:TemasService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _preguntas:PreguntasService) {
   }
 
   ngOnInit(): void {}
@@ -40,30 +40,34 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
 
   /***************************** REST ******************************/
   save(form: FormGroup) {
+    let pregunta:Pregunta = form.value;
+    pregunta.idTema = this.tema.id;
     if (form.valid) {
-      this._temas.save(form.value).then(caso => {
+      this._preguntas.save(pregunta).then(caso => {
         this._toastr.success("Agregado correctamente");
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
     }
   }
 
   update(form: FormGroup) {
+    console.log("Hola desde el update")
     if (form.valid) {
-      let tema:Tema = form.value;
-      tema.id = this.pregunta.id;
-      this._temas.update(tema).then(caso => {
+      let pregunta:Pregunta = form.value;
+      pregunta.id = this.pregunta.id;
+      pregunta.idTema = this.pregunta.idTema;
+      this._preguntas.update(pregunta).then(caso => {
         this._toastr.success("Actualizado correctamente");
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
     }
   }
 
@@ -73,17 +77,19 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
 
   /***************************** UTILS ******************************/
   initFormPregunta() {
-    //this.titulo = tema.tema === '' ? 'Nuevo tema': tema.tema;
     this.fgPregunta = this.fb.group({
-      enunciado: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
+      enunciado: ['', [Validators.required ]],
       img: ['', []],
-      opciones: [[], []]
+      opciones: [[], []],
+      respuesta: ['', [Validators.required ]]
     })
   }
 
   setValues(){
     this.enunciado.setValue(this.pregunta.enunciado);
     this.img.setValue(this.pregunta.img);
+    this.respuesta.setValue(this.pregunta.respuesta);
+    this.opciones.setValue( JSON.parse(  JSON.stringify( this.pregunta.opciones)) );
   }
 
   /* Eventos */
@@ -94,10 +100,6 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        /*let jsonFile = {
-          nombre: file.name,
-          archivo: reader.result
-        };*/
         this.fgPregunta.get(documento).patchValue(reader.result);
       };
     }
@@ -107,4 +109,6 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   /***************************** GETTERS ******************************/
   get enunciado() { return this.fgPregunta.get('enunciado') as FormControl }
   get img() { return this.fgPregunta.get('img') as FormControl }
+  get opciones() { return this.fgPregunta.get('opciones') as FormControl }
+  get respuesta() { return this.fgPregunta.get('respuesta') as FormControl }
 }

@@ -9,6 +9,10 @@
         <div class="col-12">
             <div mat-dialog-content>
                 <form [formGroup]="fgPregunta" class="row">
+                    <div class="col-12">
+                        <b>Pregunta:</b>
+                        <p>Agrega la pregunta y si lo deseas una imagen</p>
+                    </div>
                     <div class="col-12 form-group">
                         <mat-form-field appearance="legacy">
                             <mat-label>Enunciado</mat-label>
@@ -24,26 +28,44 @@
                                 placeholder="Imagen del enunciado"
                                 [accept]="'.jpg, .png, .jpeg'"
                                 [valuePlaceholder]="( img.value ) ? 'Archivo seleccionado': 'ARCHIVO NO SELECCIONADO' "
-                                (change)="handleUpload($event, 'img' )" required></ngx-mat-file-input>
+                                (change)="handleUpload($event, 'img' )"></ngx-mat-file-input>
                             <mat-icon class="material-icons-outlined" matSuffix>folder</mat-icon>
                             <mat-hint class="toggle-hint"> Sólo imagenes y archivos no mayores a 1 MB </mat-hint>
                             <mat-error *ngIf="img.hasError('required')">
                                 Este campo es requerido
                             </mat-error>
                         </mat-form-field>
-                        <hr class="col-12 py-3">
+                        <hr class="col-12 py-2">
                     </div>
-                    <div >
+                    <div class="col-12">
+                        <b>Respuesta:</b>
+                        <p>Selecciona el número de la opción que sera la respuesta. Antes debes de ingresar opciones</p>
+                        <div class="form-group">
+                            <mat-form-field>
+                                <mat-label>Respuesta</mat-label>
+                                <mat-select formControlName="respuesta" name="respuesta" required>
+                                    <mat-option *ngFor="let opcion of opciones.value" [value]="opcion.id">
+                                        {{opcion.id + 1}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="respuesta.hasError('required')">
+                                    Este campo es requerido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <hr class="col-12 py-2">
+                    </div>
+                    <div class="col-12">
                         <b>Opciones:</b>
+                        <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
                     </div>
                     <div class="col-12">
                         <app-lista-opciones formControlName="opciones"></app-lista-opciones>
+                        <hr class="col-12 py-2">
                     </div>
+                    
                 </form>
             </div>
-        </div>
-        <div class="col-12">
-            {{ fgPregunta.value | json }}
         </div>
         <div class="col-12 py-2 text-right">
             <div mat-dialog-actions>
