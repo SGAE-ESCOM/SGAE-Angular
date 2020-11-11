@@ -24,8 +24,6 @@ import { AuthService } from '@services/auth.service';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
-import { PagosAdminModule } from './modules/pagos/admin/pagos-admin.module';
-import { PagosAspiranteModule } from './modules/pagos/aspirante/pagos-aspirante.module';
   
 @NgModule({
   declarations: [
@@ -41,9 +39,7 @@ import { PagosAspiranteModule } from './modules/pagos/aspirante/pagos-aspirante.
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireStorageModule,
-    PagosAdminModule,
-    PagosAspiranteModule
+    AngularFireStorageModule
   ],
   entryComponents: [ BreadcrumbComponent ],
   providers: [AngularFireAuth, AngularFirestore, AuthService, { provide: MatPaginatorIntl, useValue: CustomPaginator() }],
