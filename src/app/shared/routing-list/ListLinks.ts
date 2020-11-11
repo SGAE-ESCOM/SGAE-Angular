@@ -65,6 +65,29 @@ export const BC_CONVOCATORIA = new Breadcrumb(CONVOCATORIA, [HOME]);
 /************************************************ PAGOS ********************************************************************************************/
 export const PAGOS = new NavigationLink("Pagos", "/app/pagos", "credit_card", "Generación de lineas de pagos");
 export const BC_PAGOS = new Breadcrumb(PAGOS, [HOME]);
+//ADMIN
+export const CONFIGURAR_REFERENCIAS = new NavigationLink("Configurar Referencias", "/app/pagos/configurar-referencias", "receipt", "Edita las referencias para los formatos de pago");
+export const BC_CONFIGURAR_REFERENCIAS = new Breadcrumb(CONFIGURAR_REFERENCIAS, [HOME, PAGOS]);
+
+export const GESTIONAR_CUENTAS = new NavigationLink("Gestionar Cuentas", "/app/pagos/gestionar-cuentas", "account_balance", "Gestiona las cuentas bancarias para recibir pagos");
+export const BC_GESTIONAR_CUENTAS = new Breadcrumb(GESTIONAR_CUENTAS, [HOME, PAGOS]);
+
+export const VALIDAR_PAGOS = new NavigationLink("Validar Pagos", "/app/pagos/validar-pagos", "fact_check", "Valida los pagos de los aspirantes que ya han enviado el formato de pago");
+export const BC_VALIDAR_PAGOS = new Breadcrumb(VALIDAR_PAGOS, [HOME, PAGOS]);
+
+//ASPIRANTE
+export const EVIDENCIA_PAGO = new NavigationLink("Subir Evidencia de Pago", "/app/pagos/evidenciar-pago", "receipt", "Sube la evidencia de pago con los datos del formato de pago");
+export const BC_EVIDENCIA_PAGO = new Breadcrumb(EVIDENCIA_PAGO, [HOME, PAGOS]);
+
+export const FORMATO_PAGO = new NavigationLink("Ver Formato de Pago", "/app/pagos/formato-pago", "description", "Consulta el formato de pago para continuar con el proceso de admisión");
+export const BC_FORMATO_PAGO = new Breadcrumb(EVIDENCIA_PAGO, [HOME, PAGOS]);
+
+
+export const LINKS_PAGOS = {
+    aspirante: [EVIDENCIA_PAGO, FORMATO_PAGO],
+    admin: [GESTIONAR_CUENTAS, CONFIGURAR_REFERENCIAS, VALIDAR_PAGOS],
+    root: [GESTIONAR_CUENTAS, CONFIGURAR_REFERENCIAS, VALIDAR_PAGOS]
+}
 
 /************************************************ ETAPAS ********************************************************************************************/
 export const ETAPAS = new NavigationLink("Gestión Etapas", "/app/etapas", "dynamic_feed", "Gestiona el orden y fecha de las etapas");
