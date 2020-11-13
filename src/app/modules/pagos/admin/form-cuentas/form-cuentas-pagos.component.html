@@ -1,0 +1,17 @@
+<div *ngIf="cuentas" class="row" [@cardAnimation]="cuentas.length">
+    <div *ngFor="let cuenta of cuentas; trackBy: trackById" class="col-12 col-sm-4 col-md-6 py-2">
+        <div class="card-hover mat-elevation-z2 bd-callout bd-callout-success pt-2 pb-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span>
+                        <mat-icon class="material-icons-outlined icon-position">account_balance_wallet</mat-icon>
+                    </span> {{cuenta.nombre}}
+                </h5>
+                <hr>
+                <p class="card-text">Banco: <label>{{cuenta.banco}}</label></p>
+                <p class="card-text">No. De Cuenta: <label>{{cuenta.noCuenta}}</label></p>
+                <p *ngIf="cuenta.referencia" class="card-text">Referencia: <label>{{cuenta.referencia}}</label></p>
+            </div>
+        </div>
+    </div>
+</div>
