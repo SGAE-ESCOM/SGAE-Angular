@@ -2,7 +2,7 @@
     <form [formGroup]="fgLista" class="col-12">
         <div class="d-flex flex-row bd-highlight mb-3">
             <mat-form-field class="" appearance="legacy">
-                <mat-label>Nombre del tema</mat-label>
+                <mat-label>Nombre del subtema</mat-label>
                 <input formControlName="item" name="item" id="item" matInput placeholder="Escribe un item" required>
                 <mat-error *ngIf="item.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
                 <mat-error *ngIf="item.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>

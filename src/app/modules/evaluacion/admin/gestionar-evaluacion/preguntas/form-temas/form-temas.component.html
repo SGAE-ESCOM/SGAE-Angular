@@ -23,9 +23,9 @@
         </div>
         <div mat-dialog-actions>
             <div class="col-12 " [ngSwitch]="opc">
-                <button mat-button (click)="cerrarModal()">Cancelar</button>
-                <button mat-button *ngSwitchCase="'agregar'" (click)="save(fgTema)" color="success">Agregar <mat-icon> add</mat-icon></button>
-                <button mat-button *ngSwitchCase="'actualizar'" (click)="update(fgTema)" color="info">Actualizar <mat-icon>cached</mat-icon></button>
+                <button mat-button (click)="cerrarModal()" name="btnModalCancelar" id="btnModalCancelar">Cancelar</button>
+                <button mat-button *ngSwitchCase="'agregar'" (click)="save(fgTema)" color="success" name="btnModalAgregar" id="btnModalAgregar">Agregar <mat-icon> add</mat-icon></button>
+                <button mat-button *ngSwitchCase="'actualizar'" (click)="update(fgTema)" color="info" name="btnModalActualiza" id="btnModalActualiza">Actualizar <mat-icon>cached</mat-icon></button>
             </div>
         </div>
     </div>
