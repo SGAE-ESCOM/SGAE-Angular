@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Grupo } from '@models/evaluacion/Grupo';
 import { GruposService } from '@services/evaluacion/grupos.service';
+import { MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { ALPHANUMERICO_CON_ESPACIOS } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -49,13 +50,13 @@ export class FormGruposComponent implements OnInit, OnChanges {
   save(form: FormGroup) {
     if (form.valid) {
       this._grupos.save(form.value).then(caso => {
-        this._toastr.success("Agregado correctamente");
+        this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
     }
   }
 
@@ -64,13 +65,13 @@ export class FormGruposComponent implements OnInit, OnChanges {
       let grupo:Grupo = form.value;
       grupo.id = this.grupo.id;
       this._grupos.update(grupo).then(caso => {
-        this._toastr.success("Actualizado correctamente");
+        this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
     }
   }
 

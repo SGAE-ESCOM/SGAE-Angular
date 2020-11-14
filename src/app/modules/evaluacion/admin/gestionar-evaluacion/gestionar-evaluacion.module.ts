@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { GestionarEvaluacionRoutingModule } from './gestionar-evaluacion-routing.module';
 import { MainGestionarEvaluacionComponent } from './main-gestionar-evaluacion/main-gestionar-evaluacion.component';
 import { CardsModule } from '@shared/components/cards/cards.module';
-import { AdminEvaluacionComponent } from './admin-evaluacion/admin-evaluacion.component';
 import { TablasModule } from '@shared/components/tablas/tablas.module';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,9 +17,11 @@ import { CrearSimuladorComponent, ModalPregunta } from './preguntas/crear-simula
 import { KatexModule } from 'ng-katex';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { ListaOpcionesComponent } from './preguntas/lista-opciones/lista-opciones.component';
+import { MainAdminEvaluacionComponent } from './admin-evaluacion/main-admin-evaluacion/main-admin-evaluacion.component';
+import { FormAdminEvaluacionComponent } from './admin-evaluacion/form-admin-evaluacion/form-admin-evaluacion.component';
 
 @NgModule({
-  declarations: [MainGestionarEvaluacionComponent, AdminEvaluacionComponent, ModalTemas, CrearSimuladorComponent, ModalPregunta, FormTemasComponent, MainPreguntasComponent, FormPreguntasComponent, ListaOpcionesComponent],
+  declarations: [MainGestionarEvaluacionComponent, ModalTemas, CrearSimuladorComponent, ModalPregunta, FormTemasComponent, MainPreguntasComponent, FormPreguntasComponent, ListaOpcionesComponent, MainAdminEvaluacionComponent, FormAdminEvaluacionComponent],
   imports: [
     CommonModule,
     GestionarEvaluacionRoutingModule,

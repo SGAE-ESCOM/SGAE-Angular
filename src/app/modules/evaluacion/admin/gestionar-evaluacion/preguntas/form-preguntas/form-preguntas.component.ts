@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { PreguntasService } from '@services/evaluacion/preguntas.service';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_VERIFICAR_FORM } from '@shared/utils/mensajes';
+import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -44,7 +44,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
     pregunta.idTema = this.tema.id;
     if (form.valid) {
       this._preguntas.save(pregunta).then(caso => {
-        this._toastr.success("Agregado correctamente");
+        this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
@@ -61,7 +61,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
       pregunta.id = this.pregunta.id;
       pregunta.idTema = this.pregunta.idTema;
       this._preguntas.update(pregunta).then(caso => {
-        this._toastr.success("Actualizado correctamente");
+        this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");

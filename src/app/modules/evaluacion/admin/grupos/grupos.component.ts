@@ -59,11 +59,11 @@ export class GruposComponent implements OnInit {
   }
 
   modalEliminar(grupo: Grupo) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar al aspirante '${grupo.nombre}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar el grupo '${grupo.nombre}'?`, 'No se podrá revertir esta acción')
     .then((result) => {
       if (result.value) {
         this._grupos.delete(grupo).then(() => {
-          this._swal.aspiranteEliminadoCorrectamente();
+          this._swal.eliminadoCorrecto('El grupo se ha eliminado');
         }).catch(err => this._toastr.error(err));
       }
     });
