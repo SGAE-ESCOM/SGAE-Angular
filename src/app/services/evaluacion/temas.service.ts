@@ -34,7 +34,6 @@ export class TemasService {
   }
 
   update(Tema: Tema){
-    console.log(Tema)
     return this.TemasCollection.doc(Tema.id).set(Tema);
   }
 

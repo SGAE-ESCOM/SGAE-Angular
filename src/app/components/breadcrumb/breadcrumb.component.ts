@@ -17,7 +17,6 @@ export class BreadcrumbComponent {
   constructor() {
     if (this.classReference.breadcrumb == null)
       this.classReference.breadcrumb = BC_HOME;
-      console.log(BreadcrumbComponent.breadcrumb)
   }
 
   public static update(breadcrumb: Breadcrumb) {

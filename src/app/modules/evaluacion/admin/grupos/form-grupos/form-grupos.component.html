@@ -4,6 +4,8 @@
             <mat-label>Nombre del grupo </mat-label>
             <input formControlName="nombre" matInput placeholder="Ingenieria">
             <mat-icon matSuffix>group</mat-icon>
+            <mat-error *ngIf="nombre.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+            <mat-error *ngIf="nombre.hasError('pattern')">{{ MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION }}</mat-error>
           </mat-form-field>
     </div>
     <div class="col-12 text-right" [ngSwitch]="opc">

@@ -88,7 +88,6 @@ export class DefinirFechasComponent implements OnInit {
   //Lógica del componente
   pintarFechas() {
     if (this.fgEtapasFechas.valid) {
-      console.log(this.fgEtapasFechas.value);
       this.dataSource = Object.entries(this.fgEtapasFechas.value).map(([atributo, valor]: any, index) => {
         return {
           id: index,

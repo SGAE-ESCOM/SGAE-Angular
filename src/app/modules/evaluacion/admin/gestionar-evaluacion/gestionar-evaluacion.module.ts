@@ -17,11 +17,15 @@ import { CrearSimuladorComponent, ModalPregunta } from './preguntas/crear-simula
 import { KatexModule } from 'ng-katex';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { ListaOpcionesComponent } from './preguntas/lista-opciones/lista-opciones.component';
-import { MainAdminEvaluacionComponent } from './admin-evaluacion/main-admin-evaluacion/main-admin-evaluacion.component';
+import { MainAdminEvaluacionComponent, ModalAdminEvaluacion } from './admin-evaluacion/main-admin-evaluacion/main-admin-evaluacion.component';
 import { FormAdminEvaluacionComponent } from './admin-evaluacion/form-admin-evaluacion/form-admin-evaluacion.component';
+import { CheckboxListModule } from '@shared/components/checkbox-list/checkbox-list.module';
 
 @NgModule({
-  declarations: [MainGestionarEvaluacionComponent, ModalTemas, CrearSimuladorComponent, ModalPregunta, FormTemasComponent, MainPreguntasComponent, FormPreguntasComponent, ListaOpcionesComponent, MainAdminEvaluacionComponent, FormAdminEvaluacionComponent],
+  declarations: [
+    MainGestionarEvaluacionComponent, ModalTemas, CrearSimuladorComponent, ModalPregunta, FormTemasComponent, MainPreguntasComponent, FormPreguntasComponent, ListaOpcionesComponent, 
+    MainAdminEvaluacionComponent, FormAdminEvaluacionComponent, ModalAdminEvaluacion
+  ],
   imports: [
     CommonModule,
     GestionarEvaluacionRoutingModule,
@@ -33,7 +37,8 @@ import { FormAdminEvaluacionComponent } from './admin-evaluacion/form-admin-eval
     MatDialogModule,
     FormSimuladorModule,
     MaterialFileInputModule,
-    KatexModule
+    KatexModule,
+    CheckboxListModule
   ]
 })
 export class GestionarEvaluacionModule { }

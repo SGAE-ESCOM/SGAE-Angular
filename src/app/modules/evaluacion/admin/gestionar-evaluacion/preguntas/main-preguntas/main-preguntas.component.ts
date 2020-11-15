@@ -85,7 +85,6 @@ export class MainPreguntasComponent implements OnInit {
   }
 
   modalActualizarTema(tema: Tema) {
-    console.log(tema);
     const dialogRef = this.dialog.open(ModalTemas, {
       width: '600px',
       data: { opc: 'actualizar', tema: tema }
@@ -101,7 +100,7 @@ export class MainPreguntasComponent implements OnInit {
       .then((result) => {
         if (result.value) {
           this._temas.delete(tema).then(() => {
-            this._swal.aspiranteEliminadoCorrectamente();
+            this._swal.eliminadoCorrecto('El tema se ha eliminado')
           }).catch(err => this._toastr.error(err));
         }
       });

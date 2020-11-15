@@ -1,8 +1,8 @@
 <div class="container" @fadeInRight>
     <div class="col-12">
         <app-tabla [columnas]="columnasEvaluacion" [datos]="evaluaciones"
-            [isSave]="true"
-            [isUpdate]="true"
-            [isDelete]="true"></app-tabla>
+            [isSave]="true" (save)="modalAgregar()"
+            [isUpdate]="true" (update)="modalActualizar($event)"
+            [isDelete]="true" (delete)="modalEliminar($event)"></app-tabla>
     </div>
 </div>

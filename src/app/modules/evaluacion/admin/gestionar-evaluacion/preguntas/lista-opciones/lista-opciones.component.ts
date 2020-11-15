@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Opcion, Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { fadeInLeft, fadeInRight } from '@shared/utils/animations/router.animations';
@@ -25,12 +25,14 @@ import { element } from 'protractor';
 export class ListaOpcionesComponent implements ControlValueAccessor {
 
   @Input() noDraggable:boolean = false;
+  @Output('isMain') isMainEE: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
   MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
   MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
-
+  
   value: Opcion[] = [];
+  isMain: Boolean = true;
   isDisabled: boolean;
-  isMain: boolean = true;
   fgLista: FormGroup;
   opcion: Opcion;
 
@@ -81,12 +83,14 @@ export class ListaOpcionesComponent implements ControlValueAccessor {
   editar(opcion: Opcion){
     this.opcion = opcion;
     this.isMain = false;
+    this.isMainEE.emit(this.isMain);
     this.item.setValue( this.opcion.enunciado );
     this.img.setValue( this.opcion.img );
   }
 
   cancelarActualizar(){
     this.isMain = true;
+    this.isMainEE.emit(this.isMain);
   }
   
   editarItem(){
@@ -98,6 +102,7 @@ export class ListaOpcionesComponent implements ControlValueAccessor {
       }
     }
     this.isMain = true;
+    this.isMainEE.emit(this.isMain);
   }
   
 

@@ -52,7 +52,6 @@ export class CrearSimuladorComponent implements OnInit, OnChanges {
   }
 
   modalActualizarPregunta(pregunta: Pregunta) {
-    console.log(pregunta)
     const dialogRef = this.dialog.open(ModalPregunta, {
       width: '1024px',
       data: { opc: 'actualizar', pregunta: pregunta, tema:  this.tema }
@@ -114,7 +113,6 @@ export class ModalPregunta {
   accion(realizado: boolean) {
     if(realizado){
       this.dialogRef.close(realizado);
-      console.log('DEbes actualizar el app-form-crear')
     }
   }
 

@@ -31,7 +31,7 @@ export class GruposComponent implements OnInit {
   modalGuardar() {
     const dialogRef = this.dialog.open(ModalGrupos, {
       width: '600px',
-      data: { opc: 'agregar' }
+      data: { opc: 'agregar', titulo:'Agregar' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -46,7 +46,7 @@ export class GruposComponent implements OnInit {
   modalActualizar(grupo: Grupo) {
     const dialogRef = this.dialog.open(ModalGrupos, {
       width: '600px',
-      data: { opc: 'actualizar', grupo: grupo }
+      data: { opc: 'actualizar', grupo: grupo, titulo:'Editar' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

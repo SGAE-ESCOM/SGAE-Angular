@@ -17,7 +17,6 @@ export class MainSimuladorComponent implements OnInit, OnChanges {
   
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.preguntas && this.preguntas != null ){
-      console.log("HOLA")
     }
   }
 

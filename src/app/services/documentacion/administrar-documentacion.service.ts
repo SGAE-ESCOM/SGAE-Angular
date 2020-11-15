@@ -44,7 +44,6 @@ export class AdministrarDocumentacionService {
   ordenarRequisitos(requisitos: TipoDato[]): Promise<any> {
     this.batch = this.db.firestore.batch();
     requisitos.forEach((requisito, index) => {
-      console.log( requisito.num+ ' ==> '+ index);
       const requisitoRef: any = this.requisitosCollection.doc<any>(requisito.id).ref;
       this.batch.update(requisitoRef, { num: index });
     });

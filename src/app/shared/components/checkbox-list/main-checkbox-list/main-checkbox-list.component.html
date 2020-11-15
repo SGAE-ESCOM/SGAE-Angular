@@ -1,0 +1,9 @@
+<span class="example-list-section">
+    <ul>
+        <li *ngFor="let opcion of opciones">
+            <mat-checkbox [color]="color" (change)="updateValue($event.checked, opcion)">
+                {{opcion[property]}}
+            </mat-checkbox>
+        </li>
+    </ul>
+</span>

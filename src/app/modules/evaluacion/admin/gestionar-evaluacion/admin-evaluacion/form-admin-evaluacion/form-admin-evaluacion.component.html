@@ -1,1 +1,47 @@
-<p>form-admin-evaluacion works!</p>
+<div class="contrainer">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 mat-dialog-title [ngSwitch]="opc">
+                <div *ngSwitchCase="'agregar'"> Agregar Evaluación </div>
+                <div *ngSwitchCase="'actualizar'"> Editar Evaluación </div>
+            </h1>
+        </div>
+        <div class="col-12">
+            <div mat-dialog-content>
+                <form [formGroup]="fgPregunta" class="row">
+                    <div class="col-12 form-group" *ngIf="isMain">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Nombre</mat-label>
+                            <input formControlName="nombre" rows="4" name="nombre" id="nombre" matInput placeholder="Escribe el nombre" required>
+                            <mat-error *ngIf="nombre.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                            <mat-error *ngIf="nombre.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
+                            <mat-icon matSuffix>playlist_add_check </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12" *ngIf="isMain">
+                        <b>Temas disponibles:</b>
+                        <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
+                    </div>
+                    <div class="col-12">
+                        <app-checkbox-list formControlName="temas" [property]="'tema'" [opciones]="temasCatalogo"></app-checkbox-list>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="col-12">
+            {{ fgPregunta.value | json}}
+        </div>
+        <div class="col-12 py-2" *ngIf="isMain">
+            <div mat-dialog-actions [ngSwitch]="opc">
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <button mat-button (click)="cerrarModal()" name="btnModalCancelar" id="btnModalCancelar">Cancelar</button>
+                        <button mat-button *ngSwitchCase="'agregar'" (click)="save(fgPregunta)" color="success" name="btnModalAgregar" id="btnModalAgregar">Agregar <mat-icon> add</mat-icon></button>
+                        <button mat-button *ngSwitchCase="'actualizar'" (click)="update(fgPregunta)" color="info" name="btnModalActualiza" id="btnModalActualiza">Actualizar <mat-icon>cached</mat-icon></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
