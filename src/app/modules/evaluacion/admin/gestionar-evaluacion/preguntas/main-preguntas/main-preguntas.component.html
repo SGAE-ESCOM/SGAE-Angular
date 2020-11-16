@@ -1,5 +1,20 @@
-<div class="container" *ngIf="isMain; else Pregunta" @fadeInRight>
-    <div class="row">
+<div class="container" [ngSwitch]="seccionActivada">
+    <div class="row" *ngSwitchCase="'secciones'" @fadeInLeft>
+        <div class="col-12">
+            <b>Instrucciones:</b>
+            <p>Agrega secciones y posteriormente preciona la opcion 'Gestionar temas' <mat-icon>sort</mat-icon> para agregar temas a esa sección</p>
+        </div>
+        <div class="col-12">
+            <app-tabla [columnas]="tablaSecciones" [datos]="secciones"
+                [isSave]="true" (save)="modalAgregarSeccion()"
+                [isCustom]="true" [customDesc]="'Gestionar temas'" [customIcon]="'sort'" (custom)="showSeccion($event)"
+                [isUpdate]="true" (update)="modalActualizarSeccion($event)"
+                [isDelete]="true" (delete)="modalEliminarSeccion($event)"></app-tabla>
+        </div>
+    </div>
+
+
+    <div class="row" *ngSwitchCase="'temas'" @fadeInLeft>
         <div class="col-12">
             <b>Instrucciones:</b>
             <p>Agrega temas y posteriormente preciona la opcion 'Gestionar preguntas' <mat-icon>grading</mat-icon> para agregar preguntas a ese tema</p>
@@ -12,21 +27,19 @@
                 [isDelete]="true" (delete)="modalEliminarTema($event)"></app-tabla>
         </div>
     </div>
-</div>
 
-<ng-template #Pregunta>
-    <div class="container" @fadeInLeft>
-        <form class="row">
-            <div class="col-12">
-                <h3>{{titulo}}</h3>
-            </div>
-            <div class="col-12 pb-3">
-                <p class="mb-0">Agrega las preguntas relacionadas a este tema precionando el botón de 'Agregar pregunta', o editalas usando el botón de 'Editar' debajo de cada pregunta</p>
-                <b class="text-danger">NOTA: Ninguno de los cambios será guardado hasta presionar 'Finalizar'</b>    
-            </div>
-            <div class="col-12 pb-5">
-                <app-crear-simulador [tema]="tema" (onCancelar)="cancelarPreguntas($event)"></app-crear-simulador>
-            </div>
-        </form>        
-    </div>
-</ng-template>
+
+    <form class="row" *ngSwitchCase="'pregunta'" @fadeInLeft>
+        <div class="col-12">
+            <h3>{{titulo}}</h3>
+        </div>
+        <div class="col-12 pb-3">
+            <p class="mb-0">Agrega las preguntas relacionadas a este tema precionando el botón de 'Agregar pregunta', o editalas usando el botón de 'Editar' debajo de cada pregunta</p>
+            <b class="text-danger">NOTA: Ninguno de los cambios será guardado hasta presionar 'Finalizar'</b>    
+        </div>
+        <div class="col-12 pb-5">
+            <app-crear-simulador [tema]="tema" (onCancelar)="cancelarPreguntas($event)"></app-crear-simulador>
+        </div>
+    </form> 
+
+</div>

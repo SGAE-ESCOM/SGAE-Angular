@@ -2,22 +2,22 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
+import { SeccionesService } from '@services/evaluacion/secciones.service';
 import { TemasService } from '@services/evaluacion/temas.service';
 import { MJS_ERROR_CONECTAR_SERVIDOR, MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-form-temas',
-  templateUrl: './form-temas.component.html',
-  styleUrls: ['./form-temas.component.scss']
+  selector: 'app-form-secciones',
+  templateUrl: './form-secciones.component.html',
+  styleUrls: ['./form-secciones.component.scss']
 })
-export class FormTemasComponent implements OnInit, OnChanges {
-  
+export class FormSeccionesComponent implements OnInit, OnChanges {
+
   @Input() opc:string = '';
-  @Input() tema: Tema;
-  @Input() seccion: Seccion;
   @Input() titulo:string = '';
+  @Input() seccion: Seccion;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
   
@@ -25,17 +25,16 @@ export class FormTemasComponent implements OnInit, OnChanges {
   MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
   MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
   
-  fgTema: FormGroup;
+  fgSeccion: FormGroup;
   
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _temas:TemasService) {
-    
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _secciones:SeccionesService) {
   }
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.tema && this.tema != null) {
+    if (changes.seccion && this.seccion != null) {
       this.initForm();
       this.setForm();
     }
@@ -44,10 +43,7 @@ export class FormTemasComponent implements OnInit, OnChanges {
   /***************************** REST ******************************/
   save(form: FormGroup) {
     if (form.valid) {
-      let tema: Tema = form.value;
-      tema.idSeccion = this.seccion.id;
-      tema.total = 0;
-      this._temas.save(tema).then(caso => {
+      this._secciones.save(form.value).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
@@ -60,11 +56,9 @@ export class FormTemasComponent implements OnInit, OnChanges {
 
   update(form: FormGroup) {
     if (form.valid) {
-      let tema:Tema = form.value;
-      tema.id = this.tema.id;
-      tema.idSeccion = this.seccion.id;
-      tema.total = this.tema.total;
-      this._temas.update(tema).then(caso => {
+      let seccion:Seccion = form.value;
+      seccion.id = this.seccion.id;
+      this._secciones.update(seccion).then(caso => {
         this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
@@ -80,15 +74,16 @@ export class FormTemasComponent implements OnInit, OnChanges {
   }
 
   /***************************** UTILS ******************************/
-  initForm() {
-    this.fgTema = this.fb.group({
-      nombre: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
+  async initForm() {
+    this.fgSeccion = this.fb.group({
+      nombre: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]] 
     })
   }
 
-  setForm(){
-    this.nombre.setValue(this.tema.nombre);
+  async setForm() {
+    this.nombre.setValue(this.seccion.nombre);
   }
 
-  get nombre() { return this.fgTema.get('nombre') as FormControl }
+  get nombre() { return this.fgSeccion.get('nombre') as FormControl }
+
 }

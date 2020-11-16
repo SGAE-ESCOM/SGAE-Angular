@@ -3,13 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
+import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Tabla } from '@models/utils/Tabla';
+import { SeccionesService } from '@services/evaluacion/secciones.service';
 import { TemasService } from '@services/evaluacion/temas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { BC_PREGUNTAS } from '@shared/routing-list/ListLinks';
 import { fadeInLeft, fadeInRight } from '@shared/utils/animations/router.animations';
-import { MJS_ERROR_REQUERIDO, MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/mensajes';
+import { MJS_ERROR_REQUERIDO, MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -22,85 +24,138 @@ import { ToastrService } from 'ngx-toastr';
 export class MainPreguntasComponent implements OnInit {
 
   //TABLA TEMAS
-  tablaTemas: Tabla[] = [{ encabezado: 'Tema', json: 'tema' }, { encabezado: "Subtemas", json: 'subtemas' }, { encabezado: 'Acciones', json: 'acciones' }];
-  tablaPreguntas: Tabla[] = [{ encabezado: 'Enunciado', json: 'enunciado' }, { encabezado: 'Respuestas', json: 'respuestas' }, { encabezado: 'Acciones', json: 'acciones' }];
+  tablaSecciones: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
+  tablaTemas: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: "Preguntas totales", json: 'total' }, { encabezado: 'Acciones', json: 'acciones' }];
 
   temas: Tema[] = [];
-
-  prueba: string[] = ['Hola', 'Mundo', 'Amigos'];
-
+  secciones: Seccion[] = [];
   preguntas: Pregunta[] = [];
 
   titulo: string = 'Agregando';
-  isMain: boolean = true;
-  isAgregando: boolean = false;
+  seccionActivada: string = 'secciones';
 
-  fgTema: FormGroup;
   tema: Tema;
+  seccion: Seccion;
 
   //MSJ
   MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
   MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _toastr: ToastrService, private _temas: TemasService) {
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _toastr: ToastrService, 
+    private _temas: TemasService, private _secciones: SeccionesService) {
     BreadcrumbComponent.update(BC_PREGUNTAS);
   }
 
   ngOnInit(): void {
-    this.getTemas()
+    this.getSecciones()
   }
 
 
   /****************************  HTTP  ***************************/
+  getSecciones() {
+    this._secciones.get().subscribe(secciones => this.secciones = secciones);
+  }
+
   getTemas() {
-    this._temas.get().subscribe(temas => this.temas = temas);
+    this._temas.get(this.seccion).then((querySnapshot) => {
+      let temas = [];
+      querySnapshot.forEach((doc) => {
+        const pregunta = doc.data();
+        pregunta.id = doc.id;
+        temas.push( pregunta );
+      });
+      this.temas = temas;
+      console.table(temas)
+    }).catch( err =>  { this._toastr.error(MJS_ERROR_CONECTAR_SERVIDOR)});
   }
 
   /****************************  ACCIONES  ***************************/
+  showSeccion(seccion: Seccion){
+    this.seccion = seccion;
+    this.getTemas();
+    this.seccionActivada = 'temas';
+  }
+
   showTema(tema?: Tema) {
-    this.titulo = (tema != null) ? tema.tema : 'Agregar tema';
-    this.tema = (tema != null) ? tema : new Tema('');
-    this.isMain = false;
+    this.titulo = (tema != null) ? tema.nombre : 'Agregar tema';
+    this.tema = (tema != null) ? tema : new Tema();
+    this.seccionActivada = 'pregunta';
   }
 
   cancelarPreguntas(accion:Boolean) {
       if (accion)
-        this.isMain = true;
+        this.seccionActivada = 'temas';
   }
 
   /**************************************** UTILS **************************************/
 
 
   /**************************************** MODALS *************************************/
-  ///////////////////////// TEMA ///////////////////////////////
-  modalAgregarTema() {
-    const dialogRef = this.dialog.open(ModalTemas, {
+  ///////////////////////// SECCIONES ///////////////////////////////
+  modalAgregarSeccion() {
+    const dialogRef = this.dialog.open(ModalSeccion, {
       width: '600px',
-      data: { opc: 'agregar' }
+      data: { opc: 'agregar', seccion: new Seccion()}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) { }
+    });
+  }
+
+  modalActualizarSeccion(seccion: Seccion) {
+    const dialogRef = this.dialog.open(ModalSeccion, {
+      width: '600px',
+      data: { opc: 'actualizar', seccion: seccion }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) { }
+    });
+  }
+
+  modalEliminarSeccion(seccion: Seccion) {
+    this._swal.confirmarEliminar(`¿Deseas eliminar seccion '${seccion.nombre}'?`, 'No se podrá revertir esta acción')
+      .then((result) => {
+        if (result.value) {
+          this._secciones.delete(seccion).then(() => {
+            this._swal.eliminadoCorrecto('El seccion se ha eliminado');
+          }).catch(err => this._toastr.error(err));
+        }
+      });
+  }
+
+  ///////////////////////// TEMA ///////////////////////////////
+  modalAgregarTema() {
+    const dialogRef = this.dialog.open(ModalTemas, {
+      width: '600px',
+      data: { titulo:'Agregar',opc: 'agregar', tema: new Tema(), seccion: this.seccion }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { this.getTemas(); }
     });
   }
 
   modalActualizarTema(tema: Tema) {
     const dialogRef = this.dialog.open(ModalTemas, {
       width: '600px',
-      data: { opc: 'actualizar', tema: tema }
+      data: { titulo:'Editar',opc: 'actualizar', tema: tema, seccion: this.seccion }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != null) { }
+      if (result != null) { this.getTemas(); }
     });
   }
 
   modalEliminarTema(tema: Tema) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar tema '${tema.tema}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar tema '${tema.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
           this._temas.delete(tema).then(() => {
-            this._swal.eliminadoCorrecto('El tema se ha eliminado')
+            this._swal.eliminadoCorrecto('El tema se ha eliminado');
+            this.getTemas();
           }).catch(err => this._toastr.error(err));
         }
       });
@@ -110,8 +165,30 @@ export class MainPreguntasComponent implements OnInit {
 }
 
 /******************************* MODALS COMPONENT ***********************************/
- ///////////////////////// TEMA ///////////////////////////////
+ ///////////////////////// SECCION ///////////////////////////////
 @Component({
+  selector: 'modal-seccion',
+  templateUrl: './modal-seccion.component.html',
+})
+export class ModalSeccion {
+
+  constructor(
+    public dialogRef: MatDialogRef<ModalSeccion>,
+    private _toast: ToastrService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  cerrar(): void {
+    this.dialogRef.close();
+  }
+
+  accion(realizado: boolean) {
+    this.dialogRef.close(realizado);
+  }
+
+}
+
+ ///////////////////////// TEMA ///////////////////////////////
+ @Component({
   selector: 'modal-tema',
   templateUrl: './modal-tema.component.html',
 })

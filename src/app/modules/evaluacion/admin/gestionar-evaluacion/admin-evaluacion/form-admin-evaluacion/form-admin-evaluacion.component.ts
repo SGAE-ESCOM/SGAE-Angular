@@ -81,14 +81,13 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   /***************************** UTILS ******************************/
   async initFormPregunta() {
     this.fgPregunta = this.fb.group({
-      nombre: ['', [Validators.required, Validators.pattern( REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
+      nombre: ['', [Validators.required, Validators.pattern( REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION )]],
       temas: [[], [Validators.required]]
     })
   }
 
   async getCatalogoTemas(){
-    this._temas.get().subscribe( temas => {this.temasCatalogo = temas, console.log(this.temasCatalogo) } );
-    
+    //this._temas.get().subscribe( temas => {this.temasCatalogo = temas, console.log(this.temasCatalogo) } );
   }
 
   setValues() {

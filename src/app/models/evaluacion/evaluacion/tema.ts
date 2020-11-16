@@ -1,11 +1,12 @@
 
 export class Tema{
     id?: string;
-    tema: string;
-    subtemas?: string[];
+    idSeccion?: string;
+    nombre: string;
+    total?: number;
 
-    constructor(tema: string, subtemas?:string[]){
-        this.tema = tema;
-        this.subtemas = subtemas || [];
+    constructor(nombre?: string, total?:number){
+        this.nombre = nombre || '';
+        this.total = total || 0;
     }
 }
