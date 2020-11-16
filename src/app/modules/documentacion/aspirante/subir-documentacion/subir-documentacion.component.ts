@@ -95,7 +95,6 @@ export class SubirDocumentacionComponent implements OnInit {
         if(requisito.value._d == null){
           listaRequisitosValidos.documentacion[nombre] = { valor: requisito.value, valido: false };
         }else{
-          console.log(requisito.value );
           listaRequisitosValidos.documentacion[nombre] = { valor: requisito.value.toDate().getTime(), valido: false };
         }
       }

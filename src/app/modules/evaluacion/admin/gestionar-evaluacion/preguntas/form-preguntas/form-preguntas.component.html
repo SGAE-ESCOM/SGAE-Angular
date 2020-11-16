@@ -9,11 +9,11 @@
         <div class="col-12">
             <div mat-dialog-content>
                 <form [formGroup]="fgPregunta" class="row">
-                    <div class="col-12">
+                    <div class="col-12" *ngIf="isMain">
                         <b>Pregunta:</b>
                         <p>Agrega la pregunta y si lo deseas una imagen</p>
                     </div>
-                    <div class="col-12 form-group">
+                    <div class="col-12 form-group" *ngIf="isMain">
                         <mat-form-field appearance="legacy">
                             <mat-label>Enunciado</mat-label>
                             <textarea formControlName="enunciado" rows="4" name="enunciado" id="enunciado" matInput placeholder="Escribe el enunciado" required></textarea>
@@ -22,7 +22,7 @@
                             <mat-icon matSuffix>playlist_add_check </mat-icon>
                         </mat-form-field>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" *ngIf="isMain">
                         <mat-form-field>
                             <ngx-mat-file-input formControlName="img" name="imgEnunciado"
                                 placeholder="Imagen del enunciado"
@@ -35,9 +35,8 @@
                                 Este campo es requerido
                             </mat-error>
                         </mat-form-field>
-                        <hr class="col-12 py-2">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" *ngIf="isMain">
                         <b>Respuesta:</b>
                         <p>Selecciona el número de la opción que sera la respuesta. Antes debes de ingresar opciones</p>
                         <div class="form-group">
@@ -53,21 +52,19 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <hr class="col-12 py-2">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" *ngIf="isMain">
                         <b>Opciones:</b>
                         <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
                     </div>
                     <div class="col-12">
-                        <app-lista-opciones formControlName="opciones"></app-lista-opciones>
-                        <hr class="col-12 py-2">
+                        <app-lista-opciones formControlName="opciones" (isMain)="isMainActivated($event)"></app-lista-opciones>
                     </div>
                     
                 </form>
             </div>
         </div>
-        <div class="col-12 py-2 text-right">
+        <div class="col-12 py-2 text-right" *ngIf="isMain">
             <div mat-dialog-actions>
                 <div [ngSwitch]="opc" class="text-right">
                     <button mat-button (click)="cerrarModal()" name="btnModalCancelar" id="btnModalCancelar">Cancelar</button>

@@ -34,7 +34,6 @@ export class GruposService {
   }
 
   update(grupo: Grupo){
-    console.log(grupo)
     return this.gruposCollection.doc(grupo.id).set(grupo);
   }
 

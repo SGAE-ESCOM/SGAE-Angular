@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Grupo } from '@models/evaluacion/Grupo';
 import { GruposService } from '@services/evaluacion/grupos.service';
+import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { ALPHANUMERICO_CON_ESPACIOS } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -14,7 +15,11 @@ import { Subject } from 'rxjs';
 })
 export class FormGruposComponent implements OnInit, OnChanges {
 
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
+
   @Input() opc: string;
+  @Input() titulo: string;
   @Input() grupo: Grupo;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -49,28 +54,28 @@ export class FormGruposComponent implements OnInit, OnChanges {
   save(form: FormGroup) {
     if (form.valid) {
       this._grupos.save(form.value).then(caso => {
-        this._toastr.success("Agregado correctamente");
+        this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
     }
   }
 
   update(form: FormGroup) {
     if (form.valid) {
-      let grupo:Grupo = form.value;
+      let grupo: Grupo = form.value;
       grupo.id = this.grupo.id;
       this._grupos.update(grupo).then(caso => {
-        this._toastr.success("Actualizado correctamente");
+        this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error("Debes agregar un nombre");
+      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
     }
   }
 
@@ -78,4 +83,5 @@ export class FormGruposComponent implements OnInit, OnChanges {
     this.cerrar.emit(true);
   }
 
+  get nombre() { return this.fgGrupo.get('nombre') as FormControl }
 }

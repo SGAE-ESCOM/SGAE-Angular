@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, CollectionReference } from '@angular/fire/firestore';
+import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,36 +10,27 @@ import { map } from 'rxjs/operators';
 })
 export class TemasService {
 
-  private TemasCollection: AngularFirestoreCollection<any>;
+  private temasCollection: AngularFirestoreCollection<any>;
+  private temasCollectionReference: CollectionReference;
   
   constructor(private db: AngularFirestore) {
-    this.TemasCollection = db.collection<Tema>('Temas');
+    this.temasCollection = db.collection<Tema>('Temas');
+    this.temasCollectionReference = db.firestore.collection('Temas');
   }
 
   save( Tema: Tema ){
-    return this.TemasCollection.add(Tema);
+    return this.temasCollection.add(Tema);
   }
 
-  get(): Observable<Tema[]>{
-    return this.TemasCollection
-    .snapshotChanges()
-    .pipe(
-      map(actions =>
-        actions.map(a => {
-          const data = a.payload.doc.data() as Tema;
-          const id = a.payload.doc.id;
-          return { id, ...data } as Tema;
-        })
-      )
-    );
+  get(seccion:Seccion) {
+    return this.temasCollectionReference.where('idSeccion', '==', seccion.id).get();
   }
 
   update(Tema: Tema){
-    console.log(Tema)
-    return this.TemasCollection.doc(Tema.id).set(Tema);
+    return this.temasCollection.doc(Tema.id).set(Tema);
   }
 
   delete( Tema: Tema ){
-    return this.TemasCollection.doc(Tema.id).delete();
+    return this.temasCollection.doc(Tema.id).delete();
   }
 }

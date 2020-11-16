@@ -38,11 +38,19 @@ export const GESTIONAR_GRUPOS = new NavigationLink("Gestionar Grupos", "/app/eva
 export const BC_GESTIONAR_GRUPOS = new Breadcrumb(GESTIONAR_GRUPOS, [HOME, EVALUACION]);
 export const GESTIONAR_EVALUACION = new NavigationLink("Gestionar Evaluación", "/app/evaluacion/gestionar-evaluacion", "spellcheck", "Gestiona la evaluación para aplicar a los aspirantes");
 export const BC_GESTIONAR_EVALUACION = new Breadcrumb(GESTIONAR_EVALUACION, [HOME, EVALUACION]);
-export const ADMIN_EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "description", "Relaciona las preguntas con una evaluación");
-export const BC_ADMIN_EVALUACION = new Breadcrumb(ADMIN_EVALUACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
 export const PREGUNTAS = new NavigationLink("Preguntas", "/app/evaluacion/gestionar-evaluacion/preguntas", "format_list_bulleted", "Gestiona preguntas relacionadas a un tema");
 export const BC_PREGUNTAS = new Breadcrumb(PREGUNTAS, [HOME, EVALUACION, GESTIONAR_EVALUACION])
-export const LINKS_GESTIONAR_EVALUACIONES = [ ADMIN_EVALUACION, PREGUNTAS ];
+export const ADMIN_EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "description", "Relaciona las preguntas con una evaluación");
+export const BC_ADMIN_EVALUACION = new Breadcrumb(ADMIN_EVALUACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
+export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "event", "Define los parametros de tu evaluación");
+export const BC_ADMIN_APLICACION = new Breadcrumb(ADMIN_APLICACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
+
+export const LINKS_GESTIONAR_EVALUACIONES = {
+    aspirante: [],
+    admin: [ PREGUNTAS, ADMIN_EVALUACION, ADMIN_APLICACION ],
+    root: [ PREGUNTAS, ADMIN_EVALUACION, ADMIN_APLICACION ]
+}
+
 
 //ASPIRANTE
 export const GRUPOS = new NavigationLink("Grupos", "/app/grupos", "group", "Grupos para aplicar evaluacion(es)");
@@ -54,8 +62,8 @@ export const BC_RESULTADOS = new Breadcrumb(RESULTADOS, [HOME, EVALUACION]);
 
 export const LINKS_EVALUACION = {
     aspirante: [GRUPOS],
-    admin: [GESTIONAR_EVALUACION, RESULTADOS, GESTIONAR_GRUPOS],
-    root: [GESTIONAR_EVALUACION, RESULTADOS, GESTIONAR_GRUPOS]
+    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, RESULTADOS],
+    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, RESULTADOS]
 }
 
 /************************************************ CONVOCATORIA ********************************************************************************************/

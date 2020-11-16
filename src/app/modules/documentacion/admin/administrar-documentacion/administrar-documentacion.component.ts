@@ -15,6 +15,7 @@ import { heapsort } from "@shared/utils/heapsort";
 import { comprobarPermisos, GESTION_DOC } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
+import { MSJ_OK_AGREGADO } from '@shared/utils/mensajes';
 
 @Component({
   selector: 'app-administrar-documentacion',
@@ -78,7 +79,7 @@ export class AdministrarDocumentacionComponent implements OnInit, AfterViewInit 
   private saveRequisito( requisito ){
     requisito.num = ( this.documentos.data.length != 0 ) ? this.documentos.data[ this.documentos.data.length -1 ].num+1: 1;
     this._ads.saveDocumento( requisito ).then(() => {
-      this.toast.success("Se agrego correctamente")
+      this.toast.success(MSJ_OK_AGREGADO)
       this.updateTablaRequerimiento();
     }).catch(err => this.toast.error(err, 'Error'));
   }

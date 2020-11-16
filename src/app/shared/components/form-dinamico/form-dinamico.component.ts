@@ -69,7 +69,6 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
       this.documentosHTML = this.documentos;
     }
     if (changes['valoresDefault'] && this.valoresDefault != null) {
-      console.log('Valores default :v')
       this.setValores();
     }
   }
@@ -112,12 +111,6 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
 
   private setValores(){
     Object.entries(this.valoresDefault).forEach( ([nombre,requisito]:any) => {
-      console.log("=====================>")
-      console.log(nombre)
-      console.log(requisito)
-      console.log(this.fgFormulario.get(nombre))
-      console.log(this.documentosAux)
-      console.log(this.fgFormulario.get(nombre).setValue(requisito))
       if(this.documentosAux[nombre] === this.OPC.SELECCION )
         this.fgFormulario.get(nombre).setValue(requisito);
     });

@@ -46,7 +46,6 @@ export class DefinirEtapasComponent implements OnInit {
     this._etapaService.getEstadosAspirante().then(estadosAspirante => {
       if (estadosAspirante.exists) {
         this.etapasPrevias = this.getEtapasSeleccionadas(estadosAspirante.data());
-        console.log(this.etapasPrevias);
         this.etapasPrevias.unshift( ETAPAS[0], ETAPAS[1]);
         this.existDefinirEtapas = true;
       }

@@ -34,7 +34,7 @@ export class CrearSimuladorComponent implements OnInit, OnChanges {
 
   ///////////////////////// PREGUNTA ///////////////////////////////
   cancelarPreguntas() {
-    this._swal.confirmarCancelar('¿Deseas cancelar la edición del tema "' + this.tema.tema + '"?', 'Nada será guardado').then(result => {
+    this._swal.confirmarCancelar('¿Deseas cancelar la edición del tema "' + this.tema.nombre + '"?', 'Nada será guardado').then(result => {
       if (result.value)
         this.onCancelar.emit(true);
     });
@@ -52,7 +52,6 @@ export class CrearSimuladorComponent implements OnInit, OnChanges {
   }
 
   modalActualizarPregunta(pregunta: Pregunta) {
-    console.log(pregunta)
     const dialogRef = this.dialog.open(ModalPregunta, {
       width: '1024px',
       data: { opc: 'actualizar', pregunta: pregunta, tema:  this.tema }
@@ -114,7 +113,6 @@ export class ModalPregunta {
   accion(realizado: boolean) {
     if(realizado){
       this.dialogRef.close(realizado);
-      console.log('DEbes actualizar el app-form-crear')
     }
   }
 

@@ -31,7 +31,7 @@ export class GruposComponent implements OnInit {
   modalGuardar() {
     const dialogRef = this.dialog.open(ModalGrupos, {
       width: '600px',
-      data: { opc: 'agregar' }
+      data: { opc: 'agregar', titulo:'Agregar' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -46,7 +46,7 @@ export class GruposComponent implements OnInit {
   modalActualizar(grupo: Grupo) {
     const dialogRef = this.dialog.open(ModalGrupos, {
       width: '600px',
-      data: { opc: 'actualizar', grupo: grupo }
+      data: { opc: 'actualizar', grupo: grupo, titulo:'Editar' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -59,11 +59,11 @@ export class GruposComponent implements OnInit {
   }
 
   modalEliminar(grupo: Grupo) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar al aspirante '${grupo.nombre}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar el grupo '${grupo.nombre}'?`, 'No se podrá revertir esta acción')
     .then((result) => {
       if (result.value) {
         this._grupos.delete(grupo).then(() => {
-          this._swal.aspiranteEliminadoCorrectamente();
+          this._swal.eliminadoCorrecto('El grupo se ha eliminado');
         }).catch(err => this._toastr.error(err));
       }
     });

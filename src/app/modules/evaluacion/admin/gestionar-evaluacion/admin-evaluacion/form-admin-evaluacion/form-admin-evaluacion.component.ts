@@ -1,50 +1,53 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
+import { Evaluacion } from '@models/evaluacion/Evaluacion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
-import { PreguntasService } from '@services/evaluacion/preguntas.service';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
+import { TemasService } from '@services/evaluacion/temas.service';
+import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
+import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-form-preguntas',
-  templateUrl: './form-preguntas.component.html',
-  styleUrls: ['./form-preguntas.component.scss']
+  selector: 'app-form-admin-evaluacion',
+  templateUrl: './form-admin-evaluacion.component.html',
+  styleUrls: ['./form-admin-evaluacion.component.scss']
 })
-export class FormPreguntasComponent implements OnInit, OnChanges {
+export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
 
   @Input() opc: string = '';
   @Input() titulo: string = '';
-  @Input() pregunta: Pregunta;
+  @Input() evaluacion: Evaluacion;
   @Input() tema: Tema;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   //STATIC
   MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
 
   isMain: Boolean = true;
   fgPregunta: FormGroup;
+  temasCatalogo: Tema[];
 
-
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _preguntas: PreguntasService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _temas:TemasService) {
   }
 
   ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.pregunta && this.pregunta != null) {
+    if (changes.evaluacion && this.evaluacion != null) {
       this.initFormPregunta();
+      this.getCatalogoTemas();
       this.setValues();
     }
   }
 
   /***************************** REST ******************************/
   save(form: FormGroup) {
-    let pregunta: Pregunta = form.value;
-    pregunta.idTema = this.tema.id;
+    /* let evaluacion: Evaluacion = form.value;
+    evaluacion.idTema = this.tema.id;
     if (form.valid) {
-      this._preguntas.save(pregunta).then(caso => {
+      this._preguntas.save(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
@@ -52,15 +55,15 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
       });
     } else {
       this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
-    }
+    } */
   }
 
   update(form: FormGroup) {
-    if (form.valid) {
-      let pregunta: Pregunta = form.value;
-      pregunta.id = this.pregunta.id;
-      pregunta.idTema = this.pregunta.idTema;
-      this._preguntas.update(pregunta).then(caso => {
+    /* if (form.valid) {
+      let evaluacion: Evaluacion = form.value;
+      evaluacion.id = this.evaluacion.id;
+      evaluacion.idTema = this.evaluacion.idTema;
+      this._preguntas.update(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
@@ -68,7 +71,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
       });
     } else {
       this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
-    }
+    } */
   }
 
   cerrarModal() {
@@ -76,20 +79,22 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   }
 
   /***************************** UTILS ******************************/
-  initFormPregunta() {
+  async initFormPregunta() {
     this.fgPregunta = this.fb.group({
-      enunciado: ['', [Validators.required]],
-      img: ['', []],
-      opciones: [[], []],
-      respuesta: ['', [Validators.required]]
+      nombre: ['', [Validators.required, Validators.pattern( REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION )]],
+      temas: [[], [Validators.required]]
     })
   }
 
+  async getCatalogoTemas(){
+    //this._temas.get().subscribe( temas => {this.temasCatalogo = temas, console.log(this.temasCatalogo) } );
+  }
+
   setValues() {
-    this.enunciado.setValue(this.pregunta.enunciado);
-    this.img.setValue(this.pregunta.img);
-    this.respuesta.setValue(this.pregunta.respuesta);
-    this.opciones.setValue(JSON.parse(JSON.stringify(this.pregunta.opciones)));
+    /* this.enunciado.setValue(this.evaluacion.enunciado);
+    this.img.setValue(this.evaluacion.img);
+    this.respuesta.setValue(this.evaluacion.respuesta);
+    this.opciones.setValue(JSON.parse(JSON.stringify(this.evaluacion.opciones))); */
   }
 
   /* Eventos */
@@ -109,8 +114,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   }
 
   /***************************** GETTERS ******************************/
-  get enunciado() { return this.fgPregunta.get('enunciado') as FormControl }
-  get img() { return this.fgPregunta.get('img') as FormControl }
-  get opciones() { return this.fgPregunta.get('opciones') as FormControl }
-  get respuesta() { return this.fgPregunta.get('respuesta') as FormControl }
+  get nombre() { return this.fgPregunta.get('nombre') as FormControl }
+  get temas() { return this.fgPregunta.get('temas') as FormControl }
+
 }

@@ -67,6 +67,14 @@ export class SweetalertService {
     });
   }
 
+  eliminadoCorrecto(texto?: string){
+    this.swalFinalizar.fire({
+      title: 'Eliminado',
+      text: texto,
+      icon: 'success'
+    });
+  }
+
   /*******************************************   CORREGIR *****************************************************************/
   cancelarRegistroAdmin(titulo: string){
     return this.swalEliminar.fire({
