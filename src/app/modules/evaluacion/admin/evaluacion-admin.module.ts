@@ -13,7 +13,8 @@ import { FormDinamicoModule } from '@shared/components/form-dinamico/form-dinami
   declarations: [GruposComponent, FormGruposComponent, ModalGrupos],
   imports: [
     CommonModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule, 
+    ReactiveFormsModule,
     EvaluacionAdminRoutingModule,
     AngularMaterialModule,
     TablasModule,

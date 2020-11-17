@@ -1,40 +1,39 @@
 
 .mat-card .mat-card-header .mat-card-header-text {
-    margin: 0px !important;
-  }
-  .card {
-    cursor: pointer;
-  
-    .body {
-      padding: 0px;
-    }
-  }
-  
-  /* Postion icon card*/
-  span .mat-icon {
-    position: relative;
-  }
-  .icon-position {
-    top: 4px !important;
-  }
-  
+  margin: 0px !important;
+}
 
-// h5 {
-//     //margin: 0.5rem 0.75rem 0.5rem;
-// }
+.card {
+  cursor: pointer;
 
-// .card-title {
-//     margin: 0.5rem 1rem 0.5rem;
-// }
+  .body {
+    padding: 0px;
+  }
+}
+
+.bd-callout {
+  margin-bottom: 0rem;
+}
+
+/* Postion icon card*/
+span .mat-icon {
+  position: relative;
+}
+.icon-position {
+  top: 4px !important;
+}
 
 p {
     margin-bottom: 0.25rem;
+    cursor: pointer !important;
 }
 
 .card-text {
     font-weight: 500;
+    cursor: pointer;
 }
 
 label {
     font-weight: 400;
+    cursor: pointer;
 }
