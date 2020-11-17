@@ -3,15 +3,17 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Evaluacion } from '@models/evaluacion/Evaluacion';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
-import { TemasService } from '@services/evaluacion/temas.service';
-import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
+import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
+import { fadeInOutDown } from '@shared/utils/animations/router.animations';
+import { MSJ_ERROR_CONECTAR_SERVIDOR, MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-admin-evaluacion',
   templateUrl: './form-admin-evaluacion.component.html',
-  styleUrls: ['./form-admin-evaluacion.component.scss']
+  styleUrls: ['./form-admin-evaluacion.component.scss'],
+  animations: [fadeInOutDown()]
 })
 export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
 
@@ -31,7 +33,7 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   isMain: Boolean = true;
   fgPregunta: FormGroup;
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _temas:TemasService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _evaluaciones:AdminEvaluacionesService) {
   }
 
   ngOnInit(): void { }
@@ -39,41 +41,38 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.evaluacion && this.evaluacion != null) {
       this.initFormPregunta();
-      this.getCatalogoTemas();
       this.setValues();
     }
   }
 
   /***************************** REST ******************************/
   save(form: FormGroup) {
-    /* let evaluacion: Evaluacion = form.value;
-    evaluacion.idTema = this.tema.id;
+    let evaluacion: Evaluacion = form.value;
     if (form.valid) {
-      this._preguntas.save(evaluacion).then(caso => {
+      this._evaluaciones.save(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
-        this._toastr.error("Ha ocurrido un error");
+        this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR);
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
-    } */
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
+    }
   }
 
   update(form: FormGroup) {
-    /* if (form.valid) {
+    if (form.valid) {
       let evaluacion: Evaluacion = form.value;
       evaluacion.id = this.evaluacion.id;
-      evaluacion.idTema = this.evaluacion.idTema;
-      this._preguntas.update(evaluacion).then(caso => {
+      this._evaluaciones.update(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
-        this._toastr.error("Ha ocurrido un error");
+        this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR);
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
-    } */
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
+    }
   }
 
   cerrarModal() {
@@ -88,19 +87,9 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
     })
   }
 
-  async getCatalogoTemas(){
-    //this._temas.get().subscribe( temas => {this.temasCatalogo = temas, console.log(this.temasCatalogo) } );
-  }
-
-  setValues() {
-    let arr = []
-    arr.push( this.temasCatalogo[1] )
-    console.log(arr);
-    this.temas.setValue( arr );
-    /* this.enunciado.setValue(this.evaluacion.enunciado);
-    this.img.setValue(this.evaluacion.img);
-    this.respuesta.setValue(this.evaluacion.respuesta);
-    this.opciones.setValue(JSON.parse(JSON.stringify(this.evaluacion.opciones))); */
+  async setValues() {
+    this.nombre.setValue( this.evaluacion.nombre )
+    this.temas.setValue( this.evaluacion.temas );
   }
 
   /* Eventos */

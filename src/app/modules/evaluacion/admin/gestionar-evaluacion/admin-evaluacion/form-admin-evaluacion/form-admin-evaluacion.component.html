@@ -23,14 +23,11 @@
                         <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
                     </div>
                     <div class="col-12">
-                        <app-checkbox-list formControlName="temas" [property]="'nombre'" [opciones]="temasCatalogo"></app-checkbox-list>
+                        <app-lista-temas formControlName="temas" [property]="'nombre'" [property2]="'total'" [temas]="temasCatalogo" [secciones]="secciones" [error]="temas.hasError('required')"></app-lista-temas>
+                        <mat-error *ngIf="temas.hasError('required')" @fadeInOutDown>{{ MJS_ERROR_REQUERIDO }}</mat-error>
                     </div>
-                    
                 </form>
             </div>
-        </div>
-        <div class="col-12">
-            {{ fgPregunta.value | json}}
         </div>
         <div class="col-12 py-2" *ngIf="isMain">
             <div mat-dialog-actions [ngSwitch]="opc">

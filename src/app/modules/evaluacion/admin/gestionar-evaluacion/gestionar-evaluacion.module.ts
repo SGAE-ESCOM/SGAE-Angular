@@ -19,13 +19,14 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { ListaOpcionesComponent } from './preguntas/lista-opciones/lista-opciones.component';
 import { MainAdminEvaluacionComponent, ModalAdminEvaluacion } from './admin-evaluacion/main-admin-evaluacion/main-admin-evaluacion.component';
 import { FormAdminEvaluacionComponent } from './admin-evaluacion/form-admin-evaluacion/form-admin-evaluacion.component';
-import { CheckboxListModule } from '@shared/components/checkbox-list/checkbox-list.module';
 import { FormSeccionesComponent } from './preguntas/form-secciones/form-secciones.component';
+import { ListaTemasComponent } from './admin-evaluacion/lista-temas/lista-temas.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
     MainGestionarEvaluacionComponent, ModalTemas, ModalSeccion, CrearSimuladorComponent, ModalPregunta, FormTemasComponent, MainPreguntasComponent, FormPreguntasComponent, ListaOpcionesComponent, 
-    MainAdminEvaluacionComponent, FormAdminEvaluacionComponent, ModalAdminEvaluacion, FormSeccionesComponent
+    MainAdminEvaluacionComponent, FormAdminEvaluacionComponent, ModalAdminEvaluacion, FormSeccionesComponent, ListaTemasComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +40,7 @@ import { FormSeccionesComponent } from './preguntas/form-secciones/form-seccione
     FormSimuladorModule,
     MaterialFileInputModule,
     KatexModule,
-    CheckboxListModule
+    MatCheckboxModule
   ]
 })
 export class GestionarEvaluacionModule { }

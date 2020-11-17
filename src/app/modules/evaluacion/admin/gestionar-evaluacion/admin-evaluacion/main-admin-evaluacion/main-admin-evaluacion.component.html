@@ -5,13 +5,4 @@
             [isUpdate]="true" (update)="modalActualizar($event)"
             [isDelete]="true" (delete)="modalEliminar($event)"></app-tabla>
     </div>
-    <div *ngIf="secciones.length != 0">
-        <div class="col-12" *ngFor="let seccion of secciones; let i = index">
-            {{ seccion.nombre }}
-            <app-checkbox-list [(ngModel)]="valores[i]" [property]="'nombre'" [opciones]="temasAgrupados[seccion.id]"></app-checkbox-list>
-        </div>
-    </div>
-    <div class="col-12">
-        {{ valores | json  }}
-    </div>
 </div>

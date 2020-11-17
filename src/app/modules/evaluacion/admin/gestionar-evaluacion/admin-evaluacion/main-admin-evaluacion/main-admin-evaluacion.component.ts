@@ -6,11 +6,13 @@ import { Evaluacion } from '@models/evaluacion/Evaluacion';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Tabla } from '@models/utils/Tabla';
+import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
 import { SeccionesService } from '@services/evaluacion/secciones.service';
 import { TemasService } from '@services/evaluacion/temas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { BC_ADMIN_EVALUACION } from '@shared/routing-list/ListLinks';
 import { fadeInRight } from '@shared/utils/animations/router.animations';
+import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,15 +24,14 @@ import { ToastrService } from 'ngx-toastr';
 export class MainAdminEvaluacionComponent implements OnInit {
 
   columnasEvaluacion: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Temas', json: 'temas' }, { encabezado: 'Acciones', json: 'acciones' }];
-  evaluaciones: Evaluacion[] = [{ nombre: 'Examen A', temas: [], grupose: [] }];
+  evaluaciones: Evaluacion[] = [];
 
   secciones:Seccion[] = [];
   temas: Tema[] = [];
   temasAgrupados: any = {};
-  valores: any = [[], []];
 
   constructor(public dialog: MatDialog, private _toastr: ToastrService, private _swal: SweetalertService,
-    private _secciones: SeccionesService, private _temas: TemasService) {
+    private _secciones: SeccionesService, private _temas: TemasService, private _evaluaciones: AdminEvaluacionesService) {
     BreadcrumbComponent.update(BC_ADMIN_EVALUACION)
   }
 
@@ -40,17 +41,13 @@ export class MainAdminEvaluacionComponent implements OnInit {
 
   /**************************************** HTTP REST ************************************************/
   async getCatalogos() {
+    this._evaluaciones.getAll().subscribe( evaluaciones => this.evaluaciones = evaluaciones );
     this._secciones.get().subscribe( secciones => { 
       this.secciones = secciones
       this._temas.getAll().subscribe( temas => {
         this.temas = temas
-        console.log("=============>")
-        console.log(this.secciones)
-        console.log("=============>")
-        console.log(this.temas);
         this.temasAgrupados = this.groupBy( this.temas, 'idSeccion' );
-        console.log(this.temasAgrupados);
-        this.valores[1].push( this.temasAgrupados['ZMZG3v5adGZw7gGoIhzO'][1] )
+        //this.valores[1].push( this.temasAgrupados['ZMZG3v5adGZw7gGoIhzO'][1] )
       } );
     });
     
@@ -92,12 +89,12 @@ export class MainAdminEvaluacionComponent implements OnInit {
   }
 
   modalEliminar(evaluacion: Evaluacion) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar tema '${evaluacion.nombre}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar evaluación '${evaluacion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
-          /* this._temas.delete(tema).then(() => {
-            this._swal.eliminadoCorrecto('El tema se ha eliminado')
-          }).catch(err => this._toastr.error(err)); */
+          this._evaluaciones.delete(evaluacion).then(() => {
+            this._swal.eliminadoCorrecto('La evaluación se ha eliminado')
+          }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
         }
       });
   }
