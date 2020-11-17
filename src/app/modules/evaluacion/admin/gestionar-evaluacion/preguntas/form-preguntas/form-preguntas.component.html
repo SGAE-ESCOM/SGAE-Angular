@@ -17,40 +17,44 @@
                         <mat-form-field appearance="legacy">
                             <mat-label>Enunciado</mat-label>
                             <textarea formControlName="enunciado" rows="4" name="enunciado" id="enunciado" matInput placeholder="Escribe el enunciado" required></textarea>
-                            <mat-error *ngIf="enunciado.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                            <mat-error *ngIf="enunciado.hasError('required')">{{ MSJ_ERROR_REQUERIDO }}</mat-error>
                             <mat-error *ngIf="enunciado.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
                             <mat-icon matSuffix>playlist_add_check </mat-icon>
                         </mat-form-field>
                     </div>
-                    <div class="col-12" *ngIf="isMain">
-                        <mat-form-field>
-                            <ngx-mat-file-input formControlName="img" name="imgEnunciado"
-                                placeholder="Imagen del enunciado"
-                                [accept]="'.jpg, .png, .jpeg'"
-                                [valuePlaceholder]="( img.value ) ? 'Archivo seleccionado': 'ARCHIVO NO SELECCIONADO' "
-                                (change)="handleUpload($event, 'img' )"></ngx-mat-file-input>
-                            <mat-icon class="material-icons-outlined" matSuffix>folder</mat-icon>
-                            <mat-hint class="toggle-hint"> Sólo imagenes y archivos no mayores a 1 MB </mat-hint>
-                            <mat-error *ngIf="img.hasError('required')">
-                                Este campo es requerido
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="col-12 pb-5" *ngIf="isMain">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5">
+                                <mat-form-field>
+                                    <ngx-mat-file-input formControlName="img" name="imgEnunciado"
+                                        placeholder="Imagen del enunciado"
+                                        [accept]="'.jpg, .png, .jpeg'"
+                                        [valuePlaceholder]="( img.value ) ? 'Archivo seleccionado': 'ARCHIVO NO SELECCIONADO' "
+                                        (change)="handleUpload($event, 'img' )"></ngx-mat-file-input>
+                                    <mat-icon class="material-icons-outlined" matSuffix>folder</mat-icon>
+                                    <mat-hint class="toggle-hint"> Sólo imagenes y archivos no mayores a 1 MB </mat-hint>
+                                    <mat-error *ngIf="img.hasError('required')">
+                                        Este campo es requerido
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-12" *ngIf="isMain">
+                    <div class="col-12 pb-4" *ngIf="isMain">
                         <b>Respuesta:</b>
                         <p>Selecciona el número de la opción que sera la respuesta. Antes debes de ingresar opciones</p>
-                        <div class="form-group">
-                            <mat-form-field>
-                                <mat-label>Respuesta</mat-label>
-                                <mat-select formControlName="respuesta" name="respuesta" required>
-                                    <mat-option *ngFor="let opcion of opciones.value" [value]="opcion.id">
-                                        {{opcion.id + 1}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="respuesta.hasError('required')">
-                                    Este campo es requerido
-                                </mat-error>
-                            </mat-form-field>
+                        <div class="row">
+                            <div class="form-group  col-sm-6 col-md-5">
+                                <mat-form-field>
+                                    <mat-label>Respuesta</mat-label>
+                                    <mat-select formControlName="respuesta" name="respuesta" required>
+                                        <mat-option *ngFor="let opcion of opciones.value" [value]="opcion.id">
+                                            {{opcion.id + 1}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="respuesta.hasError('required')"> Este campo es requerido </mat-error>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12" *ngIf="isMain">

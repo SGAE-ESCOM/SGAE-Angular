@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { TemasService } from '@services/evaluacion/temas.service';
-import { MJS_ERROR_CONECTAR_SERVIDOR, MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
+import { MSJ_ERROR_CONECTAR_SERVIDOR, MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,8 +22,8 @@ export class FormTemasComponent implements OnInit, OnChanges {
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
   
   //STATIC
-  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
-  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
   
   fgTema: FormGroup;
   
@@ -51,10 +51,10 @@ export class FormTemasComponent implements OnInit, OnChanges {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
       }, err => {
-        this._toastr.error(MJS_ERROR_CONECTAR_SERVIDOR);
+        this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR);
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 
@@ -68,10 +68,10 @@ export class FormTemasComponent implements OnInit, OnChanges {
         this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
-        this._toastr.error(MJS_ERROR_CONECTAR_SERVIDOR);
+        this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR);
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 

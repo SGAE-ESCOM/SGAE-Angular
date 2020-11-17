@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM} from '@shared/utils/mensajes';
+import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM} from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,8 +20,8 @@ import { ToastrService } from 'ngx-toastr';
 export class MainListaComponent implements OnInit, ControlValueAccessor {
 
   @Input() noDraggable:boolean = false;
-  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
-  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
 
   value: string[] = [];
   isDisabled: boolean;
@@ -64,7 +64,7 @@ export class MainListaComponent implements OnInit, ControlValueAccessor {
       else
         this.value.push(this.item.value);
     }else{
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 

@@ -1,9 +1,11 @@
 <span class="example-list-section">
-    <ul>
-        <li *ngFor="let opcion of opciones">
-            <mat-checkbox [color]="color" (change)="updateValue($event.checked, opcion)">
+    <ul *ngIf="opciones">
+        <li *ngFor="let opcion of opciones; let i = index">
+            <mat-checkbox [(ngModel)]="valueBoolean[i]" [color]="color" (change)="updateValue($event.checked, opcion)">
                 {{opcion[property]}}
             </mat-checkbox>
         </li>
     </ul>
+    <hr>
+    {{ valueBoolean | json }}
 </span>

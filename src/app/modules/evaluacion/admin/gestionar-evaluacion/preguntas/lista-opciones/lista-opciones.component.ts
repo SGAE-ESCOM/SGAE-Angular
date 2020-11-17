@@ -3,7 +3,7 @@ import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/cor
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Opcion, Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { fadeInLeft, fadeInRight } from '@shared/utils/animations/router.animations';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM } from '@shared/utils/mensajes';
+import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM } from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { kMaxLength } from 'buffer';
 import { ToastrService } from 'ngx-toastr';
@@ -27,8 +27,8 @@ export class ListaOpcionesComponent implements ControlValueAccessor {
   @Input() noDraggable:boolean = false;
   @Output('isMain') isMainEE: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
-  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
-  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
   
   value: Opcion[] = [];
   isMain: Boolean = true;
@@ -71,7 +71,7 @@ export class ListaOpcionesComponent implements ControlValueAccessor {
     if(this.fgLista.valid){
       this.value.push({id:this.value.length, enunciado: this.item.value, img: this.img.value});
     }else{
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 

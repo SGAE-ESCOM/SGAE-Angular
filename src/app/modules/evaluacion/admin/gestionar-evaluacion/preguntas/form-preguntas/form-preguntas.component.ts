@@ -3,7 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { PreguntasService } from '@services/evaluacion/preguntas.service';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
+import { TemasService } from '@services/evaluacion/temas.service';
+import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -21,13 +22,14 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   //STATIC
-  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MSJ_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
 
   isMain: Boolean = true;
   fgPregunta: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _preguntas: PreguntasService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _preguntas: PreguntasService, private _temas:TemasService) {
   }
 
   ngOnInit(): void { }
@@ -47,11 +49,13 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
       this._preguntas.save(pregunta).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
+        this.tema.total++;
+        this._temas.update(this.tema).then( res => console.log(res) );
       }, err => {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 
@@ -67,7 +71,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 

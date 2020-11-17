@@ -12,25 +12,40 @@ export class TemasService {
 
   private temasCollection: AngularFirestoreCollection<any>;
   private temasCollectionReference: CollectionReference;
-  
+
   constructor(private db: AngularFirestore) {
     this.temasCollection = db.collection<Tema>('Temas');
     this.temasCollectionReference = db.firestore.collection('Temas');
   }
 
-  save( Tema: Tema ){
+  save(Tema: Tema) {
     return this.temasCollection.add(Tema);
   }
 
-  get(seccion:Seccion) {
+  get(seccion: Seccion) {
     return this.temasCollectionReference.where('idSeccion', '==', seccion.id).get();
   }
 
-  update(Tema: Tema){
-    return this.temasCollection.doc(Tema.id).set(Tema);
+  getAll(): Observable<Tema[]> {
+    return this.temasCollection
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            const data = a.payload.doc.data() as Tema;
+            const id = a.payload.doc.id;
+            return { id, ...data } as Tema;
+          })
+        )
+      );
   }
 
-  delete( Tema: Tema ){
+  update(tema: Tema) {
+    return this.temasCollection.doc(tema.id).set(tema);
+  }
+
+  delete(Tema: Tema) {
     return this.temasCollection.doc(Tema.id).delete();
   }
+
 }

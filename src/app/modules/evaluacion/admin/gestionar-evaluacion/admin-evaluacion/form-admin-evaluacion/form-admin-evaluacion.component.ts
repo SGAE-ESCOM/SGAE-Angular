@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Evaluacion } from '@models/evaluacion/Evaluacion';
+import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { TemasService } from '@services/evaluacion/temas.service';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
+import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,18 +17,19 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
 
   @Input() opc: string = '';
   @Input() titulo: string = '';
+  @Input() secciones: Seccion[] = [];
+  @Input('temas') temasCatalogo: Tema[] = [];
   @Input() evaluacion: Evaluacion;
   @Input() tema: Tema;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   //STATIC
-  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
-  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
 
   isMain: Boolean = true;
   fgPregunta: FormGroup;
-  temasCatalogo: Tema[];
 
   constructor(private fb: FormBuilder, private _toastr: ToastrService, private _temas:TemasService) {
   }
@@ -91,6 +93,10 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   }
 
   setValues() {
+    let arr = []
+    arr.push( this.temasCatalogo[1] )
+    console.log(arr);
+    this.temas.setValue( arr );
     /* this.enunciado.setValue(this.evaluacion.enunciado);
     this.img.setValue(this.evaluacion.img);
     this.respuesta.setValue(this.evaluacion.respuesta);

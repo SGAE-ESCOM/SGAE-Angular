@@ -11,7 +11,7 @@ import { TemasService } from '@services/evaluacion/temas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { BC_PREGUNTAS } from '@shared/routing-list/ListLinks';
 import { fadeInLeft, fadeInRight } from '@shared/utils/animations/router.animations';
-import { MJS_ERROR_REQUERIDO, MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
+import { MSJ_ERROR_REQUERIDO, MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -38,8 +38,8 @@ export class MainPreguntasComponent implements OnInit {
   seccion: Seccion;
 
   //MSJ
-  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
-  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _toastr: ToastrService, 
     private _temas: TemasService, private _secciones: SeccionesService) {
@@ -51,7 +51,7 @@ export class MainPreguntasComponent implements OnInit {
   }
 
 
-  /****************************  HTTP  ***************************/
+  /******************************************  HTTP  ********************************************/
   getSecciones() {
     this._secciones.get().subscribe(secciones => this.secciones = secciones);
   }
@@ -66,10 +66,10 @@ export class MainPreguntasComponent implements OnInit {
       });
       this.temas = temas;
       console.table(temas)
-    }).catch( err =>  { this._toastr.error(MJS_ERROR_CONECTAR_SERVIDOR)});
+    }).catch( err =>  { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
   }
 
-  /****************************  ACCIONES  ***************************/
+  /************************************  ACCIONES  ************************************************/
   showSeccion(seccion: Seccion){
     this.seccion = seccion;
     this.getTemas();
@@ -87,10 +87,10 @@ export class MainPreguntasComponent implements OnInit {
         this.seccionActivada = 'temas';
   }
 
-  /**************************************** UTILS **************************************/
+  /**************************************** UTILS **************************************************/
 
 
-  /**************************************** MODALS *************************************/
+  /**************************************** MODALS ************************************************/
   ///////////////////////// SECCIONES ///////////////////////////////
   modalAgregarSeccion() {
     const dialogRef = this.dialog.open(ModalSeccion, {
@@ -164,7 +164,7 @@ export class MainPreguntasComponent implements OnInit {
   
 }
 
-/******************************* MODALS COMPONENT ***********************************/
+/************************************* MODALS COMPONENT *********************************************/
  ///////////////////////// SECCION ///////////////////////////////
 @Component({
   selector: 'modal-seccion',

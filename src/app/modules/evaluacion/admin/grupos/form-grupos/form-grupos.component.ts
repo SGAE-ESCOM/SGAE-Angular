@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Grupo } from '@models/evaluacion/Grupo';
 import { GruposService } from '@services/evaluacion/grupos.service';
-import { MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MJS_ERROR_REQUERIDO, MJS_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
+import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { ALPHANUMERICO_CON_ESPACIOS } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -15,8 +15,8 @@ import { Subject } from 'rxjs';
 })
 export class FormGruposComponent implements OnInit, OnChanges {
 
-  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
-  MJS_ERROR_REQUERIDO = MJS_ERROR_REQUERIDO;
+  MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
 
   @Input() opc: string;
   @Input() titulo: string;
@@ -60,7 +60,7 @@ export class FormGruposComponent implements OnInit, OnChanges {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 
@@ -75,7 +75,7 @@ export class FormGruposComponent implements OnInit, OnChanges {
         this._toastr.error("Ha ocurrido un error");
       });
     } else {
-      this._toastr.error(MJS_ERROR_VERIFICAR_FORM);
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
   }
 

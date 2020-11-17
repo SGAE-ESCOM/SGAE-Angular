@@ -4,8 +4,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { PreguntasService } from '@services/evaluacion/preguntas.service';
+import { TemasService } from '@services/evaluacion/temas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { MJS_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
+import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -14,14 +15,14 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./crear-simulador.component.scss']
 })
 export class CrearSimuladorComponent implements OnInit, OnChanges {
-
+  
   @Input() tema: Tema;
   @Output() onCancelar: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   fgSimulador: FormGroup;
   preguntas: Pregunta[] = [];
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _preguntas:PreguntasService, private _toast:ToastrService) { }
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _preguntas:PreguntasService, private _temas:TemasService, private _toast:ToastrService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.tema){
@@ -63,13 +64,15 @@ export class CrearSimuladorComponent implements OnInit, OnChanges {
   }
 
   modalEliminarPregunta(pregunta: Pregunta) {
-    this._swal.confirmarEliminar('¿Deseas eliminar pregunta ?', 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar('¿Deseas eliminar pregunta?', 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
           this._preguntas.delete(pregunta).then(() => {
             this.getPreguntas();
+            this.tema.total--;
+            this._temas.update(this.tema).then( res => res );
             this._swal.eliminadoCorrectamente();
-          }).catch(err => this._toast.error(MJS_ERROR_CONECTAR_SERVIDOR));
+          }).catch(err => this._toast.error(MSJ_ERROR_CONECTAR_SERVIDOR));
         }
       });
   }
@@ -85,7 +88,7 @@ export class CrearSimuladorComponent implements OnInit, OnChanges {
       });
       this.preguntas = preguntas;
       console.table(preguntas)
-    }).catch( err =>  { this._toast.error(MJS_ERROR_CONECTAR_SERVIDOR)});
+    }).catch( err =>  { this._toast.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
   }
 
   initForm() {

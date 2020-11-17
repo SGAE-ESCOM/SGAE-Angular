@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,13 +13,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class MainCheckboxListComponent implements OnInit, ControlValueAccessor {
+export class MainCheckboxListComponent implements OnChanges, ControlValueAccessor {
 
   @Input() opciones: any[] = [];
   @Input() property:string = '';
   @Input() color:string = 'primary';
   
   value: any[] = [];
+  valueBoolean: Boolean[] = [];
   isDisabled: boolean;
 
   onChange = (_: any) => { }
@@ -27,14 +28,19 @@ export class MainCheckboxListComponent implements OnInit, ControlValueAccessor {
 
 
   constructor() { }
-
-  ngOnInit(): void {
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.opciones && this.opciones != null ){
+      console.log("Hola desde onchanges");
+      this.valueBoolean = new Array(this.opciones.length).fill(false);
+    }
   }
 
   /************************* OVERRIDE *******************/
   writeValue(value: any): void {
     if (value) {
-      this.value = value || [];
+      //this.value = value || [];
+      this.setValues(value);
     } else {
       this.value = [];
     }
@@ -51,7 +57,7 @@ export class MainCheckboxListComponent implements OnInit, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
-
+  
   /********************** UTILS **********************/
   updateValue(checked:boolean, opcion: any){
     if(checked){
@@ -64,6 +70,25 @@ export class MainCheckboxListComponent implements OnInit, ControlValueAccessor {
         }
       }
     }
+    this.onChange(this.value);
+  }
+  
+  private setValues(array: any[]){
+    console.log(this.opciones);
+    console.log(array)
+    let arrayAux = [];
+    for(var i = 0; i< array.length; i++){
+      for( var j =0; j < this.opciones.length; j++ ){
+        if( Object.is( array[i], this.opciones[j] ) ){
+          arrayAux.push( {index: j, value: this.opciones[j]});
+          break;
+        }
+      }
+    }
+    arrayAux.forEach( element => {
+      //this.value.push( element )
+      this.valueBoolean[element.index] = true;
+    });
     this.onChange(this.value);
   }
 }
