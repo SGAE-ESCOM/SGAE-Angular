@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Evaluacion } from '@models/evaluacion/Evaluacion';
+import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';

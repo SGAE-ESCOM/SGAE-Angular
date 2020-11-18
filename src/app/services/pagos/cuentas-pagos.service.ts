@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, CollectionReference } from '@angular/fire/firestore';
 import { CuentaPagos } from '@models/cuentas-pagos/cuenta-pagos';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,9 +10,11 @@ import { map } from 'rxjs/operators';
 export class CuentasPagosService {
 
   private cuentasCollection: AngularFirestoreCollection<any>;
+  private cuentasCollectionReference: CollectionReference;
   
   constructor(private db: AngularFirestore) {
     this.cuentasCollection = db.collection<CuentaPagos>('CuentasPagos');
+    this.cuentasCollectionReference = db.firestore.collection('CuentasPagos');
   }
 
   save( cuenta: CuentaPagos ){
@@ -34,7 +36,11 @@ export class CuentasPagosService {
     );
   }
 
-  update(cuenta: CuentaPagos){
+  getCuenta(id): Promise<any>{
+    return this.cuentasCollectionReference.doc(id).get();
+  }
+
+  updateDatosCuenta(cuenta: CuentaPagos){
     console.log(cuenta)
     return this.cuentasCollection.doc(cuenta.id).set(cuenta);
   }

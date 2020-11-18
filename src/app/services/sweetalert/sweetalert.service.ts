@@ -151,6 +151,22 @@ export class SweetalertService {
       icon: "warning"
     });
   }
+
+  informacionActualizada(){
+    this.swalFinalizar.fire({
+      title: 'Actualizado',
+      text: 'Los datos se actualizaron exitosamente.',
+      icon: 'success'
+    });
+  }
+
+  errorActualizar(){
+    this.swalFinalizar.fire({
+      title: 'Error',
+      text: 'No se pudo actualizar los datos, intente mas tarde.',
+      icon: "error"
+    });
+  }
 }
 
 const admiracion = '<div class="swal2-icon swal2-warning swal2-icon-show" style="display: flex;"><div class="swal2-icon-content">!</div></div>';

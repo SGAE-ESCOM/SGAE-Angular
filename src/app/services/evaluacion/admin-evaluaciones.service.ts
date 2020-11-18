@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, CollectionReference } from '@angular/fire/firestore';
-import { Evaluacion } from '@models/evaluacion/Evaluacion';
+import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Observable } from 'rxjs';

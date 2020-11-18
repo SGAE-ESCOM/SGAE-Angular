@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
-import { Evaluacion } from '@models/evaluacion/Evaluacion';
+import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Tabla } from '@models/utils/Tabla';
