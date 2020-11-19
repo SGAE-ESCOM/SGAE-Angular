@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FormNuevaCuentaComponent } from './gestionar-cuentas/form-nueva-cuenta/form-nueva-cuenta.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RevisarCuentaComponent } from './revisar-cuenta/revisar-cuenta.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { RevisarCuentaComponent } from './revisar-cuenta/revisar-cuenta.componen
     MatTooltipModule,
     FormsModule, 
     ReactiveFormsModule,
-
+    MatSlideToggleModule
   ]
 })
 export class PagosAdminModule { }
