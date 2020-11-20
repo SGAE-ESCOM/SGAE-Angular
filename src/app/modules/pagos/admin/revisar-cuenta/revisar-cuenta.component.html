@@ -56,14 +56,14 @@
                         <!-- Agregar un ngIF de que no existe ningun grupo -->
                         <div *ngFor="let grupo of grupos; trackBy: trackById" class="col-12 col-md-6 form-group">
                             <section class="example-section mt-3">
-                                <mat-slide-toggle name="toogleGrupos" [(ngModel)]="grupo.isAsociado" color="accent"> {{grupo.nombre}} </mat-slide-toggle> 
+                                <mat-slide-toggle class="" name="toogleGrupos" [(ngModel)]="grupo.isAsociado" (change)="btnActualizarPagos = false;" color="accent"> {{grupo.nombre}} </mat-slide-toggle> 
                                 <!-- <mat-slide-toggle name="toogleUsuarios" [(ngModel)]="gusuarios" (change)="btnPDisable = false;" color="accent">Gestión de usuarios</mat-slide-toggle> -->
                             </section>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <button name="btnActualizarGruposAsociados" type="submit" type="submit" (click)="actualizarGrupos()" mat-button color="info">
+                            <button name="btnActualizarGruposAsociados" type="submit" type="submit" (click)="actualizarGrupos()" mat-button color="info" [disabled]="btnActualizarPagos">
                                     Actualizar <mat-icon>cached</mat-icon> 
                             </button>
                         </div>

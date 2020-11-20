@@ -18,6 +18,7 @@ import { ALPHANUMERICO_CON_ESPACIOS, NUMEROS_SIN_ESPACIOS } from '@shared/utils/
 })
 export class RevisarCuentaComponent implements OnInit {
 
+  btnActualizarPagos: boolean = true;
   grupos: GruposPagos[] = [];
   cuenta: CuentaPagos;
   fgDatosCuenta: FormGroup;
@@ -98,7 +99,19 @@ export class RevisarCuentaComponent implements OnInit {
   }
 
   actualizarGrupos(){
-    console.log(this.grupos);
+    let gruposAsociados: string[] = [];
+    this.grupos.forEach(grupo => {
+      if(grupo.isAsociado) gruposAsociados.push(grupo.id);
+    });
+
+    this.cuenta.gruposIds = gruposAsociados;
+    
+    this._cuentas.updateDatosCuenta(this.cuenta).then(() => {
+      this._swal.informacionActualizada();
+    }).catch( err => {
+      this._swal.errorActualizar();
+      this.llenarDatosCuenta();
+    });
   }
 
   trackById(index, item) {
