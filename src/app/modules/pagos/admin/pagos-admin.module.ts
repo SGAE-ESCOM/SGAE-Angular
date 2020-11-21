@@ -14,12 +14,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormNuevaCuentaComponent } from './gestionar-cuentas/form-nueva-cuenta/form-nueva-cuenta.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RevisarCuentaComponent } from './revisar-cuenta/revisar-cuenta.component';
+import { RevisarCuentaComponent, ModalNuevoCampo } from './revisar-cuenta/revisar-cuenta.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormNuevoCampoComponent } from './revisar-cuenta/form-nuevo-campo/form-nuevo-campo.component';
 
 
 @NgModule({
-  declarations: [GestionarCuentasComponent, ValidarPagosComponent, ConfigurarReferenciasComponent, ModalNuevaCuenta, FormNuevaCuentaComponent, RevisarCuentaComponent],
+  declarations: [GestionarCuentasComponent, ValidarPagosComponent, ConfigurarReferenciasComponent, ModalNuevaCuenta, FormNuevaCuentaComponent, RevisarCuentaComponent, ModalNuevoCampo, FormNuevoCampoComponent],
   imports: [
     CommonModule,
     PagosAdminRoutingModule,

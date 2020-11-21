@@ -1,23 +1,22 @@
-<!-- <form class="row" [formGroup]="fgGrupo"> -->
 <form class="row" [formGroup]="fgCuenta">
     <div class="col-12">
         <mat-form-field class="example-full-width">
             <mat-label>Nombre de la cuenta </mat-label>
-            <input formControlName="nombre" matInput placeholder="Cuenta para el IPN" autocomplete="off">
+            <input formControlName="nombre" matInput placeholder="Nombre para identificar la cuenta" autocomplete="off">
             <mat-icon matSuffix>account_balance_wallet</mat-icon>
           </mat-form-field>
     </div>
     <div class="col-12">
         <mat-form-field class="example-full-width">
             <mat-label>Nombre del banco </mat-label>
-            <input formControlName="banco" matInput placeholder="Banco México" autocomplete="off">
+            <input formControlName="banco" matInput placeholder="Nombre de la insititución bancaria" autocomplete="off">
             <mat-icon matSuffix>account_balance</mat-icon>
           </mat-form-field>
     </div>
     <div class="col-12">
         <mat-form-field class="example-full-width">
             <mat-label>Número de la cuenta bancaria </mat-label>
-            <input formControlName="noCuenta" matInput placeholder="1234000000005678" autocomplete="off">
+            <input formControlName="noCuenta" matInput autocomplete="off">
             <mat-icon matSuffix>payment</mat-icon>
           </mat-form-field>
     </div>

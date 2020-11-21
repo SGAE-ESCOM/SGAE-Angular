@@ -1,0 +1,20 @@
+<form class="row" [formGroup]="fgCampo">
+    <div class="col-12">
+        <mat-form-field class="example-full-width">
+            <mat-label>Nombre del campo </mat-label>
+            <input formControlName="nombreCampo" matInput placeholder="" autocomplete="off">
+            <mat-icon matSuffix>playlist_add_check</mat-icon>
+          </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="example-full-width">
+            <mat-label>Contenido del campo </mat-label>
+            <input formControlName="contenidoCampo" matInput placeholder="" autocomplete="off">
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field>
+    </div>
+    <div class="col-12 text-right">
+            <button mat-button (click)="cerrarModal()" name="btnModalCancelar" id="btnModalCancelar">Cancelar</button>
+            <button mat-button name="btnModalAgregar" id="btnModalAgregar" (click)="save(fgCampo)" color="success">Agregar <mat-icon>add</mat-icon></button>
+    </div>
+</form>

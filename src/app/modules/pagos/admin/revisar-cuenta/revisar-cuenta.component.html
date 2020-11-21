@@ -11,6 +11,8 @@
                     <h5 class="m-0">Información de la cuenta</h5>
                 </div>
                 <div class="card-body">
+
+                    <!-- Seccion Datos Principales -->
                     <h5>Datos principales</h5>
                     <form [formGroup]="fgDatosCuenta">
                         <div class="row">
@@ -19,7 +21,7 @@
                                     <mat-label>Nombre de la cuenta</mat-label>
                                     <input matInput formControlName="nombre" id="nombre" name="nombre" [readonly] = "!editarCuenta" required>
                                     <mat-icon matSuffix>account_balance_wallet</mat-icon>
-                                    <!-- <mat-error *ngIf="fgAdmin.get('nombres').invalid">{{getNombreErrorMessage()}}</mat-error> -->
+                                    <mat-error *ngIf="fgDatosCuenta.get('nombre').invalid">{{getNombreCuentaErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-md-4 form-group">
@@ -27,7 +29,7 @@
                                     <mat-label>Nombre del banco</mat-label>
                                     <input matInput formControlName="banco" id="banco" name="banco" [readonly] = "!editarCuenta" required>
                                     <mat-icon matSuffix>account_balance</mat-icon>
-                                    <!-- <mat-error *ngIf="fgAdmin.get('apellidos').invalid">{{getApellidoErrorMessage()}}</mat-error> -->
+                                    <mat-error *ngIf="fgDatosCuenta.get('banco').invalid">{{getBancoErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-md-4 form-group">
@@ -35,7 +37,7 @@
                                     <mat-label>Número de la cuenta bancaria</mat-label>
                                     <input matInput formControlName="noCuenta" id="noCuenta" name="noCuenta" [readonly] = "!editarCuenta" required>
                                     <mat-icon matSuffix>payment</mat-icon>
-                                    <!-- <mat-error *ngIf="fgAdmin.get('apellidos').invalid">{{getApellidoErrorMessage()}}</mat-error> -->
+                                    <mat-error *ngIf="fgDatosCuenta.get('noCuenta').invalid">{{getNoCuentaErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -50,33 +52,66 @@
                             </div>
                         </div>
                     </form>
+
+                    <!-- Seccion Datos Adicionales -->
                     <hr>
-                    <h5>Grupos asociados</h5>
+                    <h5>Datos adicionales</h5>
                     <div class="row">
-                        <!-- Agregar un ngIF de que no existe ningun grupo -->
-                        <div *ngFor="let grupo of grupos; trackBy: trackById" class="col-12 col-md-6 form-group">
-                            <section class="example-section mt-3">
-                                <mat-slide-toggle class="" name="toogleGrupos" [(ngModel)]="grupo.isAsociado" (change)="btnActualizarPagos = false;" color="accent"> {{grupo.nombre}} </mat-slide-toggle> 
-                                <!-- <mat-slide-toggle name="toogleUsuarios" [(ngModel)]="gusuarios" (change)="btnPDisable = false;" color="accent">Gestión de usuarios</mat-slide-toggle> -->
-                            </section>
+                        <div class="col-12 text-center">
+                            <h6>No existen datos adicionales</h6>
+                        </div>
+                        <div class="col-12 col-md-4 form-group">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Nombre de la cuenta</mat-label>
+                                <input matInput  id="nombre" name="nombre"  required>
+                            </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <button name="btnActualizarGruposAsociados" type="submit" type="submit" (click)="actualizarGrupos()" mat-button color="info" [disabled]="btnActualizarPagos">
+                            <button *ngIf="false;" name="btnEditarDatosAds"  type="submit" mat-button color="info" > Editar <mat-icon>create</mat-icon> </button>
+                            <button name="btnAgregarDatos" type="submit" mat-button (click)="agregarDatoAdicional()" color="success"> Agregar <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!-- Seccion Grupos Asociados -->
+                    <hr>
+                    <h5>Grupos asociados</h5>
+                    <div class="row">
+
+                        <div *ngIf="grupos.length == 0; else elseBlock" class="col-12 text-center">
+                            <h6>No se han agregado grupos</h6>
+                        </div>
+                        
+                        <ng-template #elseBlock>
+                            <div *ngFor="let grupo of grupos; trackBy: trackById" class="col-12 col-md-6 form-group">
+                                <section class="example-section mt-3">
+                                    <mat-slide-toggle class="" name="toogleGrupos" [(ngModel)]="grupo.isAsociado" (change)="btnActualizarPagos = false;" color="accent"> {{grupo.nombre}} </mat-slide-toggle> 
+                                </section>
+                            </div>
+                        </ng-template>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button name="btnActualizarGruposAsociados" type="submit" (click)="actualizarGrupos()" mat-button color="info" [disabled]="btnActualizarPagos">
                                     Actualizar <mat-icon>cached</mat-icon> 
                             </button>
                         </div>
                     </div>
+
+                    <!-- Salir Formulario -->
                     <hr>
-                   
                     <div class="row">
                         <div class="col-12 text-right">
                             <button name="btnRegresar" type="submit" [routerLink]="['/app/pagos/gestionar-cuentas']" mat-button color="warning">
                                     Regresar <mat-icon>undo</mat-icon> 
                             </button>
                         </div>
-                    </div> 
+                    </div>
+
                 </div>
             </div>
         </div>
