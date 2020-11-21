@@ -1,6 +1,6 @@
 <div *ngIf="cuentas" class="row" [@cardAnimation]="cuentas.length">
     <div *ngFor="let cuenta of cuentas; trackBy: trackById" class="col-12 col-sm-4 col-md-6 py-2">
-        <div class="card card-hover mat-elevation-z2 bd-callout bd-callout-success pt-2 pb-4" name="btnIrA" matRipple [routerLink]="[ '/app/pagos/gestionar-cuentas/revisar-cuenta/', cuenta.id ]">
+        <div class="card card-hover mat-elevation-z2 bd-callout bd-callout-success pt-2 pb-4 tarjeta" name="btnIrA" matRipple [routerLink]="[ '/app/pagos/gestionar-cuentas/revisar-cuenta/', cuenta.id ]">
             <div class="card-body">
                 <h5 class="card-title">
                     <span>
