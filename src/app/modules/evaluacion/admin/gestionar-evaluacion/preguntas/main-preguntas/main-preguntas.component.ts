@@ -82,6 +82,10 @@ export class MainPreguntasComponent implements OnInit {
     this.seccionActivada = 'pregunta';
   }
 
+  cancelarTema(){
+    this.seccionActivada = 'secciones';
+  }
+  
   cancelarPreguntas(accion:Boolean) {
       if (accion)
         this.seccionActivada = 'temas';

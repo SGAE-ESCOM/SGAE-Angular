@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-12">
                         <app-lista-temas formControlName="temas" [property]="'nombre'" [property2]="'total'" [temas]="temasCatalogo" [secciones]="secciones" [error]="temas.hasError('required')"></app-lista-temas>
-                        <mat-error *ngIf="temas.hasError('required')" @fadeInOutDown>{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                        <mat-error class="mat-table-error" *ngIf="temas.hasError('required')" @fadeInOutDown>{{ MJS_ERROR_REQUERIDO }}</mat-error>
                     </div>
                 </form>
             </div>

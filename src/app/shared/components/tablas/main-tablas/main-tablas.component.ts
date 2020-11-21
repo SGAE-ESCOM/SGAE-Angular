@@ -43,35 +43,35 @@ export class MainTablasComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['datos']){
+    if (changes['datos']) {
       this.updateTabla();
     }
-    if(changes['columnas']){
+    if (changes['columnas']) {
       this.updateColumnas();
     }
   }
 
-  onSave(){
+  onSave() {
     this.save.emit(true);
   }
 
-  onShow(fila:any){
+  onShow(fila: any) {
     this.show.emit(fila);
   }
 
-  onUpdate(fila:any){
+  onUpdate(fila: any) {
     this.update.emit(fila);
   }
 
-  onDelete(fila:any){
+  onDelete(fila: any) {
     this.delete.emit(fila);
   }
 
-  onCustom(fila:any){
+  onCustom(fila: any) {
     this.custom.emit(fila);
   }
 
@@ -82,14 +82,17 @@ export class MainTablasComponent implements OnInit, OnChanges {
     }
   }
 
-  private updateTabla(){
+  private updateTabla() {
     this.dataSource.data = this.datos;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-  
-  private updateColumnas(){
-    this.encabezado = this.columnas.map( columna => columna.json );
+
+  private updateColumnas() {
+    this.encabezado = this.columnas.map(columna => columna.json);
   }
 
+  isObject(element: any) {
+    return element instanceof Object;
+  }
 }

@@ -23,7 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MainAdminEvaluacionComponent implements OnInit {
 
-  columnasEvaluacion: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Temas', json: 'temas' }, { encabezado: 'Acciones', json: 'acciones' }];
+  columnasEvaluacion: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Temas', json: 'temas', property: 'temas', objectProperty:'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
   evaluaciones: Evaluacion[] = [];
 
   secciones:Seccion[] = [];

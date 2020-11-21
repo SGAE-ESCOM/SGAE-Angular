@@ -14,11 +14,6 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <!--<div class="p-2 bd-highlight">
-                <button *ngIf="isSave" (click)="onSave()" mat-fab color="info" aria-label="Example icon button with a delete icon">
-                    <mat-icon>save</mat-icon>
-                </button>
-            </div>-->
         </div>
     </div>
 </div>
@@ -33,7 +28,16 @@
                 <div *ngIf="columna.json !== 'acciones' ">
                     <ng-container [matColumnDef]="columna.json">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columna.encabezado }} </th>
-                        <td mat-cell *matCellDef="let row"> {{ row[columna.json] }} </td>
+                        <td mat-cell *matCellDef="let row">
+                            <div *ngIf="isObject(row[columna.json]); else Primitivo">
+                                <ul>
+                                    <li *ngFor="let item of row[columna.json]; let i = index"> {{ row[columna.property][i][columna.objectProperty] }} </li>
+                                </ul>
+                            </div>
+                            <ng-template #Primitivo>
+                                {{ row[columna.json] }}
+                            </ng-template>
+                        </td>
                     </ng-container>
                 </div>
 

@@ -11,4 +11,10 @@ export class Tabla {
      * Valor del JSON, puede ser diferente al del encabezado
      */
     json: string;
+    /**
+     * Valor del property si es Array
+     */
+    property?: string;
+
+    objectProperty?: string;
 }
