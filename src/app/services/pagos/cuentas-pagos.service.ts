@@ -20,6 +20,7 @@ export class CuentasPagosService {
   save( cuenta: CuentaPagos ){
     cuenta.estado = "Pendiente";
     cuenta.gruposIds = [];
+    cuenta.datosAds = [];
     return this.cuentasCollection.add(cuenta);
   }
 

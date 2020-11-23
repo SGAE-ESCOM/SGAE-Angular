@@ -23,12 +23,15 @@ export class RevisarCuentaComponent implements OnInit {
   btnActualizarPagos: boolean = true;
   grupos: GruposPagos[] = [];
   cuenta: CuentaPagos;
+  datosAds: {}[];
   fgDatosCuenta: FormGroup;
 
   editarCuenta: boolean = false;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private _cuentas: CuentasPagosService, private _grupos: GruposService, 
       private _swal: SweetalertService, public dialog: MatDialog) {
+    
+    /***************** REVISAR PERMISOS *******************/
 
     BreadcrumbComponent.update(BC_REVISAR_CUENTA);
   }
@@ -62,10 +65,12 @@ export class RevisarCuentaComponent implements OnInit {
         });
       }
 
+      console.log(this.cuenta.datosAds);
+      this.datosAds = this.cuenta.datosAds;
+
     }).catch( err =>  {
       console.log(err);
     });
-    
   }
 
   llenarDatosCuenta(){
@@ -117,12 +122,14 @@ export class RevisarCuentaComponent implements OnInit {
 
   agregarDatoAdicional(){
     const dialogRef = this.dialog.open(ModalNuevoCampo, {
-      width: '600px'
+      width: '600px',
+      data: { cuenta: this.cuenta }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == null) {
+      if (result != null) {
         //Ocurrio un error y no se pudo registrar
+        this.datosAds = this.cuenta.datosAds;
       }
     });
   }
@@ -148,7 +155,6 @@ export class RevisarCuentaComponent implements OnInit {
   trackById(index, item) {
     return item.id;
   }
-
 }
 
 

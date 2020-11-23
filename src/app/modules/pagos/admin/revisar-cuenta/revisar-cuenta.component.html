@@ -57,19 +57,20 @@
                     <hr>
                     <h5>Datos adicionales</h5>
                     <div class="row">
-                        <div class="col-12 text-center">
+                        <div *ngIf="datosAds.length == 0;" class="col-12 text-center">
                             <h6>No existen datos adicionales</h6>
                         </div>
-                        <div class="col-12 col-md-4 form-group">
+                        <div *ngFor="let campo of datosAds; " class="col-12 col-md-4 form-group">
                             <mat-form-field appearance="legacy">
-                                <mat-label>Nombre de la cuenta</mat-label>
-                                <input matInput  id="nombre" name="nombre"  required>
+                                <mat-label>{{ campo.nombreCampo }}</mat-label>
+                                <input matInput  id="nombre" name="nombre" readonly required>
+                                {{ campo.contenido }}
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <button *ngIf="false;" name="btnEditarDatosAds"  type="submit" mat-button color="info" > Editar <mat-icon>create</mat-icon> </button>
+                            <button *ngIf="false;" name="btnEditarDatosAds" (click)="prueba()" type="submit" mat-button color="info" > Editar <mat-icon>create</mat-icon> </button>
                             <button name="btnAgregarDatos" type="submit" mat-button (click)="agregarDatoAdicional()" color="success"> Agregar <mat-icon>add</mat-icon>
                             </button>
                         </div>

@@ -5,7 +5,7 @@
             <hr>
         </div>
         <div class="col-12">
-            <app-form-nuevo-campo (cerrar)="onNoClick()" (accion)="accion($event)"></app-form-nuevo-campo>
+            <app-form-nuevo-campo [cuenta]="data.cuenta" (cerrar)="onNoClick()" (accion)="accion($event)"></app-form-nuevo-campo>
         </div>
     </div>
 </div>

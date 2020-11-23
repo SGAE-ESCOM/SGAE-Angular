@@ -1,5 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CuentaPagos } from '@models/cuentas-pagos/cuenta-pagos';
+import { CuentasPagosService } from '@services/pagos/cuentas-pagos.service';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -9,13 +12,14 @@ import { Subject } from 'rxjs';
 })
 export class FormNuevoCampoComponent implements OnInit {
 
+  @Input() cuenta: CuentaPagos;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() accion: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   fgCampo: FormGroup;
   isForm: Subject<Boolean> = new Subject<Boolean>();
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private _cuentas: CuentasPagosService, private _toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -23,16 +27,20 @@ export class FormNuevoCampoComponent implements OnInit {
   }
 
   save(form: FormGroup) {
-    // if (form.valid) {
-    //   this._cuentas.save(form.value).then(caso => {
-    //     this._toastr.success("Agregado correctamente");
-    //     this.accion.emit(true);
-    //   }, err => {
-    //     this._toastr.error("Ha ocurrido un error");
-    //   });
-    // } else {
-    //   this._toastr.error("Llena todos los campos requeridos");
-    // }
+    if (form.valid) {
+
+      let item: {} = { nombreCampo: form.get("nombreCampo").value,
+                       contenido: form.get("contenidoCampo").value};
+      this.cuenta.datosAds.push(item);
+      this._cuentas.updateDatosCuenta(this.cuenta).then(caso => {
+        this._toastr.success("Agregado correctamente");
+        this.accion.emit(true);
+      }, err => {
+        this._toastr.error("Ha ocurrido un error");
+      });
+    } else {
+      this._toastr.error("Llena todos los campos requeridos");
+    }
   }
 
   cerrarModal() {
@@ -41,9 +49,8 @@ export class FormNuevoCampoComponent implements OnInit {
 
   initForm(): Promise<Boolean> {
     this.fgCampo = this.fb.group({
-      nombre: ['', []],
-      banco: ['', []],
-      noCuenta: ['', []]
+      nombreCampo: ['', []],
+      contenidoCampo: ['', []]
     });
     return new Promise<Boolean>(resolve => { return true });
   }
