@@ -23,7 +23,8 @@ export class RevisarCuentaComponent implements OnInit {
   btnActualizarPagos: boolean = true;
   grupos: GruposPagos[] = [];
   cuenta: CuentaPagos;
-  datosAds: {}[];
+  idCuenta: string;
+  datosAds: {}[] = [];
   fgDatosCuenta: FormGroup;
 
   editarCuenta: boolean = false;
@@ -32,7 +33,7 @@ export class RevisarCuentaComponent implements OnInit {
       private _swal: SweetalertService, public dialog: MatDialog) {
     
     /***************** REVISAR PERMISOS *******************/
-
+    this.idCuenta = this.route.snapshot.paramMap.get("id");
     BreadcrumbComponent.update(BC_REVISAR_CUENTA);
   }
 
@@ -46,10 +47,13 @@ export class RevisarCuentaComponent implements OnInit {
       noCuenta: ['', [Validators.required, Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
     });
 
-    let idCuenta = this.route.snapshot.paramMap.get("id");
-    this._cuentas.getCuenta(idCuenta).then((cuenta) => {
+    this.recargarCuenta();
+  }
+
+  recargarCuenta(){
+    this._cuentas.getCuenta(this.idCuenta).then((cuenta) => {
       this.cuenta = cuenta.data();
-      this.cuenta.id = idCuenta;
+      this.cuenta.id = this.idCuenta;
       this.llenarDatosCuenta();
 
       //Informacion Grupos Asociados
@@ -65,7 +69,7 @@ export class RevisarCuentaComponent implements OnInit {
         });
       }
 
-      console.log(this.cuenta.datosAds);
+      //Datos Adicionales
       this.datosAds = this.cuenta.datosAds;
 
     }).catch( err =>  {
@@ -123,15 +127,18 @@ export class RevisarCuentaComponent implements OnInit {
   agregarDatoAdicional(){
     const dialogRef = this.dialog.open(ModalNuevoCampo, {
       width: '600px',
-      data: { cuenta: this.cuenta }
+      data: { id: this.cuenta.id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        //Ocurrio un error y no se pudo registrar
-        this.datosAds = this.cuenta.datosAds;
+        this.recargarCuenta();
       }
     });
+  }
+
+  editarCampo(id: string){
+    console.log(id);
   }
 
   getNombreCuentaErrorMessage(){

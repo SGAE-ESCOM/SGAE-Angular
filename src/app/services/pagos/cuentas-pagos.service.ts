@@ -43,7 +43,6 @@ export class CuentasPagosService {
   }
 
   updateDatosCuenta(cuenta: CuentaPagos){
-    console.log(cuenta)
     return this.cuentasCollection.doc(cuenta.id).set(cuenta);
   }
 
