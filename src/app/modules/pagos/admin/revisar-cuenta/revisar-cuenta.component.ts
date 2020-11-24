@@ -55,22 +55,24 @@ export class RevisarCuentaComponent implements OnInit {
       this.cuenta = cuenta.data();
       this.cuenta.id = this.idCuenta;
       this.llenarDatosCuenta();
+      
+      //Datos Adicionales
+      this.datosAds = this.cuenta.datosAds;
 
       //Informacion Grupos Asociados
       this.grupos.forEach(grupo => {
         grupo.isAsociado = false;
       });
-      
+
       if(this.cuenta.gruposIds.length != 0){
         this.cuenta.gruposIds.forEach(id => {
           this.grupos.find(grupo => {
-            grupo.id == id;
-          })[0].isAsociado = true;
+            if(grupo.id == id)
+              return grupo;
+          }).isAsociado = true;
         });
       }
-
-      //Datos Adicionales
-      this.datosAds = this.cuenta.datosAds;
+      
 
     }).catch( err =>  {
       console.log(err);
@@ -127,7 +129,7 @@ export class RevisarCuentaComponent implements OnInit {
   agregarDatoAdicional(){
     const dialogRef = this.dialog.open(ModalNuevoCampo, {
       width: '600px',
-      data: { id: this.cuenta.id }
+      data: { cuenta: this.cuenta, opc: "agregar", titulo:"Nuevo Campo" }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -138,7 +140,35 @@ export class RevisarCuentaComponent implements OnInit {
   }
 
   editarCampo(id: string){
-    console.log(id);
+    const dialogRef = this.dialog.open(ModalNuevoCampo, {
+      width: '600px',
+      data: { cuenta: this.cuenta, opc: "actualizar", titulo:"Editar Campo", idCampo: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.recargarCuenta();
+      }
+    });
+  }
+
+  eliminarCampo(campo: any){
+    this._swal.confirmarEliminar(`¿Deseas eliminar el campo '${campo.nombreCampo}'?`, 'No se podrá revertir esta acción.')
+    .then((result) => {
+      if (result.value) {
+        let index = this.cuenta.datosAds.indexOf(campo,0);
+        if (index > -1) {
+          this.cuenta.datosAds.splice(index, 1);
+        }
+        this._cuentas.updateDatosCuenta(this.cuenta).then(() => {
+          this._swal.informacionActualizada();
+          this.recargarCuenta();
+        }).catch( err => {
+          this._swal.errorActualizar();
+          this.llenarDatosCuenta();
+        });
+      }
+    });
   }
 
   getNombreCuentaErrorMessage(){

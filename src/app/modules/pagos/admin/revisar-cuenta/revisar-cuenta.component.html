@@ -57,7 +57,7 @@
                     <hr>
                     <h5>Información adicional</h5>
                     <div class="row">
-                        <div *ngIf="datosAds.length == 0;" class="col-24 text-center">
+                        <div *ngIf="datosAds.length == 0;" class="col-12 text-center">
                             <h6>No existen datos adicionales</h6>
                         </div>
                         <ng-container *ngFor="let campo of datosAds; " >
@@ -68,7 +68,16 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-md-1">
-                                <button  type="submit"  (click)="editarCampo(campo.id)" mat-icon-button color="info"><mat-icon>create</mat-icon> </button>     
+                                <table width="100%" >
+                                    <tr>
+                                        <td>
+                                            <button  class="createbtn" type="submit" (click)="editarCampo(campo.id)" mat-icon-button color="info"><mat-icon>create</mat-icon> </button> 
+                                        </td>
+                                        <td>
+                                            <button  class="deletebtn" type="submit" (click)="eliminarCampo(campo)" mat-icon-button color="danger"><mat-icon>delete</mat-icon> </button> 
+                                        </td>
+                                    </tr> 
+                                </table>   
                             </div>
                         </ng-container>
                     </div>

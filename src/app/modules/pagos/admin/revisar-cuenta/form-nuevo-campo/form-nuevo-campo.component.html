@@ -13,8 +13,9 @@
             <mat-icon matSuffix></mat-icon>
           </mat-form-field>
     </div>
-    <div class="col-12 text-right">
+    <div class="col-12 text-right" [ngSwitch]="opc">
             <button mat-button (click)="cerrarModal()" name="btnModalCancelar" id="btnModalCancelar">Cancelar</button>
-            <button mat-button name="btnModalAgregar" id="btnModalAgregar" (click)="save(fgCampo)" color="success">Agregar <mat-icon>add</mat-icon></button>
+            <button mat-button *ngSwitchCase="'agregar'" name="btnModalAgregar" id="btnModalAgregar" (click)="save(fgCampo)" color="success">Agregar <mat-icon>add</mat-icon></button>
+            <button mat-button *ngSwitchCase="'actualizar'" name="btnModalActualizar" id="btnModalActualizar" (click)="update(fgCampo)" color="info">Actualizar <mat-icon>cached</mat-icon></button>
     </div>
 </form>

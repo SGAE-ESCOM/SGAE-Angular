@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h3 class="text-center">Nuevo Campo </h3>
+            <h3 class="text-center"> {{data.titulo}} </h3>
             <hr>
         </div>
         <div class="col-12">
-            <app-form-nuevo-campo [idCuenta]="data.id" (cerrar)="onNoClick()" (accion)="accion($event)"></app-form-nuevo-campo>
+            <app-form-nuevo-campo [cuenta]="data.cuenta" [opc]="data.opc" [titulo]="data.titulo" [idCampo]="data.idCampo" (cerrar)="onNoClick()" (accion)="accion($event)"></app-form-nuevo-campo>
         </div>
     </div>
 </div>
