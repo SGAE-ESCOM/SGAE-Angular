@@ -40,7 +40,6 @@ export class FormGruposComponent implements OnInit, OnChanges {
         if (result)
           this.fgGrupo.get('nombre').setValue(this.grupo.nombre);
       });
-
     }
   }
 

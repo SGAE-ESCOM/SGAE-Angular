@@ -20,6 +20,7 @@ export class CuentasPagosService {
   save( cuenta: CuentaPagos ){
     cuenta.estado = "Pendiente";
     cuenta.gruposIds = [];
+    cuenta.datosAds = [];
     return this.cuentasCollection.add(cuenta);
   }
 
@@ -42,7 +43,6 @@ export class CuentasPagosService {
   }
 
   updateDatosCuenta(cuenta: CuentaPagos){
-    console.log(cuenta)
     return this.cuentasCollection.doc(cuenta.id).set(cuenta);
   }
 

@@ -5,15 +5,14 @@ export class CuentaPagos {
     noCuenta?: string;
     estado?: string;
     referencia?: string;
+    datosAds?: {}[];
     gruposIds?: string[];
 
-    constructor(id?: string, nombre?: string, banco?: string, noCuenta?: string, estado?: string, referencia?: string, gruposIds?: string[]) {
-        this.id = id;
+    constructor(nombre?: string, banco?: string, noCuenta?: string, estado?: string, referencia?: string) {
         this.nombre = nombre;
         this.banco = banco;
         this.noCuenta = noCuenta;
         this.estado = estado;
         this.referencia = referencia;
-        this.gruposIds = gruposIds;
     }
 }
