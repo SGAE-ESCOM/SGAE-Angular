@@ -1,25 +1,29 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Aplicacion } from '@models/evaluacion/aplicacion';
 import { Evaluacion } from '@models/evaluacion/evaluacion';
-import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
+import { Grupo } from '@models/evaluacion/Grupo';
 import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
 import { fadeInOutDown } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_CONECTAR_SERVIDOR, MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
-  selector: 'app-form-admin-evaluacion',
-  templateUrl: './form-admin-evaluacion.component.html',
-  styleUrls: ['./form-admin-evaluacion.component.scss'],
+  selector: 'app-form-aplicacion',
+  templateUrl: './form-aplicacion.component.html',
+  styleUrls: ['./form-aplicacion.component.scss'],
   animations: [fadeInOutDown()]
 })
-export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
+export class FormAplicacionComponent implements OnInit, OnChanges {
 
   @Input() opc: string = '';
   @Input() titulo: string = '';
-  @Input() secciones: Seccion[] = [];
+  @Input() evaluaciones: Evaluacion[] = [];
+  @Input() grupos: Grupo[] = [];
+  @Input() aplicacion: Aplicacion;
   @Input('temas') temasCatalogo: Tema[] = [];
   @Input() evaluacion: Evaluacion;
   @Input() tema: Tema;
@@ -31,7 +35,7 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
 
   isMain: Boolean = true;
-  fgPregunta: FormGroup;
+  fgAplicacion: FormGroup;
 
   constructor(private fb: FormBuilder, private _toastr: ToastrService, private _evaluaciones: AdminEvaluacionesService) {
   }
@@ -39,8 +43,8 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.evaluacion && this.evaluacion != null) {
-      this.initFormPregunta();
+    if (changes.aplicacion && this.aplicacion != null) {
+      this.initForm();
       this.setValues();
     }
   }
@@ -82,16 +86,17 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   }
 
   /***************************** UTILS ******************************/
-  async initFormPregunta() {
-    this.fgPregunta = this.fb.group({
+  async initForm() {
+    this.fgAplicacion = this.fb.group({
       nombre: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
+      grupo: ['', [Validators.required]],
       temas: [[], [Validators.required]]
     })
   }
 
   async setValues() {
-    this.nombre.setValue(this.evaluacion.nombre)
-    this.temas.setValue(this.evaluacion.temas);
+    this.nombre.setValue(this.aplicacion.nombre)
+    //this.temas.setValue(this.aplicacion.temas);
   }
 
   /* Eventos */
@@ -101,7 +106,7 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.fgPregunta.get(documento).patchValue(reader.result);
+        this.fgAplicacion.get(documento).patchValue(reader.result);
       };
     }
   }
@@ -111,7 +116,8 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   }
 
   /***************************** GETTERS ******************************/
-  get nombre() { return this.fgPregunta.get('nombre') as FormControl }
-  get temas() { return this.fgPregunta.get('temas') as FormControl }
+  get nombre() { return this.fgAplicacion.get('nombre') as FormControl }
+  get grupo() { return this.fgAplicacion.get('grupo') as FormControl }
+  get temas() { return this.fgAplicacion.get('temas') as FormControl }
 
 }

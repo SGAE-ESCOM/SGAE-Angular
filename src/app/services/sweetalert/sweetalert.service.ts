@@ -38,8 +38,8 @@ export class SweetalertService {
       icon: 'warning',
       showCancelButton: true,
       reverseButtons: true,
-      cancelButtonText: '<span class="mat-button-wrapper"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
-      confirmButtonText: '<span class="mat-button-wrapper"> Sí, eliminar </span> <div class="mat-button-focus-overlay"></div>'
+      cancelButtonText: '<span class="mat-button-wrapper" name="btnCancelar" id="btnCancelar"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
+      confirmButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar"> Sí, eliminar </span> <div class="mat-button-focus-overlay"></div>'
     });
   }
 
@@ -50,8 +50,8 @@ export class SweetalertService {
       icon: 'warning',
       showCancelButton: true,
       reverseButtons: true,
-      cancelButtonText: '<span class="mat-button-wrapper"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
-      confirmButtonText: '<span class="mat-button-wrapper"> Sí, finalizar </span> <div class="mat-button-focus-overlay"></div>'
+      cancelButtonText: '<span class="mat-button-wrapper" name="btnCancelar" id="btnCancelar"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
+      confirmButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar"> Sí, finalizar </span> <div class="mat-button-focus-overlay"></div>'
     });
   }
 
@@ -62,8 +62,8 @@ export class SweetalertService {
       icon: 'warning',
       showCancelButton: true,
       reverseButtons: true,
-      cancelButtonText: '<span class="mat-button-wrapper"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
-      confirmButtonText: '<span class="mat-button-wrapper"> Sí, cancelar </span> <div class="mat-button-focus-overlay"></div>'
+      cancelButtonText: '<span class="mat-button-wrapper" name="btnCancelar" id="btnCancelar"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
+      confirmButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar"> Sí, cancelar </span> <div class="mat-button-focus-overlay"></div>'
     });
   }
 
@@ -82,8 +82,8 @@ export class SweetalertService {
       icon: 'warning',
       showCancelButton: true,
       reverseButtons: true,
-      confirmButtonText: '<span class="mat-button-wrapper"> Si </span> <div class="mat-button-focus-overlay"></div>',
-      cancelButtonText: '<span class="mat-button-wrapper"> No </span> <div class="mat-button-focus-overlay"></div>'
+      confirmButtonText: '<span class="mat-button-wrapper" name="btnCancelar" id="btnCancelar"> Si </span> <div class="mat-button-focus-overlay"></div>',
+      cancelButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar"> No </span> <div class="mat-button-focus-overlay"></div>'
       
     });
   }

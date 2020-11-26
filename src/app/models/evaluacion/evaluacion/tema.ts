@@ -2,7 +2,7 @@
 export class Tema{
     id?: string;
     idSeccion?: string;
-    nombre: string;
+    nombre?: string;
     total?: number;
 
     constructor(nombre?: string, total?:number){

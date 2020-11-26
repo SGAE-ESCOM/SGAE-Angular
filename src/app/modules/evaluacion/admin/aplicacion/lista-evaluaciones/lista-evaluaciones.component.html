@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-12">
+        <table class="table table-sm table-borderless" [class.table-error]="error">
+            <thead>
+                <th></th>
+                <th>Evaluación</th>
+                <th>Total preguntas</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let evaluacion of evaluaciones; let i = index" class="hover">
+                    <td>
+                        <mat-checkbox [(ngModel)]="valueBoolean[i]" [color]="color" (change)="updateValue($event.checked, evaluacion)">
+                        </mat-checkbox>
+                    </td>
+                    <td (click)="changeValue(evaluacion, i)"> {{evaluacion['nombre']}} </td>
+                    <td (click)="changeValue(evaluacion, i)"> {{evaluacion['total']}} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

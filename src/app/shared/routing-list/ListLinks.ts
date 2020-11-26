@@ -42,15 +42,12 @@ export const PREGUNTAS = new NavigationLink("Preguntas", "/app/evaluacion/gestio
 export const BC_PREGUNTAS = new Breadcrumb(PREGUNTAS, [HOME, EVALUACION, GESTIONAR_EVALUACION])
 export const ADMIN_EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "description", "Relaciona las preguntas con una evaluación");
 export const BC_ADMIN_EVALUACION = new Breadcrumb(ADMIN_EVALUACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
-export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "event", "Define los parametros de tu evaluación");
-export const BC_ADMIN_APLICACION = new Breadcrumb(ADMIN_APLICACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
 
 export const LINKS_GESTIONAR_EVALUACIONES = {
     aspirante: [],
-    admin: [ PREGUNTAS, ADMIN_EVALUACION, ADMIN_APLICACION ],
-    root: [ PREGUNTAS, ADMIN_EVALUACION, ADMIN_APLICACION ]
+    admin: [ PREGUNTAS, ADMIN_EVALUACION ],
+    root: [ PREGUNTAS, ADMIN_EVALUACION ]
 }
-
 
 //ASPIRANTE
 export const GRUPOS = new NavigationLink("Grupos", "/app/grupos", "group", "Grupos para aplicar evaluacion(es)");
@@ -59,11 +56,13 @@ export const EVALUACIONES = new NavigationLink("Evaluaciones", "/app/evaluacione
 export const BC_EVALUACIONES = new Breadcrumb(EVALUACIONES, [HOME, EVALUACION]);
 export const RESULTADOS = new NavigationLink("Publicación de Resultados", "/app/resultados", "event", "Resultado de evaluacion");
 export const BC_RESULTADOS = new Breadcrumb(RESULTADOS, [HOME, EVALUACION]);
+export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluacion/aplicacion", "event", "Define los parametros de tu evaluación");
+export const BC_ADMIN_APLICACION = new Breadcrumb(ADMIN_APLICACION, [HOME, EVALUACION])
 
 export const LINKS_EVALUACION = {
     aspirante: [GRUPOS],
-    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, RESULTADOS],
-    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, RESULTADOS]
+    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, RESULTADOS],
+    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, RESULTADOS]
 }
 
 /************************************************ CONVOCATORIA ********************************************************************************************/

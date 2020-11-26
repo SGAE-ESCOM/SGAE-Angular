@@ -13,6 +13,7 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { BC_ADMIN_EVALUACION } from '@shared/routing-list/ListLinks';
 import { fadeInRight } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
+import { groupBy, groupByOnly } from '@shared/utils/utils-grupos';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -27,6 +28,7 @@ export class MainAdminEvaluacionComponent implements OnInit {
   evaluaciones: Evaluacion[] = [];
 
   secciones:Seccion[] = [];
+  seccionesAgrupadas: any = {};
   temas: Tema[] = [];
   temasAgrupados: any = {};
 
@@ -43,25 +45,16 @@ export class MainAdminEvaluacionComponent implements OnInit {
   async getCatalogos() {
     this._evaluaciones.getAll().subscribe( evaluaciones => this.evaluaciones = evaluaciones );
     this._secciones.get().subscribe( secciones => { 
-      this.secciones = secciones
+      this.secciones = secciones;
+      this.seccionesAgrupadas = groupByOnly( this.secciones, 'id');
       this._temas.getAll().subscribe( temas => {
-        this.temas = temas
-        this.temasAgrupados = this.groupBy( this.temas, 'idSeccion' );
+        this.temas = temas;
+        this.temasAgrupados = groupByOnly( this.temas, 'id' );
+        console.log(this.temasAgrupados)
         //this.valores[1].push( this.temasAgrupados['ZMZG3v5adGZw7gGoIhzO'][1] )
       } );
     });
     
-  }
-  
-  /**************************************** UTILS ***************************************************/
-  private groupBy( list: any[], property: string): any {
-    return list.reduce( (prev, current ) => { 
-      let key = current[property];
-      if( !prev[key] )
-        prev[key] = [];
-      prev[key].push( current );
-      return prev;
-    } , {});
   }
 
   /**************************************** MODALS ***************************************************/
