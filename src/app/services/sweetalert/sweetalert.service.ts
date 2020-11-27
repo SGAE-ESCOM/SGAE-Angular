@@ -167,6 +167,14 @@ export class SweetalertService {
       icon: "error"
     });
   }
+
+  eliminarCuenta(){
+    this.swalFinalizar.fire({
+      title: 'Cuenta eliminada',
+      text: 'La cuenta ha sido eliminada.',
+      icon: 'success'
+    });
+  }
 }
 
 const admiracion = '<div class="swal2-icon swal2-warning swal2-icon-show" style="display: flex;"><div class="swal2-icon-content">!</div></div>';

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CuentasPagosService } from '@services/pagos/cuentas-pagos.service';
-import { ALPHANUMERICO_CON_ESPACIOS } from '@shared/utils/validators/regex';
+import { ALPHANUMERICO_CON_ESPACIOS, NUMEROS_SIN_ESPACIOS } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 
@@ -30,7 +30,7 @@ export class FormNuevaCuentaComponent implements OnInit {
     this.fgCuenta = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
       banco: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
-      noCuenta: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]]
+      noCuenta: ['', [Validators.required, Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
     });
     return new Promise<Boolean>(resolve => { return true });
   }
@@ -50,6 +50,24 @@ export class FormNuevaCuentaComponent implements OnInit {
 
   cerrarModal() {
     this.cerrar.emit(true);
+  }
+
+  getNombreCuentaErrorMessage(){
+    return this.fgCuenta.get('nombre').hasError('required') ? 'Este campo es requerido' :
+      this.fgCuenta.get('nombre').hasError('pattern') ? 'Nombre no valido' :
+        '';
+  }
+
+  getBancoErrorMessage(){
+    return this.fgCuenta.get('banco').hasError('required') ? 'Este campo es requerido' :
+      this.fgCuenta.get('banco').hasError('pattern') ? 'Nombre no valido' :
+        '';
+  }
+
+  getNoCuentaErrorMessage(){
+    return this.fgCuenta.get('noCuenta').hasError('required') ? 'Este campo es requerido' :
+      this.fgCuenta.get('noCuenta').hasError('pattern') ? 'Número no valido' :
+        '';
   }
 
 }
