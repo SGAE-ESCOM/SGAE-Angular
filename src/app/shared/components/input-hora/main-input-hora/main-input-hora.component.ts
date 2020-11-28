@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO } from '@shared/utils/mensajes';
-
+import { MSJ_ERROR_REQUERIDO, MSJ_MINUTOS_NO_VALIDAS, MSJ_HORAS_NO_VALIDAS } from '@shared/utils/mensajes';
+import { REGEX_NUMEROS_MINUTOS, REGEX_NUMEROS_HORAS } from '@shared/utils/validators/regex';
 
 @Component({
   selector: 'input-hora',
@@ -18,19 +18,21 @@ import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQU
 export class MainInputHoraComponent implements OnChanges, ControlValueAccessor {
 
   MSJ_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
-  MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
+  MSJ_HORAS_NO_VALIDAS = MSJ_HORAS_NO_VALIDAS;
+  MSJ_MINUTOS_NO_VALIDAS = MSJ_MINUTOS_NO_VALIDAS;
+
 
   @Input() titulo: string = "";
   @Input() error: boolean = false;
-  
-  value: any[] = [];
+
+  value: string = '';
   valueBoolean: Boolean[] = [];
   isDisabled: boolean;
 
   fgFormFecha: FormGroup;
-  
-  hora: FormControl = new FormControl('0', [Validators.required])
-  minutos: FormControl = new FormControl('0', [Validators.required])
+
+  hora: FormControl = new FormControl('0', [Validators.required, Validators.pattern(REGEX_NUMEROS_HORAS)])
+  minutos: FormControl = new FormControl('0', [Validators.required, Validators.pattern(REGEX_NUMEROS_MINUTOS), Validators.max(60)])
 
   onChange = (_: any) => { }
   onTouch = () => { }
@@ -39,7 +41,7 @@ export class MainInputHoraComponent implements OnChanges, ControlValueAccessor {
   constructor(private fb: FormBuilder) {
     this.initForm();
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     /* if(changes.evaluaciones && this.evaluaciones != null ){
       this.valueBoolean = new Array(this.evaluaciones.length).fill(false);
@@ -51,10 +53,10 @@ export class MainInputHoraComponent implements OnChanges, ControlValueAccessor {
   /************************* OVERRIDE *******************/
   writeValue(value: any): void {
     if (value) {
-      //this.value = value || [];
-      //this.setValues(value);
+      this.value = value || '';
+      this.setValue();
     } else {
-      this.value = [];
+      this.value = '';
     }
   }
 
@@ -69,41 +71,30 @@ export class MainInputHoraComponent implements OnChanges, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
-  
+
   /********************** UTILS **********************/
-  updateValue(checked:boolean, opcion: any){
-    if(checked){
-      this.value.push(opcion);
-    }else{
-      for(var i = 0; i< this.value.length; i++){
-        if( Object.is( this.value[i], opcion ) ){
-          this.value.splice(i, 1);
-          break;
-        }
-      }
+  updateValue() {
+    if (this.hora.valid && this.minutos.valid) {
+      this.value = this.hora.value + ':' + this.minutos.value
+    } else {
+      this.value = '';
     }
     this.onChange(this.value);
   }
-  
-  changeValue(opcion: any, index: number){
-    this.valueBoolean[index] = !this.valueBoolean[index];
-    if(this.valueBoolean[index]){
-      this.value.push(opcion);
-    }else{
-      for(var i = 0; i< this.value.length; i++){
-        if( Object.is( this.value[i], opcion ) ){
-          this.value.splice(i, 1);
-          break;
-        }
-      }
+
+  setValue() {
+    if (this.value !== '') {
+      let time = this.value.split(":");
+      this.hora.setValue(time[0]);
+      this.minutos.setValue(time[1])
     }
     this.onChange(this.value);
   }
 
   /*************************** INIT *****************************/
-  initForm(){
+  initForm() {
     this.fgFormFecha = this.fb.group({
-      
+
     })
   }
 

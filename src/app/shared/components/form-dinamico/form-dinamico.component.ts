@@ -6,7 +6,7 @@ import { OPC_ARCHIVO } from './models/enums/enum-tipo-archivo.enum'
 import { OPC_SELECCION } from './models/enums/enum-tipo-seleccion.enum'
 import { OPC_FECHA } from './models/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { REGEX_MAYUSCULAS, REGEX_NUMEROS, REGEX_MINUSCULAS } from '@shared/utils/validators/regex';
+import { REGEX_MAYUSCULAS, REGEX_NUMEROS_MINUTOS, REGEX_MINUSCULAS } from '@shared/utils/validators/regex';
 
 @Component({
   selector: 'app-form-dinamico',
@@ -98,7 +98,7 @@ export class FormDinamicoComponent implements OnInit, OnChanges {
       error = 'Sólo ';
       if(patron.includes(REGEX_MAYUSCULAS)){ error+='mayúsculas, ' }
       if(patron.includes(REGEX_MINUSCULAS)){ error+='minúsculas, ' }
-      if(patron.includes(REGEX_NUMEROS)){ error+='números, ' }
+      if(patron.includes(REGEX_NUMEROS_MINUTOS)){ error+='números, ' }
       if(patron.includes(' ')){ error+= 'y sin espacios al inicio y final' }else { error+= 'y sin espacios' }  
     }
     return error;

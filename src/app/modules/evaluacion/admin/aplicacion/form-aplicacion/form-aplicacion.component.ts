@@ -4,10 +4,10 @@ import { Aplicacion } from '@models/evaluacion/aplicacion';
 import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Grupo } from '@models/evaluacion/Grupo';
-import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
+import { AplicacionService } from '@services/evaluacion/aplicacion.service';
 import { fadeInOutDown } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_CONECTAR_SERVIDOR, MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
-import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
+import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, NUMEROS_SIN_ESPACIOS } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -37,7 +37,7 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
   isMain: Boolean = true;
   fgAplicacion: FormGroup;
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _evaluaciones: AdminEvaluacionesService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _evaluaciones: AplicacionService) {
   }
 
   ngOnInit(): void { }
@@ -51,9 +51,10 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
 
   /***************************** REST ******************************/
   save(form: FormGroup) {
-    let evaluacion: Evaluacion = form.value;
     //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
     if (form.valid) {
+      let evaluacion: Aplicacion = form.value;
+      console.log(evaluacion)
       this._evaluaciones.save(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
@@ -67,7 +68,7 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
 
   update(form: FormGroup) {
     if (form.valid) {
-      let evaluacion: Evaluacion = form.value;
+      let evaluacion: Aplicacion = form.value;
       evaluacion.id = this.evaluacion.id;
       //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
       this._evaluaciones.update(evaluacion).then(caso => {
@@ -93,13 +94,17 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
       evaluaciones: [[], [Validators.required]],
       fecha: ['', [Validators.required]],
       duracion: ['', [Validators.required]],
-      aciertos: ['', [Validators.required]]
+      aciertos: ['', [Validators.required, Validators.min(0), Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
     })
   }
 
   async setValues() {
-    this.nombre.setValue(this.aplicacion.nombre)
-    //this.temas.setValue(this.aplicacion.temas);
+    this.nombre.setValue(this.aplicacion.nombre);
+    this.grupo.setValue(this.aplicacion.grupo);
+    this.aciertos.setValue(this.aplicacion.aciertos)
+    this.fecha.setValue(this.aplicacion.fecha)
+    this.duracion.setValue(this.aplicacion.duracion)
+    this.evaluaciones.setValue(this.aplicacion.evaluaciones);
   }
 
   /* Eventos */

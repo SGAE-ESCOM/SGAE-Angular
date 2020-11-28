@@ -4,6 +4,7 @@ import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { PreguntasService } from '@services/evaluacion/preguntas.service';
 import { TemasService } from '@services/evaluacion/temas.service';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
@@ -29,7 +30,7 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   fgPregunta: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _preguntas: PreguntasService, private _temas:TemasService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _preguntas: PreguntasService, private _temas:TemasService, private _swal:SweetalertService) {
   }
 
   ngOnInit(): void { }
@@ -76,7 +77,10 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
   }
 
   cerrarModal() {
-    this.cerrar.emit(true);
+    this._swal.confirmarCancelar('¿Deseas cancelar?', 'Nada será guardado').then(result => {
+      if (result.value)
+        this.cerrar.emit(true);
+    });
   }
 
   /***************************** UTILS ******************************/

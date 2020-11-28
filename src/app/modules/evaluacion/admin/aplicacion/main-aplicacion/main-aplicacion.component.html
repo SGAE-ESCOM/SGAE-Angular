@@ -1,26 +1,38 @@
 <div class="container" @fadeInRight>
     <div class="row">
-        <div class="col-12">
+        <!-- <div class="col-12">
             <p>Indica la relación entre evaluaciones y grupos</p>
+        </div> -->
+        <div class="col-12 text-right">
             <button mat-button color="success" (click)="onAgregar()">Agregar aplicación<mat-icon>add</mat-icon></button>
         </div>
-        <div class="col-12 pb-2">
-            {{ grupos | json }}
-        </div>
-        <div class="col-12 pb-2">
-            {{ evaluaciones | json }}
-        </div>
-        <div class="col-12">
+        <div class="col-12" *ngFor="let aplicacion of aplicaciones">
             <div class="row">
                 <div class="col-12">
-                    Nombre 
+                    <h3>{{ aplicacion.nombre }} </h3>
                     <hr>
                 </div>
-                <div class="col-12 col-sm-12 col-md-6">
-                    Grupos:
+                <div class="col-12 pb-1">
+                    <b>Grupo:</b> {{ gruposObj[aplicacion.grupo].nombre }}
                 </div>
-                <div class="col-12 col-sm-12 col-md-6">
-                    Evaluaciones:
+                <div class="col-12 col-sm-6 col-md-4 pb-1">
+                    <b>Aciertos:</b> {{ aplicacion.aciertos }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 pb-1">
+                    <b>Fecha de aplicación:</b> {{ aplicacion.fechaAplicacion }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 pb-1">
+                    <b>Duración:</b> {{ aplicacion.duracion }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 pb-1">
+                    <b>Evaluaciones: </b>
+                    <ul>
+                        <li *ngFor="let evaluacion of evaluaciones">{{ evaluacionesObj[evaluacion.id].nombre }}</li>
+                    </ul>
+                </div>
+                <div class="col-12 pb-1 text-right">
+                    <button mat-button color="info" (click)="onActualizar(aplicacion)">Editar <mat-icon>edit</mat-icon></button>
+                    <button mat-button color="danger" (click)="onEliminar(aplicacion)">Eliminar <mat-icon>delete</mat-icon></button>
                 </div>
             </div>
         </div>
