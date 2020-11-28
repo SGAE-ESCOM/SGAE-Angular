@@ -38,7 +38,7 @@ export class CuentasPagosService {
     );
   }
 
-  getCuenta(id): Promise<any>{
+  getCuenta(id: string): Promise<any>{
     return this.cuentasCollectionReference.doc(id).get();
   }
 
@@ -46,7 +46,8 @@ export class CuentasPagosService {
     return this.cuentasCollection.doc(cuenta.id).set(cuenta);
   }
 
-  delete(cuenta: CuentaPagos ){
-    return this.cuentasCollection.doc(cuenta.id).delete();
+  delete(id: string){
+    return this.cuentasCollection.doc(id).delete(); 
+    //Revisar si se tiene que eliminar en escala
   }
 }

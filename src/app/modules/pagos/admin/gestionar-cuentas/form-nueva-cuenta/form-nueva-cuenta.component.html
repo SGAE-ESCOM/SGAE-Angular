@@ -4,6 +4,7 @@
             <mat-label>Nombre de la cuenta </mat-label>
             <input formControlName="nombre" matInput placeholder="Nombre para identificar la cuenta" autocomplete="off">
             <mat-icon matSuffix>account_balance_wallet</mat-icon>
+            <mat-error *ngIf="fgCuenta.get('nombre').invalid">{{getNombreCuentaErrorMessage()}}</mat-error>
           </mat-form-field>
     </div>
     <div class="col-12">
@@ -11,6 +12,7 @@
             <mat-label>Nombre del banco </mat-label>
             <input formControlName="banco" matInput placeholder="Nombre de la insititución bancaria" autocomplete="off">
             <mat-icon matSuffix>account_balance</mat-icon>
+            <mat-error *ngIf="fgCuenta.get('banco').invalid">{{getBancoErrorMessage()}}</mat-error>
           </mat-form-field>
     </div>
     <div class="col-12">
@@ -18,6 +20,7 @@
             <mat-label>Número de la cuenta bancaria </mat-label>
             <input formControlName="noCuenta" matInput autocomplete="off">
             <mat-icon matSuffix>payment</mat-icon>
+            <mat-error *ngIf="fgCuenta.get('noCuenta').invalid">{{getNoCuentaErrorMessage()}}</mat-error>
           </mat-form-field>
     </div>
     <div class="col-12 text-right">

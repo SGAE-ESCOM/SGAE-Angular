@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { CuentaPagos } from '@models/cuentas-pagos/cuenta-pagos';
 import { GruposPagos } from '@models/cuentas-pagos/grupos-pagos';
@@ -30,7 +30,7 @@ export class RevisarCuentaComponent implements OnInit {
   editarCuenta: boolean = false;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private _cuentas: CuentasPagosService, private _grupos: GruposService, 
-      private _swal: SweetalertService, public dialog: MatDialog) {
+      private _swal: SweetalertService, public dialog: MatDialog, private _toast: ToastrService, private router: Router) {
     
     /***************** REVISAR PERMISOS *******************/
     this.idCuenta = this.route.snapshot.paramMap.get("id");
@@ -124,6 +124,7 @@ export class RevisarCuentaComponent implements OnInit {
       this._swal.errorActualizar();
       this.llenarDatosCuenta();
     });
+    this.btnActualizarPagos = true;
   }
 
   agregarDatoAdicional(){
@@ -167,6 +168,18 @@ export class RevisarCuentaComponent implements OnInit {
           this._swal.errorActualizar();
           this.llenarDatosCuenta();
         });
+      }
+    });
+  }
+
+  eliminarCuenta(id: string){
+    this._swal.confirmarEliminar(`¿Estas seguro de eliminar esta cuenta para pagos'?`, 'No se podrá revertir esta acción.')
+    .then((result) => {
+      if (result.value) {
+        this._cuentas.delete(id).then(() => {
+          this._swal.eliminarCuenta();
+          this.router.navigate(['/app/pagos/gestionar-cuentas'])
+        }).catch(err => this._toast.error(err));
       }
     });
   }
