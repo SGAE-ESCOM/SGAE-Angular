@@ -7,7 +7,7 @@
         <div mat-dialog-content>
             <div class="col-12">
                 <form [formGroup]="fgAplicacion" class="row">
-                    <div class="col-12 col-md-6 form-group" *ngIf="isMain">
+                    <div class="col-12 col-md-4 form-group" *ngIf="isMain">
                         <mat-form-field appearance="legacy">
                             <mat-label>Nombre</mat-label>
                             <input formControlName="nombre" rows="4" name="nombre" id="nombre" matInput placeholder="Escribe el nombre" required>
@@ -25,17 +25,37 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="grupo.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                            <mat-icon matSuffix>groups </mat-icon>
                         </mat-form-field>
                     </div>
+                    
+                    <div class="col-12 col-md-4 form-group" *ngIf="isMain">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Aciertos</mat-label>
+                            <input type="number" formControlName="nombre" rows="4" name="nombre" id="nombre" matInput placeholder="Escribe el nombre" required>
+                            <mat-error *ngIf="nombre.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                            <mat-error *ngIf="nombre.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
+                            <mat-icon matSuffix>spellcheck </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4 form-group" *ngIf="isMain">
+                        <input-fecha formControlName="fecha"></input-fecha>
+                    </div>
+                    <div class="col-12 col-md-4 form-group" *ngIf="isMain"> 
+                        <input-hora formControlName="duracion" [titulo]="'Duración'"></input-hora>
+                    </div>
                     <div class="col-12" *ngIf="isMain">
-                        <b>Temas disponibles:</b>
+                        <b>Evaluaciones disponibles:</b>
                         <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
                     </div>
                     <div class="col-12">
-                        <app-lista-evaluaciones formControlName="temas" [evaluaciones]="evaluaciones" [error]="temas.hasError('required')"></app-lista-evaluaciones>
-                        <mat-error class="mat-table-error" *ngIf="temas.hasError('required')" @fadeInOutDown>{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                        <app-lista-evaluaciones formControlName="evaluaciones" [evaluaciones]="evaluacionesCat" [error]="evaluaciones.hasError('required')"></app-lista-evaluaciones>
+                        <mat-error class="mat-table-error" *ngIf="evaluaciones.hasError('required')" @fadeInOutDown>{{ MJS_ERROR_REQUERIDO }}</mat-error>
                     </div>
                 </form>
+            </div>
+            <div class="col-12 py-2">
+                {{ fgAplicacion.value | json }}
             </div>
             <div class="col-12 py-2" *ngIf="isMain">
                 <div class="row">

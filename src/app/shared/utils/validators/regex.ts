@@ -5,3 +5,4 @@ export const NUMEROS_SIN_ESPACIOS = '^[0-9]+$';
 export const REGEX_MAYUSCULAS = 'A-ZÁ-Ú';
 export const REGEX_MINUSCULAS = 'a-zá-ú';
 export const REGEX_NUMEROS = '0-9';
+export const REGEX_FECHAS = '^[0-9][0-9]-[0-9][0-9]-[0-9]{4}$';

@@ -21,7 +21,7 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
 
   @Input() opc: string = '';
   @Input() titulo: string = '';
-  @Input() evaluaciones: Evaluacion[] = [];
+  @Input('evaluaciones') evaluacionesCat: Evaluacion[] = [];
   @Input() grupos: Grupo[] = [];
   @Input() aplicacion: Aplicacion;
   @Input('temas') temasCatalogo: Tema[] = [];
@@ -90,7 +90,10 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
     this.fgAplicacion = this.fb.group({
       nombre: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
       grupo: ['', [Validators.required]],
-      temas: [[], [Validators.required]]
+      evaluaciones: [[], [Validators.required]],
+      fecha: ['', [Validators.required]],
+      duracion: ['', [Validators.required]],
+      aciertos: ['', [Validators.required]]
     })
   }
 
@@ -118,6 +121,8 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
   /***************************** GETTERS ******************************/
   get nombre() { return this.fgAplicacion.get('nombre') as FormControl }
   get grupo() { return this.fgAplicacion.get('grupo') as FormControl }
-  get temas() { return this.fgAplicacion.get('temas') as FormControl }
-
+  get evaluaciones() { return this.fgAplicacion.get('evaluaciones') as FormControl }
+  get fecha() { return this.fgAplicacion.get('fecha') as FormControl }
+  get duracion() { return this.fgAplicacion.get('duracion') as FormControl }
+  get aciertos() { return this.fgAplicacion.get('aciertos') as FormControl }
 }

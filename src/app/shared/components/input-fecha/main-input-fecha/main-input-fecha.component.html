@@ -1,0 +1,7 @@
+<mat-form-field appearance="legacy">
+    <mat-label> {{ label}}</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="fechaInput" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="fechaInput.hasError('invalid')">Fecha no valida</mat-error>
+</mat-form-field>
