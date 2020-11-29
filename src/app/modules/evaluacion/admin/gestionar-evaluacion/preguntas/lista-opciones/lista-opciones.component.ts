@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Opcion, Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { fadeInLeft, fadeInRight } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM } from '@shared/utils/mensajes';
@@ -39,10 +39,10 @@ export class ListaOpcionesComponent implements ControlValueAccessor {
   onChange = (_: any) => { }
   onTouch = () => { }
 
-  constructor(private _toastr:ToastrService) {
-    this.fgLista = new FormGroup({
-      item: new FormControl('',[Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]),
-      img: new FormControl(''),
+  constructor(private fb:FormBuilder, private _toastr:ToastrService) {
+    this.fgLista = this.fb.group({
+      item: ['',[Validators.required]],
+      img: ['']
     })
   }
 
@@ -75,6 +75,22 @@ export class ListaOpcionesComponent implements ControlValueAccessor {
     }
   }
 
+  editarItem(){
+    if(this.fgLista.valid){
+      for(var i = 0; i < this.value.length; i++){
+        if(this.value[i].id == this.opcion.id){
+          this.value[i].enunciado = this.item.value;
+          if(this.img.value)
+            this.value[i].img = this.img.value;
+        }
+      }
+      this.isMain = true;
+      this.isMainEE.emit(this.isMain);
+    }else{
+      this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
+    }
+  }
+
   eliminar(index:number){
     this.value.splice(index, 1);
     this.reordenar();
@@ -93,19 +109,6 @@ export class ListaOpcionesComponent implements ControlValueAccessor {
     this.isMainEE.emit(this.isMain);
   }
   
-  editarItem(){
-    for(var i = 0; i < this.value.length; i++){
-      if(this.value[i].id == this.opcion.id){
-        this.value[i].enunciado = this.item.value;
-        if(this.img.value)
-          this.value[i].img = this.img.value;
-      }
-    }
-    this.isMain = true;
-    this.isMainEE.emit(this.isMain);
-  }
-  
-
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.value, event.previousIndex, event.currentIndex);
   }

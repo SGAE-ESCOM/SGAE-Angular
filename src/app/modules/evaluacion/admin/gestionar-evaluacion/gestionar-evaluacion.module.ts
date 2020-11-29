@@ -22,11 +22,12 @@ import { FormAdminEvaluacionComponent } from './admin-evaluacion/form-admin-eval
 import { FormSeccionesComponent } from './preguntas/form-secciones/form-secciones.component';
 import { ListaTemasComponent } from './admin-evaluacion/lista-temas/lista-temas.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { InfoKatexComponent } from './preguntas/info-katex/info-katex.component';
 
 @NgModule({
   declarations: [
     MainGestionarEvaluacionComponent, ModalTemas, ModalSeccion, CrearSimuladorComponent, ModalPregunta, FormTemasComponent, MainPreguntasComponent, FormPreguntasComponent, ListaOpcionesComponent, 
-    MainAdminEvaluacionComponent, FormAdminEvaluacionComponent, ModalAdminEvaluacion, FormSeccionesComponent, ListaTemasComponent
+    MainAdminEvaluacionComponent, FormAdminEvaluacionComponent, ModalAdminEvaluacion, FormSeccionesComponent, ListaTemasComponent, InfoKatexComponent
   ],
   imports: [
     CommonModule,

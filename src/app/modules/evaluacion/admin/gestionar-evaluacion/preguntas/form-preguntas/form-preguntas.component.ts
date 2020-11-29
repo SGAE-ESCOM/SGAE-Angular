@@ -5,6 +5,7 @@ import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { PreguntasService } from '@services/evaluacion/preguntas.service';
 import { TemasService } from '@services/evaluacion/temas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { PREGUNTAS } from '@shared/routing-list/ListLinks';
 import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM, MSJ_OK_AGREGADO, MSJ_OK_EDITADO } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
@@ -114,6 +115,10 @@ export class FormPreguntasComponent implements OnInit, OnChanges {
 
   isMainActivated(isActived: Boolean){
     this.isMain = isActived;
+  }
+
+  gotoInfo(){
+    window.open('#/'+PREGUNTAS.url+'/info', "_blank");
   }
 
   /***************************** GETTERS ******************************/

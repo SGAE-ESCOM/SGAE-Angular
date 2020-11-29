@@ -5,7 +5,7 @@
             <mat-label>Enunciado</mat-label>
             <textarea formControlName="item" name="item" id="item" rows="5" matInput placeholder="Escribe un item" required></textarea>
             <mat-error *ngIf="item.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
-            <mat-error *ngIf="item.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
+            <mat-error *ngIf="item.hasError('pattern')">{{ MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
             <mat-icon matSuffix>playlist_add_check </mat-icon>
         </mat-form-field>
     </div>
@@ -18,9 +18,6 @@
                 (change)="handleUpload($event, 'img' )"></ngx-mat-file-input>
                 <mat-icon class="material-icons-outlined" matSuffix>folder</mat-icon>
                 <mat-hint class="toggle-hint"> Sólo imagenes y archivos no mayores a 1 MB </mat-hint>
-                <mat-error *ngIf="img.hasError('required')">
-                    Este campo es requerido
-                </mat-error>
         </mat-form-field>
     </div>
     <div class="col-12 text-right" *ngIf="isMain">
@@ -63,7 +60,7 @@
 </div>
 <div class="row" *ngIf="!isMain">
     <div class="col-12">
-        <ng-katex-html [html]="item.value"></ng-katex-html>
+        <ng-katex-html *ngIf="item.value" [html]="item.value"></ng-katex-html>
         <div *ngIf="img.value" class="img-fluid">
             <img [src]="img.value"> 
         </div>

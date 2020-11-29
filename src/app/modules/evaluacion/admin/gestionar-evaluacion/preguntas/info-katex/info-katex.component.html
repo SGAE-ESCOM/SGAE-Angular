@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 pb-4">
+            <h3>Ecuación</h3>
+            <p >Si deseas agregar una ecuación puedes usar la siguiente expersión.</p>
+            <p class="highlight" [innerHTML]="ecuacionEjemplo"></p>
+            <ng-katex-html [html]="ecuacion"></ng-katex-html>
+        </div>
+        <div class="col-12 pb-4">
+            <h3>Parrafo</h3>
+            <p>Si deseas agregar una ecuación puedes usar la siguiente expersión.</p>
+            <p class="highlight" [innerHTML]="parrafoEjemplo"></p>
+            <ng-katex-html [html]="parrafoEjemplo"></ng-katex-html>
+        </div>
+        <div class="col-12 pb-4">
+            <h3>Más Símbolos</h3>
+            <p>Visita la siguiente página para buscar la simbología necesaria</p>
+            <button mat-button color="info" (click)="gotoKateAPI()">Documentación Katex <mat-icon>info</mat-icon></button>
+        </div>
+    </div>
+</div>

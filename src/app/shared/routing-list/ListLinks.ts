@@ -40,6 +40,8 @@ export const GESTIONAR_EVALUACION = new NavigationLink("Gestionar Evaluación", 
 export const BC_GESTIONAR_EVALUACION = new Breadcrumb(GESTIONAR_EVALUACION, [HOME, EVALUACION]);
 export const PREGUNTAS = new NavigationLink("Preguntas", "/app/evaluacion/gestionar-evaluacion/preguntas", "format_list_bulleted", "Gestiona preguntas relacionadas a un tema");
 export const BC_PREGUNTAS = new Breadcrumb(PREGUNTAS, [HOME, EVALUACION, GESTIONAR_EVALUACION])
+export const INFO_KATEX = new NavigationLink("Información, ¿Cómo agregar símbolos?", "/app/evaluacion/gestionar-evaluacion/preguntas/info", "help", "");
+export const BC_INFO_KATEX = new Breadcrumb(INFO_KATEX, [HOME, EVALUACION, GESTIONAR_EVALUACION, PREGUNTAS])
 export const ADMIN_EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "description", "Relaciona las preguntas con una evaluación");
 export const BC_ADMIN_EVALUACION = new Breadcrumb(ADMIN_EVALUACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
 
