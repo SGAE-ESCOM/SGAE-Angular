@@ -92,11 +92,11 @@ export const EVIDENCIA_PAGO = new NavigationLink("Subir Evidencia de Pago", "/ap
 export const BC_EVIDENCIA_PAGO = new Breadcrumb(EVIDENCIA_PAGO, [HOME, PAGOS]);
 
 export const FORMATO_PAGO = new NavigationLink("Ver Formato de Pago", "/app/pagos/formato-pago", "description", "Consulta el formato de pago para continuar con el proceso de admisión");
-export const BC_FORMATO_PAGO = new Breadcrumb(EVIDENCIA_PAGO, [HOME, PAGOS]);
+export const BC_FORMATO_PAGO = new Breadcrumb(FORMATO_PAGO, [HOME, PAGOS]);
 
 
 export const LINKS_PAGOS = {
-    aspirante: [EVIDENCIA_PAGO, FORMATO_PAGO],
+    aspirante: [FORMATO_PAGO, EVIDENCIA_PAGO],
     admin: [GESTIONAR_CUENTAS, CONFIGURAR_REFERENCIAS, VALIDAR_PAGOS],
     root: [GESTIONAR_CUENTAS, CONFIGURAR_REFERENCIAS, VALIDAR_PAGOS]
 }

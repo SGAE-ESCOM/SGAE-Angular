@@ -38,6 +38,10 @@ export class CuentasPagosService {
     );
   }
 
+  obtenerCuentasPorIdGrupo(idGrupo: string): Promise<any>{
+    return this.cuentasCollectionReference.where("gruposIds", "array-contains", idGrupo).get();
+  }
+
   getCuenta(id: string): Promise<any>{
     return this.cuentasCollectionReference.doc(id).get();
   }
