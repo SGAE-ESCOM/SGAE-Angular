@@ -177,7 +177,7 @@ export class RevisarCuentaComponent implements OnInit {
     .then((result) => {
       if (result.value) {
         this._cuentas.delete(id).then(() => {
-          this._swal.eliminarCuenta();
+          this._swal.eliminadoCorrecto("La cuenta ha sido eliminada.");
           this.router.navigate(['/app/pagos/gestionar-cuentas'])
         }).catch(err => this._toast.error(err));
       }

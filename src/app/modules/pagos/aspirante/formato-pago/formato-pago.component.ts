@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { BC_FORMATO_PAGO } from '@shared/routing-list/ListLinks';
 
@@ -9,6 +9,8 @@ import { BC_FORMATO_PAGO } from '@shared/routing-list/ListLinks';
 })
 export class FormatoPagoComponent implements OnInit {
 
+  @ViewChild('htmlData') htmlData:ElementRef;
+
   constructor() {
     /***************** REVISAR ACCESO SOLO ASPIRANTES *******************/
 
@@ -16,6 +18,10 @@ export class FormatoPagoComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+
+  downloadAsPDF(){
+
   }
 
 }
