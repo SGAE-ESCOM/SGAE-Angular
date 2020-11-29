@@ -47,7 +47,7 @@ export class MainInputFechaComponent implements OnChanges, ControlValueAccessor 
   writeValue(value: any): void {
     if (value) {
       this.value = value || '';
-      //this.setValues(value);
+      this.fechaInput.setValue(new Date(this.value) );
     } else {
       this.value = new Date().getTime();
     }
@@ -75,5 +75,5 @@ export class MainInputFechaComponent implements OnChanges, ControlValueAccessor 
     }
     this.onChange(this.value);
   }
-  
+
 }

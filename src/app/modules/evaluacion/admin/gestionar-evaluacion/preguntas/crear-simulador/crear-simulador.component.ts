@@ -35,10 +35,7 @@ export class CrearSimuladorComponent implements OnInit, OnChanges {
 
   ///////////////////////// PREGUNTA ///////////////////////////////
   cancelarPreguntas() {
-    this._swal.confirmarCancelar('¿Deseas cancelar la edición del tema "' + this.tema.nombre + '"?', 'Nada será guardado').then(result => {
-      if (result.value)
-        this.onCancelar.emit(true);
-    });
+    this.onCancelar.emit(true);
   }
 
   modalAgregarPregunta() {

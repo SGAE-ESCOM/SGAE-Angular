@@ -6,10 +6,13 @@ import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Grupo } from '@models/evaluacion/Grupo';
 import { AuthService } from '@services/auth.service';
 import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
+import { AplicacionService } from '@services/evaluacion/aplicacion.service';
 import { GruposService } from '@services/evaluacion/grupos.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { BC_ADMIN_APLICACION } from '@shared/routing-list/ListLinks';
 import { fadeInRight } from '@shared/utils/animations/router.animations';
+import { momentJS } from '@shared/utils/traduccion/moment';
+import { groupByOnly } from '@shared/utils/utils-grupos';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,10 +25,15 @@ export class MainAplicacionComponent implements OnInit {
 
   grupos: Grupo[];
   evaluaciones: Evaluacion[];
+  aplicaciones: Aplicacion[];
+  
+  //ParserObject
+  gruposObj: any = {};
+  evaluacionesObj: any = {};
 
   constructor(private _auth: AuthService, private dialog: MatDialog,
     private _swal: SweetalertService, private _toastr: ToastrService,
-    private _evaluacion:AdminEvaluacionesService, private _grupos: GruposService) {
+    private _evaluacion:AdminEvaluacionesService, private _grupos: GruposService, private _aplicaciones: AplicacionService) {
     BreadcrumbComponent.update(BC_ADMIN_APLICACION)
   }
 
@@ -37,20 +45,32 @@ export class MainAplicacionComponent implements OnInit {
   async getCatalogos() {
     await this.getGrupos();
     await this.getEvaluaciones();
+    await this.getAplicaciones();
   }
 
   async getGrupos(){
-    this._grupos.get().subscribe( grupos => this.grupos = grupos);
+    await this._grupos.get().subscribe( grupos => { 
+      this.grupos = grupos;
+      this.gruposObj = groupByOnly(this.grupos, 'id');
+    });
   }
 
   async getEvaluaciones(){
     this._evaluacion.getAll().subscribe( evaluaciones => {
-      this.evaluaciones = evaluaciones
-      console.log(this.evaluaciones);
+      this.evaluaciones = evaluaciones;
       this.evaluaciones.forEach( evaluacion => {
         evaluacion.total = evaluacion.temas.reduce( (prev, current ) => { return current.total + prev }, 0 );
       });
-      console.log(this.evaluaciones)
+      this.evaluacionesObj = groupByOnly(this.evaluaciones, 'id')
+    });
+  }
+
+  async getAplicaciones(){
+    this._aplicaciones.getAll().subscribe( aplicaciones => { 
+      this.aplicaciones = aplicaciones;
+      this.aplicaciones.forEach( aplicacion => {
+        aplicacion.fechaAplicacion = momentJS(aplicacion.fecha).format('Do MMMM YYYY');
+      })
     });
   }
 
@@ -85,13 +105,13 @@ export class MainAplicacionComponent implements OnInit {
     });
   }
 
-  onEliminar(grupo: any) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar el grupo '${grupo.nombre}'?`, 'No se podrá revertir esta acción')
+  onEliminar(aplicacion: Aplicacion) {
+    this._swal.confirmarEliminar(`¿Deseas eliminar el aplicación '${aplicacion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
-          /* this._grupos.delete(grupo).then(() => {
+          this._aplicaciones.delete(aplicacion).then(() => {
             this._swal.eliminadoCorrecto('El grupo se ha eliminado');
-          }).catch(err => this._toastr.error(err)); */
+          }).catch(err => this._toastr.error(err));
         }
       });
   }

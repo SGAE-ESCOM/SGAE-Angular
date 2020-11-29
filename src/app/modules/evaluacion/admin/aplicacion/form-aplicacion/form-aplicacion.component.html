@@ -2,6 +2,7 @@
         <div mat-dialog-title class="row">
             <div class="col-12 text-center">
                 <h3> {{ titulo }} </h3>
+                <hr>
             </div>
         </div>
         <div mat-dialog-content>
@@ -20,7 +21,7 @@
                         <mat-form-field appearance="legacy">
                             <mat-label>Grupo </mat-label>
                             <mat-select formControlName="grupo" name="grupo" id="grupo" required>
-                                <mat-option *ngFor="let grupo of grupos" [value]="grupo">
+                                <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">
                                     {{ grupo.nombre }}
                                 </mat-option>
                             </mat-select>
@@ -32,9 +33,10 @@
                     <div class="col-12 col-md-4 form-group" *ngIf="isMain">
                         <mat-form-field appearance="legacy">
                             <mat-label>Aciertos</mat-label>
-                            <input type="number" formControlName="nombre" rows="4" name="nombre" id="nombre" matInput placeholder="Escribe el nombre" required>
-                            <mat-error *ngIf="nombre.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
-                            <mat-error *ngIf="nombre.hasError('pattern')">{{MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION}} </mat-error>
+                            <input type="number" min="0" formControlName="aciertos" rows="4" name="aciertos" id="aciertos" matInput placeholder="Escribe el aciertos" required>
+                            <mat-error *ngIf="aciertos.hasError('min')"> Mínimo de aciertos 0 </mat-error>
+                            <mat-error *ngIf="aciertos.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                            <mat-error *ngIf="aciertos.hasError('pattern')">Sólo valores positivos</mat-error>
                             <mat-icon matSuffix>spellcheck </mat-icon>
                         </mat-form-field>
                     </div>
@@ -46,7 +48,6 @@
                     </div>
                     <div class="col-12" *ngIf="isMain">
                         <b>Evaluaciones disponibles:</b>
-                        <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
                     </div>
                     <div class="col-12">
                         <app-lista-evaluaciones formControlName="evaluaciones" [evaluaciones]="evaluacionesCat" [error]="evaluaciones.hasError('required')"></app-lista-evaluaciones>
