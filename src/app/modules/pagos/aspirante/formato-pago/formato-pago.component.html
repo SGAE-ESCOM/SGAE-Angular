@@ -5,26 +5,44 @@
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </div>
     </div>
-    <div class="row" id="htmlData" #htmlData>
-        <div class="col-3"></div>
-        <div class="col-6">
+    <div class="row">
+        <div class="col-3 offset-3 op-pago">
+            <mat-form-field>
+                <mat-label>Opción de pago</mat-label>
+                <mat-select formControlName="tipo" name="tipoDato" id="tipoDato" (selectionChange)="onChangeCuenta($event.value)" required>
+                    <mat-option *ngFor="let cuenta of cuentaPagos"  [value]="cuenta">
+                        {{cuenta.banco | uppercase }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-6 offset-3">
             <div class="card no-border mat-elevation-z3">
                 <div class="card-header text-center">
                     <h5 class="m-0">Información de la cuenta</h5>
                 </div>
-                <div class="card-body">
+                <div *ngIf="cuentaSelec == null; else elseBlock" class="card-body">
                     <div class="row">
-                        <div class="col-12 col-md-12 line">
-                            <span class="bold">Banco: </span><span class="data">Banxico</span>
-                        </div>
-                        <div class="col-12 col-md-12 line">
-                            <span class="bold">Número de cuenta: </span><span class="data">12341234123412341234</span>
-                        </div>
-                        <div class="col-12 col-md-12 line">
-                            <span class="bold">Referencia: </span><span class="data">Chocomil</span>
+                        <div class="col-12 col-md-12 text-center">
+                            <h6 class="m-0">Escoje una opción de pago</h6>
                         </div>
                     </div>
                 </div>
+                <ng-template #elseBlock>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 line">
+                                <span class="bold">Banco: </span>{{ cuentaSelec.banco }}
+                            </div>
+                            <div class="col-12 col-md-12 line">
+                                <span class="bold">Número de cuenta: </span>{{ cuentaSelec.noCuenta }}
+                            </div>
+                            <div *ngFor="let datoAds of cuentaSelec.datosAds;"  class="col-12 col-md-12 line">
+                                <span class="bold">{{ datoAds.nombreCampo }}: </span>{{ datoAds.contenido }}
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
