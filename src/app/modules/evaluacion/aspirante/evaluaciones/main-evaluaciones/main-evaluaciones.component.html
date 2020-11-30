@@ -1,0 +1,37 @@
+<div class="container" @fadeInRight>
+    <div class="row" *ngIf="hasGrupo; else MensajeInscribirse">
+        <div class="col-12 py-4">
+            <h3> {{ grupo.nombre }}</h3>
+        </div>
+        <div class="col-12">
+            <div *ngIf="aplicaciones" class="row" [@cardAnimation]="aplicaciones.length">
+                <div *ngFor="let aplicacion of aplicaciones; trackBy: trackById" class="col-12 col-sm-4 col-md-3 py-2">
+                    <div class="card card-hover mat-elevation-z2 bd-callout bd-callout-primary pt-2 pb-4" name="btnIrA" matRipple (click)="gotoAplicacion(aplicacion)">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span>
+                                    <mat-icon class="material-icons-outlined icon-position">eval</mat-icon>
+                                </span> {{aplicacion.nombre}}
+                            </h5>
+                            <hr>
+                            <p class="card-text"> <b>Fecha aplicación: </b>{{aplicacion.fecha }}</p>
+                            <p class="card-text"> <b>Duración: </b>{{aplicacion.duracion }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #MensajeInscribirse>
+        <div class="row">
+            <div class="col-12 pt-2">
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">No te has inscrito a ningún grupo</h4>
+                    <a mat-flat-button color="warning" [routerLink]="linkInscribirGrupo">Inscribir Grupo <mat-icon>
+                            navigate_next</mat-icon></a>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

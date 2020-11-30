@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, CollectionReference, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
+import { Grupo } from '@models/evaluacion/Grupo';
 
 
 @Injectable({
@@ -33,6 +34,10 @@ export class UsuarioService {
 
   updateEstadoDocumentacion(usuario: UsuarioInterface, estado: string) {
     this.usuariosCollection.doc(usuario.id).update({"estado.documentacion": estado});
+  }
+
+  gasignarGrupo(usuario: UsuarioInterface, grupo: Grupo) {
+    return this.usuariosCollection.doc(usuario.id).update({ grupo});
   }
 
   getAspirantes(): Promise<any> {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, CollectionReference } from '@angular/fire/firestore';
 import { Aplicacion } from '@models/evaluacion/aplicacion';
+import { Grupo } from '@models/evaluacion/Grupo';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -37,6 +38,10 @@ export class AplicacionService {
           })
         )
       );
+  }
+
+  getAllByGrupo(grupo: Grupo) {
+    return this.aplicacionesCollectionReference.where('grupo', '==', grupo.id).get();
   }
 
   update(aplicacion: Aplicacion) {

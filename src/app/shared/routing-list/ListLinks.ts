@@ -52,9 +52,9 @@ export const LINKS_GESTIONAR_EVALUACIONES = {
 }
 
 //ASPIRANTE
-export const GRUPOS = new NavigationLink("Grupos", "/app/grupos", "group", "Grupos para aplicar evaluacion(es)");
+export const GRUPOS = new NavigationLink("Grupos", "/app/evaluacion/grupos", "group", "Grupos para aplicar evaluacion(es)");
 export const BC_GRUPOS = new Breadcrumb(GRUPOS, [HOME, EVALUACION]);
-export const EVALUACIONES = new NavigationLink("Evaluaciones", "/app/evaluaciones", "spellcheck", "Evaluacion de conocimientos");
+export const EVALUACIONES = new NavigationLink("Evaluaciones", "/app/evaluacion/evaluaciones", "spellcheck", "Evaluacion de conocimientos");
 export const BC_EVALUACIONES = new Breadcrumb(EVALUACIONES, [HOME, EVALUACION]);
 export const RESULTADOS = new NavigationLink("Publicación de Resultados", "/app/resultados", "event", "Resultado de evaluacion");
 export const BC_RESULTADOS = new Breadcrumb(RESULTADOS, [HOME, EVALUACION]);
@@ -62,7 +62,7 @@ export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluaci
 export const BC_ADMIN_APLICACION = new Breadcrumb(ADMIN_APLICACION, [HOME, EVALUACION])
 
 export const LINKS_EVALUACION = {
-    aspirante: [GRUPOS],
+    aspirante: [GRUPOS, EVALUACIONES],
     admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, RESULTADOS],
     root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, RESULTADOS]
 }

@@ -68,10 +68,10 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
 
   update(form: FormGroup) {
     if (form.valid) {
-      let evaluacion: Aplicacion = form.value;
-      evaluacion.id = this.evaluacion.id;
+      let aplicacion: Aplicacion = form.value;
+      aplicacion.id = this.aplicacion.id;
       //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
-      this._evaluaciones.update(evaluacion).then(caso => {
+      this._evaluaciones.update(aplicacion).then(caso => {
         this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {

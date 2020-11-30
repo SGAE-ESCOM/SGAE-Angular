@@ -3,8 +3,8 @@
         <div class="d-flex justify-content-end">
             <div class="button-bottom">
                 <div class="button-right">
-                    <button mat-raised-button type="button" color="danger" class="btn-lg mx-2" (click)="cancelarPreguntas()">Regresar <mat-icon>undo</mat-icon></button>
-                    <button mat-raised-button type="button" color="success" class="btn-lg mx-2" (click)="modalAgregarPregunta()">Agregar pregunta <mat-icon>add</mat-icon></button>
+                    <button mat-raised-button type="button" color="danger" class="btn-lg mx-2" (click)="cancelarPreguntas()" name="regresarTema" id="regresarTema">Regresar <mat-icon>undo</mat-icon></button>
+                    <button mat-raised-button type="button" color="success" class="btn-lg mx-2" (click)="modalAgregarPregunta()" name="agregarPregunta" id="agregarPregunta">Agregar pregunta <mat-icon>add</mat-icon></button>
                 </div>
             </div>
         </div>
@@ -32,8 +32,8 @@
         </div>
         <div class="col-12">
             <div class="d-flex justify-content-end">
-                <button mat-button color="info" (click)="modalActualizarPregunta(pregunta)">Editar<mat-icon>edit</mat-icon></button>
-                <button mat-button color="danger" (click)="modalEliminarPregunta(pregunta)">Eliminar<mat-icon>delete</mat-icon></button>
+                <button mat-button color="info" (click)="modalActualizarPregunta(pregunta)" name="editarSecciones" id="editarSecciones">Editar<mat-icon>edit</mat-icon></button>
+                <button mat-button color="danger" (click)="modalEliminarPregunta(pregunta)" name="eliminarSecciones" id="eliminarSecciones">Eliminar<mat-icon>delete</mat-icon></button>
             </div>
         </div>
     </div>

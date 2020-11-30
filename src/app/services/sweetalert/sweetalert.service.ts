@@ -67,6 +67,18 @@ export class SweetalertService {
     });
   }
 
+  confirmarGenerico(titulo: string, texto?: string, textoBotonCancelar?: string, textoBotonDo?: string ){
+    return this.swalConfirmar.fire({
+      title: titulo,
+      text: texto,
+      icon: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      cancelButtonText: '<span class="mat-button-wrapper" name="btnCancelar" id="btnCancelar">'+ textoBotonCancelar + ' </span> <div class="mat-button-focus-overlay"></div>',
+      confirmButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar">'+ textoBotonDo+' </span> <div class="mat-button-focus-overlay"></div>'
+    });
+  }
+
   eliminadoCorrecto(texto?: string){
     this.swalFinalizar.fire({
       title: 'Eliminado',
