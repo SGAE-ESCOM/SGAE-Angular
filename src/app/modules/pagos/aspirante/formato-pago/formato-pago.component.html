@@ -1,8 +1,7 @@
 <div class="container animated-row pb-4">
     <div class="row">
         <div class="col-12">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Consulta los datos para realizar tu pago, selecciona uno de los bancos disponibles en las siguientes opciones. Una vez hecho el pago, sube la evidencia en la sección "Subir Evidencia de Pago".</p>
         </div>
     </div>
     <div class="row">
@@ -16,7 +15,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-6 offset-3">
+        <div class="col-6 offset-3 op-pago">
             <div class="card no-border mat-elevation-z3">
                 <div class="card-header text-center">
                     <h5 class="m-0">Información de la cuenta</h5>
@@ -37,6 +36,9 @@
                             <div class="col-12 col-md-12 line">
                                 <span class="bold">Número de cuenta: </span>{{ cuentaSelec.noCuenta }}
                             </div>
+                            <div class="col-12 col-md-12 line">
+                                <span class="bold">Cantidad de pago: </span>${{ cuentaSelec.cantidad }}
+                            </div>
                             <div *ngFor="let datoAds of cuentaSelec.datosAds;"  class="col-12 col-md-12 line">
                                 <span class="bold">{{ datoAds.nombreCampo }}: </span>{{ datoAds.contenido }}
                             </div>
@@ -44,6 +46,9 @@
                     </div>
                 </ng-template>
             </div>
+        </div>
+        <div *ngIf="cuentaSelec" class="col-6 offset-3 text-right">
+            <button mat-raised-button color="info" name="btnIrAEvidenciaPago" [routerLink]="['/app/pagos/evidenciar-pago']" >Subir Evidencia Pago</button>
         </div>
     </div>
 </div>

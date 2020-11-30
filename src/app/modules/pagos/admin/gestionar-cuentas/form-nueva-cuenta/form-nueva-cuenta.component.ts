@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CuentasPagosService } from '@services/pagos/cuentas-pagos.service';
-import { ALPHANUMERICO_CON_ESPACIOS, NUMEROS_SIN_ESPACIOS } from '@shared/utils/validators/regex';
+import { ALPHANUMERICO_CON_ESPACIOS, NUMEROS_SIN_ESPACIOS, REGEX_NUMERO_PRECIO } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 
@@ -30,7 +30,8 @@ export class FormNuevaCuentaComponent implements OnInit {
     this.fgCuenta = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
       banco: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
-      noCuenta: ['', [Validators.required, Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
+      noCuenta: ['', [Validators.required, Validators.pattern(NUMEROS_SIN_ESPACIOS)]],
+      cantidad: ['', [Validators.required, Validators.pattern(REGEX_NUMERO_PRECIO)]]
     });
     return new Promise<Boolean>(resolve => { return true });
   }
@@ -67,6 +68,12 @@ export class FormNuevaCuentaComponent implements OnInit {
   getNoCuentaErrorMessage(){
     return this.fgCuenta.get('noCuenta').hasError('required') ? 'Este campo es requerido' :
       this.fgCuenta.get('noCuenta').hasError('pattern') ? 'Número no valido' :
+        '';
+  }
+
+  getCantidadErrorMessage(){
+    return this.fgCuenta.get('cantidad').hasError('required') ? 'Este campo es requerido' :
+      this.fgCuenta.get('cantidad').hasError('pattern') ? 'Cantidad no valida, usa formato de dos digitos: 9.99' :
         '';
   }
 

@@ -10,7 +10,7 @@ import { GruposService } from '@services/evaluacion/grupos.service';
 import { CuentasPagosService } from '@services/pagos/cuentas-pagos.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { BC_REVISAR_CUENTA } from '@shared/routing-list/ListLinks';
-import { ALPHANUMERICO_CON_ESPACIOS, NUMEROS_SIN_ESPACIOS } from '@shared/utils/validators/regex';
+import { ALPHANUMERICO_CON_ESPACIOS, NUMEROS_SIN_ESPACIOS, REGEX_NUMERO_PRECIO } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -44,7 +44,8 @@ export class RevisarCuentaComponent implements OnInit {
     this.fgDatosCuenta = this.fb.group({
       nombre: ['', [Validators.required, Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
       banco: ['', [Validators.required, Validators.pattern(ALPHANUMERICO_CON_ESPACIOS)]],
-      noCuenta: ['', [Validators.required, Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
+      noCuenta: ['', [Validators.required, Validators.pattern(NUMEROS_SIN_ESPACIOS)]],
+      cantidad: ['', [Validators.required, Validators.pattern(REGEX_NUMERO_PRECIO)]]
     });
 
     this.recargarCuenta();
@@ -83,6 +84,7 @@ export class RevisarCuentaComponent implements OnInit {
     this.fgDatosCuenta.get('nombre').setValue(this.cuenta.nombre);
     this.fgDatosCuenta.get('banco').setValue(this.cuenta.banco);
     this.fgDatosCuenta.get('noCuenta').setValue(this.cuenta.noCuenta);
+    this.fgDatosCuenta.get('cantidad').setValue(this.cuenta.cantidad);
   }
 
   cancelarEdicionDatosCuenta(){
@@ -96,6 +98,7 @@ export class RevisarCuentaComponent implements OnInit {
       cuentaUpdate.nombre = fgDatosCuenta.get("nombre").value;
       cuentaUpdate.banco = fgDatosCuenta.get("banco").value;
       cuentaUpdate.noCuenta = fgDatosCuenta.get("noCuenta").value;
+      cuentaUpdate.cantidad = fgDatosCuenta.get("cantidad").value;
 
       this._cuentas.updateDatosCuenta(this.cuenta).then(() => {
         this._swal.informacionActualizada();
@@ -199,6 +202,12 @@ export class RevisarCuentaComponent implements OnInit {
   getNoCuentaErrorMessage(){
     return this.fgDatosCuenta.get('noCuenta').hasError('required') ? 'Este campo es requerido' :
       this.fgDatosCuenta.get('noCuenta').hasError('pattern') ? 'Número no valido' :
+        '';
+  }
+
+  getCantidadErrorMessage(){
+    return this.fgDatosCuenta.get('cantidad').hasError('required') ? 'Este campo es requerido' :
+      this.fgDatosCuenta.get('cantidad').hasError('pattern') ? 'Cantidad no valida, usa formato de dos digitos: 9.99' :
         '';
   }
 

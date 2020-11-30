@@ -16,7 +16,7 @@
                     <h5>Datos principales</h5>
                     <form [formGroup]="fgDatosCuenta">
                         <div class="row">
-                            <div class="col-12 col-md-4 form-group">
+                            <div class="col-12 col-md-6 form-group">
                                 <mat-form-field appearance="legacy">
                                     <mat-label>Nombre de la cuenta</mat-label>
                                     <input matInput formControlName="nombre" id="nombre" name="nombre" [readonly] = "!editarCuenta" required>
@@ -24,7 +24,7 @@
                                     <mat-error *ngIf="fgDatosCuenta.get('nombre').invalid">{{getNombreCuentaErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-12 col-md-4 form-group">
+                            <div class="col-12 col-md-6 form-group">
                                 <mat-form-field appearance="legacy">
                                     <mat-label>Nombre del banco</mat-label>
                                     <input matInput formControlName="banco" id="banco" name="banco" [readonly] = "!editarCuenta" required>
@@ -32,12 +32,20 @@
                                     <mat-error *ngIf="fgDatosCuenta.get('banco').invalid">{{getBancoErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-12 col-md-4 form-group">
+                            <div class="col-12 col-md-6 form-group">
                                 <mat-form-field appearance="legacy">
                                     <mat-label>Número de la cuenta bancaria</mat-label>
                                     <input matInput formControlName="noCuenta" id="noCuenta" name="noCuenta" [readonly] = "!editarCuenta" required>
                                     <mat-icon matSuffix>payment</mat-icon>
                                     <mat-error *ngIf="fgDatosCuenta.get('noCuenta').invalid">{{getNoCuentaErrorMessage()}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Cantidad a pagar</mat-label>
+                                    <input matInput formControlName="cantidad" id="cantidad" name="cantidad" [readonly] = "!editarCuenta" required>
+                                    <mat-icon matSuffix>payments</mat-icon>
+                                    <mat-error *ngIf="fgDatosCuenta.get('noCuenta').invalid">{{getCantidadErrorMessage()}}</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
