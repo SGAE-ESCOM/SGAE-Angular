@@ -1,3 +1,5 @@
+import { Grupo } from '@models/evaluacion/Grupo';
+
 export interface Roles {
     aspirante?: boolean;
     admin?: boolean;
@@ -17,5 +19,6 @@ export interface UsuarioInterface {
     estado?: Estados;
     roles?: Roles;
     rol?: string;
+    grupo?: Grupo;
     permisos?: number;
 }

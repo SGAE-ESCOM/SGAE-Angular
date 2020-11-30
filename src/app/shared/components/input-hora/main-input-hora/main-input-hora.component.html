@@ -5,7 +5,7 @@
     </div>
     <div class="col-3">
         <mat-form-field appearance="legacy">
-            <input type="number" [formControl]="hora" rows="4" name="duracion" min="0" id="duracion" matInput placeholder="" (input)="updateValue()" required>
+            <input type="number" [formControl]="hora" rows="4" name="hora" min="0" id="hora" matInput placeholder="" (input)="updateValue()" required>
             <mat-hint>Horas</mat-hint>
             <mat-error *ngIf="hora.hasError('required')">{{ MSJ_ERROR_REQUERIDO }}</mat-error>
             <mat-error *ngIf="hora.hasError('pattern')">{{ MSJ_HORAS_NO_VALIDAS }} </mat-error>
@@ -14,7 +14,7 @@
     <div class="two-point">:</div>
     <div class="col-3">
         <mat-form-field appearance="legacy">
-            <input type="number" [formControl]="minutos" rows="4" name="duracion" min="0" id="duracion" matInput placeholder="" (input)="updateValue()" required>
+            <input type="number" [formControl]="minutos" rows="4" name="minutos" min="0" id="minutos" matInput placeholder="" (input)="updateValue()" required>
             <mat-hint>Minutos</mat-hint>
             <mat-error *ngIf="minutos.hasError('required')">{{ MSJ_ERROR_REQUERIDO }}</mat-error>
             <mat-error *ngIf="minutos.hasError('pattern')">{{ MSJ_MINUTOS_NO_VALIDAS }} </mat-error>

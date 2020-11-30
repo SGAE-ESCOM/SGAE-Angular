@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col-sm-6 col-md-5">
                                 <mat-form-field>
-                                    <ngx-mat-file-input formControlName="img" name="imgEnunciado"
+                                    <ngx-mat-file-input formControlName="img" name="imgEnunciado" id="imgEnunciado"
                                         placeholder="Imagen del enunciado"
                                         [accept]="'.jpg, .png, .jpeg'"
                                         [valuePlaceholder]="( img.value ) ? 'Archivo seleccionado': 'ARCHIVO NO SELECCIONADO' "
@@ -50,7 +50,7 @@
                             <div class="form-group  col-sm-6 col-md-5">
                                 <mat-form-field>
                                     <mat-label>Respuesta</mat-label>
-                                    <mat-select formControlName="respuesta" name="respuesta" required>
+                                    <mat-select formControlName="respuesta" name="respuesta" id="respuesta" required>
                                         <mat-option *ngFor="let opcion of opciones.value" [value]="opcion.id">
                                             {{opcion.id + 1}}
                                         </mat-option>
