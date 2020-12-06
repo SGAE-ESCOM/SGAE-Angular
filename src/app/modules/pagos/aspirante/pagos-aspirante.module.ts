@@ -9,8 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
 import { DndDirective } from './evidencia-pago/dnd.directive';
 import { ProgressComponent } from './evidencia-pago/progress/progress.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,8 +18,7 @@ import { FormsModule } from '@angular/forms';
     PagosAspiranteRoutingModule,
     MatSelectModule,
     MatButtonModule,
-    AngularMaterialModule,
-    FormsModule
+    AngularMaterialModule
   ]
 })
 export class PagosAspiranteModule { }
