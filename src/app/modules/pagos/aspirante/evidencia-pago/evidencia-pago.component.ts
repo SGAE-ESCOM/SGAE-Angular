@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { BC_EVIDENCIA_PAGO } from '@shared/routing-list/ListLinks';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-evidencia-pago',
@@ -11,7 +12,7 @@ export class EvidenciaPagoComponent implements OnInit {
 
   files: any[] = [];
 
-  constructor() { 
+  constructor(private _toastr: ToastrService) { 
     /***************** REVISAR ACCESO SOLO ASPIRANTES *******************/
 
     BreadcrumbComponent.update(BC_EVIDENCIA_PAGO);
@@ -24,6 +25,10 @@ export class EvidenciaPagoComponent implements OnInit {
    * on file drop handler
    */
   onFileDropped($event) {
+    if ($event.length > 1){
+      this._toastr.error("Arraste solo un archivo.");
+      return;
+    }
     this.prepareFilesList($event);
   }
 
@@ -51,11 +56,15 @@ export class EvidenciaPagoComponent implements OnInit {
         return;
       } else {
         const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
+            try {
+              if (this.files[index].progress === 100) {
+              clearInterval(progressInterval);
+              this.uploadFilesSimulator(index + 1);
+            } else {
+              this.files[index].progress += 5;
+            }
+          } catch(e) {
             clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
           }
         }, 200);
       }
@@ -67,8 +76,13 @@ export class EvidenciaPagoComponent implements OnInit {
    * @param files (Files List)
    */
   prepareFilesList(files: Array<any>) {
-    if (files.length > 1){
-      console.log("mas de un archivo");
+    //Validaciones para solo cargar 1 archivo a la vez
+    if (this.files.length > 0){
+      this._toastr.error("Archivo previamente cargado.");
+      return;
+    }
+    if(files[0].type != 'application/pdf'){
+      this._toastr.error("Solo se soportan archivos con extensión pdf.");
       return;
     }
     for (const item of files) {
