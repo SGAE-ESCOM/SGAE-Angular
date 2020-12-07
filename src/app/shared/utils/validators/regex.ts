@@ -7,3 +7,4 @@ export const REGEX_MINUSCULAS = 'a-zá-ú';
 export const REGEX_NUMEROS_MINUTOS = '^[0-5]?[0-9]$';
 export const REGEX_NUMEROS_HORAS = '^[0-2]?[0-9]$';
 export const REGEX_FECHAS = '^[0-9][0-9]-[0-9][0-9]-[0-9]{4}$';
+export const REGEX_NUMERO_PRECIO = '^[0-9]+\.[0-9]{2}$';
