@@ -1,14 +1,25 @@
-<form [formGroup]="fgSimulador" *ngIf="preguntas">
-    <div class="row" *ngFor="let pregunta of preguntas; let i = index">
-        <div class="col-12">
-            <b>{{i+1}}. {{ pregunta.enunciado}}</b>
+<form [formGroup]="fgSimulador" *ngIf="evaluacion && secciones">
+    <div class="row pb-4" *ngFor="let seccion of secciones">
+        <div class="col-12 pb-1">
+            <h4>{{ seccion.nombre }}</h4>
+            <hr>
         </div>
-        <div class="col-12">
-            <mat-radio-group color="primary" class="example-radio-group">
-                <mat-radio-button class="example-radio-button" *ngFor="let opcion of pregunta.opciones" [value]="opcion.id">
-                    {{opcion.enunciado}}
-                </mat-radio-button>
-            </mat-radio-group>
+        <div class="row" *ngFor="let pregunta of seccion.preguntas; let i = index">
+            <div class="col-12">
+                <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
+            </div>
+            <div class="col-12">
+                <mat-radio-group color="primary" class="example-radio-group">
+                    <mat-radio-button class="example-radio-button" *ngFor="let opcion of pregunta.opciones" [value]="opcion.id">
+                        <ng-katex-html [html]="opcion.enunciado"></ng-katex-html>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <button mat-flat-button color="success">Finalizar <mat-icon>done</mat-icon></button> 
         </div>
     </div>
 </form>

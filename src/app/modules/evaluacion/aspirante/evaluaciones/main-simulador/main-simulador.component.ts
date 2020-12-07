@@ -33,6 +33,7 @@ export class MainSimuladorComponent implements OnInit {
   aplicacion: Aplicacion;
   evaluacion: Evaluacion;
   preguntas: Pregunta[] = [];
+  totalIteraciones: number;
 
   constructor(private router: Router, private _toastr: ToastrService, private _swal: SweetalertService,
     private _auth: AuthService, private _preguntas: PreguntasService) {
@@ -65,21 +66,23 @@ export class MainSimuladorComponent implements OnInit {
   }
 
   async getPreguntas() {
-    this.evaluacion.temas.forEach(tema => {
-      console.log(tema);
-      this._preguntas.getPreguntas(tema).then((querySnapshot) => {
+    this.totalIteraciones = this.evaluacion.temas.length;
+    for (let i = 0; i < this.evaluacion.temas.length; i++) {
+
+      this._preguntas.getPreguntas(this.evaluacion.temas[i]).then((querySnapshot) => {
         let preguntas = [];
         querySnapshot.forEach((doc) => {
           const pregunta = doc.data();
           pregunta.id = doc.id;
           preguntas.push(pregunta);
         });
-        this.preguntas = this.preguntas.concat(preguntas);
+        this.evaluacion.temas[i].preguntas = preguntas;
       }).catch(err => { 
         console.error(err);
         this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) 
       });;
-    });
+
+    }
   }
 
   /*************************************** UTILS *******************************************/
