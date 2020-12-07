@@ -1,11 +1,11 @@
-<form>
+<form [formGroup]="fgSimulador" *ngIf="preguntas">
     <div class="row" *ngFor="let pregunta of preguntas; let i = index">
         <div class="col-12">
             <b>{{i+1}}. {{ pregunta.enunciado}}</b>
         </div>
         <div class="col-12">
-            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
-                <mat-radio-button class="example-radio-button" *ngFor="let opcion of pregunta.opciones" [value]="season">
+            <mat-radio-group color="primary" class="example-radio-group">
+                <mat-radio-button class="example-radio-button" *ngFor="let opcion of pregunta.opciones" [value]="opcion.id">
                     {{opcion.enunciado}}
                 </mat-radio-button>
             </mat-radio-group>

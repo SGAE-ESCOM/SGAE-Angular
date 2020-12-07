@@ -7,7 +7,7 @@ import { AuthService } from '@services/auth.service';
 import { GruposService } from '@services/evaluacion/grupos.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
-import { BC_GRUPOS, EVALUACION } from '@shared/routing-list/ListLinks';
+import { BC_GRUPOS, EVALUACION, EVALUACIONES } from '@shared/routing-list/ListLinks';
 import { fadeInRight } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_REQUERIDO } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
@@ -24,8 +24,9 @@ export class MainInscribirGrupoComponent implements OnInit {
 
   usuario
   grupos: Grupo[];
-  hasGrupo: boolean = false;
-
+  hasGrupo: boolean = true;
+  grupoName: string = '';
+  linkEvaluaciones: string = EVALUACIONES.url
 
   fgInscripcionGrupo: FormGroup;
 
@@ -34,8 +35,13 @@ export class MainInscribirGrupoComponent implements OnInit {
     private _grupos: GruposService, private _usuarios: UsuarioService) {
     BreadcrumbComponent.update(BC_GRUPOS);
     this.usuario = this._authServices.getUsuarioC();
-    this.initForm();
-    this.getGrupos();
+    if(this.usuario.grupo){
+      this.grupoName = this.usuario.grupo.nombre;
+    }else{
+      this.hasGrupo = false;
+      this.initForm();
+      this.getGrupos();
+    }
   }
 
   ngOnInit() {

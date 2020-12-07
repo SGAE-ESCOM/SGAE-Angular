@@ -106,7 +106,7 @@ export class MainAplicacionComponent implements OnInit {
   }
 
   onEliminar(aplicacion: Aplicacion) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar el aplicación '${aplicacion.nombre}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar la aplicación '${aplicacion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
           this._aplicaciones.delete(aplicacion).then(() => {
