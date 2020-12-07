@@ -30,8 +30,8 @@ export class MainTablasComponent implements OnInit, OnChanges {
   @Output() custom: EventEmitter<any> = new EventEmitter<any>();
   @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() show: EventEmitter<any> = new EventEmitter<any>();
-  @Output() update: EventEmitter<any> = new EventEmitter<any>();;
-  @Output() delete: EventEmitter<any> = new EventEmitter<any>();;
+  @Output() update: EventEmitter<any> = new EventEmitter<any>();
+  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
