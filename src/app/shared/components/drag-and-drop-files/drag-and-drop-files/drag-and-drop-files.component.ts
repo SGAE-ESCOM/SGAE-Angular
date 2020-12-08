@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-drag-and-drop-files',
@@ -16,7 +16,9 @@ export class DragAndDropFilesComponent implements OnInit {
   @Output() fileLimitUploadError: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() typeFilesError: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @ViewChild('fileDropRef') btnGetFiles: ElementRef;
   files: any[] = [];
+  readyToSend: boolean = false;
 
   constructor() { }
 
@@ -47,6 +49,8 @@ export class DragAndDropFilesComponent implements OnInit {
    */
   deleteFile(index: number) {
     this.files.splice(index, 1);
+    if(this.files.length == 0)
+      this.readyToSend = false;
   }
 
   /**
@@ -60,14 +64,19 @@ export class DragAndDropFilesComponent implements OnInit {
         const progressInterval = setInterval(() => {
             try {
               if (this.files[index].progress === 100) {
+                //archivo cargado
+                clearInterval(progressInterval);
+                this.uploadFilesSimulator(index + 1);
+                this.readyToSend = true;
+              } else {
+                this.files[index].progress += 5;
+              }
+            } catch(e) {
+              //carga de archivo interrumpida
+              if(this.files.length == 0)
+                this.readyToSend = false;
               clearInterval(progressInterval);
-              this.uploadFilesSimulator(index + 1);
-            } else {
-              this.files[index].progress += 5;
             }
-          } catch(e) {
-            clearInterval(progressInterval);
-          }
         }, 200);
       }
     }, 1000);
@@ -117,6 +126,11 @@ export class DragAndDropFilesComponent implements OnInit {
 
   submitFiles(){
     this.sendFiles.emit(this.files);
+  }
+
+  clearValue(){
+    //Validacion para cargar el mismo elemento antes eliminado
+    this.btnGetFiles.nativeElement.value = null;
   }
 
 }

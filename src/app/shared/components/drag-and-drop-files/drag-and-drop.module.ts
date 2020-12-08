@@ -5,6 +5,7 @@ import { DndDirective } from './drag-and-drop-files/dnd.directive';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ProgressComponent } from './drag-and-drop-files/progress/progress.component';
 import { FormsModule } from '@angular/forms';
+import { AngularMaterialModule } from '@modules/template/angular-material.module';
 
 
 
@@ -12,7 +13,8 @@ import { FormsModule } from '@angular/forms';
   declarations: [DragAndDropFilesComponent, DndDirective, ProgressComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    AngularMaterialModule
   ],
   exports: [DragAndDropFilesComponent],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-MX' }]

@@ -9,6 +9,9 @@
             <button mat-raised-button color="info" name="btnIrAEvidenciaPago">Subir Evidencia Pago <mat-icon>arrow_circle_up</mat-icon></button>
         </div>
     </div> -->
-    <app-drag-and-drop-files [multipleFiles]="false" [typeFiles]="['application/pdf']" [titleBox]="'Arrastra y suelta el fórmato de pago.'" 
-        (sendFiles)="subirArchivo($event)" (singleFileDropError)="singleFileDropError()" (fileLimitUploadError)="fileLimitUploadError()" (typeFilesError)="typeFilesError()"></app-drag-and-drop-files>
+    <app-drag-and-drop-files
+        [multipleFiles]="false" [typeFiles]="['application/pdf']" [titleBox]="'Arrastra y suelta el fórmato de pago.'" 
+        (sendFiles)="subirArchivo($event)" (singleFileDropError)="singleFileDropError()" 
+        (fileLimitUploadError)="fileLimitUploadError()" (typeFilesError)="typeFilesError()">
+    </app-drag-and-drop-files>
 </div>

@@ -21,8 +21,8 @@ export class EvidenciaPagoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  subirArchivo(variable: any){
-    console.log('funcionando')
+  subirArchivo(files: any){
+    this._toastr.success("Archivo enviado.");
   }
 
   singleFileDropError(){
