@@ -6,8 +6,9 @@ export interface Roles {
     root?: boolean;
 }
 
-export interface Estados{
+export interface Estados {
     documentacion?: string;
+    pagos?: string;
 }
 
 export interface UsuarioInterface {

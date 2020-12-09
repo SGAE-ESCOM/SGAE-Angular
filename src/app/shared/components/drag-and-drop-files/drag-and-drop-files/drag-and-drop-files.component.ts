@@ -77,7 +77,7 @@ export class DragAndDropFilesComponent implements OnInit {
                 this.readyToSend = false;
               clearInterval(progressInterval);
             }
-        }, 200);
+        }, 50);
       }
     }, 1000);
   }
