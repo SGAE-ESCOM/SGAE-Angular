@@ -1,17 +1,48 @@
 <div class="container animated-row pb-4">
     <div class="row">
-        <div class="col-12">
+        <div *ngIf="estadoPago == estadosPagos.PENDIENTE; else elseBlock" class="col-12">
             <p>Sube la evidencía de tu pago en formato pdf para que pueda ser revisado por la institutción. Puedes revisar si tu pago fue validado en esta sección.</p>
         </div>
+        <ng-template #elseBlock>
+            <div class="col-12">
+                <div class="alert " [ngClass]="{
+                    'alert-info': estadoPago === estadosPagos.REVISION,
+                    'alert-warning': estadoPago === estadosPagos.INVALIDA,
+                    'alert-success': estadoPago === estadosPagos.VALIDADA  }" role="alert" [ngSwitch]="estadoPago">
+                    <div class="col-12 pt-2">
+                        <h4 class="alert-heading">Estado de mi documentación</h4>
+                        <p *ngSwitchCase="estadosPagos.REVISION">
+                            Tu evidencia de pago esta siendo revisada.
+                        </p>
+                        <p *ngSwitchCase="estadosPagos.INVALIDA">
+                            Tu evidencia de pago no fue aprobada, revise los comentarios y vuelva a enviar su evidencia.
+                        </p>
+                        <p *ngSwitchCase="estadosPagos.VALIDADA">
+                            Tu evidencia de pago fue validada.
+                        </p>
+                    </div>
+                    <div class="col-12" *ngSwitchCase="estadosPagos.INVALIDA">
+                        <hr>
+                        <p class="mb-0">{{ comentarios }}</p>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </ng-template>
     </div>
-    <!-- <div class="row">
-        <div class="col-12 text-center">
-            <button mat-raised-button color="info" name="btnIrAEvidenciaPago">Subir Evidencia Pago <mat-icon>arrow_circle_up</mat-icon></button>
-        </div>
-    </div> -->
-    <app-drag-and-drop-files
+
+    <app-drag-and-drop-files *ngIf="estadoPago == estadosPagos.PENDIENTE || estadoPago == estadosPagos.INVALIDA"
         [multipleFiles]="false" [typeFiles]="['application/pdf']" [titleBox]="'Arrastra y suelta el fórmato de pago.'" 
         (sendFiles)="subirArchivo($event)" (singleFileDropError)="singleFileDropError()" 
         (fileLimitUploadError)="fileLimitUploadError()" (typeFilesError)="typeFilesError()">
     </app-drag-and-drop-files>
+
+    <div class="row">
+        <div class="col-12 text-left return">
+            <button name="btnRegresar" type="submit" type="submit" [routerLink]="['/app/pagos']" mat-button color="info">
+                    Regresar <mat-icon>undo</mat-icon> 
+            </button>
+        </div>
+    </div>
+
 </div>
