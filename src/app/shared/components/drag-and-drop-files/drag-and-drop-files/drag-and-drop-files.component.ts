@@ -1,4 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-drag-and-drop-files',
@@ -15,12 +17,13 @@ export class DragAndDropFilesComponent implements OnInit {
   @Output() singleFileDropError: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() fileLimitUploadError: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() typeFilesError: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() fileUploadError: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('fileDropRef') btnGetFiles: ElementRef;
   files: any[] = [];
   readyToSend: boolean = false;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -105,6 +108,7 @@ export class DragAndDropFilesComponent implements OnInit {
       item.progress = 0;
       this.files.push(item);
     }
+
     this.uploadFilesSimulator(0);
   }
 
@@ -131,6 +135,49 @@ export class DragAndDropFilesComponent implements OnInit {
   clearValue(){
     //Validacion para cargar el mismo elemento antes eliminado
     this.btnGetFiles.nativeElement.value = null;
+  }
+
+
+
+  abrirArchivo(file: File){
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      let data = {
+        archivo : reader.result.toString(),
+        nombre: file.name
+      }
+
+      const dialogRef = this.dialog.open(ModalVerDocumento, {
+        width: '1000px',
+        data: data
+      });
+      dialogRef.afterClosed().subscribe(result => {});
+
+    };
+
+    reader.onerror = (error) => {
+      this.fileUploadError.emit(true);
+    };
+
+
+  }
+}
+
+@Component({
+  selector: 'modal-editar',
+  templateUrl: './modal-documento.component.html',
+})
+export class ModalVerDocumento {
+
+  constructor(
+    public dialogRef: MatDialogRef<ModalVerDocumento>,
+    public sanitizer: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

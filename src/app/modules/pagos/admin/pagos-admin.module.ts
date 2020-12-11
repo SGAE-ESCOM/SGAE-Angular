@@ -17,10 +17,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RevisarCuentaComponent, ModalNuevoCampo } from './revisar-cuenta/revisar-cuenta.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormNuevoCampoComponent } from './revisar-cuenta/form-nuevo-campo/form-nuevo-campo.component';
+import { ValidarPagoAspiranteComponent } from './validar-pago-aspirante/validar-pago-aspirante.component';
+import { PipesModule } from '@shared/pipes/pipes.module';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 @NgModule({
-  declarations: [GestionarCuentasComponent, ValidarPagosComponent, ConfigurarReferenciasComponent, ModalNuevaCuenta, FormNuevaCuentaComponent, RevisarCuentaComponent, ModalNuevoCampo, FormNuevoCampoComponent],
+  declarations: [GestionarCuentasComponent, ValidarPagosComponent, ConfigurarReferenciasComponent, ModalNuevaCuenta, FormNuevaCuentaComponent, RevisarCuentaComponent, ModalNuevoCampo, FormNuevoCampoComponent, ValidarPagoAspiranteComponent],
   imports: [
     CommonModule,
     PagosAdminRoutingModule,
@@ -34,7 +37,9 @@ import { FormNuevoCampoComponent } from './revisar-cuenta/form-nuevo-campo/form-
     MatTooltipModule,
     FormsModule, 
     ReactiveFormsModule,
-    MatSlideToggleModule
-  ]
+    MatSlideToggleModule,
+    PipesModule
+  ],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-MX' }]
 })
 export class PagosAdminModule { }

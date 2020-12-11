@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
 import { DragAndDropModule } from '@shared/components/drag-and-drop-files/drag-and-drop.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DragAndDropModule } from '@shared/components/drag-and-drop-files/drag-a
     MatSelectModule,
     MatButtonModule,
     AngularMaterialModule,
-    DragAndDropModule
+    DragAndDropModule,
+    MatDialogModule
   ]
 })
 export class PagosAspiranteModule { }

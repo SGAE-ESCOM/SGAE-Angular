@@ -26,18 +26,20 @@ export class EvidenciaPagoComponent implements OnInit {
     /***************** REVISAR ACCESO SOLO ASPIRANTES *******************/
 
     this.usuario = this._authService.getUsuarioC();
-    // if(typeof this.usuario.estado !== 'undefined' && typeof this.usuario.estado.pagos === 'undefined')
-    //   this.estadoEvidenciaPago = this.usuario.estado.pagos;
-
-    this._evidenciasPagos.getEvidencia(this.usuario.id).then(value => {
-      let pago: EvidenciaPago = value.data();
-      this.estadoPago = pago.estado;
-      this.comentarios = pago.comentarios;
-      console.log(pago);
-    }).catch(error => {
-      console.log(error);
+    if(typeof this.usuario.estado !== 'undefined' && typeof this.usuario.estado.pago !== 'undefined')
+      this.estadoPago = this.usuario.estado.pago;
+    else
       this.estadoPago = this.estadosPagos.PENDIENTE;
-    })
+
+    if(this.estadoPago == this.estadosPagos.INVALIDA){
+      this._evidenciasPagos.getEvidencia(this.usuario.id).then(value => {
+        let pago: EvidenciaPago = value.data();
+        this.comentarios = pago.comentarios;
+        // console.log(pago);
+      }).catch(error => {
+        console.log(error);
+      })
+    }
 
     BreadcrumbComponent.update(BC_EVIDENCIA_PAGO);
   }
@@ -56,15 +58,18 @@ export class EvidenciaPagoComponent implements OnInit {
         nombre: files[0].name,
         archivo: reader.result.toString(),
         comentarios: '',
-        estado: this.estadosPagos.REVISION
+        valido: false
       }
 
       this._evidenciasPagos.save(value, this.usuario.id)
         .then(result => {
           this._toastr.info("Evidencia de pago enviada");
+          this._usuarioService.updateEstadoDocumentacion(this.usuario, EstadoPago.REVISION);
           this.estadoPago = this.estadosPagos.REVISION
         })
-        .catch(error => this._toastr.error(error));
+        .catch(error => {
+          this._toastr.error("El archivo es demasiado pesado.");
+        });
     };
 
     reader.onerror = (error) => {
@@ -82,6 +87,10 @@ export class EvidenciaPagoComponent implements OnInit {
 
   typeFilesError(){
     this._toastr.error("Solo se soportan archivos con extensión pdf.");
+  }
+
+  fileUploadError(){
+    this._toastr.error("Ocurrio un error al cargar el archivo.");
   }
 
 }

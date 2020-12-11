@@ -1,0 +1,42 @@
+<div class="container animated-row pb-4">
+    <div class="row mat-elevation-z3 pb-3">
+        <div class="col-12 px-0">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Requisito</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Valido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th>Evidencia de pago</th>
+                        <div>
+                            <a (click)="abrirArchivo()">{{ "prueba de doc" }}</a>
+                        </div>
+                        <td>
+                            <mat-checkbox [(ngModel)]="validado">Si</mat-checkbox>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-12 my-1">
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Comentarios</mat-label>
+                        <textarea matInput name="txtComentarios" id="txtComentarios" rows="4" placeholder="Agrega lo que se debe corregir de la evidencia de pago" [(ngModel)]="evidenciaPagoObject.comentarios"></textarea>
+                        <mat-icon matSuffix>message</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 text-right">
+                    <button mat-button color="info" name="btnEnviarCorrecciones" id="btnEnviarCorrecciones" (click)="onEnviarCorrecciones()">Enviar correcciones</button>
+                    <button mat-button color="success" name="btnValidar" id="btnValidar" *ngIf="usuario.estado.pago !== 'validada'" (click)="onFinalizar()">Validar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

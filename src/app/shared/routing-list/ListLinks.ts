@@ -84,6 +84,10 @@ export const BC_GESTIONAR_CUENTAS = new Breadcrumb(GESTIONAR_CUENTAS, [HOME, PAG
 export const VALIDAR_PAGOS = new NavigationLink("Validar Pagos", "/app/pagos/validar-pagos", "fact_check", "Valida los pagos de los aspirantes que ya han enviado el formato de pago");
 export const BC_VALIDAR_PAGOS = new Breadcrumb(VALIDAR_PAGOS, [HOME, PAGOS]);
 
+export const VALIDAR_PAGO_ASPIRANTE = new NavigationLink("Validar Pago Aspirante", "/app/pagos/validar-pagos");
+export const BC_VALIDAR_PAGO_ASPIRANTE = new Breadcrumb(VALIDAR_PAGO_ASPIRANTE, [HOME, PAGOS, VALIDAR_PAGOS]);
+
+
 export const REVISAR_CUENTA = new NavigationLink("Revisar Cuenta", "/app/pagos/revisar-cuenta");
 export const BC_REVISAR_CUENTA = new Breadcrumb(REVISAR_CUENTA, [HOME, PAGOS, GESTIONAR_CUENTAS]);
 

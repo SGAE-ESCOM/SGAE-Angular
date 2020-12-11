@@ -36,6 +36,10 @@ export class UsuarioService {
     this.usuariosCollection.doc(usuario.id).update({"estado.documentacion": estado});
   }
 
+  updateEstadoPago(usuario: UsuarioInterface, estado: string) {
+    this.usuariosCollection.doc(usuario.id).update({"estado.pago": estado});
+  }
+
   gasignarGrupo(usuario: UsuarioInterface, grupo: Grupo) {
     return this.usuariosCollection.doc(usuario.id).update({ grupo});
   }
@@ -54,6 +58,10 @@ export class UsuarioService {
 
   getAspirantesValidados(): Promise<any> {
     return this.usuariosCollection.where('estado.documentacion', '==', 'validada').get();
+  }
+
+  getAspirantesConEstadoPago(estado: string){
+    return this.usuariosCollection.where('estado.pago', '==', estado).get();
   }
 
   deleteAspirante(user: UsuarioInterface){

@@ -8,6 +8,7 @@ export interface Roles {
 
 export interface Estados {
     documentacion?: string;
+    pago?: string;
 }
 
 export interface UsuarioInterface {
