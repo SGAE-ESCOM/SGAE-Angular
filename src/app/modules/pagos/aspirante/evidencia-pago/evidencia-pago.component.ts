@@ -64,7 +64,7 @@ export class EvidenciaPagoComponent implements OnInit {
       this._evidenciasPagos.save(value, this.usuario.id)
         .then(result => {
           this._toastr.info("Evidencia de pago enviada");
-          this._usuarioService.updateEstadoDocumentacion(this.usuario, EstadoPago.REVISION);
+          this._usuarioService.updateEstadoPago(this.usuario, EstadoPago.REVISION);
           this.estadoPago = this.estadosPagos.REVISION
         })
         .catch(error => {

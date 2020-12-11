@@ -19,7 +19,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormNuevoCampoComponent } from './revisar-cuenta/form-nuevo-campo/form-nuevo-campo.component';
 import { ValidarPagoAspiranteComponent } from './validar-pago-aspirante/validar-pago-aspirante.component';
 import { PipesModule } from '@shared/pipes/pipes.module';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {  MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -38,7 +40,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     FormsModule, 
     ReactiveFormsModule,
     MatSlideToggleModule,
-    PipesModule
+    PipesModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-MX' }]
 })

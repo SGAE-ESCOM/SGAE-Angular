@@ -92,7 +92,7 @@ export const REVISAR_CUENTA = new NavigationLink("Revisar Cuenta", "/app/pagos/r
 export const BC_REVISAR_CUENTA = new Breadcrumb(REVISAR_CUENTA, [HOME, PAGOS, GESTIONAR_CUENTAS]);
 
 //ASPIRANTE
-export const EVIDENCIA_PAGO = new NavigationLink("Subir Evidencia de Pago", "/app/pagos/evidenciar-pago", "receipt", "Sube la evidencia de pago con los datos del formato de pago");
+export const EVIDENCIA_PAGO = new NavigationLink("Evidencia de Pago", "/app/pagos/evidenciar-pago", "receipt", "Sube tu evidencia de pago y revisa su estado de aprobación.");
 export const BC_EVIDENCIA_PAGO = new Breadcrumb(EVIDENCIA_PAGO, [HOME, PAGOS]);
 
 export const FORMATO_PAGO = new NavigationLink("Ver Formato de Pago", "/app/pagos/formato-pago", "description", "Consulta el formato de pago para continuar con el proceso de admisión");

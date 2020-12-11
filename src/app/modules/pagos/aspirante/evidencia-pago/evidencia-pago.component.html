@@ -10,7 +10,7 @@
                     'alert-warning': estadoPago === estadosPagos.INVALIDA,
                     'alert-success': estadoPago === estadosPagos.VALIDADA  }" role="alert" [ngSwitch]="estadoPago">
                     <div class="col-12 pt-2">
-                        <h4 class="alert-heading">Estado de mi documentación</h4>
+                        <h4 class="alert-heading">Estado de mi evidencia de pago</h4>
                         <p *ngSwitchCase="estadosPagos.REVISION">
                             Tu evidencia de pago esta siendo revisada.
                         </p>

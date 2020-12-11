@@ -24,10 +24,7 @@ export class ValidarPagoAspiranteComponent implements OnInit {
   requisitosTabla;
 
   //Variables de logica validacion
-  evidenciaPagoObject: EvidenciaPago;
-  validado:boolean = false;
-  comentarios = '';
-  requisitosValidados: any[] = [];
+  evidenciaPagoObject: EvidenciaPago = null;
   usuario: UsuarioInterface;
 
   constructor(public dialog: MatDialog, private _evidenciasPagos: EvidenciasPagosService, private _personaService: UsuarioService, 
@@ -48,7 +45,6 @@ export class ValidarPagoAspiranteComponent implements OnInit {
     this._evidenciasPagos.getEvidenciaObs(this.usuario).subscribe(value => {
       this.evidenciaPagoObject = value;
     }); //PRODUCCION
-    // this.formatearRequisitos(requisitos)
   }
 
   ngAfterViewInit() {
@@ -57,7 +53,12 @@ export class ValidarPagoAspiranteComponent implements OnInit {
 
   //HTTP
   onEnviarCorrecciones() {
-    if (this.validado) {
+    if(this.evidenciaPagoObject.comentarios == ""){
+      this._toast.error("Agrega un comentario a la corrección.");
+      return;
+    }
+
+    if (!this.evidenciaPagoObject.valido) {
       this._evidenciasPagos.save(this.evidenciaPagoObject, this.usuario.id).then(response => {
         this._personaService.updateEstadoPago(this.usuario, EstadoPago.INVALIDA);
         this._toast.success("Se envio la corrección");
@@ -69,7 +70,7 @@ export class ValidarPagoAspiranteComponent implements OnInit {
   }
 
   onFinalizar() {
-    if (this.validado) {
+    if (this.evidenciaPagoObject.valido) {
       this._swal.confirmarFinalizar("¿Finalizar validación del pago?", "No podras cambiar el estado del pago despues.")
         .then(result => {
           if (result.value) {
@@ -85,16 +86,6 @@ export class ValidarPagoAspiranteComponent implements OnInit {
       this._toast.error("Debe validar la evidencia de pago para finalizar.");
     }
   }
-
-  // private todosValidos(): boolean {
-  //   let todosValidos = true;
-  //   for (let i = 0; i < this.requisitosValidados.length; i++) {
-  //     if (todosValidos && this.requisitosValidados[i][1].valido)
-  //       continue;
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   abrirArchivo() {
     let data = {
