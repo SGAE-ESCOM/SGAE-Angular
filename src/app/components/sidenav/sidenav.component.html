@@ -9,12 +9,34 @@
       SGAE
     </h1>
     <span class="spacer"></span>
+    <!-- <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="alerts" data-title="Sin nuevas alertas"  [disabled]="true"  @fadeInDown>
+      <mat-icon style="color:gray" class="material-icons-outlined">notification_important</mat-icon>
+    </button> -->
+    <button *ngIf="usuario.alertas.length == 0; else elseBlock" mat-button [matMenuTriggerFor]="alerts" @fadeInDown disabled>
+      <mat-icon style="color: gray" class="material-icons-outlined">notification_important</mat-icon>
+    </button>
+    <ng-template #elseBlock>
+      <button mat-button [matMenuTriggerFor]="alerts" data-title-alert="Tienes nuevas alertas" @fadeInDown>
+        <mat-icon style="color: orange" class="material-icons-outlined">notification_important</mat-icon> <span class="numberCircle">&nbsp;{{ usuario.alertas.length }}&nbsp;</span>
+      </button>
+    </ng-template>
     <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu" @fadeInDown>
       <mat-icon class="material-icons-outlined">account_circle</mat-icon> {{ usuario.nombres }}
     </button>
+
+    <!-- Alertas -->
+    <mat-menu #alerts="matMenu">
+      <button mat-menu-item>
+        <mat-icon style="color: red" class="material-icons-outlined">error_outline</mat-icon><span>&nbsp;</span>Se requiere de tu pago 
+      </button>
+      <button mat-menu-item>
+        <mat-icon style="color: #17a2b8" class="material-icons-outlined">info</mat-icon><span>&nbsp;</span>Nuevos grupos disponibles
+      </button>
+    </mat-menu>
+    
     <mat-menu #menu="matMenu">
       <button mat-menu-item>
-        <mat-icon class="material-icons-outlined">settings_application</mat-icon> Configurar
+        <mat-icon class="material-icons-outlined">settings_application</mat-icon> Configurar 
       </button>
       <button mat-menu-item (click)="onLogout()">
         <mat-icon>exit_to_app</mat-icon> Salir

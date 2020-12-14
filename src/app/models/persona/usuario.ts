@@ -22,4 +22,5 @@ export interface UsuarioInterface {
     rol?: string;
     grupo?: Grupo;
     permisos?: number;
+    alertas?: string[];
 }

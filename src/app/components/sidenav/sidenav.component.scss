@@ -93,3 +93,65 @@ h1.example-app-name {
 .sidenav-icon {
   padding-right: 30px;
 }
+
+.numberCircle {
+  border-radius: 100%;
+  width: 100px;
+  height: 20px;
+
+  background: orange;
+  border: 3px solid orange;
+  color: white;
+
+  font: 10px Arial, sans-serif;
+}
+
+
+
+[data-title]:hover::before {
+  content: attr(data-title);
+  position: absolute;
+  bottom: -48px;
+  display: inline-block;
+  padding: 0px 6px;
+  border-radius: 2px;
+  background: gray;
+  color: #fff;
+  font-size: 14px;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+[data-title]:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 28px;
+  display: inline-block;
+  color: #fff;
+  border: 8px solid transparent;	
+  border-bottom: 8px solid gray;
+}
+
+[data-title-alert]:hover::before {
+  content: attr(data-title-alert);
+  position: absolute;
+  bottom: -48px;
+  display: inline-block;
+  padding: 0px 6px;
+  border-radius: 2px;
+  background: orange;
+  color: #fff;
+  font-size: 14px;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+[data-title-alert]:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 28px;
+  display: inline-block;
+  color: #fff;
+  border: 8px solid transparent;	
+  border-bottom: 8px solid orange;
+}
