@@ -1,4 +1,3 @@
-import { NavigationLink } from '@models/template/NavigationLink';
 
 export enum TipoAlert {
     ALERTA = "ALERTA",
@@ -8,13 +7,13 @@ export enum TipoAlert {
 
 export class Alert {
     nombre: string;
-    descripcion: string;
+    mensaje: string;
     url: string;
     tipo: TipoAlert;
 
-    constructor(nombre: string, descripcion: string, url: string, tipo: TipoAlert){ 
+    constructor(nombre: string, mensaje: string, url: string, tipo: TipoAlert){ 
         this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.mensaje = mensaje;
         this.url = url;
         this.tipo = tipo;
     }

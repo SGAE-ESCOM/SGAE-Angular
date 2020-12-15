@@ -3,6 +3,8 @@ import { AngularFirestore, CollectionReference, AngularFirestoreDocument } from 
 import { Observable } from 'rxjs';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { Grupo } from '@models/evaluacion/Grupo';
+import { EstadoPago } from '@models/cuentas-pagos/enums/estado-pago.enum';
+import * as Alerts from '@shared/alertas/Alerts'; 
 
 
 @Injectable({
@@ -37,7 +39,11 @@ export class UsuarioService {
   }
 
   updateEstadoPago(usuario: UsuarioInterface, estado: string) {
-    this.usuariosCollection.doc(usuario.id).update({"estado.pago": estado});
+    if(typeof usuario.alertas === "undefined") usuario.alertas = new Array();
+    if(estado == EstadoPago.INVALIDA) { usuario.alertas.push(Alerts.EVIDENCIA_INVALIDA.nombre); console.log(Alerts.EVIDENCIA_INVALIDA.nombre);}
+    else if (estado == EstadoPago.VALIDADA) { usuario.alertas.push(Alerts.EVIDENCIA_CORRECTA.nombre); console.log(Alerts.EVIDENCIA_CORRECTA.nombre);}
+    
+    this.usuariosCollection.doc(usuario.id).update({"estado.pago": estado, "alertas": usuario.alertas});
   }
 
   gasignarGrupo(usuario: UsuarioInterface, grupo: Grupo) {

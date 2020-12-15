@@ -106,32 +106,6 @@ h1.example-app-name {
   font: 10px Arial, sans-serif;
 }
 
-
-
-[data-title]:hover::before {
-  content: attr(data-title);
-  position: absolute;
-  bottom: -48px;
-  display: inline-block;
-  padding: 0px 6px;
-  border-radius: 2px;
-  background: gray;
-  color: #fff;
-  font-size: 14px;
-  font-family: sans-serif;
-  white-space: nowrap;
-}
-[data-title]:hover::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  left: 28px;
-  display: inline-block;
-  color: #fff;
-  border: 8px solid transparent;	
-  border-bottom: 8px solid gray;
-}
-
 [data-title-alert]:hover::before {
   content: attr(data-title-alert);
   position: absolute;
@@ -154,4 +128,29 @@ h1.example-app-name {
   color: #fff;
   border: 8px solid transparent;	
   border-bottom: 8px solid orange;
+}
+
+::ng-deep .itemAlerta button.mat-menu-item {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: 0;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  /** set line height to desired height */
+  line-height: 24px;
+  /** set height to auto */
+  height: auto;
+  padding: 8px 16px;
+  text-align: left;
+  text-decoration: none;
+  max-width: 100%;
+  position: relative;
+  // background-color: rgba(255, 0, 0, 0.1);
 }
