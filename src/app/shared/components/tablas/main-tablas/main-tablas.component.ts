@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Tabla } from '@models/utils/Tabla';
 
@@ -26,6 +26,8 @@ export class MainTablasComponent implements OnInit, OnChanges {
   @Input() customIcon: string = 'home';
   @Input() customDesc: string = 'Accion';
   @Input() customColor: string = 'primary';
+  //ORDET DEFAULT TABLE
+  @Input() orderBy: string = '';
 
   @Output() custom: EventEmitter<any> = new EventEmitter<any>();
   @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -86,6 +88,17 @@ export class MainTablasComponent implements OnInit, OnChanges {
     this.dataSource.data = this.datos;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.fnOrderBy();
+  }
+
+  private fnOrderBy() {
+    if (this.orderBy) {
+      this.dataSource.sort = this.sort;
+      const sortState: Sort = { active: this.orderBy, direction: 'asc' };
+      this.sort.active = sortState.active;
+      this.sort.direction = sortState.direction;
+      this.sort.sortChange.emit(sortState);
+    }
   }
 
   private updateColumnas() {

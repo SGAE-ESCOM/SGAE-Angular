@@ -5,7 +5,7 @@
             <p>Agrega secciones y posteriormente preciona la opcion 'Gestionar temas' <mat-icon>sort</mat-icon> para agregar temas a esa sección</p>
         </div>
         <div class="col-12">
-            <app-tabla [columnas]="tablaSecciones" [datos]="secciones"
+            <app-tabla [columnas]="tablaSecciones" [datos]="secciones" [orderBy]="ordenarPorNombre"
                 [isSave]="true" (save)="modalAgregarSeccion()"
                 [isCustom]="true" [customDesc]="'Gestionar temas'" [customIcon]="'sort'" (custom)="showSeccion($event)"
                 [isUpdate]="true" (update)="modalActualizarSeccion($event)"
@@ -20,7 +20,7 @@
             <p>Agrega temas y posteriormente preciona la opcion 'Gestionar preguntas' <mat-icon>grading</mat-icon> para agregar preguntas a ese tema</p>
         </div>
         <div class="col-12">
-            <app-tabla [columnas]="tablaTemas" [datos]="temas"
+            <app-tabla [columnas]="tablaTemas" [datos]="temas" [orderBy]="ordenarPorNombre"
                 [isSave]="true" (save)="modalAgregarTema()"
                 [isCustom]="true" [customDesc]="'Gestionar preguntaas'" [customIcon]="'grading'" (custom)="showTema($event)"
                 [isUpdate]="true" (update)="modalActualizarTema($event)"

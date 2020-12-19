@@ -6,6 +6,7 @@ import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Tabla } from '@models/utils/Tabla';
+import { PreguntasService } from '@services/evaluacion/preguntas.service';
 import { SeccionesService } from '@services/evaluacion/secciones.service';
 import { TemasService } from '@services/evaluacion/temas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -26,6 +27,7 @@ export class MainPreguntasComponent implements OnInit {
   //TABLA TEMAS
   tablaSecciones: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
   tablaTemas: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: "Preguntas totales", json: 'total' }, { encabezado: 'Acciones', json: 'acciones' }];
+  ordenarPorNombre = "nombre";
 
   temas: Tema[] = [];
   secciones: Seccion[] = [];
@@ -41,8 +43,8 @@ export class MainPreguntasComponent implements OnInit {
   MJS_ERROR_REQUERIDO = MSJ_ERROR_REQUERIDO;
   MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _toastr: ToastrService, 
-    private _temas: TemasService, private _secciones: SeccionesService) {
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _toastr: ToastrService,
+    private _temas: TemasService, private _secciones: SeccionesService, private _preguntas: PreguntasService) {
     BreadcrumbComponent.update(BC_PREGUNTAS);
   }
 
@@ -52,25 +54,54 @@ export class MainPreguntasComponent implements OnInit {
 
 
   /******************************************  HTTP  ********************************************/
-  getSecciones() {
+  //GETTERS
+  async getSecciones() {
     this._secciones.get().subscribe(secciones => this.secciones = secciones);
   }
 
-  getTemas() {
+  async getTemas() {
     this._temas.get(this.seccion).then((querySnapshot) => {
       let temas = [];
       querySnapshot.forEach((doc) => {
         const pregunta = doc.data();
         pregunta.id = doc.id;
-        temas.push( pregunta );
+        temas.push(pregunta);
       });
       this.temas = temas;
-      console.table(temas)
+    }).catch(err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
+  }
+
+  async getPreguntas(tema: Tema) {
+    await this._preguntas.getPreguntas(tema).then((querySnapshot) => {
+      let preguntas = [];
+      querySnapshot.forEach((doc) => {
+        const pregunta = doc.data();
+        pregunta.id = doc.id;
+        preguntas.push( pregunta );
+      });
+      this.preguntas = preguntas;
+      console.table(preguntas);
     }).catch( err =>  { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
   }
 
+  //DELETE
+  async eliminarTema(tema: Tema){
+    await this.getPreguntas(tema);
+    await this.eliminarPreguntas();
+    this._temas.delete(tema).then(() => {
+      this._swal.eliminadoCorrecto('El tema se ha eliminado');
+      this.getTemas();
+    }).catch(err => this._toastr.error(err));
+  }
+
+  async eliminarPreguntas(){
+    for (let i = 0; i < this.preguntas.length; i++) {
+      this._preguntas.delete(this.preguntas[i]).then(() => {
+      }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
+    }
+  }
   /************************************  ACCIONES  ************************************************/
-  showSeccion(seccion: Seccion){
+  showSeccion(seccion: Seccion) {
     this.seccion = seccion;
     this.getTemas();
     this.seccionActivada = 'temas';
@@ -82,13 +113,13 @@ export class MainPreguntasComponent implements OnInit {
     this.seccionActivada = 'pregunta';
   }
 
-  cancelarTema(){
+  cancelarTema() {
     this.seccionActivada = 'secciones';
   }
-  
-  cancelarPreguntas(accion:Boolean) {
-      if (accion)
-        this.seccionActivada = 'temas';
+
+  cancelarPreguntas(accion: Boolean) {
+    if (accion)
+      this.seccionActivada = 'temas';
   }
 
   /**************************************** UTILS **************************************************/
@@ -99,11 +130,10 @@ export class MainPreguntasComponent implements OnInit {
   modalAgregarSeccion() {
     const dialogRef = this.dialog.open(ModalSeccion, {
       width: '600px',
-      data: { opc: 'agregar', seccion: new Seccion()}
+      data: { opc: 'agregar', seccion: new Seccion() }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) { }
     });
   }
@@ -123,6 +153,7 @@ export class MainPreguntasComponent implements OnInit {
     this._swal.confirmarEliminar(`¿Deseas eliminar seccion '${seccion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
+          //const preguntas:Pregunta[] = this._preguntas.get();
           this._secciones.delete(seccion).then(() => {
             this._swal.eliminadoCorrecto('El seccion se ha eliminado');
           }).catch(err => this._toastr.error(err));
@@ -134,7 +165,7 @@ export class MainPreguntasComponent implements OnInit {
   modalAgregarTema() {
     const dialogRef = this.dialog.open(ModalTemas, {
       width: '600px',
-      data: { titulo:'Agregar',opc: 'agregar', tema: new Tema(), seccion: this.seccion }
+      data: { titulo: 'Agregar', opc: 'agregar', tema: new Tema(), seccion: this.seccion }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -145,7 +176,7 @@ export class MainPreguntasComponent implements OnInit {
   modalActualizarTema(tema: Tema) {
     const dialogRef = this.dialog.open(ModalTemas, {
       width: '600px',
-      data: { titulo:'Editar',opc: 'actualizar', tema: tema, seccion: this.seccion }
+      data: { titulo: 'Editar', opc: 'actualizar', tema: tema, seccion: this.seccion }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -157,19 +188,16 @@ export class MainPreguntasComponent implements OnInit {
     this._swal.confirmarEliminar(`¿Deseas eliminar tema '${tema.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
-          this._temas.delete(tema).then(() => {
-            this._swal.eliminadoCorrecto('El tema se ha eliminado');
-            this.getTemas();
-          }).catch(err => this._toastr.error(err));
+          this.eliminarTema(tema);
         }
       });
   }
 
-  
+
 }
 
 /************************************* MODALS COMPONENT *********************************************/
- ///////////////////////// SECCION ///////////////////////////////
+///////////////////////// SECCION ///////////////////////////////
 @Component({
   selector: 'modal-seccion',
   templateUrl: './modal-seccion.component.html',
@@ -191,8 +219,8 @@ export class ModalSeccion {
 
 }
 
- ///////////////////////// TEMA ///////////////////////////////
- @Component({
+///////////////////////// TEMA ///////////////////////////////
+@Component({
   selector: 'modal-tema',
   templateUrl: './modal-tema.component.html',
 })

@@ -25,7 +25,13 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.evaluacion && this.evaluacion != null) {
-      console.log("=================")
+      console.log("*********************************************************************************************************************************************")
+      console.log(this.evaluacion);
+      this.evaluacion.temas.forEach(element => {
+        console.log( Object.keys(element) );
+      });
+      console.log("*********************************************************************************************************************************************")
+      //this.evaluacion = this.copyObj(this.evaluacion);
       this.initForm();
       this.getCatalogo();
     }
@@ -36,23 +42,29 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   }
 
   /**************************************** HTPP REST **********************************/
+  finalizar(){
+    
+  }
+
   async getCatalogo() {
     await this.getSecciones();
   }
 
   async getSecciones() {
-    this._secciones.get().subscribe(secciones => { this.secciones = secciones; this.ordenarPreguntas() }, error => { console.error(error) });
+    this._secciones.get().subscribe(secciones => { 
+      this.secciones = secciones;
+      this.ordenarPreguntas()
+    }, error => { console.error(error) });
   }
 
-  /**************************************** UTILS **********************************/
+  /**************************************** UTILS **************************************/
   ordenarPreguntas() {
-    console.log(this.secciones);
-    console.table(this.evaluacion.temas);
-    const preguntasSeccion = this.groupByProperty(this.evaluacion.temas, "idSeccion");
-    console.log(preguntasSeccion);
+    console.log("--------------------------------")
+    console.log(this.evaluacion)
+    console.log(this.evaluacion.temas)
+    console.log("--------------------------------")
+    let preguntasSeccion = this.groupByProperty(this.evaluacion.temas, "idSeccion");
     Object.entries(preguntasSeccion).forEach( ( [ id, preguntas ]:any ) => {
-      console.log(id);
-      console.log(preguntas);
       for (let i = 0; i < this.secciones.length; i++) {
         if(this.secciones[i].id === id ){
           this.secciones[i].preguntas = preguntas;
@@ -60,6 +72,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
         }
       }
     });
+    console.log("=====================");
     console.log(this.secciones);
   }
 
@@ -72,8 +85,17 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
       let key = temaActual[propertyGroup];
       if (!prevSecciones[key])
         prevSecciones[key] = [];
-      prevSecciones[key] = prevSecciones[key].concat( JSON.parse( JSON.stringify( temaActual.preguntas) ) );
+      console.log("...")
+      console.log(temaActual);
+      console.log( Object.keys(temaActual ))
+      console.log(temaActual.preguntas);
+      if(temaActual.preguntas)
+        prevSecciones[key] = prevSecciones[key].concat( temaActual.preguntas ) ;
       return prevSecciones;
     }, {});
+  }
+
+  copyObj(obj:any): any{
+    return JSON.parse( JSON.stringify( obj ) );
   }
 }

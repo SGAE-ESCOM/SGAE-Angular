@@ -4,16 +4,18 @@
             <h4>{{ seccion.nombre }}</h4>
             <hr>
         </div>
-        <div class="row" *ngFor="let pregunta of seccion.preguntas; let i = index">
-            <div class="col-12">
-                <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
-            </div>
-            <div class="col-12">
-                <mat-radio-group color="primary" class="example-radio-group">
-                    <mat-radio-button class="example-radio-button" *ngFor="let opcion of pregunta.opciones" [value]="opcion.id">
-                        <ng-katex-html [html]="opcion.enunciado"></ng-katex-html>
-                    </mat-radio-button>
-                </mat-radio-group>
+        <div class="col-12">
+            <div class="row" *ngFor="let pregunta of seccion.preguntas; let i = index">
+                <div class="col-12">
+                    <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
+                </div>
+                <div class="col-12">
+                    <mat-radio-group color="primary" class="example-radio-group">
+                        <mat-radio-button class="example-radio-button" *ngFor="let opcion of pregunta.opciones" [value]="opcion.id">
+                            <ng-katex-html [html]="opcion.enunciado"></ng-katex-html>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
             </div>
         </div>
     </div>

@@ -52,7 +52,7 @@ export class MainEvaluacionesComponent implements OnInit {
 
   /************************ UTILS ***********************/
   gotoAplicacion( aplicacion: Aplicacion ){
-    console.log(aplicacion)
+    console.log(aplicacion);
     this._swal.confirmarGenerico('¿Iniciar aplicación de '+aplicacion.nombre+'?', 'Una vez inicies con la aplicación no podrás realizarla de nuevo.', 'Cancelar', 'Iniciar aplicación').then( accion => {
       if(accion.value){
         this.router.navigate(['/app/evaluacion/evaluaciones/simulador'], { state: { aplicacion: JSON.stringify(aplicacion) } });

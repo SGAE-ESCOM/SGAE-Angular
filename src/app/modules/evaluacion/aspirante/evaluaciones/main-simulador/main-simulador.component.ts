@@ -33,7 +33,7 @@ export class MainSimuladorComponent implements OnInit {
   aplicacion: Aplicacion;
   evaluacion: Evaluacion;
   preguntas: Pregunta[] = [];
-  totalIteraciones: number;
+  //totalIteraciones: number;
 
   constructor(private router: Router, private _toastr: ToastrService, private _swal: SweetalertService,
     private _auth: AuthService, private _preguntas: PreguntasService) {
@@ -42,6 +42,7 @@ export class MainSimuladorComponent implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     //VALIDAR URL DEL PARAMETRO
     if (navigation.extras.state) {
+      //OBTENER LA APLICACION
       this.aplicacion = JSON.parse(navigation.extras.state.aplicacion);
       //DEFINIR EL BREADCRUMB
       this.SIMULADOR = new NavigationLink(this.aplicacion.nombre, "/app/evaluacion/evaluaciones/simulador", "spellcheck", "");
@@ -60,15 +61,15 @@ export class MainSimuladorComponent implements OnInit {
   /*************************************** HTTP REST *******************************************/
   async init() {
     //Define la evaluacion a través de un random 
-    const indexRandom = this.getRandomInt(0, this.aplicacion.evaluaciones.length)
+    let indexRandom = this.getRandomInt(0, this.aplicacion.evaluaciones.length)
+    this.evaluacion = null
     this.evaluacion = this.aplicacion.evaluaciones[indexRandom];
     await this.getPreguntas();
   }
 
   async getPreguntas() {
-    this.totalIteraciones = this.evaluacion.temas.length;
+    //this.totalIteraciones = this.evaluacion.temas.length;
     for (let i = 0; i < this.evaluacion.temas.length; i++) {
-
       this._preguntas.getPreguntas(this.evaluacion.temas[i]).then((querySnapshot) => {
         let preguntas = [];
         querySnapshot.forEach((doc) => {

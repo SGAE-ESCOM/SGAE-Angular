@@ -5,4 +5,5 @@ export class Evaluacion {
     nombre: string;
     temas: Tema[];
     total?: number;
+    preguntas?: any[];
 }

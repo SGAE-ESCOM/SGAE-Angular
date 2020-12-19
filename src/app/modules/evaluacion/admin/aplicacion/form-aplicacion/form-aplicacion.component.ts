@@ -54,7 +54,6 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
     //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
     if (form.valid) {
       let evaluacion: Aplicacion = form.value;
-      console.log(evaluacion)
       this._evaluaciones.save(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
