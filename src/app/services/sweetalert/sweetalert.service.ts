@@ -31,6 +31,15 @@ export class SweetalertService {
     buttonsStyling: false
   });
 
+  private swalTerminar = Swal.mixin({
+    customClass: {
+      confirmButton: 'mat-button mat-button-base mat-success',
+    },
+    buttonsStyling: false,
+    allowOutsideClick: false
+  });
+
+  //IMPLEMENTACION GENERICOS
   confirmarEliminar(titulo: string, texto?: string){
     return this.swalEliminar.fire({
       title: titulo,
@@ -52,6 +61,16 @@ export class SweetalertService {
       reverseButtons: true,
       cancelButtonText: '<span class="mat-button-wrapper" name="btnCancelar" id="btnCancelar"> Cancelar </span> <div class="mat-button-focus-overlay"></div>',
       confirmButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar"> Sí, finalizar </span> <div class="mat-button-focus-overlay"></div>'
+    });
+  }
+
+  confirmarTerminar(titulo: string, texto?: string, butonText?: string){
+    return this.swalTerminar.fire({
+      title: titulo,
+      text: texto,
+      icon: 'warning',
+      reverseButtons: true,
+      confirmButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar">'+ butonText +'</span> <div class="mat-button-focus-overlay"></div>'
     });
   }
 

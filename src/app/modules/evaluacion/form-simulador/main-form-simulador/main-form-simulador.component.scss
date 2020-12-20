@@ -7,3 +7,18 @@
 .example-radio-button {
     margin: 5px;
 }
+
+.button-bottom {
+    position: fixed;
+    bottom: 24px;
+    right: auto;
+    z-index: 1;
+    margin: auto;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.button-left {
+    display: block;
+    justify-content: flex-left;
+}

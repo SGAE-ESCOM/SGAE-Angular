@@ -70,9 +70,10 @@ export class MainEvaluacionesComponent implements OnInit {
   filtrarAplicacionesDisponibles(){
     this.aplicacionesDisponibles = this.aplicaciones.filter( aplicacion => {
       for (let i = 0; i < this.aplicacionesRealizadas.length; i++) {
-        if( aplicacion.id !== this.aplicacionesRealizadas[i].idAplicacion )
-          return this.aplicacionesRealizadas[i];
+        if( aplicacion.id === this.aplicacionesRealizadas[i].idAplicacion )
+          return;
       }
+      return aplicacion;
     });
   }
 
