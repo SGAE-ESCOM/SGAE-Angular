@@ -33,6 +33,10 @@ export class SeccionesService {
     );
   }
 
+  getById(idSeccion: string){
+    return this.SeccionesCollection.doc(idSeccion).get();
+  }
+
   update(Seccion: Seccion){
     return this.SeccionesCollection.doc(Seccion.id).set(Seccion);
   }

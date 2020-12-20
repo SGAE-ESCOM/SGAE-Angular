@@ -26,14 +26,16 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.evaluacion && this.evaluacion != null) {
       console.log("*********************************************************************************************************************************************")
+      this.initForm();
       console.log(this.evaluacion);
       this.evaluacion.temas.forEach(element => {
         console.log( Object.keys(element) );
       });
+      this.secciones = this.groupByProperty(this.evaluacion.temas);
+      console.log(this.secciones);
       console.log("*********************************************************************************************************************************************")
       //this.evaluacion = this.copyObj(this.evaluacion);
-      this.initForm();
-      this.getCatalogo();
+      //this.getCatalogo();
     }
 
   }
@@ -63,7 +65,10 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     console.log(this.evaluacion)
     console.log(this.evaluacion.temas)
     console.log("--------------------------------")
-    let preguntasSeccion = this.groupByProperty(this.evaluacion.temas, "idSeccion");
+    let preguntasSeccion = this.groupByProperty(this.evaluacion.temas);
+    console.log(preguntasSeccion);
+    console.log("---------------------------------")
+
     Object.entries(preguntasSeccion).forEach( ( [ id, preguntas ]:any ) => {
       for (let i = 0; i < this.secciones.length; i++) {
         if(this.secciones[i].id === id ){
@@ -80,19 +85,23 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     this.fgSimulador = this.fb.group({});
   }
 
-  groupByProperty(list: any[], propertyGroup: string): any {
-    return list.reduce((prevSecciones, temaActual:Tema) => {
-      let key = temaActual[propertyGroup];
+  groupByProperty(list: any[]): any {
+    let seccionesAux = list.reduce((prevSecciones, temaActual:Tema) => {
+      let key = temaActual["idSeccion"];
       if (!prevSecciones[key])
         prevSecciones[key] = [];
-      console.log("...")
+   /*    console.log("...")
       console.log(temaActual);
       console.log( Object.keys(temaActual ))
-      console.log(temaActual.preguntas);
-      if(temaActual.preguntas)
-        prevSecciones[key] = prevSecciones[key].concat( temaActual.preguntas ) ;
+      console.log(temaActual.preguntas); */
+      /* if(temaActual.preguntas)
+        prevSecciones[key] = prevSecciones[key].concat( temaActual.preguntas ) ; */
+      prevSecciones[key].push(temaActual);
       return prevSecciones;
     }, {});
+    //let secciones = Object.entries(seccionesAux);
+    //console.log(secciones);
+    return Object.entries(seccionesAux);
   }
 
   copyObj(obj:any): any{

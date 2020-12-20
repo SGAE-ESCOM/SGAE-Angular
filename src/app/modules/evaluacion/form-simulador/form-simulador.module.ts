@@ -5,9 +5,10 @@ import { AngularMaterialModule } from '@modules/template/angular-material.module
 import { MatRadioModule } from '@angular/material/radio';
 import { KatexModule } from 'ng-katex';
 import { MainFormSimuladorComponent } from './main-form-simulador/main-form-simulador.component';
+import { PreguntasSeccionComponent } from './preguntas-seccion/preguntas-seccion.component';
 
 @NgModule({
-  declarations: [MainFormSimuladorComponent],
+  declarations: [MainFormSimuladorComponent, PreguntasSeccionComponent],
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,

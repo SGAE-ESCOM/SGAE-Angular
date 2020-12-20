@@ -48,6 +48,7 @@ export class MainSimuladorComponent implements OnInit {
       this.SIMULADOR = new NavigationLink(this.aplicacion.nombre, "/app/evaluacion/evaluaciones/simulador", "spellcheck", "");
       this.BC_SIMULADOR = new Breadcrumb(this.SIMULADOR, [HOME, EVALUACION, EVALUACIONES]);
       BreadcrumbComponent.update(this.BC_SIMULADOR);
+      //INICIAR LA BUSQUEDA DE SECCIONES
       this.init();
     } else {
       this.router.navigate([EVALUACIONES.url]);
@@ -64,7 +65,7 @@ export class MainSimuladorComponent implements OnInit {
     let indexRandom = this.getRandomInt(0, this.aplicacion.evaluaciones.length)
     this.evaluacion = null
     this.evaluacion = this.aplicacion.evaluaciones[indexRandom];
-    await this.getPreguntas();
+    //await this.getPreguntas();
   }
 
   async getPreguntas() {
@@ -78,11 +79,13 @@ export class MainSimuladorComponent implements OnInit {
           preguntas.push(pregunta);
         });
         this.evaluacion.temas[i].preguntas = preguntas;
+        console.log("++++++++++++++++++")
+        console.log(Object.keys(this.evaluacion.temas[i]))
+        console.log(this.evaluacion.temas[i])
       }).catch(err => { 
         console.error(err);
         this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) 
       });;
-
     }
   }
 

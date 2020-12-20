@@ -1,5 +1,8 @@
 <form [formGroup]="fgSimulador" *ngIf="evaluacion && secciones">
     <div class="row pb-4" *ngFor="let seccion of secciones">
+        <app-preguntas-seccion [idSeccion]="seccion[0]" [temas]="seccion[1]"></app-preguntas-seccion>
+    </div>
+    <!-- <div class="row pb-4" *ngFor="let seccion of secciones">
         <div class="col-12 pb-1">
             <h4>{{ seccion.nombre }}</h4>
             <hr>
@@ -18,7 +21,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="row">
         <div class="col-12 text-right">
             <button mat-flat-button color="success">Finalizar <mat-icon>done</mat-icon></button> 
