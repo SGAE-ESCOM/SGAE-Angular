@@ -4,8 +4,8 @@
             <h4> {{ grupo.nombre }}</h4>
         </div>
         <div class="col-12">
-            <div *ngIf="aplicaciones" class="row" [@cardAnimation]="aplicaciones.length">
-                <div *ngFor="let aplicacion of aplicaciones; trackBy: trackById" class="col-12 col-sm-4 col-md-3 py-2">
+            <div *ngIf="aplicacionesDisponibles" class="row" [@cardAnimation]="aplicacionesDisponibles.length">
+                <div *ngFor="let aplicacion of aplicacionesDisponibles; trackBy: trackById" class="col-12 col-sm-4 col-md-3 py-2">
                     <div class="card card-hover mat-elevation-z2 bd-callout bd-callout-primary pt-2 pb-4" name="cardEvaluacion" matRipple (click)="gotoAplicacion(aplicacion)">
                         <div class="card-body">
                             <h5 class="card-title">

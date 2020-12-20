@@ -51,7 +51,7 @@ export class MainSimuladorComponent implements OnInit {
       //INICIAR LA BUSQUEDA DE SECCIONES
       this.init();
     } else {
-      this.router.navigate([EVALUACIONES.url]);
+      this.redireccionarEvaluaciones(true)
     }
   }
 
@@ -63,34 +63,17 @@ export class MainSimuladorComponent implements OnInit {
   async init() {
     //Define la evaluacion a través de un random 
     let indexRandom = this.getRandomInt(0, this.aplicacion.evaluaciones.length)
-    this.evaluacion = null
+    this.evaluacion = null;
     this.evaluacion = this.aplicacion.evaluaciones[indexRandom];
-    //await this.getPreguntas();
-  }
-
-  async getPreguntas() {
-    //this.totalIteraciones = this.evaluacion.temas.length;
-    for (let i = 0; i < this.evaluacion.temas.length; i++) {
-      this._preguntas.getPreguntas(this.evaluacion.temas[i]).then((querySnapshot) => {
-        let preguntas = [];
-        querySnapshot.forEach((doc) => {
-          const pregunta = doc.data();
-          pregunta.id = doc.id;
-          preguntas.push(pregunta);
-        });
-        this.evaluacion.temas[i].preguntas = preguntas;
-        console.log("++++++++++++++++++")
-        console.log(Object.keys(this.evaluacion.temas[i]))
-        console.log(this.evaluacion.temas[i])
-      }).catch(err => { 
-        console.error(err);
-        this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) 
-      });;
-    }
   }
 
   /*************************************** UTILS *******************************************/
   private getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  redireccionarEvaluaciones(accion:Boolean){
+    if(accion)
+      this.router.navigate([EVALUACIONES.url]);
   }
 }

@@ -1,13 +1,10 @@
-<div *ngIf="evaluacion && secciones">
+<form [formGroup]="fgSimulador" *ngIf="evaluacion && secciones">
     <div class="row pb-4" *ngFor="let seccion of secciones">
-        <app-preguntas-seccion [(ngModel)]="respuestasSeccion[i]" [idSeccion]="seccion[0]" [temas]="seccion[1]"></app-preguntas-seccion>
+        <app-preguntas-seccion [formControlName]="seccion[0]" [idSeccion]="seccion[0]" [temas]="seccion[1]"></app-preguntas-seccion>
     </div>
     <div class="row">
         <div class="col-12 text-right">
-            <button mat-flat-button color="success">Finalizar <mat-icon>done</mat-icon></button> 
+            <button mat-flat-button color="success" (click)="onFinalizar()">Finalizar, evaluación <mat-icon>done</mat-icon></button> 
         </div>
     </div>
-</div>
-<div class="col-12">
-    {{ respuestasSeccion | json }}
-</div>
+</form>

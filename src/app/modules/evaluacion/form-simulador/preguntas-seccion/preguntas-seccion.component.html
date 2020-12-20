@@ -6,6 +6,9 @@
     <div class="row" *ngFor="let pregunta of preguntas; let i = index">
         <div class="col-12">
             <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
+            <div *ngIf="pregunta.img" class="ml-3 img-fluid">
+                <img [src]="pregunta.img"> 
+            </div>
         </div>
         <div class="col-12 ml-3 pt-2 pb-3">
             <table class="table table-sm table-borderless" [class.table-error]="error">
@@ -16,7 +19,12 @@
                                 <mat-radio-button class="example-radio-button" [value]="opcion.id" (change)="changeValue(opcion, i, j)">
                                 </mat-radio-button>
                             </td>
-                            <td (click)="changeValue(opcion, i, j)" class="col-10"> <ng-katex-html [html]="opcion.enunciado"></ng-katex-html> </td>
+                            <td (click)="changeValue(opcion, i, j)" class="col-10">
+                                <ng-katex-html [html]="opcion.enunciado"></ng-katex-html>
+                                <div *ngIf="opcion.img" class="img-fluid">
+                                    <img [src]="opcion.img"> 
+                                </div>
+                            </td>
                         </tr>
                     </mat-radio-group>
                 </tbody>
@@ -31,7 +39,7 @@
         </div> -->
     </div>
 </div>
-<div class="col-12">
+<!-- <div class="col-12">
     {{ respuestas | json }}
 </div>
 <div class="col-12">
@@ -39,4 +47,4 @@
 </div>
 <div class="col-12">
     {{ value | json }}
-</div>
+</div> -->

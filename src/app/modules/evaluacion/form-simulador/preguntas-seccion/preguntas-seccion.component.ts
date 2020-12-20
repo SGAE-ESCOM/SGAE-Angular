@@ -28,7 +28,7 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   aciertos: number[] = [];
 
   //CONTROL VALUE
-  value: number = 0;
+  value: any = { seccion: '', aciertos: 0};
   isDisabled: boolean;
   onChange = (_: any) => { }
   onTouch = () => { }
@@ -38,8 +38,13 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idSeccion && this.idSeccion != null) {
       this._secciones.getById(this.idSeccion).subscribe((doc: any) => {
-        if (doc.exists)
+        if (doc.exists){
           this.seccion = doc.data();
+          this.value.seccion = this.seccion.nombre;
+          this.onChange(this.value);
+        }else{
+          console.log(this.idSeccion);
+        }
       });
     }
     if (changes.temas && this.temas != null) {
@@ -53,9 +58,9 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   writeValue(value: any): void {
     if (value) {
       //this.value = value || [];
-      this.value = 0;
+      this.value = { seccion: '', aciertos: 0};
     } else {
-      this.value = 0;
+      this.value = { seccion: '', aciertos: 0};
     }
   }
 
@@ -94,12 +99,12 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
     this.respuestas[i] = opcion.id;
     this.aciertos[i] = this.preguntas[i].respuesta == opcion.id ? 1 : 0;
     this.calcularAciertos();
+    this.onChange(this.value);
   }
 
   calcularAciertos() {
-    this.value = this.aciertos.reduce((prev, current) => {
+    this.value.aciertos = this.aciertos.reduce((prev, current) => {
       return prev + current;
     }, 0);
-    this.onChange(this.value);
   }
 }
