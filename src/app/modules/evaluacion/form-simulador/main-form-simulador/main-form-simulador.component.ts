@@ -20,6 +20,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   @Input() totalIteraciones: number = 0;
   private iteracion = 0;
   secciones: Seccion[];
+  respuestasSeccion: number[] = [];
 
   constructor(private fb: FormBuilder, private _secciones: SeccionesService) { }
 
@@ -27,15 +28,9 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     if (changes.evaluacion && this.evaluacion != null) {
       console.log("*********************************************************************************************************************************************")
       this.initForm();
-      console.log(this.evaluacion);
-      this.evaluacion.temas.forEach(element => {
-        console.log( Object.keys(element) );
-      });
       this.secciones = this.groupByProperty(this.evaluacion.temas);
-      console.log(this.secciones);
+      this.respuestasSeccion = new Array(this.secciones.length).fill(1);
       console.log("*********************************************************************************************************************************************")
-      //this.evaluacion = this.copyObj(this.evaluacion);
-      //this.getCatalogo();
     }
 
   }
@@ -48,38 +43,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     
   }
 
-  async getCatalogo() {
-    await this.getSecciones();
-  }
-
-  async getSecciones() {
-    this._secciones.get().subscribe(secciones => { 
-      this.secciones = secciones;
-      this.ordenarPreguntas()
-    }, error => { console.error(error) });
-  }
-
   /**************************************** UTILS **************************************/
-  ordenarPreguntas() {
-    console.log("--------------------------------")
-    console.log(this.evaluacion)
-    console.log(this.evaluacion.temas)
-    console.log("--------------------------------")
-    let preguntasSeccion = this.groupByProperty(this.evaluacion.temas);
-    console.log(preguntasSeccion);
-    console.log("---------------------------------")
-
-    Object.entries(preguntasSeccion).forEach( ( [ id, preguntas ]:any ) => {
-      for (let i = 0; i < this.secciones.length; i++) {
-        if(this.secciones[i].id === id ){
-          this.secciones[i].preguntas = preguntas;
-          break;
-        }
-      }
-    });
-    console.log("=====================");
-    console.log(this.secciones);
-  }
 
   initForm() {
     this.fgSimulador = this.fb.group({});
@@ -90,21 +54,10 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
       let key = temaActual["idSeccion"];
       if (!prevSecciones[key])
         prevSecciones[key] = [];
-   /*    console.log("...")
-      console.log(temaActual);
-      console.log( Object.keys(temaActual ))
-      console.log(temaActual.preguntas); */
-      /* if(temaActual.preguntas)
-        prevSecciones[key] = prevSecciones[key].concat( temaActual.preguntas ) ; */
       prevSecciones[key].push(temaActual);
       return prevSecciones;
     }, {});
-    //let secciones = Object.entries(seccionesAux);
-    //console.log(secciones);
     return Object.entries(seccionesAux);
   }
 
-  copyObj(obj:any): any{
-    return JSON.parse( JSON.stringify( obj ) );
-  }
 }
