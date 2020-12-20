@@ -64,12 +64,13 @@ export class SweetalertService {
     });
   }
 
-  confirmarTerminar(titulo: string, texto?: string, butonText?: string){
+  confirmarTerminar(titulo: string, texto?: string, butonText?: string, outClick?: boolean| false){
     return this.swalTerminar.fire({
       title: titulo,
       text: texto,
       icon: 'warning',
       reverseButtons: true,
+      allowOutsideClick: outClick,
       confirmButtonText: '<span class="mat-button-wrapper" name="btnConfiramar" id="btnConfirmar">'+ butonText +'</span> <div class="mat-button-focus-overlay"></div>'
     });
   }

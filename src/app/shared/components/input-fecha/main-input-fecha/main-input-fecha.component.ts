@@ -1,7 +1,6 @@
 import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { REGEX_FECHAS } from '@shared/utils/validators/regex';
 
 @Component({
   selector: 'input-fecha',
@@ -19,6 +18,7 @@ export class MainInputFechaComponent implements OnChanges, ControlValueAccessor 
 
   @Input() label: string = 'Fecha';
   @Input() error: boolean = false;
+  @Input() minDate: Date = new Date();
   
   value: number;
   valueBoolean: Boolean[] = [];
@@ -36,11 +36,9 @@ export class MainInputFechaComponent implements OnChanges, ControlValueAccessor 
   }
   
   ngOnChanges(changes: SimpleChanges): void {
-    /* if(changes.evaluaciones && this.evaluaciones != null ){
-      this.valueBoolean = new Array(this.evaluaciones.length).fill(false);
-      //this.evaluaciones = this.ordenaTemas();
-      //this.seccionesObj = this.groupBy(this.secciones, 'id');
-    } */
+    if( changes.minDate && this.minDate){
+      this.minDate = new Date(this.minDate);
+    }
   }
 
   /************************* OVERRIDE *******************/

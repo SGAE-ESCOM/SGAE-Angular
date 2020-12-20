@@ -16,15 +16,18 @@
                     <b>Grupo:</b> {{ gruposObj[aplicacion.grupo].nombre }}
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 pb-1">
-                    <b>Aciertos:</b> {{ aplicacion.aciertos }}
+                    <b>Mínimo de aciertos:</b> {{ aplicacion.aciertos }}
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 pb-1">
-                    <b>Fecha de aplicación:</b> {{ aplicacion.fechaAplicacion }}
+                    <b>Fecha de inicio:</b> {{ aplicacion?.fechaInicioAplicacion }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 pb-1">
+                    <b>Fecha de termino:</b> {{ aplicacion?.fechaTerminoAplicacion }}
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 pb-1">
                     <b>Duración:</b> {{ aplicacion.duracion }}
                 </div>
-                <div class="col-12 col-sm-6 col-md-4 pb-1">
+                <div class="col-12 pb-1">
                     <b>Evaluaciones: </b>
                     <ul>
                         <li *ngFor="let evaluacion of aplicacion.evaluaciones">{{ evaluacionesObj[evaluacion.id].nombre }}</li>

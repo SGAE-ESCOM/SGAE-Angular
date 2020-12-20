@@ -91,7 +91,8 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
       nombre: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
       grupo: ['', [Validators.required]],
       evaluaciones: [[], [Validators.required]],
-      fecha: ['', [Validators.required]],
+      fechaInicio: ['', [Validators.required]],
+      fechaTermino: ['', [Validators.required]],
       duracion: ['', [Validators.required]],
       aciertos: ['', [Validators.required, Validators.min(0), Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
     })
@@ -101,7 +102,8 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
     this.nombre.setValue(this.aplicacion.nombre);
     this.grupo.setValue(this.aplicacion.grupo);
     this.aciertos.setValue(this.aplicacion.aciertos)
-    this.fecha.setValue(this.aplicacion.fecha)
+    this.fechaInicio.setValue(this.aplicacion.fechaInicio)
+    this.fechaTermino.setValue(this.aplicacion.fechaTermino)
     this.duracion.setValue(this.aplicacion.duracion)
     this.evaluaciones.setValue(this.aplicacion.evaluaciones);
   }
@@ -126,7 +128,8 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
   get nombre() { return this.fgAplicacion.get('nombre') as FormControl }
   get grupo() { return this.fgAplicacion.get('grupo') as FormControl }
   get evaluaciones() { return this.fgAplicacion.get('evaluaciones') as FormControl }
-  get fecha() { return this.fgAplicacion.get('fecha') as FormControl }
+  get fechaInicio() { return this.fgAplicacion.get('fechaInicio') as FormControl }
+  get fechaTermino() { return this.fgAplicacion.get('fechaTermino') as FormControl }
   get duracion() { return this.fgAplicacion.get('duracion') as FormControl }
   get aciertos() { return this.fgAplicacion.get('aciertos') as FormControl }
 }

@@ -31,7 +31,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   respuestasSeccion: number[] = [];
   horas: number = 0;
   minutos: number = 0;
-  segundos: number = 60;
+  segundos: number = 59;
   interval;
 
 

@@ -7,8 +7,10 @@ export class Aplicacion {
     nombre: string;
     evaluaciones: Evaluacion[];
     duracion: string;
-    fecha: Date;
-    fechaAplicacion?: string;
+    fechaInicio: Date;
+    fechaTermino: Date;
+    fechaInicioAplicacion?: string;
+    fechaTerminoAplicacion?: string;
     aciertos: number;
 
     constructor(){

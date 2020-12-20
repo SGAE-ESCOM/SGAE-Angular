@@ -41,7 +41,8 @@ export class MainEvaluacionesComponent implements OnInit {
         let aplicaciones = [];
         querySnapshot.forEach((doc) => {
           let aplicacion = doc.data();
-          aplicacion.fechaFormated = momentJS(aplicacion.fecha).format('Do MMMM YYYY')
+          aplicacion.fechaFormated = momentJS(aplicacion.fechaInicio).format('Do/MM/YYYY') + ' a ' + momentJS(aplicacion.fechaTermino).format('Do/MM/YYYY')
+          aplicacion.disponible = this.isDisponible( aplicacion.fechaInicio, aplicacion.fechaTermino );
           aplicaciones.push(aplicacion);
         });
         this.aplicaciones = aplicaciones;
@@ -77,12 +78,23 @@ export class MainEvaluacionesComponent implements OnInit {
     });
   }
 
-  gotoAplicacion(aplicacion: Aplicacion) {
-    this._swal.confirmarGenerico('¿Iniciar evaluación de ' + aplicacion.nombre + '?', 'Una vez inicies con la evaluación no podrás realizarla de nuevo.', 'Cancelar', 'Iniciar evaluación').then(accion => {
-      if (accion.value) {
-        this.router.navigate(['/app/evaluacion/evaluaciones/simulador'], { state: { aplicacion: JSON.stringify(aplicacion) } });
-      }
-    });
+  gotoAplicacion(aplicacion: Aplicacion, disponible: Boolean) {
+    if(disponible){
+      this._swal.confirmarGenerico('¿Iniciar evaluación de ' + aplicacion.nombre + '?', 'Una vez inicies con la evaluación no podrás realizarla de nuevo.', 'Cancelar', 'Iniciar evaluación').then(accion => {
+        if (accion.value) {
+          this.router.navigate(['/app/evaluacion/evaluaciones/simulador'], { state: { aplicacion: JSON.stringify(aplicacion) } });
+        }
+      });
+    }else{
+      this._swal.confirmarTerminar('Evaluación no disponible', 'Revista la fecha de aplicación de esta evaluación', 'Regresar', true).then( result => {} );
+    }
+  }
+
+  isDisponible(minDate, maxDate): Boolean {
+    const fechaActual = new Date().getTime();
+    if(fechaActual >= minDate && fechaActual <= maxDate )
+      return true
+    return false;
   }
 
 }

@@ -69,7 +69,8 @@ export class MainAplicacionComponent implements OnInit {
     this._aplicaciones.getAll().subscribe( aplicaciones => { 
       this.aplicaciones = aplicaciones;
       this.aplicaciones.forEach( aplicacion => {
-        aplicacion.fechaAplicacion = momentJS(aplicacion.fecha).format('Do MMMM YYYY');
+        aplicacion.fechaInicioAplicacion = momentJS(aplicacion.fechaInicio).format('Do MMMM YYYY');
+        aplicacion.fechaTerminoAplicacion = momentJS(aplicacion.fechaTermino).format('Do MMMM YYYY');
       })
     });
   }
