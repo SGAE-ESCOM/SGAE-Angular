@@ -46,6 +46,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     }
     if (changes.aplicacion && this.aplicacion != null) {
       this.startTimer();
+      console.log(this.aplicacion)
     }
   }
 
@@ -61,7 +62,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
       idUsuario: this._auth.getUsuarioC().id,
       idAplicacion: this.aplicacion.id,
       nombre: this.aplicacion.nombre,
-      fecha: new Date(),
+      fecha: new Date().getTime(),
       aciertos: aciertos,
     }
     this._resultados.save(resultado).then(result => {

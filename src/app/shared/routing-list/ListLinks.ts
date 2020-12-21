@@ -56,15 +56,15 @@ export const GRUPOS = new NavigationLink("Grupos", "/app/evaluacion/grupos", "gr
 export const BC_GRUPOS = new Breadcrumb(GRUPOS, [HOME, EVALUACION]);
 export const EVALUACIONES = new NavigationLink("Evaluaciones", "/app/evaluacion/evaluaciones", "spellcheck", "Evaluacion de conocimientos");
 export const BC_EVALUACIONES = new Breadcrumb(EVALUACIONES, [HOME, EVALUACION]);
-export const RESULTADOS = new NavigationLink("Publicación de Resultados", "/app/resultados", "event", "Resultado de evaluacion");
+export const RESULTADOS = new NavigationLink("Publicación de Resultados", "/app/evaluacion/resultados", "event", "Resultado de evaluacion");
 export const BC_RESULTADOS = new Breadcrumb(RESULTADOS, [HOME, EVALUACION]);
 export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluacion/aplicacion", "event", "Define los parametros de tu evaluación");
 export const BC_ADMIN_APLICACION = new Breadcrumb(ADMIN_APLICACION, [HOME, EVALUACION])
 
 export const LINKS_EVALUACION = {
-    aspirante: [GRUPOS, EVALUACIONES],
-    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, RESULTADOS],
-    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, RESULTADOS]
+    aspirante: [GRUPOS, EVALUACIONES, RESULTADOS],
+    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION],
+    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION]
 }
 
 /************************************************ CONVOCATORIA ********************************************************************************************/

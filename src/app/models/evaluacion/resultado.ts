@@ -3,6 +3,6 @@ export class Resultado {
     idUsuario: string;
     idAplicacion: string;
     nombre: string;
-    fecha?: Date;
+    fecha?: any;
     aciertos: any[];
 }

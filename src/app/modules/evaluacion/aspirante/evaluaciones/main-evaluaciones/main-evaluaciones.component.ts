@@ -41,6 +41,7 @@ export class MainEvaluacionesComponent implements OnInit {
         let aplicaciones = [];
         querySnapshot.forEach((doc) => {
           let aplicacion = doc.data();
+          aplicacion.id = doc.id;
           aplicacion.fechaFormated = momentJS(aplicacion.fechaInicio).format('Do/MM/YYYY') + ' a ' + momentJS(aplicacion.fechaTermino).format('Do/MM/YYYY')
           aplicacion.disponible = this.isDisponible( aplicacion.fechaInicio, aplicacion.fechaTermino );
           aplicaciones.push(aplicacion);
@@ -67,7 +68,7 @@ export class MainEvaluacionesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  /************************ UTILS ***********************/
+  /************************************* UTILS *************************************/
   filtrarAplicacionesDisponibles(){
     this.aplicacionesDisponibles = this.aplicaciones.filter( aplicacion => {
       for (let i = 0; i < this.aplicacionesRealizadas.length; i++) {
@@ -80,6 +81,7 @@ export class MainEvaluacionesComponent implements OnInit {
 
   gotoAplicacion(aplicacion: Aplicacion, disponible: Boolean) {
     if(disponible){
+      console.log(aplicacion);
       this._swal.confirmarGenerico('¿Iniciar evaluación de ' + aplicacion.nombre + '?', 'Una vez inicies con la evaluación no podrás realizarla de nuevo.', 'Cancelar', 'Iniciar evaluación').then(accion => {
         if (accion.value) {
           this.router.navigate(['/app/evaluacion/evaluaciones/simulador'], { state: { aplicacion: JSON.stringify(aplicacion) } });
