@@ -28,7 +28,7 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   aciertos: number[] = [];
 
   //CONTROL VALUE
-  value: any = { seccion: '', aciertos: 0};
+  value: any = { seccion: '', aciertos: 0, total: 0 };
   isDisabled: boolean;
   onChange = (_: any) => { }
   onTouch = () => { }
@@ -58,9 +58,9 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   writeValue(value: any): void {
     if (value) {
       //this.value = value || [];
-      this.value = { seccion: '', aciertos: 0};
+      this.value = { seccion: '', aciertos: 0, total: 0 };
     } else {
-      this.value = { seccion: '', aciertos: 0};
+      this.value = { seccion: '', aciertos: 0, total: 0 };
     }
   }
 
@@ -88,6 +88,8 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
       this.preguntas = this.preguntas.concat(preguntas);
       this.respuestas = new Array(this.preguntas.length).fill(-1);
       this.aciertos = new Array(this.preguntas.length).fill(0);
+      this.value.total = this.preguntas.length;
+      this.onChange(this.value);
     }).catch(err => {
       console.error(err);
       //this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)

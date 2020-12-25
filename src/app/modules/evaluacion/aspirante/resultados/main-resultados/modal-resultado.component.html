@@ -13,17 +13,26 @@
         <div class="col-12">
             <div mat-dialog-content>
                 <div class="row">
+                    <div class="col-12">
+                        <p> <b>Resultado:</b> {{ data.resultado }}</p>
+                    </div>
                     <div class="col-12 col-sm-6 col-md-6">
                         <p> <b>Fecha aplicación:</b> {{ data.fechaFormated }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <p> <b>Preguntas totales:</b> {{ data.preguntasTotales }}</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <p> <b>Mínimo de aciertos:</b> {{ data.minAciertos }}</p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-6">
                         <p> <b>Aciertos totales:</b> {{ data.aciertosTotales }}</p>
                     </div>
                     <div class="col-12">
-                        <p><b>Resumen:</b></p>
+                        <p><b>Resumen aciertos:</b></p>
                         <ul>
                             <li *ngFor="let seccion of data.aciertos"><b> {{ seccion.seccion }} :</b> {{
-                                seccion.aciertos }} </li>
+                                seccion.aciertos }} de {{ seccion.total }} </li>
                         </ul>
                     </div>
                 </div>

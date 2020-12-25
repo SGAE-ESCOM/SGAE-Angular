@@ -39,6 +39,7 @@ export class MainResultadosComponent implements OnInit {
         console.log(aplicacion.fecha)
         aplicacion.fechaFormated = momentJS(aplicacion.fecha).format('Do/MM/YYYY');
         aplicacion.aciertosTotales = aplicacion.aciertos.reduce( (prev, current ) => { return current.aciertos + prev }, 0 );
+        aplicacion.preguntasTotales = aplicacion.aciertos.reduce( (prev, current ) => { return current.total + prev }, 0 );
         aplicacionesRealizadas.push(aplicacion);
       });
       this.aplicacionesRealizadas = aplicacionesRealizadas;

@@ -5,11 +5,11 @@ import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
-import { Resultado } from '@models/evaluacion/resultado';
+import { Resultado, ResultadoEnum } from '@models/evaluacion/resultado';
 import { AuthService } from '@services/auth.service';
 import { ResultadosService } from '@services/evaluacion/resultados.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { MSJ_ERROR_CONECTAR_SERVIDOR, MSJ_OK_AGREGADO } from '@shared/utils/mensajes';
+import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -56,18 +56,23 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   /**************************************** HTPP REST **********************************/
   private finalizarSimulador() {
     let aciertos = Object.entries(this.fgSimulador.value).map(([id, aciertosSeccion]: any) => {
-      return { seccion: aciertosSeccion.seccion, aciertos: aciertosSeccion.aciertos };
+      return { seccion: aciertosSeccion.seccion, aciertos: aciertosSeccion.aciertos, total: aciertosSeccion.total };
     });
+    let aciertosTotales = aciertos.reduce( (prev, current ) => { return current.aciertos + prev }, 0 );
+
     let resultado: Resultado = {
       idUsuario: this._auth.getUsuarioC().id,
       idAplicacion: this.aplicacion.id,
       nombre: this.aplicacion.nombre,
+      minAciertos: this.aplicacion.aciertos,
       fecha: new Date().getTime(),
       aciertos: aciertos,
+      aciertosTotales: aciertosTotales,
+      resultado: aciertosTotales >= this.aplicacion.aciertos? ResultadoEnum.APROBADO : ResultadoEnum.REPROBADO
     }
     this._resultados.save(resultado).then(result => {
       this.finalizar.emit(true);
-      this._toastr.success(MSJ_OK_AGREGADO);
+      this._toastr.success("Evaluación enviada. Revisa en publicación de resultados");
     }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
   }
 
