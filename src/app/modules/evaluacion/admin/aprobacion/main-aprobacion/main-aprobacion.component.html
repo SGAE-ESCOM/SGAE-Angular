@@ -1,0 +1,36 @@
+<div class="container" @fadeInRight>
+    <div class="row">
+        <!-- GRUPO -->
+        <div class="col-12 col-sm-4 form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Grupo</mat-label>
+                <mat-select name="SelectFiltro" [formControl]="grupo" (selectionChange)="onChangeGrupo($event.value)" required>
+                    <mat-option *ngFor="let grupo of grupos" [value]="grupo">
+                        {{ grupo.nombre }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- APLICACION -->
+        <div class="col-12 col-sm-4 form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Aplicación </mat-label>
+                <mat-select name="SelectFiltro" [formControl]="aplicacion" (selectionChange)="onChangeAplicacion($event.value)" required>
+                    <mat-option *ngFor="let aplicacion of aplicaciones" [value]="aplicacion">
+                        {{ aplicacion.nombre }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+<!--         <div class="col-12 col-sm-4 form-group">
+            <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+                <mat-icon>search</mat-icon>
+            </button>
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <app-tabla [columnas]="columnas" [datos]="aspirantes"></app-tabla>
+        </div>
+    </div>
+</div>

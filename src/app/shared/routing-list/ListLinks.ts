@@ -44,6 +44,8 @@ export const INFO_KATEX = new NavigationLink("Información, ¿Cómo agregar sím
 export const BC_INFO_KATEX = new Breadcrumb(INFO_KATEX, [HOME, EVALUACION, GESTIONAR_EVALUACION, PREGUNTAS])
 export const ADMIN_EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion/gestionar-evaluacion/evaluacion", "description", "Relaciona las preguntas con una evaluación");
 export const BC_ADMIN_EVALUACION = new Breadcrumb(ADMIN_EVALUACION, [HOME, EVALUACION, GESTIONAR_EVALUACION])
+export const APROBACION_EVALUACION = new NavigationLink("Aprobación", "/app/evaluacion/aprobacion", "description", "Con base al resultado de las aplicaciones asigna el estado de cada aspirante");
+export const BC_APROBACION_EVALUACION = new Breadcrumb(APROBACION_EVALUACION, [HOME, EVALUACION])
 
 export const LINKS_GESTIONAR_EVALUACIONES = {
     aspirante: [],
@@ -58,13 +60,13 @@ export const EVALUACIONES = new NavigationLink("Evaluaciones", "/app/evaluacion/
 export const BC_EVALUACIONES = new Breadcrumb(EVALUACIONES, [HOME, EVALUACION]);
 export const RESULTADOS = new NavigationLink("Publicación de Resultados", "/app/evaluacion/resultados", "event", "Resultado de evaluacion");
 export const BC_RESULTADOS = new Breadcrumb(RESULTADOS, [HOME, EVALUACION]);
-export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluacion/aplicacion", "event", "Define los parametros de tu evaluación");
+export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluacion/aplicacion", "event", "Define los parametros de tu evaluación y el grupo al que aplicacrá");
 export const BC_ADMIN_APLICACION = new Breadcrumb(ADMIN_APLICACION, [HOME, EVALUACION])
 
 export const LINKS_EVALUACION = {
     aspirante: [GRUPOS, EVALUACIONES, RESULTADOS],
-    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION],
-    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION]
+    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, APROBACION_EVALUACION],
+    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, APROBACION_EVALUACION]
 }
 
 /************************************************ CONVOCATORIA ********************************************************************************************/

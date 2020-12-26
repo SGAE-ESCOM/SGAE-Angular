@@ -44,7 +44,7 @@
                         <input-fecha formControlName="fechaInicio"></input-fecha>
                     </div>
                     <div class="col-12 col-md-4 form-group" *ngIf="isMain">
-                        <input-fecha formControlName="fechaTermino" [minDate]="fechaInicio.value"></input-fecha>
+                        <input-fecha formControlName="fechaTermino" [minDate]="fechaInicio.value" [startDate]="false"></input-fecha>
                     </div>
                     <div class="col-12 col-md-4 form-group" *ngIf="isMain"> 
                         <input-hora formControlName="duracion" [titulo]="'Duración'"></input-hora>

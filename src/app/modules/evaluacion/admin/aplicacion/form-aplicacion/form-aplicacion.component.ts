@@ -54,6 +54,7 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
     //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
     if (form.valid) {
       let evaluacion: Aplicacion = form.value;
+      
       this._evaluaciones.save(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
         this.accion.emit(true);
@@ -108,22 +109,10 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
     this.evaluaciones.setValue(this.aplicacion.evaluaciones);
   }
 
-  /* Eventos */
-  handleUpload(event: any, documento) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.fgAplicacion.get(documento).patchValue(reader.result);
-      };
-    }
+  setRangoTiempo(aplicacion:Aplicacion){
+    aplicacion.fechaInicio = new Date(aplicacion.fechaInicio);
   }
-
-  isMainActivated(isActived: Boolean) {
-    this.isMain = isActived;
-  }
-
+  
   /***************************** GETTERS ******************************/
   get nombre() { return this.fgAplicacion.get('nombre') as FormControl }
   get grupo() { return this.fgAplicacion.get('grupo') as FormControl }

@@ -9,6 +9,7 @@ import { Resultado, ResultadoEnum } from '@models/evaluacion/resultado';
 import { AuthService } from '@services/auth.service';
 import { ResultadosService } from '@services/evaluacion/resultados.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { UsuarioService } from '@services/usuario/usuario.service';
 import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { ToastrService } from 'ngx-toastr';
 
@@ -36,7 +37,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
 
 
   constructor(private fb: FormBuilder, private _toastr: ToastrService, private _swal: SweetalertService,
-    private _auth: AuthService, private _resultados: ResultadosService) { }
+    private _auth: AuthService, private _usuarios:UsuarioService, private _resultados: ResultadosService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.evaluacion && this.evaluacion != null) {
@@ -71,8 +72,13 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
       resultado: aciertosTotales >= this.aplicacion.aciertos? ResultadoEnum.APROBADO : ResultadoEnum.REPROBADO
     }
     this._resultados.save(resultado).then(result => {
-      this.finalizar.emit(true);
-      this._toastr.success("Evaluación enviada. Revisa en publicación de resultados");
+      this._usuarios.addEvaluacion(this._auth.getUsuarioC().id, this.aplicacion.id, resultado).then( accion => {
+        console.log("=================")
+        console.log(this._auth.getUsuarioC().id);
+        console.log(accion);
+        this.finalizar.emit(true);
+        this._toastr.success("Evaluación enviada. Revisa en publicación de resultados");
+      });
     }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
   }
 

@@ -24,14 +24,6 @@ export class ValidarDocumentacionComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  //Varibale DEBUG
-  listaUsuarios: any[] = [ //DEBUG
-    { "id": "1", "nombres": "Gustavo Andres", "apellidos": "Lopez Sanchez", "estado": "SIN_REVISION" },
-    { "id": "2", "nombres": "Aiko Dallane", "apellidos": "López Rivera", "estado": "SIN_REVISION" },
-    { "id": "3", "nombres": "Edgar", "apellidos": "Flores Altamirano", "estado": "SIN_REVISION" },
-    { "id": "4", "nombres": "Christian Andres", "apellidos": "Cervantes Moreno", "estado": "SIN_REVISION" },
-  ];
-
   filtros: any[] = [
     { nombre: "Sin revisión", valor: "revision" },
     { nombre: "Pendiente de corrección", valor: "correccion" },

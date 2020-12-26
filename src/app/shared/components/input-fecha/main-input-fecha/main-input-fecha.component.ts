@@ -19,7 +19,8 @@ export class MainInputFechaComponent implements OnChanges, ControlValueAccessor 
   @Input() label: string = 'Fecha';
   @Input() error: boolean = false;
   @Input() minDate: Date = new Date();
-  
+  @Input() startDate: Boolean = true;
+
   value: number;
   valueBoolean: Boolean[] = [];
   isDisabled: boolean;
@@ -41,7 +42,7 @@ export class MainInputFechaComponent implements OnChanges, ControlValueAccessor 
     }
   }
 
-  /************************* OVERRIDE *******************/
+  /************************* OVERRIDE ****************************/
   writeValue(value: any): void {
     if (value) {
       this.value = value || '';
@@ -63,10 +64,17 @@ export class MainInputFechaComponent implements OnChanges, ControlValueAccessor 
     this.isDisabled = isDisabled;
   }
   
-  /********************** UTILS **********************/
+  /********************** UTILS **********************************/
   addEvent(type: string, event: MatDatepickerInputEvent<Date>){
     if(event.value){
-      this.value = event.value.valueOf();
+      //Define date to start
+      if(this.startDate)
+        this.value = event.value.valueOf();
+      else{
+        let endDay = new Date(event.value.valueOf());
+        endDay.setHours(23,59,59);
+        this.value = endDay.getTime();
+      }
     }else{
       this.value = null;
       this.fechaInput.setErrors({ invalid: true });
