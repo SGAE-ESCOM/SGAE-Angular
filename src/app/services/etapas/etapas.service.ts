@@ -26,6 +26,10 @@ export class EtapasService {
     return this.etapasCollection.doc('estado').get().toPromise();
   }
 
+  getEtapas() {
+    return this.etapasCollection.doc('estado').get();
+  }
+
   //CRUD FECHAS
   saveFechasEtapas(fechas:any[]): Promise<any>{
     this.batch = this.db.firestore.batch();

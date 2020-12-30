@@ -3,14 +3,14 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable, of } from 'rxjs';
 import { AuthService } from '@services/auth.service';
 import { map, mergeMap } from 'rxjs/operators';
-import { PermisosAccesoGuard } from './permisos-acceso.guard';
+import { EtapasService } from '@services/etapas/etapas.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router:Router, private permisosAccesoGuard:PermisosAccesoGuard){}
+  constructor(private authService: AuthService, private router:Router, private _etapas: EtapasService){}
   
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -32,6 +32,15 @@ export class AuthGuard implements CanActivate {
           }
           return false;
         }))
+      }),
+      mergeMap( res => {
+        return this._etapas.getEtapas().pipe( map( estadosAspirante => {
+          if (estadosAspirante.exists) {
+            const etapas = estadosAspirante.data();
+            this.authService.setEtapas(etapas);
+          }
+          return res;
+        }));
       })
     );
   }

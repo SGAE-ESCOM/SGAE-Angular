@@ -4,8 +4,6 @@ import { BC_USUARIOS, LINKS_USUARIOS, LINKS_ROOT_USUARIOS } from "@routing/ListL
 import { comprobarPermisos, GESTION_USUARIOS } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { PermisosAccesoGuard } from '@shared/guards/permisos-acceso.guard';
-
 
 @Component({
   selector: 'app-main-usuarios',

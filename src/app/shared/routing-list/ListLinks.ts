@@ -49,8 +49,8 @@ export const BC_APROBACION_EVALUACION = new Breadcrumb(APROBACION_EVALUACION, [H
 
 export const LINKS_GESTIONAR_EVALUACIONES = {
     aspirante: [],
-    admin: [ PREGUNTAS, ADMIN_EVALUACION ],
-    root: [ PREGUNTAS, ADMIN_EVALUACION ]
+    admin: [PREGUNTAS, ADMIN_EVALUACION],
+    root: [PREGUNTAS, ADMIN_EVALUACION]
 }
 
 //ASPIRANTE
@@ -139,8 +139,25 @@ export const LINKS_HOME = {
     root: [HOME, DOCUMENTACION, EVALUACION, PAGOS, ETAPAS, USUARIOS]
 }
 
-
-
 export const LINKS_ETAPAS = [DEFINIR_ETAPAS, DEFINIR_FECHAS];
 export const LINKS_USUARIOS = [GESTION_ASPIRANTES];
 export const LINKS_ROOT_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
+
+/************************************************ HOME AND LANDINGPAGE ********************************************************************************************/
+export function getCardsByEtapas(rol: string, etapas: any) {
+    let links = Object.entries(etapasJson).reduce((prev, [key, value]) => {
+        if (etapas[key])
+            prev = prev.concat(value);
+        return prev;
+    }, []);
+    if(rol === 'admin' || rol === 'root')
+        links = links.concat(ETAPAS, USUARIOS);
+    links.unshift(HOME);
+    return links;
+}
+
+const etapasJson = {
+    'documentacion': DOCUMENTACION,
+    'evaluacionConocimientos': EVALUACION,
+    'pagos': PAGOS
+}

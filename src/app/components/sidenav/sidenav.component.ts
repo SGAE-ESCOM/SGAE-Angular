@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { LINKS_HOME } from '@routing/ListLinks';
+import { getCardsByEtapas, LINKS_HOME } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class SidenavComponent implements OnInit {
   alertas: Array<Alert>;
   tipoAlerta: any =  TipoAlert;
   mobileQuery: MediaQueryList;
-  navigationLinks = LINKS_HOME['aspirante']; // admin; DEBUG //CAMBIAR A page EN PRODUCCION
+  navigationLinks = LINKS_HOME['page']; // admin; DEBUG //CAMBIAR A page EN PRODUCCION
   isLoggedIn: boolean = false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
   shouldRun = true;
 
@@ -60,7 +60,7 @@ export class SidenavComponent implements OnInit {
               this.alertas = getAlertas(usaurio.alertas);
 
             if(usaurio.rol === 'root' || usaurio.rol === 'aspirante' )
-              this.navigationLinks = LINKS_HOME[usaurio.rol];
+              this.navigationLinks = getCardsByEtapas(usaurio.rol, this._authService.getEtapas() );
             else if(usaurio.rol === 'admin')
               this.navigationLinks = getNavigationLinksAdmin(usaurio.permisos);
           } else {
