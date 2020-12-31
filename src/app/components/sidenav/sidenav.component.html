@@ -31,7 +31,7 @@
     <!-- Menu Alertas -->
     <mat-menu class="itemAlerta" #alerts="matMenu">
       <!-- <button [style.background-color]=" alerta.tipo == tipoAlerta.ALERTA ? rgba(255, 0, 0, 0.1) : (alerta.tipo == tipoAlerta.AVISO ? rgba(63, 191, 191, 0.1) : rgba(63, 191, 63, 0.1)) " *ngFor="let alerta of alertas" style="white-space: normal;"  mat-menu-item> -->
-        <button *ngFor="let alerta of alertas" style="white-space: normal" routerLink={{alerta.url}} mat-menu-item>
+        <button *ngFor="let alerta of alertas" style="white-space: normal" (click)="onClickAlerta(alerta)" mat-menu-item>
           <mat-icon *ngIf="alerta.tipo == tipoAlerta.ALERTA" style="color: red;" class="material-icons-outlined">error_outline</mat-icon>
           <mat-icon *ngIf="alerta.tipo == tipoAlerta.AVISO" style="color: #17a2b8;" class="material-icons-outlined">info</mat-icon>
           <mat-icon *ngIf="alerta.tipo == tipoAlerta.CONFIRMACION" style="color: green;" class="material-icons-outlined">info</mat-icon>
