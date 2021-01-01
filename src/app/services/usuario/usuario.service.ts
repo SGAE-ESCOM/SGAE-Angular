@@ -37,9 +37,9 @@ export class UsuarioService {
   }
 
   /*********************************************** EVALUACION **********************************************/
-  geAspirantesPorAplicacion(idAplicacion: string): Promise<any> {
+  geAspirantesPorAplicacion(idAplicacion: string, resultado: string): Promise<any> {
     let idHistorial = 'historialAplicacion.' + idAplicacion + ".resultado"
-    return this.usuariosCollection.where(idHistorial, '==', 'Aprobado').get();
+    return this.usuariosCollection.where(idHistorial, '==', resultado).get();
   }
 
   addEvaluacion(idUsuario: string, idAplicacion: string, resultado: Resultado) {

@@ -12,17 +12,8 @@
                     <h3>{{ aplicacion.nombre }} </h3>
                     <hr>
                 </div>
-                <div class="col-12 pb-1">
-                    <b>Grupo:</b> {{ gruposObj[aplicacion.grupo].nombre }}
-                </div>
                 <div class="col-12 col-sm-6 col-md-4 pb-1">
                     <b>Mínimo de aciertos:</b> {{ aplicacion.aciertos }}
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 pb-1">
-                    <b>Fecha de inicio:</b> {{ aplicacion?.fechaInicioAplicacion }}
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 pb-1">
-                    <b>Fecha de termino:</b> {{ aplicacion?.fechaTerminoAplicacion }}
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 pb-1">
                     <b>Duración:</b> {{ aplicacion.duracion }}
@@ -32,6 +23,20 @@
                     <ul>
                         <li *ngFor="let evaluacion of aplicacion.evaluaciones">{{ evaluacionesObj[evaluacion.id].nombre }}</li>
                     </ul>
+                </div>
+                <div class="col-12">
+                    <table class="table table-stripped table-sm"> 
+                        <thead class="table-primary">
+                            <th>Grupo</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha termino</th>
+                        </thead>
+                        <tbody>
+                            <td>{{ gruposObj[aplicacion.grupo].nombre }}</td>
+                            <td>{{ aplicacion?.fechaInicioAplicacion }}</td>
+                            <td>{{ aplicacion?.fechaTerminoAplicacion }}</td>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="col-12 pb-1 text-right">
                     <button mat-button color="info" (click)="onActualizar(aplicacion)">Editar <mat-icon>edit</mat-icon></button>

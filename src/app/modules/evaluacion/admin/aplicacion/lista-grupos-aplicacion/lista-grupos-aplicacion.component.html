@@ -1,0 +1,78 @@
+<form [formGroup]="fgLista" class="row">
+    <!-- GRUPO -->
+    <div class="col-12 col-sm-5 col-md-4 form-group">
+        <mat-form-field appearance="legacy">
+            <mat-label>Grupo </mat-label>
+            <mat-select formControlName="grupo" name="grupo" id="grupo" required>
+                <mat-option *ngFor="let grupo of gruposCat" [value]="grupo">
+                    {{ grupo.nombre }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="grupo.hasError('required')">{{ MJS_ERROR_REQUERIDO }}</mat-error>
+            <mat-icon matSuffix>groups </mat-icon>
+        </mat-form-field>
+    </div>
+    <!-- FECHA INICIO -->
+    <div class="col-12 col-md-4 form-group">
+        <input-fecha formControlName="fechaInicio"></input-fecha>
+    </div>
+    <!-- FECHA TERMINO -->
+    <div class="col-12 col-md-4 form-group">
+        <input-fecha formControlName="fechaTermino" [minDate]="fechaInicio.value" [startDate]="false"></input-fecha>
+    </div>
+
+    <div class="col-12 text-right">
+        <button class="" mat-button color="success" (click)="agregar()" name="agregarItem" id="agregarItem">Agregar a lista <mat-icon>add</mat-icon></button>
+    </div>
+   <!--  <div class="col-12">
+        <hr>
+        {{ fgLista.value | json }}
+    </div> -->
+    <div class="col-12">
+        <hr>
+        {{ value | json }}
+        <hr>
+    </div>
+    <div class="col-12 text-right" *ngIf="!isMain">
+        <button type="button" mat-button color="danger" (click)="cancelarActualizar()" name="cancelarActualizar" id="cancelarActualizar">
+            Cancelar <mat-icon>cancel</mat-icon>
+        </button>
+        <button type="button" mat-button color="primary" (click)="editarItem()" name="actualizarItem" id="actualizarItem">
+            Actualizar <mat-icon>cached</mat-icon>
+        </button>
+    </div>
+</form>
+<div class="row" *ngIf="isMain">
+    <div class="col-12">
+        <table class="table table-sm table-borderless" [class.table-error]="error">
+            <thead>
+                <!-- <th></th> -->
+                <th>Grupo</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha termino</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let objAplicacion of valueArray; let i = index">
+                   <!--  <td>
+                        <mat-checkbox [color]="color"
+                            (change)="updateValue($event.checked, objAplicacion)">
+                        </mat-checkbox>
+                    </td> -->
+                    <td> {{ objAplicacion[1].grupo.nombre }} </td>
+                    <td> {{ objAplicacion[1].fechaInicio }} </td>
+                    <td> {{ objAplicacion[1].fechaTermino }} </td>
+                    <td>
+                        <button type="button" mat-button color="primary" (click)="editar(objAplicacion[1])" name="editarItem" id="editarItem">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button type="button" mat-button color="danger" (click)="eliminar(i)"  name="eliminarItem" id="eliminarItem">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

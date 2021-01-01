@@ -32,6 +32,7 @@ export class MainAprobacionComponent implements OnInit {
   //Controls
   grupo: FormControl = new FormControl('');
   aplicacion: FormControl = new FormControl('');
+  resultado: FormControl = new FormControl('');
 
   constructor(private _toastr: ToastrService,
     private _usuarios: UsuarioService, private _aplicacion: AplicacionService, private _grupos: GruposService) {
@@ -48,6 +49,16 @@ export class MainAprobacionComponent implements OnInit {
     this._grupos.get().subscribe(grupos => this.grupos = grupos);
   }
 
+  private async getAspirantes(aplicacion:Aplicacion, resultado: string){
+    this._usuarios.geAspirantesPorAplicacion(aplicacion.id, resultado).then((querySnapshot) => {
+      let usuarios = [];
+      querySnapshot.forEach((doc) => {
+        usuarios.push(doc.data());
+      });
+      this.definirUsuarios(usuarios, aplicacion.id);
+    }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
+  }
+
   /*********************************************** ACCIONES **************************************************/
   onChangeGrupo(grupo: Grupo) {
     this.aplicaciones = this.aplicacionesDisponibles[grupo.id];
@@ -60,25 +71,22 @@ export class MainAprobacionComponent implements OnInit {
     }
   }
 
-  onChangeAplicacion(aplicacion: Aplicacion) {
-    this._usuarios.geAspirantesPorAplicacion(aplicacion.id).then((querySnapshot) => {
-      let usuarios = [];
-      querySnapshot.forEach((doc) => {
-        usuarios.push(doc.data());
-      });
-      this.definirUsuarios(usuarios, aplicacion.id);
-    }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
+  async onChangeAplicacion(aplicacion: Aplicacion) {
+    this.aspirantes = [];
+    await this.getAspirantes(aplicacion, 'Aprobado');
+    await this.getAspirantes(aplicacion, 'Reprobado');
   }
 
+  /****************************************  UTILS *********************************************/
   private definirUsuarios(usuarios: any[], idAplicacion: string): void {
+    console.log(usuarios);
     if (!usuarios.length)
       this._toastr.info("No se han encontrado resultados");
-    console.log(usuarios)
-    this.aspirantes = usuarios.map( usuario => {
+    this.aspirantes = this.aspirantes.concat(usuarios.map( usuario => {
       usuario.resultado = usuario.historialAplicacion[idAplicacion].resultado,
       usuario.aciertos = usuario.historialAplicacion[idAplicacion].aciertos
       return usuario;
-    });
+    }));
   }
 
 }

@@ -12,6 +12,7 @@ import { EstadoDocumentacion } from "@models/documentacion/enums/estado-document
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { Router } from '@angular/router';
 import { heapsort } from "@shared/utils/heapsort";
+import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 
 @Component({
   selector: 'app-subir-documentacion',
@@ -36,6 +37,7 @@ export class SubirDocumentacionComponent implements OnInit {
     BreadcrumbComponent.update(BC_SUBIR_DOCUMENTACION);
     this.usuario = this._authService.getUsuarioC();
     this.estadoDocUsuario = this.usuario.estado.documentacion;
+    console.log(this.usuario.id);
   }
 
   ngOnInit() {
@@ -43,8 +45,9 @@ export class SubirDocumentacionComponent implements OnInit {
       this.mostrarFormulario = true;
       this._subirDoc.getRequisitos().subscribe((documentos: TipoDato[]) => {
         this.requisitos = heapsort(documentos);
-        this._subirDoc.getDocumentacion(this.usuario).subscribe(
-          requisito => this.requisitosGuardados = requisito, err => this._toast.error("Ha ocurrido un error"));
+        this._subirDoc.getDocumentacion(this.usuario).subscribe( requisito => {
+          this.requisitosGuardados = requisito
+        }, err => this._toast.error("Ha ocurrido un error"));
       }); //PRODUCCION
     }
   }
@@ -74,6 +77,7 @@ export class SubirDocumentacionComponent implements OnInit {
   }
 
   guardarFormulario(formularioRecivido: FormGroup) {
+    console.log("HOLA FORM")
     if (this.estadoDocUsuario === EstadoDocumentacion.INVALIDA) {
       this.requisitosValidos = this.saveRequisitos(formularioRecivido);
     } else {
@@ -82,7 +86,10 @@ export class SubirDocumentacionComponent implements OnInit {
     if (Object.keys(this.requisitosValidos).length) {
       this._subirDoc.saveDocumentacion(this.usuario, this.requisitosValidos)
         .then(result => this._toast.info("La información se guardo correctamente"))
-        .catch(error => this._toast.error(error));
+        .catch(error => {
+          this._toast.error(MSJ_ERROR_CONECTAR_SERVIDOR);
+          console.error(error)
+        });
     } else {
       this._toast.error("Debe existir por lo menos un valor para guardar", "Valor invalido");
     }
@@ -105,7 +112,7 @@ export class SubirDocumentacionComponent implements OnInit {
   private updateRequisitos(formulario: FormGroup) {
     for (let [nombre, requisito] of Object.entries(formulario.controls)) {
       if (requisito.valid){
-        if(requisito.value._d == null){
+        if(requisito.value?._d == null){
           this.requisitosGuardados.documentacion[nombre].valor = requisito.value;
         }else{
           this.requisitosGuardados.documentacion[nombre].valor = requisito.value.toDate().getTime();

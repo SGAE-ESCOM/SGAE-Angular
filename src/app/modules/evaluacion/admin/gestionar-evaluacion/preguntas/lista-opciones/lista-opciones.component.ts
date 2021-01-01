@@ -1,13 +1,10 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { Opcion, Pregunta } from '@models/evaluacion/evaluacion/pregunta';
+import { Opcion } from '@models/evaluacion/evaluacion/pregunta';
 import { fadeInLeft, fadeInRight } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION, MSJ_ERROR_REQUERIDO, MSJ_ERROR_VERIFICAR_FORM } from '@shared/utils/mensajes';
-import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
-import { kMaxLength } from 'buffer';
 import { ToastrService } from 'ngx-toastr';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-lista-opciones',

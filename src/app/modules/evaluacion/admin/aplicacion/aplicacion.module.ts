@@ -9,13 +9,16 @@ import { ListaEvaluacionesComponent } from './lista-evaluaciones/lista-evaluacio
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { InputFechaModule } from '@shared/components/input-fecha/input-fecha.module';
 import { InputHoraModule } from '@shared/components/input-hora/input-hora.module';
+import { ListaGruposAplicacionComponent } from './lista-grupos-aplicacion/lista-grupos-aplicacion.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [MainAplicacionComponent, ModalAplicacion, FormAplicacionComponent, ListaEvaluacionesComponent],
+  declarations: [MainAplicacionComponent, ModalAplicacion, FormAplicacionComponent, ListaEvaluacionesComponent, ListaGruposAplicacionComponent],
   imports: [
     CommonModule,
     AplicacionRoutingModule,
     FormsModule, ReactiveFormsModule,
+    MatDialogModule,
     AngularMaterialModule,
     MatCheckboxModule,
     InputFechaModule,
