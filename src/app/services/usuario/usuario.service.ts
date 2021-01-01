@@ -6,6 +6,7 @@ import { Grupo } from '@models/evaluacion/Grupo';
 import { EstadoPago } from '@models/cuentas-pagos/enums/estado-pago.enum';
 import * as Alerts from '@shared/alertas/Alerts';
 import { Resultado } from '@models/evaluacion/resultado';
+import { Alert } from '@models/utils/Alert';
 
 
 @Injectable({
@@ -53,15 +54,17 @@ export class UsuarioService {
     this.usuariosCollection.doc(usuario.id).update({ "estado.evaluacion": estado });
   }
 
-  /*********************************************** PAGPOS *****************************************************/
+  /*********************************************** PAGOS *****************************************************/
   getAspirantesConEstadoPago(estado: string) {
     return this.usuariosCollection.where('estado.pago', '==', estado).get();
   }
 
   updateEstadoPago(usuario: UsuarioInterface, estado: string) {
     if (typeof usuario.alertas === "undefined") usuario.alertas = new Array();
-    if (estado == EstadoPago.INVALIDA) { usuario.alertas.push(Alerts.EVIDENCIA_INVALIDA.nombre); console.log(Alerts.EVIDENCIA_INVALIDA.nombre); }
-    else if (estado == EstadoPago.VALIDADA) { usuario.alertas.push(Alerts.EVIDENCIA_CORRECTA.nombre); console.log(Alerts.EVIDENCIA_CORRECTA.nombre); }
+    usuario.alertas = Alerts.removerGrupoAlertas(usuario.alertas ,Alerts.ALERTAS_PAGOS);
+    
+    if (estado == EstadoPago.INVALIDA) usuario.alertas.push(Alerts.EVIDENCIA_INVALIDA.nombre);
+    else if (estado == EstadoPago.VALIDADA) usuario.alertas.push(Alerts.EVIDENCIA_CORRECTA.nombre);
 
     this.usuariosCollection.doc(usuario.id).update({ "estado.pago": estado, "alertas": usuario.alertas });
   }
@@ -85,6 +88,15 @@ export class UsuarioService {
       rol: 'aspirante',
     }
     return userRef.set(data, { merge: true }).then(() => this.usuariosCollection.doc(user.id).delete());
+  }
+
+  removerAlerta(usuario: UsuarioInterface, alerta: Alert){
+    if(typeof usuario.alertas !== 'undefined'){
+      let index = usuario.alertas.indexOf(alerta.nombre, 0);
+      if (index > -1) usuario.alertas.splice(index, 1);
+      this.usuariosCollection.doc(usuario.id).update({"alertas": usuario.alertas });
+    }
+    return usuario.alertas;
   }
 
 }

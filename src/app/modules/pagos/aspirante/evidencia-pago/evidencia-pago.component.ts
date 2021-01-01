@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { EstadoPago } from '@models/cuentas-pagos/enums/estado-pago.enum';
 import { EvidenciaPago } from '@models/cuentas-pagos/evidencia-pago';
 import { UsuarioInterface } from '@models/persona/usuario';
+import { Alert } from '@models/utils/Alert';
 import { AuthService } from '@services/auth.service';
 import { EvidenciasPagosService } from '@services/pagos/evidencias-pagos.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
@@ -76,6 +78,7 @@ export class EvidenciaPagoComponent implements OnInit {
       this._toastr.error("No se pudo subir el archivo, intentelo mas tarde.");
     };
   }
+
 
   singleFileDropError(){
     this._toastr.error("Arrastre solo un archivo.");

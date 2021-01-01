@@ -10,6 +10,8 @@ import { getNavigationLinksAdmin } from '@shared/admin-permissions/permissions';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ALERTAS, getAlertas } from '@shared/alertas/Alerts';
 import { Alert, TipoAlert } from '@models/utils/Alert';
+import { UsuarioService } from '@services/usuario/usuario.service';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-sidenav',
@@ -19,7 +21,7 @@ import { Alert, TipoAlert } from '@models/utils/Alert';
 })
 export class SidenavComponent implements OnInit {
 
-  usuario: UsuarioInterface = { nombres: '-', roles: null, alertas: [] };
+  usuario: UsuarioInterface = { nombres: '-', roles: null, alertas: [] , id: ''};
   alertas: Array<Alert>;
   tipoAlerta: any =  TipoAlert;
   mobileQuery: MediaQueryList;
@@ -30,9 +32,8 @@ export class SidenavComponent implements OnInit {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
-    private _authService: AuthService, private _afsAuth: AngularFireAuth,
-    private router: Router) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private _usuarioService: UsuarioService,
+    private _authService: AuthService, private _afsAuth: AngularFireAuth, private router: Router) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -84,5 +85,14 @@ export class SidenavComponent implements OnInit {
     this.navigationLinks = LINKS_HOME['page'];
     this.router.navigate(['']);
   }
+
+  onClickAlerta(alerta: Alert) {
+    if(alerta.removerOnClick){
+      try { this.usuario.alertas = this._usuarioService.removerAlerta(this.usuario, alerta); } 
+      catch (error) { console.log(error); }
+    }
+    this.router.navigate([alerta.url]);
+  }
+
 
 }
