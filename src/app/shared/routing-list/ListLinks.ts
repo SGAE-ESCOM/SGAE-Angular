@@ -129,6 +129,11 @@ export const BC_GESTION_ASPIRANTES = new Breadcrumb(GESTION_ASPIRANTES, [HOME, U
 export const BC_REGISTRAR_ADMON = new Breadcrumb(REGISTRAR_ADMON, [HOME, USUARIOS, GESTION_ADMON]);
 export const BC_EDITAR_ADMON = new Breadcrumb(EDITAR_ADMON, [HOME, USUARIOS, GESTION_ADMON]);
 
+/************************************************ USUARIO ********************************************************************************************/
+export const CONFIGURAR_USUARIO = new NavigationLink("Configurar Usuario", "/app/usuario/configurar-usuario");
+
+export const BC_CONFIGURAR_USUARIO = new Breadcrumb(CONFIGURAR_USUARIO, [HOME]);
+
 /************************************************ HOME AND LANDINGPAGE ********************************************************************************************/
 export const LINKS_PAGE: NavigationLink[] = [LANDINPAGE, LOGIN];
 
