@@ -37,7 +37,7 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
   isMain: Boolean = true;
   fgAplicacion: FormGroup;
 
-  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _evaluaciones: AplicacionService) {
+  constructor(private fb: FormBuilder, private _toastr: ToastrService, private _aplicaciones: AplicacionService) {
   }
 
   ngOnInit(): void { }
@@ -53,14 +53,18 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
   save(form: FormGroup) {
     //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
     if (form.valid) {
-      let evaluacion: Aplicacion = form.value;
-      
-      this._evaluaciones.save(evaluacion).then(caso => {
-        this._toastr.success(MSJ_OK_AGREGADO);
-        this.accion.emit(true);
-      }, err => {
-        this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR);
-      });
+      if( Object.keys(this.fechasAplicacion.value).length ){
+        let aplicacion: Aplicacion = form.value;
+        aplicacion.grupos = Object.entries(aplicacion.fechasAplicacion).map( ([key, value]:any) => { return key } );
+        this._aplicaciones.save(aplicacion).then(caso => {
+          this._toastr.success(MSJ_OK_AGREGADO);
+          this.accion.emit(true);
+        }, err => {
+          this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR);
+        });
+      }else{
+        this._toastr.error('Debes agregar por lo menos una fecha de aplciacion para un grupo');
+      }
     } else {
       this._toastr.error(MSJ_ERROR_VERIFICAR_FORM);
     }
@@ -70,8 +74,8 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
     if (form.valid) {
       let aplicacion: Aplicacion = form.value;
       aplicacion.id = this.aplicacion.id;
-      //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
-      this._evaluaciones.update(aplicacion).then(caso => {
+      aplicacion.grupos = Object.entries(aplicacion.fechasAplicacion).map( ([key, value]:any) => { return key } );
+      this._aplicaciones.update(aplicacion).then(caso => {
         this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);
       }, err => {
@@ -90,37 +94,25 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
   async initForm() {
     this.fgAplicacion = this.fb.group({
       nombre: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
-      grupo: ['', [Validators.required]],
-      grupos: ['', [Validators.required]],
+      fechasAplicacion: [{}, [Validators.required]],
       evaluaciones: [[], [Validators.required]],
-      fechaInicio: ['', [Validators.required]],
-      fechaTermino: ['', [Validators.required]],
       duracion: ['', [Validators.required]],
-      aciertos: ['', [Validators.required, Validators.min(0), Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
+      aciertos: ['0', [Validators.required, Validators.min(0), Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
     })
   }
 
   async setValues() {
     this.nombre.setValue(this.aplicacion.nombre);
-    this.grupo.setValue(this.aplicacion.grupo);
     this.aciertos.setValue(this.aplicacion.aciertos)
-    this.fechaInicio.setValue(this.aplicacion.fechaInicio)
-    this.fechaTermino.setValue(this.aplicacion.fechaTermino)
     this.duracion.setValue(this.aplicacion.duracion)
     this.evaluaciones.setValue(this.aplicacion.evaluaciones);
-  }
-
-  setRangoTiempo(aplicacion:Aplicacion){
-    aplicacion.fechaInicio = new Date(aplicacion.fechaInicio);
+    this.fechasAplicacion.setValue(this.aplicacion.fechasAplicacion);
   }
   
   /***************************** GETTERS ******************************/
   get nombre() { return this.fgAplicacion.get('nombre') as FormControl }
-  get grupo() { return this.fgAplicacion.get('grupo') as FormControl }
-  get grupos() { return this.fgAplicacion.get('grupos') as FormControl }
+  get fechasAplicacion() { return this.fgAplicacion.get('fechasAplicacion') as FormControl }
   get evaluaciones() { return this.fgAplicacion.get('evaluaciones') as FormControl }
-  get fechaInicio() { return this.fgAplicacion.get('fechaInicio') as FormControl }
-  get fechaTermino() { return this.fgAplicacion.get('fechaTermino') as FormControl }
   get duracion() { return this.fgAplicacion.get('duracion') as FormControl }
   get aciertos() { return this.fgAplicacion.get('aciertos') as FormControl }
 }

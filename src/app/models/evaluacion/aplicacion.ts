@@ -1,24 +1,23 @@
 import { Evaluacion } from './evaluacion';
+import { FechaAplicacion } from './fecha-aplicacion';
 
 export class Aplicacion {
     id?: string;
-    grupo?: string;
-    idGrupo?: string;
+    grupos: string[];
+    fechasAplicacion: any;
+    fechasAplicacionArray: any[];
     nombre: string;
     evaluaciones: Evaluacion[];
     duracion: string;
-    fechaInicio: Date;
-    fechaTermino: Date;
-    fechaInicioAplicacion?: string;
-    fechaTerminoAplicacion?: string;
     aciertos: number;
 
     constructor(){
-        this.idGrupo = '';
-        this.grupo = '';
         this.nombre = '';
         this.evaluaciones = [];
         this.duracion = '';
+        this.grupos = [];
+        this.fechasAplicacion = {};
+        this.fechasAplicacionArray = [];
         //this.tiempo = ;
         //this.fechaAplicacion = '';
         //this.minAciertos = '';

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { getCardsByEtapas, LINKS_HOME } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -7,11 +7,9 @@ import { Router } from '@angular/router';
 import { fadeInDown } from '@shared/utils/animations/router.animations';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { getNavigationLinksAdmin } from '@shared/admin-permissions/permissions';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { ALERTAS, getAlertas } from '@shared/alertas/Alerts';
+import { getAlertas } from '@shared/alertas/Alerts';
 import { Alert, TipoAlert } from '@models/utils/Alert';
 import { UsuarioService } from '@services/usuario/usuario.service';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-sidenav',

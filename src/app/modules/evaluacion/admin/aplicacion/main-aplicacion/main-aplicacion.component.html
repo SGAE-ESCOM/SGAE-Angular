@@ -26,15 +26,19 @@
                 </div>
                 <div class="col-12">
                     <table class="table table-stripped table-sm"> 
-                        <thead class="table-primary">
-                            <th>Grupo</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha termino</th>
+                        <thead class="table-info">
+                            <tr>
+                                <th>Grupo</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha termino</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <td>{{ gruposObj[aplicacion.grupo].nombre }}</td>
-                            <td>{{ aplicacion?.fechaInicioAplicacion }}</td>
-                            <td>{{ aplicacion?.fechaTerminoAplicacion }}</td>
+                            <tr *ngFor="let fechaAplicacion of aplicacion.fechasAplicacionArray">
+                                <td>{{ gruposObj[fechaAplicacion[0]].nombre }}</td>
+                                <td>{{ fechaAplicacion[1]?.fechaInicioF }}</td>
+                                <td>{{ fechaAplicacion[1]?.fechaTerminoF }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

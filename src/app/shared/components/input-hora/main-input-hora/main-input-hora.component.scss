@@ -4,15 +4,9 @@
 }
 
 .titulo{
-    position: absolute;
     font-size: 0.8rem !important;
-    top: 0;
-    left: 4rem;
     color: rgba(0, 0, 0, 0.54);
     font: inherit;
     pointer-events: none;
-    width: 100%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    height: 0 !important;
 }

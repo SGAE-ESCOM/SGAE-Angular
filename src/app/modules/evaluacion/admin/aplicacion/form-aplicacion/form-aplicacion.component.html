@@ -1,7 +1,7 @@
 <div class="contrainer">
         <div class="row">
             <div class="col-12 text-center">
-                <h3 mat-dialog-title> {{ titulo }} </h3>
+                <div mat-dialog-title> <h3> {{ titulo }} </h3>  </div>
                 <hr>
             </div>
             <div class="col-12">
@@ -33,15 +33,17 @@
                         <div class="col-12 col-md-4 form-group" *ngIf="isMain"> 
                             <input-hora formControlName="duracion" [titulo]="'Duración'"></input-hora>
                         </div>
+                        <div class="col-12"><hr></div>
                         <!-- GRUPOS :v -->
                         <div class="col-12"><p><b>Grupos: </b></p></div>
                         <div class="col-12">
-                            <app-lista-grupos-aplicacion [gruposCat]="gruposCat"></app-lista-grupos-aplicacion>
+                            <app-lista-grupos-aplicacion formControlName="fechasAplicacion" [gruposCat]="gruposCat" (isMain)="isMain = $event"></app-lista-grupos-aplicacion>
+                            <hr>
                         </div>
                         <div class="col-12" *ngIf="isMain">
                             <b>Evaluaciones disponibles:</b>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" *ngIf="isMain">
                             <app-lista-evaluaciones formControlName="evaluaciones" [evaluaciones]="evaluacionesCat" [error]="evaluaciones.hasError('required')"></app-lista-evaluaciones>
                             <mat-error class="mat-table-error" *ngIf="evaluaciones.hasError('required')" @fadeInOutDown>{{ MJS_ERROR_REQUERIDO }}</mat-error>
                         </div>
