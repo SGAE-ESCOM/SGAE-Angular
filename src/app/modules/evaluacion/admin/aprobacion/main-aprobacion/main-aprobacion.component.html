@@ -1,7 +1,7 @@
 <div class="container" @fadeInRight>
     <div class="row">
         <!-- GRUPO -->
-        <div class="col-12 col-sm-4 form-group">
+        <!-- <div class="col-12 col-sm-4 form-group">
             <mat-form-field appearance="outline">
                 <mat-label>Grupo</mat-label>
                 <mat-select name="SelectFiltro" [formControl]="grupo" (selectionChange)="onChangeGrupo($event.value)" required>
@@ -10,7 +10,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
+        </div> -->
         <!-- APLICACION -->
         <div class="col-12 col-sm-4 form-group">
             <mat-form-field appearance="outline">
@@ -21,6 +21,10 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-4 form-group">
+            <button mat-button color="success" (click)="aprobarTodos()">Aprobar a sólo a los aprobados</button>
+            <button mat-button color="info" (click)="aprobarTodos()">Aprobar a todos</button>
         </div>
 <!--         <div class="col-12 col-sm-4 form-group">
             <button mat-fab color="primary" aria-label="Example icon button with a delete icon">

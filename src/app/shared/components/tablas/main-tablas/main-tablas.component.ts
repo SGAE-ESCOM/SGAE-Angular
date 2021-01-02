@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Tabla } from '@models/utils/Tabla';
+import { Tabla, TipoColumn } from '@models/utils/Tabla';
 
 @Component({
   selector: 'app-tabla',
@@ -40,6 +40,8 @@ export class MainTablasComponent implements OnInit, OnChanges {
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   encabezado: string[] = [];
+
+  tipos = TipoColumn;
 
   constructor() {
   }

@@ -29,11 +29,28 @@
                     <ng-container [matColumnDef]="columna.json">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columna.encabezado }} </th>
                         <td mat-cell *matCellDef="let row">
+                            <!-- CASO OBJETO -->
                             <div *ngIf="isObject(row[columna.json]); else Primitivo">
-                                <ul>
-                                    <li *ngFor="let item of row[columna.json]; let i = index"> {{ row[columna.property][i][columna.objectProperty] }} </li>
-                                </ul>
+                                <span [ngSwitch]="columna.tipo">
+                                    <div *ngSwitchCase="tipos.OBJETO">
+                                        {{ row[columna.json] }}
+                                    </div>
+                                    <div *ngSwitchCase="tipos.OBJETO_PROPERTY">
+                                        {{ row[columna.json][columna.property] }}
+                                    </div>
+                                    <div *ngSwitchCase="tipos.ARRAY_PRIMITIVO">
+                                        <ul>
+                                            <li *ngFor="let item of row[columna.json]; let i = index"> {{ row[columna.json][i] }} </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngSwitchCase="tipos.ARRAY_OBJETOS_PROPERTY">
+                                        <ul>
+                                            <li *ngFor="let item of row[columna.json]; let i = index"> {{ row[columna.json][i][columna.property] }} </li>
+                                        </ul>
+                                    </div>
+                                </span>
                             </div>
+                            <!-- CASO PRIMITIVO -->
                             <ng-template #Primitivo>
                                 {{ row[columna.json] }}
                             </ng-template>

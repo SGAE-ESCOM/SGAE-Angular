@@ -97,7 +97,7 @@ export class FormAplicacionComponent implements OnInit, OnChanges {
       fechasAplicacion: [{}, [Validators.required]],
       evaluaciones: [[], [Validators.required]],
       duracion: ['', [Validators.required]],
-      aciertos: ['0', [Validators.required, Validators.min(0), Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
+      aciertos: [0, [Validators.required, Validators.min(0), Validators.pattern(NUMEROS_SIN_ESPACIOS)]]
     })
   }
 

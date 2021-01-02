@@ -7,7 +7,7 @@
             <div class="col-12">
                 <div mat-dialog-content> 
                     <form [formGroup]="fgAplicacion" class="row">
-                        <div class="col-12"><p><b>Información general</b></p></div>
+                        <div class="col-12"><p><b>Parámetros de la aplicación</b></p></div>
                         <!-- NOMBER -->
                         <div class="col-12 col-md-4 form-group" *ngIf="isMain">
                             <mat-form-field appearance="legacy">
@@ -34,19 +34,19 @@
                             <input-hora formControlName="duracion" [titulo]="'Duración'"></input-hora>
                         </div>
                         <div class="col-12"><hr></div>
-                        <!-- GRUPOS :v -->
-                        <div class="col-12"><p><b>Grupos: </b></p></div>
-                        <div class="col-12">
-                            <app-lista-grupos-aplicacion formControlName="fechasAplicacion" [gruposCat]="gruposCat" (isMain)="isMain = $event"></app-lista-grupos-aplicacion>
-                            <hr>
-                        </div>
+                        <!-- EVALUACIONES -->
                         <div class="col-12" *ngIf="isMain">
-                            <b>Evaluaciones disponibles:</b>
-                        </div>
-                        <div class="col-12" *ngIf="isMain">
+                            <p><b>Evaluaciones disponibles:</b></p>
                             <app-lista-evaluaciones formControlName="evaluaciones" [evaluaciones]="evaluacionesCat" [error]="evaluaciones.hasError('required')"></app-lista-evaluaciones>
                             <mat-error class="mat-table-error" *ngIf="evaluaciones.hasError('required')" @fadeInOutDown>{{ MJS_ERROR_REQUERIDO }}</mat-error>
+                            <hr>
                         </div>
+                        <!-- GRUPOS -->
+                        <div class="col-12">
+                            <p><b>Grupos: </b></p>
+                            <app-lista-grupos-aplicacion formControlName="fechasAplicacion" [gruposCat]="gruposCat" (isMain)="isMain = $event"></app-lista-grupos-aplicacion>
+                        </div>
+                        
                     </form>
                 </div>
             </div>

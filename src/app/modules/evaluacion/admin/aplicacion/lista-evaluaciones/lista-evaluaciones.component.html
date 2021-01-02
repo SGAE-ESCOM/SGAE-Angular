@@ -2,9 +2,11 @@
     <div class="col-12">
         <table class="table table-sm table-borderless" [class.table-error]="error">
             <thead>
-                <th></th>
-                <th>Evaluación</th>
-                <th>Total preguntas</th>
+                <tr class="table-warning">
+                    <th></th>
+                    <th>Evaluación</th>
+                    <th>Total preguntas</th>
+                </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let evaluacion of evaluaciones; let i = index" class="hover">

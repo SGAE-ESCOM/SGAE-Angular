@@ -5,7 +5,7 @@ import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component
 import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
-import { Tabla } from '@models/utils/Tabla';
+import { Tabla, TipoColumn } from '@models/utils/Tabla';
 import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
 import { SeccionesService } from '@services/evaluacion/secciones.service';
 import { TemasService } from '@services/evaluacion/temas.service';
@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MainAdminEvaluacionComponent implements OnInit {
 
-  columnasEvaluacion: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Temas', json: 'temas', property: 'temas', objectProperty:'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
+  columnasEvaluacion: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Temas', json: 'temas', property: 'nombre', tipo: TipoColumn.ARRAY_OBJETOS_PROPERTY }, { encabezado: 'Acciones', json: 'acciones' }];
   evaluaciones: Evaluacion[] = [];
 
   secciones:Seccion[] = [];

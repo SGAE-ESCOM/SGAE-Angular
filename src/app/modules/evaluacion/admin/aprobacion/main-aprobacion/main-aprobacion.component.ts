@@ -4,14 +4,13 @@ import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component
 import { Aplicacion } from '@models/evaluacion/aplicacion';
 import { Grupo } from '@models/evaluacion/Grupo';
 import { UsuarioInterface } from '@models/persona/usuario';
-import { Tabla } from '@models/utils/Tabla';
+import { Tabla, TipoColumn } from '@models/utils/Tabla';
 import { AplicacionService } from '@services/evaluacion/aplicacion.service';
 import { GruposService } from '@services/evaluacion/grupos.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { BC_APROBACION_EVALUACION } from '@shared/routing-list/ListLinks';
 import { fadeInRight } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
-import { groupBy } from '@shared/utils/utils-grupos';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,7 +21,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MainAprobacionComponent implements OnInit {
 
-  columnas: Tabla[] = [{ encabezado: 'Nombres', json: 'nombres' }, { encabezado: 'Apellidos', json: 'apellidos' }, { encabezado: 'Aciertos', json: 'aciertos', property:'',  }, { encabezado: 'Resultado', json: 'resultado' }, { encabezado: 'Acciones', json: 'acciones' }]
+  columnas: Tabla[] = [
+    { encabezado: 'Nombres', json: 'nombres' }, { encabezado: 'Apellidos', json: 'apellidos' }, { encabezado: 'Aciertos', json: 'aciertos' }, { encabezado: 'Resultado de simulador', json: 'resultado' }, 
+    { encabezado: 'Estado etapa evaluación', tipo: TipoColumn.OBJETO_PROPERTY, json: 'estado', property: 'evaluacion' }, { encabezado: 'Acciones', json: 'acciones' }];
   aspirantes: UsuarioInterface[] = [];
 
   grupos: Grupo[] = [];
@@ -45,11 +46,11 @@ export class MainAprobacionComponent implements OnInit {
 
   /*********************************************** REST HTTP **************************************************/
   async getCatalogos() {
-    await this._aplicacion.getAll().subscribe(aplicaciones => this.aplicacionesDisponibles = groupBy(aplicaciones, 'grupo'));
-    this._grupos.get().subscribe(grupos => this.grupos = grupos);
+    await this._aplicacion.getAll().subscribe(aplicaciones => this.aplicaciones = aplicaciones);
+    //await this._grupos.get().subscribe(grupos => this.grupos = grupos);
   }
 
-  private async getAspirantes(aplicacion:Aplicacion, resultado: string){
+  private async getAspirantes(aplicacion: Aplicacion, resultado: string) {
     this._usuarios.geAspirantesPorAplicacion(aplicacion.id, resultado).then((querySnapshot) => {
       let usuarios = [];
       querySnapshot.forEach((doc) => {
@@ -59,6 +60,9 @@ export class MainAprobacionComponent implements OnInit {
     }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
   }
 
+  aprobarTodos() {
+
+  }
   /*********************************************** ACCIONES **************************************************/
   onChangeGrupo(grupo: Grupo) {
     this.aplicaciones = this.aplicacionesDisponibles[grupo.id];
@@ -82,9 +86,9 @@ export class MainAprobacionComponent implements OnInit {
     console.log(usuarios);
     if (!usuarios.length)
       this._toastr.info("No se han encontrado resultados");
-    this.aspirantes = this.aspirantes.concat(usuarios.map( usuario => {
+    this.aspirantes = this.aspirantes.concat(usuarios.map(usuario => {
       usuario.resultado = usuario.historialAplicacion[idAplicacion].resultado,
-      usuario.aciertos = usuario.historialAplicacion[idAplicacion].aciertos
+        usuario.aciertos = usuario.historialAplicacion[idAplicacion].aciertos
       return usuario;
     }));
   }

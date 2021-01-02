@@ -37,16 +37,18 @@ export class MainEvaluacionesComponent implements OnInit {
     if (this.usuario.grupo) {
       this.hasGrupo = true;
       this.grupo = this.usuario.grupo;
+      //OBTENER TODAS LAS APLICACIONES PARA UN GRUPO
       this._aplicaciones.getAllByGrupo(this.grupo).then((querySnapshot) => {
         let aplicaciones = [];
         querySnapshot.forEach((doc) => {
-          let aplicacion = doc.data();
+          let aplicacion = doc.data() as Aplicacion;
           aplicacion.id = doc.id;
-          aplicacion.fechaFormated = momentJS(aplicacion.fechaInicio).format('Do/MM/YYYY') + ' a ' + momentJS(aplicacion.fechaTermino).format('Do/MM/YYYY')
-          aplicacion.disponible = this.isDisponible( aplicacion.fechaInicio, aplicacion.fechaTermino );
+          aplicacion.fechaFormated = momentJS(aplicacion.fechasAplicacion[this.grupo.id].fechaInicio).format('Do/MM/YYYY') + ' a ' + momentJS(aplicacion.fechasAplicacion[this.grupo.id].fechaTermino).format('Do/MM/YYYY')
+          aplicacion.disponible = this.isDisponible( aplicacion.fechasAplicacion[this.grupo.id].fechaInicio, aplicacion.fechasAplicacion[this.grupo.id].fechaTermino );
           aplicaciones.push(aplicacion);
         });
         this.aplicaciones = aplicaciones;
+        console.log(this.aplicaciones);
         //OBETER TODAS LAS REALIZADAS POR EL ASPIRANTE
         this._resultados.getByUsuario(this.usuario).then(queryS => {
           let aplicacionesRealizadas = [];

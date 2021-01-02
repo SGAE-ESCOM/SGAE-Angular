@@ -1,9 +1,10 @@
 import { Evaluacion } from './evaluacion';
-import { FechaAplicacion } from './fecha-aplicacion';
 
 export class Aplicacion {
     id?: string;
     grupos: string[];
+    fechaFormated: string;
+    disponible: Boolean;
     fechasAplicacion: any;
     fechasAplicacionArray: any[];
     nombre: string;
@@ -18,10 +19,6 @@ export class Aplicacion {
         this.grupos = [];
         this.fechasAplicacion = {};
         this.fechasAplicacionArray = [];
-        //this.tiempo = ;
-        //this.fechaAplicacion = '';
-        //this.minAciertos = '';
-        //this.aciertos = '';
-        
+        this.aciertos = 0;
     }
 }

@@ -41,7 +41,7 @@ export class AplicacionService {
   }
 
   getAllByGrupo(grupo: Grupo) {
-    return this.aplicacionesCollectionReference.where('grupo', '==', grupo.id).get();
+    return this.aplicacionesCollectionReference.where('grupos', 'array-contains', grupo.id).get();
   }
 
   update(aplicacion: Aplicacion) {
