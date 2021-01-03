@@ -14,7 +14,7 @@
     </button> -->
 
     <!-- Icono Alertas -->
-    <ng-template *ngIf="isLoggedIn">
+    <div *ngIf="isLoggedIn;else loggedOutOptions">
       <button *ngIf="alertas.length == 0; else elseBlock" mat-button [matMenuTriggerFor]="alerts" @fadeInDown disabled>
         <mat-icon style="color: gray" class="material-icons-outlined">notification_important</mat-icon>
       </button>
@@ -23,12 +23,13 @@
           <mat-icon style="color: orange" class="material-icons-outlined">notification_important</mat-icon> <span class="numberCircle">&nbsp;{{ alertas.length }}&nbsp;</span>
         </button>
       </ng-template>
-    </ng-template>
+      <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu" @fadeInDown>
+        <mat-icon class="material-icons-outlined">account_circle</mat-icon> {{ usuario.nombres }}
+      </button>
+    </div>
     <!-- /Icono Alertas -->
 
-    <button *ngIf="isLoggedIn;else loggedOutOptions" mat-button [matMenuTriggerFor]="menu" @fadeInDown>
-      <mat-icon class="material-icons-outlined">account_circle</mat-icon> {{ usuario.nombres }}
-    </button>
+
 
     <!-- Menu Alertas -->
     <mat-menu class="itemAlerta" #alerts="matMenu">
