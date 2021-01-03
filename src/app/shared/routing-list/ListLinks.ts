@@ -145,11 +145,14 @@ export const LINKS_ROOT_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 
 /************************************************ HOME AND LANDINGPAGE ********************************************************************************************/
 export function getCardsByEtapas(rol: string, etapas: any) {
-    let links = Object.entries(etapasJson).reduce((prev, [key, value]) => {
-        if (etapas[key])
-            prev = prev.concat(value);
-        return prev;
-    }, []);
+    let links = [];
+    if(etapas){
+        links = Object.entries(etapasJson).reduce((prev, [key, value]) => {
+            if (etapas[key])
+                prev = prev.concat(value);
+            return prev;
+        }, []);
+    }
     if(rol === 'admin' || rol === 'root')
         links = links.concat(ETAPAS, USUARIOS);
     links.unshift(HOME);

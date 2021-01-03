@@ -12,7 +12,7 @@
             </mat-form-field>
         </div> -->
         <!-- APLICACION -->
-        <div class="col-12 col-sm-4 form-group">
+        <div class="col-12 col-sm-12 col-md-4 form-group">
             <mat-form-field appearance="outline">
                 <mat-label>Aplicación </mat-label>
                 <mat-select name="SelectFiltro" [formControl]="aplicacion" (selectionChange)="onChangeAplicacion($event.value)" required>
@@ -22,9 +22,13 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-12 col-sm-4 form-group">
-            <button mat-button color="success" (click)="aprobarTodos()">Aprobar a sólo a los aprobados</button>
-            <button mat-button color="info" (click)="aprobarTodos()">Aprobar a todos</button>
+        <div class="col-12 col-sm-12 col-md-5 d-flex flex-row form-group">
+            <div class="mt-3">
+                <button mat-button color="success" (click)="aprebarSoloAprobados()">Aprobar a sólo a los aprobados</button>
+            </div>
+            <div class="mt-3">
+                <button mat-button color="info" (click)="aprobarTodos()">Aprobar a todos</button>
+            </div>
         </div>
 <!--         <div class="col-12 col-sm-4 form-group">
             <button mat-fab color="primary" aria-label="Example icon button with a delete icon">

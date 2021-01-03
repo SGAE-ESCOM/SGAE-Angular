@@ -7,6 +7,7 @@ import { UsuarioInterface } from '@models/persona/usuario';
 import { Tabla, TipoColumn } from '@models/utils/Tabla';
 import { AplicacionService } from '@services/evaluacion/aplicacion.service';
 import { GruposService } from '@services/evaluacion/grupos.service';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { BC_APROBACION_EVALUACION } from '@shared/routing-list/ListLinks';
 import { fadeInRight } from '@shared/utils/animations/router.animations';
@@ -23,7 +24,7 @@ export class MainAprobacionComponent implements OnInit {
 
   columnas: Tabla[] = [
     { encabezado: 'Nombres', json: 'nombres' }, { encabezado: 'Apellidos', json: 'apellidos' }, { encabezado: 'Aciertos', json: 'aciertos' }, { encabezado: 'Resultado de simulador', json: 'resultado' }, 
-    { encabezado: 'Estado etapa evaluación', tipo: TipoColumn.OBJETO_PROPERTY, json: 'estado', property: 'evaluacion' }, { encabezado: 'Acciones', json: 'acciones' }];
+    { encabezado: 'Estado Evaluación', tipo: TipoColumn.OBJETO_PROPERTY, json: 'estado', property: 'evaluacionConocimientos' }, { encabezado: 'Acciones', json: 'acciones' }];
   aspirantes: UsuarioInterface[] = [];
 
   grupos: Grupo[] = [];
@@ -35,7 +36,7 @@ export class MainAprobacionComponent implements OnInit {
   aplicacion: FormControl = new FormControl('');
   resultado: FormControl = new FormControl('');
 
-  constructor(private _toastr: ToastrService,
+  constructor(private _toastr: ToastrService, private _swal: SweetalertService,
     private _usuarios: UsuarioService, private _aplicacion: AplicacionService, private _grupos: GruposService) {
     BreadcrumbComponent.update(BC_APROBACION_EVALUACION);
   }
@@ -61,8 +62,12 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   aprobarTodos() {
-
+    this._swal.confirmarGenerico('¿Deseas aprobar a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar')
   }
+
+  aprebarSoloAprobados(){
+  }
+
   /*********************************************** ACCIONES **************************************************/
   onChangeGrupo(grupo: Grupo) {
     this.aplicaciones = this.aplicacionesDisponibles[grupo.id];
@@ -83,9 +88,6 @@ export class MainAprobacionComponent implements OnInit {
 
   /****************************************  UTILS *********************************************/
   private definirUsuarios(usuarios: any[], idAplicacion: string): void {
-    console.log(usuarios);
-    if (!usuarios.length)
-      this._toastr.info("No se han encontrado resultados");
     this.aspirantes = this.aspirantes.concat(usuarios.map(usuario => {
       usuario.resultado = usuario.historialAplicacion[idAplicacion].resultado,
         usuario.aciertos = usuario.historialAplicacion[idAplicacion].aciertos
