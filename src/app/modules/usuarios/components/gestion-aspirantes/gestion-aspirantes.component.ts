@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_GESTION_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { UsuarioService } from '@services/usuario/usuario.service';
@@ -11,6 +11,8 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { comprobarPermisos, GESTION_USUARIOS } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-gestion-aspirantes',
@@ -23,7 +25,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns: string[] = ['nombres', 'apellidos', 'email', 'estadoDoc', 'acciones'];
+  displayedColumns: string[] = ['nombres', 'apellidos', 'email', 'estadoDoc',  'estados', 'acciones'];
 
   filtros: any[] = [
     {nombre: 'Todos', valor: 'true'},
@@ -34,7 +36,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   fcFiltro = new FormControl(this.filtros[0].valor);
 
   constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
-      private _authServices: AuthService, private router: Router) {
+      private _authServices: AuthService, private router: Router, public dialog: MatDialog) {
     let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
     if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
@@ -108,6 +110,14 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  visualizarEstados(row){
+    const dialogRef = this.dialog.open(ModalVisualizarEstados, {
+      width: '500px',
+      data: row
+    });
+    dialogRef.afterClosed().subscribe(result => {});
+  }
+
   private updateTablaUsuarios(): void {
     this.usuarios.paginator = this.paginator;
     this.usuarios.sort = this.sort;
@@ -115,6 +125,36 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
 
   private mensajeError():void{
     this._toast.error("Hubo un error al cargar información");
+  }
+
+}
+
+
+@Component({
+  selector: 'modal-visualizar-estados',
+  templateUrl: './modal-visualizar-estados.html',
+  styleUrls: ['./gestion-aspirantes.component.scss']
+})
+export class ModalVisualizarEstados {
+
+  constructor(
+    public dialogRef: MatDialogRef<ModalVisualizarEstados>, public sanitizer: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.configurarDialog();
+  }
+
+  configurarDialog(){
+    // let permisos = this.data.permisos;
+    // this.gusuarios = GESTION_USUARIOS & permisos ? true : false;
+    // this.getapas = GESTION_ETAPAS & permisos ? true : false;
+    // this.gpagos = GESTION_PAGOS & permisos ? true : false;
+    // this.gconvocatoria = GESTION_CONV & permisos ? true : false;
+    // this.gevaluacion = GESTION_EVAL & permisos ? true : false;
+    // this.gdocumentacion = GESTION_DOC & permisos ? true : false;
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

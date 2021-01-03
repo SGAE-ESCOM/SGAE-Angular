@@ -40,7 +40,6 @@ export class ConfigurarUsuarioComponent implements OnInit {
         this._authService.findUsuario(auth.uid).subscribe((usuario: UsuarioInterface) => {
           if (usuario) {
             this.usuario = usuario;
-            console.log(usuario);
             this.fgUser.get('nombres').setValue(this.usuario.nombres);
             this.fgUser.get('apellidos').setValue(this.usuario.apellidos);
           }

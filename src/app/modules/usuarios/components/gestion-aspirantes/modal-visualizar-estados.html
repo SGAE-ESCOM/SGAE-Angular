@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-12">
+        <h4 class="text-center" mat-dialog-title>Estados del aspirante: {{data.nombres}} {{data.apellidos}}  </h4>
+        <hr>
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="card no-border col-12">
+                    <div class="card no-border mat-elevation-z3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-12 form-group">
+                                    <section class="example-section mt-3">
+                                        <p>Documentacion: {{data.estado.documentacion}} </p>
+                                    </section>
+                                </div>
+                                <div class="col-12 col-md-12 form-group">
+                                    <section class="example-section mt-3">
+                                        <p>Pagos: {{data.estado.pago}} </p>
+                                    </section>
+                                </div>
+                                <div class="col-12 col-md-12 form-group">
+                                    <section class="example-section mt-3">
+                                        <p>Evaluacion: {{data.estado.evaluacionConocimientos}} </p>
+                                    </section>
+                                </div>
+                                <div class="col-12 col-md-12 form-group">
+                                    <section class="example-section mt-3">
+                                        <p>Publicacion Resultados: {{data.estado.publicacionResultados}} </p>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-right pt-2" >
+                    <button mat-button name="btnCerrarEstados" (click)="onNoClick()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
