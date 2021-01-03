@@ -1,0 +1,53 @@
+<div class="container animated-row pb-4">
+    <!-- <div class="row">
+        <div class="col-12">
+            <p>Edita la información de tu cuenta.</p>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card no-border mat-elevation-z3">
+                <div class="card-header text-center">
+                    <h5 class="m-0">Formulario para editar tu información</h5>
+                </div>
+                <div class="card-body">
+                    <h5>Información de la cuenta</h5>
+                    <form [formGroup]="fgUser">
+                        <div class="row">
+                            <div class="col-12 col-md-4 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Nombre(s)</mat-label>
+                                    <input matInput formControlName="nombres" type="nombres" id="nombres" name="nombres" (change)="btnActualizar = true;" required>
+                                    <mat-icon matSuffix>text_fields</mat-icon>
+                                    <mat-error *ngIf="fgUser.get('nombres').invalid">{{getNombreErrorMessage()}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Apellido(s)</mat-label>
+                                    <input matInput formControlName="apellidos" type="apellidos" id="apellidos" name="apellidos" (change)="btnActualizar = true;" required>
+                                    <mat-icon matSuffix>text_fields</mat-icon>
+                                    <mat-error *ngIf="fgUser.get('apellidos').invalid">{{getApellidoErrorMessage()}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button name="btnActualizarInfoAdmin" type="submit" type="submit" mat-button color="info" (click)="actualizarInformacion(fgUser)" [disabled]="!btnActualizar"> Actualizar <mat-icon>cached</mat-icon> 
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button name="btnRegresar" type="submit" type="submit" [routerLink]="['/app/usuarios/gestion-admon']" mat-button color="warning">
+                                    Regresar <mat-icon>undo</mat-icon> 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
