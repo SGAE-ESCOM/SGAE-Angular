@@ -145,7 +145,7 @@ export const LINKS_HOME = {
 }
 
 export const LINKS_ETAPAS = [DEFINIR_ETAPAS, DEFINIR_FECHAS];
-export const LINKS_USUARIOS = [GESTION_ASPIRANTES];
+export const LINKS_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 export const LINKS_ROOT_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 
 /************************************************ HOME AND LANDINGPAGE ********************************************************************************************/
