@@ -70,6 +70,11 @@ export class UsuarioService {
   }
 
   /*********************************************** USUARIOS *****************************************************/
+  
+  updateUsuario(usuario: UsuarioInterface, userData: UsuarioInterface){
+    return this.usuariosCollection.doc(usuario.id).update({ "nombres" : userData.nombres, "apellidos": userData.apellidos });
+  }
+  
   gasignarGrupo(usuario: UsuarioInterface, grupo: Grupo) {
     return this.usuariosCollection.doc(usuario.id).update({ grupo });
   }

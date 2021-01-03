@@ -107,6 +107,14 @@ export class SweetalertService {
     });
   }
 
+  actualizadoCorrecto(texto?: string){
+    this.swalFinalizar.fire({
+      title: 'Actualizado',
+      text: texto,
+      icon: 'success'
+    });
+  }
+
   /*******************************************   CORREGIR *****************************************************************/
   cancelarRegistroAdmin(titulo: string){
     return this.swalEliminar.fire({

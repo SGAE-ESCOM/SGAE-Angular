@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { UsuarioInterface } from '@models/persona/usuario';
+import { AuthService } from '@services/auth.service';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { UsuarioService } from '@services/usuario/usuario.service';
 import { BC_CONFIGURAR_USUARIO } from '@shared/routing-list/ListLinks';
 import { TEXTO_CON_ESPACIOS } from '@shared/utils/validators/regex';
 
@@ -16,8 +20,10 @@ export class ConfigurarUsuarioComponent implements OnInit {
   fgUser: FormGroup;
   btnActualizar = false;
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private _usuarioService: UsuarioService, private _swal: SweetalertService, 
+        private _authService: AuthService, private router: Router) { 
     BreadcrumbComponent.update(BC_CONFIGURAR_USUARIO);
+
   }
 
   ngOnInit(): void {
@@ -25,22 +31,41 @@ export class ConfigurarUsuarioComponent implements OnInit {
       nombres: ['', [Validators.required, Validators.pattern(TEXTO_CON_ESPACIOS)]],
       apellidos: ['', [Validators.required, Validators.pattern(TEXTO_CON_ESPACIOS)]]
     });
+    this.getUsuarioActual();
+  }
+
+  getUsuarioActual() {
+    this._authService.isAuth().subscribe(auth => {
+      if (auth) {
+        this._authService.findUsuario(auth.uid).subscribe((usuario: UsuarioInterface) => {
+          if (usuario) {
+            this.usuario = usuario;
+            console.log(usuario);
+            this.fgUser.get('nombres').setValue(this.usuario.nombres);
+            this.fgUser.get('apellidos').setValue(this.usuario.apellidos);
+          }
+        }, error => {
+          this._swal.errorActualizar();
+          this.router.navigate(['/app']);
+        });
+      } 
+    });
   }
 
   actualizarInformacion(formulario: FormGroup){
-    // if(formulario.valid){
-    //   let data = formulario.value;
-    //   this._adminService.updateInformacionAdministrador(this.usuario, data).then(() => {
-    //     this._swal.informacionAdminActualizada();
-    //     this.usuario.nombres = data.nombres;
-    //     this.usuario.apellidos = data.apellidos;
-    //   }).catch( err => {
-    //     this._swal.errorActualizarAdmin();
-    //     this.fgAdmin.get('nombres').setValue(this.usuario.nombres);
-    //     this.fgAdmin.get('apellidos').setValue(this.usuario.apellidos);
-    //   });
-    //   this.btnIDisable = true;
-    // }
+    if(formulario.valid){
+      let data: UsuarioInterface = formulario.value;
+      this._usuarioService.updateUsuario(this.usuario, data).then(() => {
+        this._swal.actualizadoCorrecto("Información actualizada.");
+        this.usuario.nombres = data.nombres;
+        this.usuario.apellidos = data.apellidos;
+      }).catch( err => {
+        this._swal.errorActualizarAdmin();
+        this.fgUser.get('nombres').setValue(this.usuario.nombres);
+        this.fgUser.get('apellidos').setValue(this.usuario.apellidos);
+      });
+      this.btnActualizar = false;
+    }
   }
 
 

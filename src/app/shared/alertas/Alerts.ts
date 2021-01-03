@@ -54,7 +54,7 @@ const NAME_EVIDENCIA_CORRECTA = "EVIDENCIA_CORRECTA";
 export const EVIDENCIA_CORRECTA = new Alert(NAME_EVIDENCIA_CORRECTA, "Evidencia de pago aprobada.", ListLinks.EVIDENCIA_PAGO.url, TipoAlert.CONFIRMACION, true);
 ALERTAS.set(NAME_EVIDENCIA_CORRECTA, EVIDENCIA_CORRECTA);
 
-export const ALERTAS_PAGOS = [EVIDENCIA_INVALIDA, EVIDENCIA_CORRECTA, NAME_INICIO_ETAPA_PAGOS];
+export const ALERTAS_PAGOS = [EVIDENCIA_INVALIDA, EVIDENCIA_CORRECTA, INICIO_ETAPA_PAGOS];
 
 
 /************************************************ EVALUACION ********************************************************************************************/
