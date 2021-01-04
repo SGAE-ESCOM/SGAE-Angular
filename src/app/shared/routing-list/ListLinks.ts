@@ -122,12 +122,18 @@ const GESTION_ADMON = new NavigationLink("Gestión Administradores", "/app/usuar
 const GESTION_ASPIRANTES = new NavigationLink("Gestión Aspirantes", "/app/usuarios/gestion-aspirantes", "people_outline", "Gestión de los aspirantes registrados");
 const REGISTRAR_ADMON = new NavigationLink("Registrar Nuevo Administrador", "/app/usuarios/gestion-admon/registrar", "check_box", "Formulario para registrar nuevos administradores");
 const EDITAR_ADMON = new NavigationLink("Editar Administrador", "/app/usuarios/gestion-admon/editar", "check_box", "Formulario para editar información de un administrador");
+const REVISAR_ASPIRANTES = new NavigationLink("Revisar Aspirantes", "/app/usuarios/gestion-aspirantes/revisar-aspirantes", "people_outline", "Revisa la informacion de los aspirantes registrados.")
+const ASIGNAR_ASPIRANTES = new NavigationLink("Asignar Aspirantes", "/app/usuarios/gestion-aspirantes/asignar-aspirantes", "check_box", "Asigna los aspirantes que hayan completado todas las etapas del sistema.")
 
 export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
 export const BC_GESTION_ADMON = new Breadcrumb(GESTION_ADMON, [HOME, USUARIOS]);
 export const BC_GESTION_ASPIRANTES = new Breadcrumb(GESTION_ASPIRANTES, [HOME, USUARIOS]);
 export const BC_REGISTRAR_ADMON = new Breadcrumb(REGISTRAR_ADMON, [HOME, USUARIOS, GESTION_ADMON]);
 export const BC_EDITAR_ADMON = new Breadcrumb(EDITAR_ADMON, [HOME, USUARIOS, GESTION_ADMON]);
+export const BC_REVISAR_ASPIRANTES = new Breadcrumb(REVISAR_ASPIRANTES, [HOME, USUARIOS, GESTION_ASPIRANTES]);
+export const BC_ASIGNAR_ASPIRANTES = new Breadcrumb(ASIGNAR_ASPIRANTES, [HOME, USUARIOS, GESTION_ASPIRANTES]);
+
+export const LINKS_GESTION_ASPIRANTES = [REVISAR_ASPIRANTES, ASIGNAR_ASPIRANTES];
 
 /************************************************ USUARIO ********************************************************************************************/
 export const CONFIGURAR_USUARIO = new NavigationLink("Configurar Usuario", "/app/usuario/configurar-usuario");

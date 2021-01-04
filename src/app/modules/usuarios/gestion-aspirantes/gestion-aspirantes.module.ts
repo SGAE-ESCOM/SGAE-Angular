@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsuariosRoutingModule } from './usuarios-routing.module';
 
-/* Components */
-import { MainUsuariosComponent } from './main-usuarios/main-usuarios.component';
+import { GestionAspirantesRoutingModule } from './gestion-aspirantes-routing.module';
+import { ModalVisualizarEstados, RevisarAspirantesComponent } from './revisar-aspirantes/revisar-aspirantes.component';
+import { UsuariosRoutingModule } from '../usuarios-routing.module';
 import { CardsModule } from '@shared/components/cards/cards.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '@modules/template/angular-material.module';
@@ -12,18 +12,18 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { GestionAdmonComponent, ModalVisualizarPermisos } from './components/gestion-admon/gestion-admon.component';
-import { RegistrarAdmonComponent } from './components/registrar-admon/registrar-admon.component';
-import { EditarAdmonComponent } from './components/editar-admon/editar-admon.component';
+import { MainGestionAspirantesComponent } from './main-gestion-aspirantes/main-gestion-aspirantes.component';
 
 
 @NgModule({
-  declarations: [MainUsuariosComponent, GestionAdmonComponent, RegistrarAdmonComponent, EditarAdmonComponent, ModalVisualizarPermisos],
+  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados],
   imports: [
+    CommonModule,
+    GestionAspirantesRoutingModule,
     CommonModule,
     UsuariosRoutingModule,
     CardsModule,
@@ -43,4 +43,4 @@ import { EditarAdmonComponent } from './components/editar-admon/editar-admon.com
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-MX' }]
 })
-export class UsuariosModule { }
+export class GestionAspirantesModule { }
