@@ -60,7 +60,7 @@ export class MainPreguntasComponent implements OnInit {
   }
 
   async getTemas() {
-    this._temas.get(this.seccion).then((querySnapshot) => {
+    return this._temas.get(this.seccion).then((querySnapshot) => {
       let temas = [];
       querySnapshot.forEach((doc) => {
         const pregunta = doc.data();
@@ -150,6 +150,7 @@ export class MainPreguntasComponent implements OnInit {
   }
 
   modalEliminarSeccion(seccion: Seccion) {
+    this.getTemas().then( res => { console.log( res); console.log(this.temas )})
     this._swal.confirmarEliminar(`¿Deseas eliminar seccion '${seccion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {

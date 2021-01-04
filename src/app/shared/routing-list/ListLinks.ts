@@ -167,5 +167,5 @@ export function getCardsByEtapas(rol: string, etapas: any) {
 const etapasJson = {
     'documentacion': DOCUMENTACION,
     'evaluacionConocimientos': EVALUACION,
-    'pagos': PAGOS
+    'pago': PAGOS
 }

@@ -13,7 +13,7 @@ export class PagosGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this._auth.getEtapas()['pagos'])
+    if (this._auth.getEtapas()['pago'])
       return true;
     return false;
   }
