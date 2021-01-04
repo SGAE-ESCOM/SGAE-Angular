@@ -77,28 +77,28 @@ export class MainPreguntasComponent implements OnInit {
       querySnapshot.forEach((doc) => {
         const pregunta = doc.data();
         pregunta.id = doc.id;
-        preguntas.push( pregunta );
+        preguntas.push(pregunta);
       });
       this.preguntas = preguntas;
       console.table(preguntas);
-    }).catch( err =>  { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
+    }).catch(err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
   }
 
   //DELETE
-  async eliminarTema(tema: Tema){
-    await this.getPreguntas(tema);
-    await this.eliminarPreguntas();
+  async eliminarTema(tema: Tema) {
+    //await this.getPreguntas(tema);
+    await this.eliminarPreguntas(tema);
     this._temas.delete(tema).then(() => {
       this._swal.eliminadoCorrecto('El tema se ha eliminado');
       this.getTemas();
     }).catch(err => this._toastr.error(err));
   }
 
-  async eliminarPreguntas(){
-    for (let i = 0; i < this.preguntas.length; i++) {
-      this._preguntas.delete(this.preguntas[i]).then(() => {
-      }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
-    }
+  async eliminarPreguntas(tema:Tema) {
+    this._preguntas.getAllPreguntas(tema).then( (preguntas:Pregunta[]) => {
+      this._preguntas.deleteAll(preguntas).then(() => {
+        }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
+    });
   }
   /************************************  ACCIONES  ************************************************/
   showSeccion(seccion: Seccion) {
@@ -150,14 +150,17 @@ export class MainPreguntasComponent implements OnInit {
   }
 
   modalEliminarSeccion(seccion: Seccion) {
-    this.getTemas().then( res => { console.log( res); console.log(this.temas )})
     this._swal.confirmarEliminar(`¿Deseas eliminar seccion '${seccion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
-          //const preguntas:Pregunta[] = this._preguntas.get();
-          this._secciones.delete(seccion).then(() => {
-            this._swal.eliminadoCorrecto('El seccion se ha eliminado');
-          }).catch(err => this._toastr.error(err));
+          this.seccion = seccion;
+          this.getTemas().then(res => {
+            this._temas.deleteAll(this.temas);
+          }).then(res => {
+            this._secciones.delete(seccion).then(() => {
+              this._swal.eliminadoCorrecto('La sección se ha eliminado');
+            }).catch(err => this._toastr.error(err));
+          });
         }
       });
   }
