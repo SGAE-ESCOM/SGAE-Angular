@@ -80,7 +80,6 @@ export class MainPreguntasComponent implements OnInit {
         preguntas.push(pregunta);
       });
       this.preguntas = preguntas;
-      console.table(preguntas);
     }).catch(err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
   }
 
