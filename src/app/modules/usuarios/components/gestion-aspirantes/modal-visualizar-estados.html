@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <h4 class="text-center" mat-dialog-title>Estados del aspirante: {{data.nombres}} {{data.apellidos}}  </h4>
+        <h4 class="text-center" mat-dialog-title>Estados del aspirante: <br>{{data.nombres}} {{data.apellidos}}  </h4>
         <hr>
         <div mat-dialog-content>
             <div class="row">
@@ -8,25 +8,35 @@
                     <div class="card no-border mat-elevation-z3">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 col-md-12 form-group">
-                                    <section class="example-section mt-3">
-                                        <p>Documentacion: {{data.estado.documentacion}} </p>
-                                    </section>
+                                <div class="col-12 col-md-8 form-group">
+                                    <p class="card-text">Documentacion:&nbsp;</p>
                                 </div>
-                                <div class="col-12 col-md-12 form-group">
-                                    <section class="example-section mt-3">
-                                        <p>Pagos: {{data.estado.pago}} </p>
-                                    </section>
+                                <div class="col-12 col-md-4 form-group">
+                                    <label>{{data.estado.documentacion | titlecase}}</label>
                                 </div>
-                                <div class="col-12 col-md-12 form-group">
-                                    <section class="example-section mt-3">
-                                        <p>Evaluacion: {{data.estado.evaluacionConocimientos}} </p>
-                                    </section>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-8 form-group">
+                                    <p class="card-text">Pagos:&nbsp;</p>
                                 </div>
-                                <div class="col-12 col-md-12 form-group">
-                                    <section class="example-section mt-3">
-                                        <p>Publicacion Resultados: {{data.estado.publicacionResultados}} </p>
-                                    </section>
+                                <div class="col-12 col-md-4 form-group">
+                                    <label>{{data.estado.pago | titlecase}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-8 form-group">
+                                    <p class="card-text">Evaluacion:&nbsp;</p>
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <label>{{data.estado.evaluacionConocimientos | titlecase}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-8 form-group">
+                                    <p class="card-text">Publicacion Resultados:&nbsp;</p>
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <label>{{data.estado.publicacionResultados | titlecase}}</label>
                                 </div>
                             </div>
                         </div>

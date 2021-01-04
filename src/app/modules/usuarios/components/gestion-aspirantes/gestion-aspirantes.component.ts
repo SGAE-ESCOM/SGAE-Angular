@@ -13,6 +13,7 @@ import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { filtrosEstadosDocumentacion, filtrosEstadosEvaluacion, filtrosEstadosPagos, filtrosEstadosResultados, filtrosEtapas } from '@models/utils/Filtros';
 
 @Component({
   selector: 'app-gestion-aspirantes',
@@ -25,15 +26,13 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns: string[] = ['nombres', 'apellidos', 'email', 'estadoDoc',  'estados', 'acciones'];
-
-  filtros: any[] = [
-    {nombre: 'Todos', valor: 'true'},
-    {nombre: 'Sin Estado', valor: 'Sin Estado'},
-    {nombre: 'Validada', valor: 'validada'},
-    {nombre: 'Invalida', valor: 'invalida'}
-  ];
-  fcFiltro = new FormControl(this.filtros[0].valor);
+  displayedColumns: string[] = ['nombres', 'apellidos', 'email',  'estados', 'acciones'];
+  fcFiltroEstados: FormControl = new FormControl();
+  filtrosEstados: any[] = [];
+  fcFiltroEtapas = new FormControl(filtrosEtapas[0].valor);
+  filtrosEtapas = filtrosEtapas;
+  colEstadoOn: boolean = false;
+  etapaSeleccionada: any;
 
   constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
       private _authServices: AuthService, private router: Router, public dialog: MatDialog) {
@@ -65,16 +64,28 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   }
 
   //Eventos
-  onChangeFiltroUsuario(filtro) {
+  onChangeFiltroEstado(filtro) {
+    let etapa = this.etapaSeleccionada.valor;
     this._usuarioService.getAspirantes().then((querySnapshot) => {
       let usuarios = [];
       querySnapshot.forEach((doc) => {
         let user = doc.data();
-        if(user.estado === undefined || user.estado.documentacion === undefined){
-          user['estado'] = {'documentacion' : 'Sin Estado'};
-        }
-        if(filtro === 'true' || user.estado.documentacion === filtro){
-          usuarios.push(user);
+        if(filtro === 'true') usuarios.push(user);
+        else {
+          switch(etapa){
+            case 'documentacion':
+              if(user.estado.documentacion === filtro) usuarios.push(user);
+              break;
+            case 'evaluacionConocimientos':
+              if(user.estado.evaluacionConocimientos === filtro) usuarios.push(user);
+              break;
+            case 'pago':
+              if(user.estado.pago === filtro) usuarios.push(user);
+              break;
+            case 'publicacionResultados':
+              if(user.estado.publicacionResultados === filtro) usuarios.push(user);
+              break;
+          }
         }
       });
       this.definirUsuarios(usuarios);
@@ -83,6 +94,37 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
       console.log(err);
     });
     this.updateTablaUsuarios();
+  }
+
+  onChangeFiltroEtapa(filtro) {
+    if (filtro == 'true'){
+      this.displayedColumns = ['nombres', 'apellidos', 'email',  'estados', 'acciones'];
+      this.colEstadoOn = false;
+      this.fcFiltroEstados = new FormControl();
+      this.filtrosEstados = [];
+    } else {
+      this.etapaSeleccionada = filtrosEtapas.find(etapa => etapa.valor == filtro);
+      this.displayedColumns = ['nombres', 'apellidos', 'email', 'colEstado',  'estados', 'acciones'];
+      this.colEstadoOn = true;
+
+      if(filtro == 'documentacion'){
+        this.fcFiltroEstados = new FormControl(filtrosEstadosDocumentacion[0].valor);
+        this.filtrosEstados = filtrosEstadosDocumentacion;
+      }
+      else if(filtro == 'evaluacionConocimientos'){
+        this.fcFiltroEstados = new FormControl(filtrosEstadosEvaluacion[0].valor);
+        this.filtrosEstados = filtrosEstadosEvaluacion;
+      }
+      else if(filtro == 'pago'){
+        this.fcFiltroEstados = new FormControl(filtrosEstadosPagos[0].valor);
+        this.filtrosEstados = filtrosEstadosPagos;
+      }
+      else if(filtro == 'publicacionResultados'){
+        this.fcFiltroEstados = new FormControl(filtrosEstadosResultados[0].valor);
+        this.filtrosEstados = filtrosEstadosResultados;
+      }
+      this.onChangeFiltroEstado('true');
+    }
   }
 
   private definirUsuarios(usuarios: any[]): void{
@@ -104,7 +146,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
       if (result.value) {
         this._usuarioService.deleteAspirante(row).then(() => {
           this._swal.aspiranteEliminadoCorrectamente();
-          this.onChangeFiltroUsuario(this.fcFiltro.value);
+          // this.onChangeFiltroEstado(this.fcFiltro.value);
         }).catch(err => this._toast.error(err));
       }
     });
@@ -112,7 +154,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
 
   visualizarEstados(row){
     const dialogRef = this.dialog.open(ModalVisualizarEstados, {
-      width: '500px',
+      width: '400px',
       data: row
     });
     dialogRef.afterClosed().subscribe(result => {});
@@ -140,17 +182,6 @@ export class ModalVisualizarEstados {
   constructor(
     public dialogRef: MatDialogRef<ModalVisualizarEstados>, public sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.configurarDialog();
-  }
-
-  configurarDialog(){
-    // let permisos = this.data.permisos;
-    // this.gusuarios = GESTION_USUARIOS & permisos ? true : false;
-    // this.getapas = GESTION_ETAPAS & permisos ? true : false;
-    // this.gpagos = GESTION_PAGOS & permisos ? true : false;
-    // this.gconvocatoria = GESTION_CONV & permisos ? true : false;
-    // this.gevaluacion = GESTION_EVAL & permisos ? true : false;
-    // this.gdocumentacion = GESTION_DOC & permisos ? true : false;
   }
 
   onNoClick(): void {
