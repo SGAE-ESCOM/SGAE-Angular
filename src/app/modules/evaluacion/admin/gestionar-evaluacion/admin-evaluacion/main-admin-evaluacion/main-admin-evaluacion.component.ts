@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { Evaluacion } from '@models/evaluacion/evaluacion';
@@ -50,7 +49,6 @@ export class MainAdminEvaluacionComponent implements OnInit {
       this._temas.getAll().subscribe( temas => {
         this.temas = temas;
         this.temasAgrupados = groupByOnly( this.temas, 'id' );
-        console.log(this.temasAgrupados)
         //this.valores[1].push( this.temasAgrupados['ZMZG3v5adGZw7gGoIhzO'][1] )
       } );
     });

@@ -1,10 +1,11 @@
 <div class="contrainer">
     <div class="row">
         <div class="col-12 text-center">
-            <h1 mat-dialog-title [ngSwitch]="opc">
-                <div *ngSwitchCase="'agregar'"> Agregar Evaluación </div>
-                <div *ngSwitchCase="'actualizar'"> Editar Evaluación </div>
-            </h1>
+            <div mat-dialog-title [ngSwitch]="opc">
+                <h3 *ngSwitchCase="'agregar'"> Agregar Evaluación </h3>
+                <h3 *ngSwitchCase="'actualizar'"> Editar Evaluación </h3>
+            </div>
+            <hr>
         </div>
         <div class="col-12">
             <div mat-dialog-content>

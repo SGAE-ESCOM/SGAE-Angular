@@ -35,25 +35,19 @@ export class AuthService {
   }
 
   registrarUsuario( usuario: UsuarioInterface ) {
-    return new Promise((resolve, reject) => {
-      this.afsAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
+    return this.afsAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
         .then(userData => {
-          resolve(userData),
-            this.updateInformacionUsuario(userData.user, usuario)
-        }).catch(err => console.log(reject(err)));
-    });
+          return this.updateInformacionUsuario(userData.user, usuario);
+        }).catch(err => console.error(err));
   }
 
   //Se creo una segunda conexion para que no se cambiara la sesion al crear un nuevo usuario
   registrarAdministrador( usuario: UsuarioInterface ) {
-    return new Promise((resolve, reject) => {
-      this.adminRegistryApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
+    return this.adminRegistryApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
         .then(userData => {
-          resolve(userData),
             this.updateInformacionAdministrador(userData.user, usuario);
             this.adminRegistryApp.auth().signOut();
-        }).catch(err => console.log(reject(err)));
-    });
+        }).catch(err => console.error(err));
   }
   
   loginEmailUser(email: string, pass: string) {

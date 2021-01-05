@@ -48,7 +48,7 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
   /***************************** REST ******************************/
   save(form: FormGroup) {
     let evaluacion: Evaluacion = form.value;
-    //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
+    evaluacion.secciones = Object.keys(evaluacion.temas.reduce( (prev, temaCurrent) => { prev[temaCurrent.idSeccion]; return prev }, {} ));
     if (form.valid) {
       this._evaluaciones.save(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_AGREGADO);
@@ -65,7 +65,7 @@ export class FormAdminEvaluacionComponent implements OnInit, OnChanges {
     if (form.valid) {
       let evaluacion: Evaluacion = form.value;
       evaluacion.id = this.evaluacion.id;
-      //evaluacion.temas = evaluacion.temas.map(tema => { return { id: tema.id } })
+      evaluacion.secciones = Object.keys(evaluacion.temas.reduce( (prev, temaCurrent) => { prev[temaCurrent.idSeccion] = ''; return prev }, {} ));
       this._evaluaciones.update(evaluacion).then(caso => {
         this._toastr.success(MSJ_OK_EDITADO);
         this.accion.emit(true);

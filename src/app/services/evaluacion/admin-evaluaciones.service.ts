@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection, CollectionReference } fro
 import { Evaluacion } from '@models/evaluacion/evaluacion';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
+import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -23,10 +24,6 @@ export class AdminEvaluacionesService {
     return this.evaluacionesCollection.add(evaluacion);
   }
 
-  get(seccion: Seccion) {
-    return this.evaluacionesCollectionReference.where('idSeccion', '==', seccion.id).get();
-  }
-
   getAll(): Observable<Evaluacion[]> {
     return this.evaluacionesCollection
       .snapshotChanges()
@@ -39,6 +36,18 @@ export class AdminEvaluacionesService {
           })
         )
       );
+  }
+
+  findAllInEvaluacion(seccion: Seccion){
+    return this.evaluacionesCollectionReference.where('secciones', 'array-contains', seccion.id).get().then((querySnapshot) => {
+      let preguntas = [];
+      querySnapshot.forEach((doc) => {
+        const pregunta = doc.data();
+        pregunta.id = doc.id;
+        preguntas.push(pregunta);
+      });
+      return preguntas;
+    }).catch(err => { console.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
   }
 
   update(evaluacion: Evaluacion) {

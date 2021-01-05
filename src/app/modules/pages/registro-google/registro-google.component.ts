@@ -23,6 +23,7 @@ export class RegistroGoogleComponent implements OnInit {
     public afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router,
     private _authService: AuthService, private fb: FormBuilder, 
     private _toas: ToastrService) {
+      console.log("INTENTE XD")
       this.route.queryParams.subscribe( params => {
         try{
           this.usuarioActual = JSON.parse(params['usuario']);

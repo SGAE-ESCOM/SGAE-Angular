@@ -49,6 +49,16 @@ export class SidenavComponent implements OnInit {
   getUsuarioActual() {
     this._authService.isAuth().subscribe(auth => {
       if (auth) {
+        /* this.usuario = this._authService.getUsuarioC();
+        this.isLoggedIn = true;  
+        if(typeof this.usuario.alertas !== 'undefined') 
+          this.alertas = getAlertas(this.usuario.alertas);
+
+        if(this.usuario.rol === 'root' || this.usuario.rol === 'aspirante' )
+          this.navigationLinks = getCardsByEtapas(this.usuario.rol, this._authService.getEtapas() );
+        else if(this.usuario.rol === 'admin')
+          this.navigationLinks = getNavigationLinksAdmin(this.usuario.permisos); */
+
         this._authService.findUsuario(auth.uid).subscribe((usaurio: UsuarioInterface) => {
           if (usaurio) {
             this._authService.setUsuarioC(usaurio);
@@ -62,12 +72,6 @@ export class SidenavComponent implements OnInit {
               this.navigationLinks = getCardsByEtapas(usaurio.rol, this._authService.getEtapas() );
             else if(usaurio.rol === 'admin')
               this.navigationLinks = getNavigationLinksAdmin(usaurio.permisos);
-          } else {
-            const infoUsuario = {
-              uid: auth.uid,
-              email: auth.email
-            }
-            this.router.navigate(['/registro-goolge'], { queryParams: { usuario: JSON.stringify(infoUsuario) } });
           }
         }, error => { });
       } else {

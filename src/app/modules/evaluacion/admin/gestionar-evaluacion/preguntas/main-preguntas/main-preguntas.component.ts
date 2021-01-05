@@ -6,6 +6,7 @@ import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
 import { Tema } from '@models/evaluacion/evaluacion/tema';
 import { Tabla } from '@models/utils/Tabla';
+import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
 import { PreguntasService } from '@services/evaluacion/preguntas.service';
 import { SeccionesService } from '@services/evaluacion/secciones.service';
 import { TemasService } from '@services/evaluacion/temas.service';
@@ -44,6 +45,7 @@ export class MainPreguntasComponent implements OnInit {
   MJS_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION = MSJ_ERROR_REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private _swal: SweetalertService, private _toastr: ToastrService,
+    private _evaluaciones: AdminEvaluacionesService,
     private _temas: TemasService, private _secciones: SeccionesService, private _preguntas: PreguntasService) {
     BreadcrumbComponent.update(BC_PREGUNTAS);
   }
@@ -94,10 +96,10 @@ export class MainPreguntasComponent implements OnInit {
     }).catch(err => this._toastr.error(err));
   }
 
-  async eliminarPreguntas(tema:Tema) {
-    this._preguntas.getAllPreguntas(tema).then( (preguntas:Pregunta[]) => {
+  async eliminarPreguntas(tema: Tema) {
+    this._preguntas.getAllPreguntas(tema).then((preguntas: Pregunta[]) => {
       this._preguntas.deleteAll(preguntas).then(() => {
-        }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
+      }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
     });
   }
   /************************************  ACCIONES  ************************************************/
@@ -153,14 +155,21 @@ export class MainPreguntasComponent implements OnInit {
     this._swal.confirmarEliminar(`¿Deseas eliminar seccion '${seccion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
-          this.seccion = seccion;
-          this.getTemas().then(res => {
-            this._temas.deleteAll(this.temas);
-          }).then(res => {
-            this._secciones.delete(seccion).then(() => {
-              this._swal.eliminadoCorrecto('La sección se ha eliminado');
-            }).catch(err => this._toastr.error(err));
-          });
+          this._evaluaciones.findAllInEvaluacion(seccion).then((evaluaciones: any) => {
+            //Se valida que no hay evaluaciones que dependen de esta seccion
+            if (evaluaciones.length) {
+              this._swal.confirmarEliminar('Existen evaluaciones que dependen de esta sección','Si eliminas la seccion será borrado también de las evaluaciones en que las definiste')
+            } else {
+              this.seccion = seccion;
+              this.getTemas().then(res => {
+                this._temas.deleteAll(this.temas);
+              }).then(res => {
+                this._secciones.delete(seccion).then(() => {
+                  this._swal.eliminadoCorrecto('La sección se ha eliminado');
+                }).catch(err => this._toastr.error(err));
+              });
+            }
+          })
         }
       });
   }

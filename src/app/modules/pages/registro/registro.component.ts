@@ -51,8 +51,10 @@ export class RegistroComponent implements OnInit {
 
   onRegistrar( usuario ){
     this._authService.registrarUsuario( usuario )
-    .then( res => this.router.navigate(['/app'] )
-    ).catch(err => this.showError(err));
+    .then( res => {
+      console.log(res);
+      this.router.navigate(['/app']);
+    }).catch(err => this.showError(err));
   }
 
   getErrorMessage() {
