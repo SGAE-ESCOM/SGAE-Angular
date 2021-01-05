@@ -151,7 +151,7 @@ export class MainPreguntasComponent implements OnInit {
   }
 
   modalEliminarSeccion(seccion: Seccion) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar seccion '${seccion.nombre}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar la sección '${seccion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
           this._evaluaciones.findAllInEvaluacion(seccion).then((evaluaciones: any) => {
