@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
-import { BC_GESTION_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
+import { BC_GESTION_ASPIRANTES, BC_REVISAR_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
@@ -14,13 +14,14 @@ import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { filtrosEstadosDocumentacion, filtrosEstadosEvaluacion, filtrosEstadosPagos, filtrosEstadosResultados, filtrosEtapas } from '@models/utils/Filtros';
+import { EtapasService } from '@services/etapas/etapas.service';
 
 @Component({
-  selector: 'app-gestion-aspirantes',
-  templateUrl: './gestion-aspirantes.component.html',
-  styleUrls: ['./gestion-aspirantes.component.scss']
+  selector: 'app-revisar-aspirantes',
+  templateUrl: './revisar-aspirantes.component.html',
+  styleUrls: ['./revisar-aspirantes.component.scss']
 })
-export class GestionAspirantesComponent implements OnInit, AfterViewInit {
+export class RevisarAspirantesComponent implements OnInit, AfterViewInit {
 
   usuarios: MatTableDataSource<any> = new MatTableDataSource();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -35,11 +36,11 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   etapaSeleccionada: any;
 
   constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
-      private _authServices: AuthService, private router: Router, public dialog: MatDialog) {
+      private _authServices: AuthService, private router: Router, public dialog: MatDialog, private _etapas: EtapasService) {
     let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
     if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
-      BreadcrumbComponent.update(BC_GESTION_ASPIRANTES);
+      BreadcrumbComponent.update(BC_REVISAR_ASPIRANTES);
     }
   }
 
@@ -97,6 +98,8 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
   }
 
   onChangeFiltroEtapa(filtro) {
+    console.log(this._authServices.getEtapas()['pago']);
+
     if (filtro == 'true'){
       this.displayedColumns = ['nombres', 'apellidos', 'email',  'estados', 'acciones'];
       this.colEstadoOn = false;
@@ -123,8 +126,8 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
         this.fcFiltroEstados = new FormControl(filtrosEstadosResultados[0].valor);
         this.filtrosEstados = filtrosEstadosResultados;
       }
-      this.onChangeFiltroEstado('true');
     }
+    this.onChangeFiltroEstado('true');
   }
 
   private definirUsuarios(usuarios: any[]): void{
@@ -146,7 +149,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
       if (result.value) {
         this._usuarioService.deleteAspirante(row).then(() => {
           this._swal.aspiranteEliminadoCorrectamente();
-          // this.onChangeFiltroEstado(this.fcFiltro.value);
+          this.onChangeFiltroEstado('true');
         }).catch(err => this._toast.error(err));
       }
     });
@@ -175,7 +178,7 @@ export class GestionAspirantesComponent implements OnInit, AfterViewInit {
 @Component({
   selector: 'modal-visualizar-estados',
   templateUrl: './modal-visualizar-estados.html',
-  styleUrls: ['./gestion-aspirantes.component.scss']
+  styleUrls: ['./revisar-aspirantes.component.scss']
 })
 export class ModalVisualizarEstados {
 

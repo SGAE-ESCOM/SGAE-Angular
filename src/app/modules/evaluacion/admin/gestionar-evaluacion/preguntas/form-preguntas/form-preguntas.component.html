@@ -5,6 +5,7 @@
                 <div *ngSwitchCase="'agregar'"> Agregar Pregunta </div>
                 <div *ngSwitchCase="'actualizar'"> Editar Pregunta </div>
             </h1>
+            <hr>
         </div>
         <div class="col-12">
             <div mat-dialog-content>
@@ -25,7 +26,7 @@
                             <mat-icon matSuffix>playlist_add_check </mat-icon>
                         </mat-form-field>
                     </div>
-                    <div class="col-12 pb-5" *ngIf="isMain">
+                    <div class="col-12" *ngIf="isMain">
                         <div class="row">
                             <div class="col-sm-6 col-md-5">
                                 <mat-form-field>
@@ -43,6 +44,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 py-3"><hr class="blue"></div>
+                    <!-- OPCIONES -->
+                    <div class="col-12" *ngIf="isMain">
+                        <b>Opciones:</b>
+                        <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
+                    </div>
+                    <div class="col-12">
+                        <app-lista-opciones formControlName="opciones" (isMain)="isMainActivated($event)"></app-lista-opciones>
+                    </div>
+                    <div class="col-12 py-3"><hr class="blue"></div>
+                    <!-- RESPUESTA -->
                     <div class="col-12 pb-4" *ngIf="isMain">
                         <b>Respuesta:</b>
                         <p>Selecciona el número de la opción que sera la respuesta. Antes debes de ingresar opciones</p>
@@ -60,14 +72,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12" *ngIf="isMain">
-                        <b>Opciones:</b>
-                        <p>Agrega la opciones para esta pregunta. Ingresa un enunciado y si es necesario una imagen, después presiona 'Agregar a lista'</p>
-                    </div>
-                    <div class="col-12">
-                        <app-lista-opciones formControlName="opciones" (isMain)="isMainActivated($event)"></app-lista-opciones>
-                    </div>
-                    
                 </form>
             </div>
         </div>

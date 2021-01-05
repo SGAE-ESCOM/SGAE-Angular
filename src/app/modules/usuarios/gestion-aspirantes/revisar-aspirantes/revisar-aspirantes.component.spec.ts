@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GestionAspirantesComponent } from './gestion-aspirantes.component';
+import { GestionAspirantesComponent } from './revisar-aspirantes.component';
 
 describe('GestionAspirantesComponent', () => {
   let component: GestionAspirantesComponent;
