@@ -8,7 +8,8 @@ import { Alert } from '@models/utils/Alert';
 import { AuthService } from '@services/auth.service';
 import { EvidenciasPagosService } from '@services/pagos/evidencias-pagos.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
-import { BC_EVIDENCIA_PAGO, EVIDENCIA_PAGO } from '@shared/routing-list/ListLinks';
+import { sinAcceso } from '@shared/admin-permissions/permissions';
+import { BC_EVIDENCIA_PAGO, BC_PAGOS, EVIDENCIA_PAGO } from '@shared/routing-list/ListLinks';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -24,10 +25,14 @@ export class EvidenciaPagoComponent implements OnInit {
   public comentarios: string;
 
   constructor(private _toastr: ToastrService, private _evidenciasPagos: EvidenciasPagosService, private _usuarioService: UsuarioService,
-      private _authService: AuthService) { 
+      private _authService: AuthService, private router: Router) { 
     /***************** REVISAR ACCESO SOLO ASPIRANTES *******************/
 
     this.usuario = this._authService.getUsuarioC();
+    //Comprobar Permisos
+    BreadcrumbComponent.update(BC_PAGOS);
+    if(this.usuario.rol != 'aspirante') sinAcceso(router);
+
     if(typeof this.usuario.estado !== 'undefined' && typeof this.usuario.estado.pago !== 'undefined')
       this.estadoPago = this.usuario.estado.pago;
     else

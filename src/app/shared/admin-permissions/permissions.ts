@@ -1,4 +1,5 @@
 //PERMISOS ADMINISTRADOR
+import { NavigationLink } from '@models/template/NavigationLink';
 import { HOME, DOCUMENTACION, EVALUACION, PAGOS, ETAPAS, USUARIOS, CONVOCATORIA } from '@routing/ListLinks';
 
 export const GESTION_USUARIOS: number = 1;   //000001
@@ -25,7 +26,7 @@ export function comprobarPermisos(user, permiso, router) {
         case 'admin':
             if ((user.permisos & permiso) > 0)
                 return true;
-            router.navigate(['  ']);
+            router.navigate(['/app']);
             return false;
         case 'aspirante':
             router.navigate(['/app']);
@@ -51,7 +52,31 @@ export function getNavigationLinksAdmin(permisos) {
     if ((permisos & GESTION_EVAL) > 0) navigationLinks.push(EVALUACION);
     if ((permisos & GESTION_PAGOS) > 0) navigationLinks.push(PAGOS);
     if ((permisos & GESTION_ETAPAS) > 0) navigationLinks.push(ETAPAS);
-    if ((permisos & GESTION_CONV) > 0) navigationLinks.push(CONVOCATORIA);
+    //if ((permisos & GESTION_CONV) > 0) navigationLinks.push(CONVOCATORIA);
     if ((permisos & GESTION_USUARIOS) > 0) navigationLinks.push(USUARIOS);
     return navigationLinks;
+}
+
+export function filtrarLinksPorPermisos(links: NavigationLink[], permisos: number){
+    let linksAux = [];
+    links.forEach(link => {
+        switch(link.name){
+            case DOCUMENTACION.name:
+                if ((permisos & GESTION_DOC) > 0) linksAux.push(DOCUMENTACION);
+                break;
+            case EVALUACION.name:
+                if ((permisos & GESTION_EVAL) > 0) linksAux.push(EVALUACION);
+                break;
+            case PAGOS.name:
+                if ((permisos & GESTION_PAGOS) > 0) linksAux.push(PAGOS);
+                break;
+            case ETAPAS.name:
+                if ((permisos & GESTION_ETAPAS) > 0) linksAux.push(ETAPAS);
+                break;
+            case USUARIOS.name:
+                if ((permisos & GESTION_USUARIOS) > 0) linksAux.push(USUARIOS);
+                break;
+        }
+    });
+    return linksAux;
 }

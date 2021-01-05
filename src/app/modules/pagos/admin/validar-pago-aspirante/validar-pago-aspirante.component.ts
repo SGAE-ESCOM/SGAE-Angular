@@ -10,7 +10,8 @@ import { AuthService } from '@services/auth.service';
 import { EvidenciasPagosService } from '@services/pagos/evidencias-pagos.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
-import { BC_VALIDAR_PAGO_ASPIRANTE } from '@shared/routing-list/ListLinks';
+import { comprobarPermisos, GESTION_PAGOS, sinAcceso } from '@shared/admin-permissions/permissions';
+import { BC_PAGOS, BC_VALIDAR_PAGO_ASPIRANTE } from '@shared/routing-list/ListLinks';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -29,9 +30,14 @@ export class ValidarPagoAspiranteComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private _evidenciasPagos: EvidenciasPagosService, private _personaService: UsuarioService, 
       private route: ActivatedRoute, private router: Router, private _toast: ToastrService, private _swal: SweetalertService, 
-      private _authServices: AuthService) { 
+      private _authServices: AuthService, private _router:Router) { 
     //REVISAR PERMISOS DE ADMINISTRADOR
-
+        
+    let usuario = this._authServices.getUsuarioC();
+    //Comprobar Permisos
+    BreadcrumbComponent.update(BC_PAGOS);
+    if(usuario.rol != 'root' && !comprobarPermisos(usuario, GESTION_PAGOS, _router)) sinAcceso(_router);
+    
     BreadcrumbComponent.update(BC_VALIDAR_PAGO_ASPIRANTE);
     const navigation = this.router.getCurrentNavigation();
     if( navigation.extras.state ){

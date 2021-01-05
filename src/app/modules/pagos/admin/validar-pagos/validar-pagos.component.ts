@@ -8,7 +8,8 @@ import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component
 import { EstadoPago } from '@models/cuentas-pagos/enums/estado-pago.enum';
 import { AuthService } from '@services/auth.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
-import { BC_VALIDAR_PAGOS } from '@shared/routing-list/ListLinks';
+import { comprobarPermisos, GESTION_PAGOS, sinAcceso } from '@shared/admin-permissions/permissions';
+import { BC_PAGOS, BC_VALIDAR_PAGOS } from '@shared/routing-list/ListLinks';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -35,7 +36,11 @@ export class ValidarPagosComponent  implements OnInit, AfterViewInit {
 
   constructor(private _router:Router, private _usuarioService: UsuarioService, private _toast:ToastrService, 
       private _authServices: AuthService) { 
-    
+    let usuario = this._authServices.getUsuarioC();
+    //Comprobar Permisos
+    BreadcrumbComponent.update(BC_PAGOS);
+    if(usuario.rol != 'root' && !comprobarPermisos(usuario, GESTION_PAGOS, _router)) sinAcceso(_router);
+  
     BreadcrumbComponent.update(BC_VALIDAR_PAGOS);
   }
 

@@ -6,10 +6,12 @@ import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component
 import { CuentaPagos } from '@models/cuentas-pagos/cuenta-pagos';
 import { GruposPagos } from '@models/cuentas-pagos/grupos-pagos';
 import { Grupo } from '@models/evaluacion/Grupo';
+import { AuthService } from '@services/auth.service';
 import { GruposService } from '@services/evaluacion/grupos.service';
 import { CuentasPagosService } from '@services/pagos/cuentas-pagos.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { BC_REVISAR_CUENTA } from '@shared/routing-list/ListLinks';
+import { comprobarPermisos, GESTION_PAGOS, sinAcceso } from '@shared/admin-permissions/permissions';
+import { BC_PAGOS, BC_REVISAR_CUENTA } from '@shared/routing-list/ListLinks';
 import { ALPHANUMERICO_CON_ESPACIOS, NUMEROS_SIN_ESPACIOS, REGEX_NUMERO_PRECIO } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 
@@ -30,9 +32,14 @@ export class RevisarCuentaComponent implements OnInit {
   editarCuenta: boolean = false;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private _cuentas: CuentasPagosService, private _grupos: GruposService, 
-      private _swal: SweetalertService, public dialog: MatDialog, private _toast: ToastrService, private router: Router) {
+      private _swal: SweetalertService, public dialog: MatDialog, private _toast: ToastrService, private router: Router, private _authServices: AuthService) {
     
-    /***************** REVISAR PERMISOS *******************/
+
+    let usuario = this._authServices.getUsuarioC();
+    //Comprobar Permisos
+    BreadcrumbComponent.update(BC_PAGOS);
+    if(usuario.rol != 'root' && !comprobarPermisos(usuario, GESTION_PAGOS, router)) sinAcceso(router);
+
     this.idCuenta = this.route.snapshot.paramMap.get("id");
     BreadcrumbComponent.update(BC_REVISAR_CUENTA);
   }

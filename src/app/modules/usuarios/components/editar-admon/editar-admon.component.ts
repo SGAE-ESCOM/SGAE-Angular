@@ -4,7 +4,7 @@ import { BC_EDITAR_ADMON, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { ToastrService } from 'ngx-toastr';
-import { GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, sinAcceso } from '@shared/admin-permissions/permissions';
+import { GESTION_USUARIOS, GESTION_ETAPAS, GESTION_PAGOS, GESTION_CONV, GESTION_EVAL, GESTION_DOC, sinAcceso, comprobarPermisos } from '@shared/admin-permissions/permissions';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TEXTO_CON_ESPACIOS } from '@shared/utils/validators/regex';
@@ -34,7 +34,8 @@ export class EditarAdmonComponent implements OnInit {
       private _swal: SweetalertService, private fb: FormBuilder, private _authServices: AuthService, private router: Router) {
     let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(usuario.rol != 'root') sinAcceso(router);
+    //Comprobar Permisos
+    if(usuario.rol != 'root' && !comprobarPermisos(usuario, GESTION_USUARIOS, router)) sinAcceso(router);
     BreadcrumbComponent.update(BC_EDITAR_ADMON);
     this.usuario = { id: this.route.snapshot.paramMap.get("id") };
   }

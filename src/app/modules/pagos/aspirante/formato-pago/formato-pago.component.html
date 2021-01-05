@@ -5,51 +5,69 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3 offset-3 op-pago">
-            <mat-form-field>
-                <mat-label>Opción de pago</mat-label>
-                <mat-select formControlName="tipo" name="tipoDato" id="tipoDato" (selectionChange)="onChangeCuenta($event.value)" required>
-                    <mat-option *ngFor="let cuenta of cuentaPagos"  [value]="cuenta">
-                        {{cuenta.banco | uppercase }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-6 offset-3 op-pago">
-            <div class="card no-border mat-elevation-z3">
-                <div class="card-header text-center">
-                    <h5 class="m-0">Información de la cuenta</h5>
+        <div *ngIf="sinCuentaPagos; else elseBlockAlert" class="col-12">
+            <div class="alert alert-warning" role="alert" [ngSwitch]="estadoPago">
+                <div *ngIf="grupoId==''; else elseBlockAlertContent" class="col-12 pt-2">
+                    <h4  class="alert-heading">Sin grupo inscrito</h4>
+                    <h4 class="alert-heading">Sin formato de pago asociado</h4>
+                    <p >Primero inscribete a un grupo para obtener tu formato de pago.</p>
                 </div>
-                <div *ngIf="cuentaSelec == null; else elseBlock" class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-md-12 text-center">
-                            <h6 class="m-0">Escoje una opción de pago</h6>
-                        </div>
-                    </div>
-                </div>
-                <ng-template #elseBlock>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-md-12 line">
-                                <span class="bold">Banco: </span>{{ cuentaSelec.banco }}
-                            </div>
-                            <div class="col-12 col-md-12 line">
-                                <span class="bold">Número de cuenta: </span>{{ cuentaSelec.noCuenta }}
-                            </div>
-                            <div class="col-12 col-md-12 line">
-                                <span class="bold">Cantidad de pago: </span>${{ cuentaSelec.cantidad }}
-                            </div>
-                            <div *ngFor="let datoAds of cuentaSelec.datosAds;"  class="col-12 col-md-12 line">
-                                <span class="bold">{{ datoAds.nombreCampo }}: </span>{{ datoAds.contenido }}
-                            </div>
-                        </div>
+                <ng-template #elseBlockAlertContent>
+                    <div class="col-12 pt-2">
+                        <h4 class="alert-heading">Sin formato de pago asociado</h4>
+                        <p>No existe un formato de pago asociado a tu grupo inscrito, favor de revisar mas tarde.</p>
                     </div>
                 </ng-template>
             </div>
+            <br>
         </div>
-        <div *ngIf="cuentaSelec" class="col-6 offset-3 text-right">
-            <button mat-raised-button color="info" name="btnIrAEvidenciaPago" [routerLink]="['/app/pagos/evidenciar-pago']" >Subir Evidencia Pago</button>
-        </div>
+        <ng-template #elseBlockAlert>
+            <div class="col-3 offset-3 op-pago">
+                <mat-form-field>
+                    <mat-label>Opción de pago</mat-label>
+                    <mat-select formControlName="tipo" name="tipoDato" id="tipoDato" (selectionChange)="onChangeCuenta($event.value)" required>
+                        <mat-option *ngFor="let cuenta of cuentaPagos"  [value]="cuenta">
+                            {{cuenta.banco | uppercase }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-6 offset-3 op-pago">
+                <div class="card no-border mat-elevation-z3">
+                    <div class="card-header text-center">
+                        <h5 class="m-0">Información de la cuenta</h5>
+                    </div>
+                    <div *ngIf="cuentaSelec == null; else elseBlock" class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 text-center">
+                                <h6 class="m-0">Escoje una opción de pago</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-12 line">
+                                    <span class="bold">Banco: </span>{{ cuentaSelec.banco }}
+                                </div>
+                                <div class="col-12 col-md-12 line">
+                                    <span class="bold">Número de cuenta: </span>{{ cuentaSelec.noCuenta }}
+                                </div>
+                                <div class="col-12 col-md-12 line">
+                                    <span class="bold">Cantidad de pago: </span>${{ cuentaSelec.cantidad }}
+                                </div>
+                                <div *ngFor="let datoAds of cuentaSelec.datosAds;"  class="col-12 col-md-12 line">
+                                    <span class="bold">{{ datoAds.nombreCampo }}: </span>{{ datoAds.contenido }}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div *ngIf="cuentaSelec" class="col-6 offset-3 text-right">
+                <button mat-raised-button color="info" name="btnIrAEvidenciaPago" [routerLink]="['/app/pagos/evidenciar-pago']" >Subir Evidencia Pago</button>
+            </div>
+        </ng-template>
     </div>
     <div class="row">
         <div class="col-12 text-right return">

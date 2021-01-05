@@ -8,7 +8,7 @@ import { ValidarPagoAspiranteComponent } from './validar-pago-aspirante/validar-
 
 const routes: Routes = [
   { path: 'gestionar-cuentas', component:  GestionarCuentasComponent },
-  { path: 'configurar-referencias', component: ConfigurarReferenciasComponent },
+  //{ path: 'configurar-referencias', component: ConfigurarReferenciasComponent },
   { path: 'validar-pagos', component: ValidarPagosComponent },
   { path: 'gestionar-cuentas/revisar-cuenta/:id', component: RevisarCuentaComponent},
   { path: 'validar-pagos/aspirante', component: ValidarPagoAspiranteComponent}

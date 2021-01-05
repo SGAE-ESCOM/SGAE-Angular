@@ -5,7 +5,7 @@
         </div>
         <ng-template #elseBlock>
             <div class="col-12">
-                <div class="alert " [ngClass]="{
+                <div class="alert" [ngClass]="{
                     'alert-info': estadoPago === estadosPagos.REVISION,
                     'alert-warning': estadoPago === estadosPagos.INVALIDA,
                     'alert-success': estadoPago === estadosPagos.VALIDADA  }" role="alert" [ngSwitch]="estadoPago">

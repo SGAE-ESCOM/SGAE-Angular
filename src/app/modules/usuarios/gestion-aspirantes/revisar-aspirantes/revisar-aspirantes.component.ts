@@ -8,7 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { comprobarPermisos, GESTION_USUARIOS } from '@shared/admin-permissions/permissions';
+import { comprobarPermisos, GESTION_USUARIOS, sinAcceso } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -39,25 +39,13 @@ export class RevisarAspirantesComponent implements OnInit, AfterViewInit {
       private _authServices: AuthService, private router: Router, public dialog: MatDialog, private _etapas: EtapasService) {
     let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
-    if(comprobarPermisos(usuario, GESTION_USUARIOS, router)){
-      BreadcrumbComponent.update(BC_REVISAR_ASPIRANTES);
-    }
+    //Comprobar Permisos
+    if(usuario.rol != 'root' && !comprobarPermisos(usuario, GESTION_USUARIOS, router)) sinAcceso(router);
+    BreadcrumbComponent.update(BC_REVISAR_ASPIRANTES);
   }
 
   ngOnInit(): void {
-    this._usuarioService.getAspirantes().then((querySnapshot) => {
-      let usuarios = [];
-      querySnapshot.forEach((doc) => {
-        let user = doc.data();
-        if(user.estado === undefined || user.estado.documentacion === undefined){
-          user['estado'] = {'documentacion' : 'Sin Estado'};
-        }
-        usuarios.push(user);
-      });
-      this.usuarios.data = usuarios;
-    }).catch( err =>  {this.mensajeError()
-      console.log(err);
-    });
+    this.onChangeFiltroEstado('true');
   }
 
   ngAfterViewInit(): void {
@@ -66,13 +54,13 @@ export class RevisarAspirantesComponent implements OnInit, AfterViewInit {
 
   //Eventos
   onChangeFiltroEstado(filtro) {
-    let etapa = this.etapaSeleccionada.valor;
     this._usuarioService.getAspirantes().then((querySnapshot) => {
       let usuarios = [];
       querySnapshot.forEach((doc) => {
         let user = doc.data();
-        if(filtro === 'true') usuarios.push(user);
+        if(filtro == 'true') usuarios.push(user);
         else {
+          let etapa = this.etapaSeleccionada.valor;
           switch(etapa){
             case 'documentacion':
               if(user.estado.documentacion === filtro) usuarios.push(user);
