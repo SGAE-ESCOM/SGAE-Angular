@@ -28,6 +28,7 @@ export class MainAprobacionComponent implements OnInit {
   aspirantes: UsuarioInterface[] = [];
 
   grupos: Grupo[] = [];
+  aplicacionAux: Aplicacion;
   aplicaciones: Aplicacion[] = [];
   aplicacionesDisponibles: any = {};
 
@@ -62,10 +63,38 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   aprobarTodos() {
-    this._swal.confirmarGenerico('¿Deseas aprobar a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar')
+    this._swal.confirmarGenerico('¿Deseas admitir a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then( accion => {
+      if(accion.value){
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Admitido').then( res => {
+          this.onChangeAplicacion(this.aplicacionAux);
+        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
+      }
+    });
   }
 
-  aprebarSoloAprobados(){
+  rechazarTodos() {
+    this._swal.confirmarGenerico('¿Deseas rechazar a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Rechazar').then( accion => {
+      if(accion.value){
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Rechazado').then( res => {
+          this.onChangeAplicacion(this.aplicacionAux);
+        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
+      }
+    });
+  }
+
+  admitirSoloAprobados(){
+    this._swal.confirmarGenerico('¿Deseas admitir sólo a los aprobados?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then( accion => {
+      if(accion.value){
+        const aprobados = this.aspirantes.filter( aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Aprobado');
+        const reprobados = this.aspirantes.filter( aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Reprobado');
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(aprobados, 'Admitido').then( res => {
+        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)}).then( s => {
+          this._usuarios.updateEstadoEvaluacionPorAplicacion(reprobados, 'Rechazado').then( res => {
+            this.onChangeAplicacion(this.aplicacionAux);
+          }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
+        });
+      }
+    });
   }
 
   /*********************************************** ACCIONES **************************************************/
@@ -81,6 +110,7 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   async onChangeAplicacion(aplicacion: Aplicacion) {
+    this.aplicacionAux = aplicacion;
     this.aspirantes = [];
     await this.getAspirantes(aplicacion, 'Aprobado');
     await this.getAspirantes(aplicacion, 'Reprobado');

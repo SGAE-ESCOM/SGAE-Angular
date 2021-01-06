@@ -23,4 +23,5 @@ export interface UsuarioInterface {
     grupo?: Grupo;
     permisos?: number;
     alertas?: Array<string>;
+    historialAplicacion?: string;
 }

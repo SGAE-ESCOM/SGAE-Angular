@@ -24,10 +24,13 @@
         </div>
         <div class="col-12 col-sm-12 col-md-5 d-flex flex-row form-group">
             <div class="mt-3">
-                <button mat-button color="success" (click)="aprebarSoloAprobados()">Aprobar a sólo a los aprobados</button>
+                <button mat-button color="success" (click)="admitirSoloAprobados()" [disabled]="aspirantes.length == 0">Admitir sólo a los aprobados<mat-icon>playlist_add_check</mat-icon></button>
             </div>
             <div class="mt-3">
-                <button mat-button color="info" (click)="aprobarTodos()">Aprobar a todos</button>
+                <button mat-button color="info" (click)="aprobarTodos()" [disabled]="aspirantes.length == 0">Admitir a todos <mat-icon>done</mat-icon></button>
+            </div>
+            <div class="mt-3">
+                <button mat-button color="danger" (click)="rechazarTodos()" [disabled]="aspirantes.length == 0">Rechazar a todos <mat-icon>close</mat-icon></button>
             </div>
         </div>
 <!--         <div class="col-12 col-sm-4 form-group">

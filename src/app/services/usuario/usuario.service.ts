@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, CollectionReference, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { AngularFirestore, CollectionReference, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { Grupo } from '@models/evaluacion/Grupo';
 import { EstadoPago } from '@models/cuentas-pagos/enums/estado-pago.enum';
@@ -14,49 +13,61 @@ import { Alert } from '@models/utils/Alert';
 })
 export class UsuarioService {
 
-  private usuariosCollection: CollectionReference;
+  private usuariosCollection: AngularFirestoreCollection<any>;
+  private usuariosCollectionReference: CollectionReference;
+  private batch: firebase.firestore.WriteBatch;
 
-  constructor(private afs: AngularFirestore) {
-    this.usuariosCollection = afs.firestore.collection('Usuarios');
+  constructor(private db: AngularFirestore) {
+    this.usuariosCollection = db.collection<UsuarioInterface>('Usuarios');
+    this.usuariosCollectionReference = db.firestore.collection('Usuarios');
   }
 
   /*********************************************** DOCUMENTACION **********************************************/
   getAspirantesParaRevision(): Promise<any> {
-    return this.usuariosCollection.where('estado.documentacion', '==', 'revision').get();
+    return this.usuariosCollectionReference.where('estado.documentacion', '==', 'revision').get();
   }
 
   getAspirantesEnCorreccion(): Promise<any> {
-    return this.usuariosCollection.where('estado.documentacion', '==', 'correccion').get();
+    return this.usuariosCollectionReference.where('estado.documentacion', '==', 'correccion').get();
   }
 
   getAspirantesValidados(): Promise<any> {
-    return this.usuariosCollection.where('estado.documentacion', '==', 'validada').get();
+    return this.usuariosCollectionReference.where('estado.documentacion', '==', 'validada').get();
   }
 
   updateEstadoDocumentacion(usuario: UsuarioInterface, estado: string) {
-    this.usuariosCollection.doc(usuario.id).update({ "estado.documentacion": estado });
+    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.documentacion": estado });
   }
 
   /*********************************************** EVALUACION **********************************************/
   geAspirantesPorAplicacion(idAplicacion: string, resultado: string): Promise<any> {
     let idHistorial = 'historialAplicacion.' + idAplicacion + ".resultado"
-    return this.usuariosCollection.where(idHistorial, '==', resultado).get();
+    return this.usuariosCollectionReference.where(idHistorial, '==', resultado).get();
   }
 
   addEvaluacion(idUsuario: string, idAplicacion: string, resultado: Resultado) {
     let idHistorial = 'historialAplicacion.' + idAplicacion;
     let historialAplicacion = {};
     historialAplicacion[idHistorial] = { resultado: resultado.resultado, aciertos: resultado.aciertosTotales }
-    return this.usuariosCollection.doc(idUsuario).update(historialAplicacion);
+    return this.usuariosCollectionReference.doc(idUsuario).update(historialAplicacion);
   }
 
   updateEstadoEvaluacion(usuario: UsuarioInterface, estado: string) {
-    this.usuariosCollection.doc(usuario.id).update({ "estado.evaluacion": estado });
+    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.evaluacionConocimientos": estado });
+  }
+
+  updateEstadoEvaluacionPorAplicacion(usuarios: UsuarioInterface[], estado: string){
+    this.batch = this.db.firestore.batch();
+    usuarios.forEach((usuario, index) => {
+      const requisitoRef: any = this.usuariosCollection.doc<any>(usuario.id).ref;
+      this.batch.update(requisitoRef, { 'estado.evaluacionConocimientos': estado });
+    });
+    return this.batch.commit();
   }
 
   /*********************************************** PAGOS *****************************************************/
   getAspirantesConEstadoPago(estado: string) {
-    return this.usuariosCollection.where('estado.pago', '==', estado).get();
+    return this.usuariosCollectionReference.where('estado.pago', '==', estado).get();
   }
 
   updateEstadoPago(usuario: UsuarioInterface, estado: string) {
@@ -66,25 +77,25 @@ export class UsuarioService {
     if (estado == EstadoPago.INVALIDA) usuario.alertas.push(Alerts.EVIDENCIA_INVALIDA.nombre);
     else if (estado == EstadoPago.VALIDADA) usuario.alertas.push(Alerts.EVIDENCIA_CORRECTA.nombre);
 
-    this.usuariosCollection.doc(usuario.id).update({ "estado.pago": estado, "alertas": usuario.alertas });
+    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.pago": estado, "alertas": usuario.alertas });
   }
 
   /*********************************************** USUARIOS *****************************************************/
   
   updateUsuario(usuario: UsuarioInterface, userData: UsuarioInterface){
-    return this.usuariosCollection.doc(usuario.id).update({ "nombres" : userData.nombres, "apellidos": userData.apellidos });
+    return this.usuariosCollectionReference.doc(usuario.id).update({ "nombres" : userData.nombres, "apellidos": userData.apellidos });
   }
   
   gasignarGrupo(usuario: UsuarioInterface, grupo: Grupo) {
-    return this.usuariosCollection.doc(usuario.id).update({ grupo });
+    return this.usuariosCollectionReference.doc(usuario.id).update({ grupo });
   }
 
   getAspirantes(): Promise<any> {
-    return this.usuariosCollection.where('rol', '==', 'aspirante').get();
+    return this.usuariosCollectionReference.where('rol', '==', 'aspirante').get();
   }
 
   deleteAspirante(user: UsuarioInterface) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`DeletedUsers/${user.id}`);
+    const userRef: AngularFirestoreDocument<any> = this.db.doc(`DeletedUsers/${user.id}`);
     const data: UsuarioInterface = {
       id: user.id,
       nombres: user.nombres,
@@ -92,14 +103,14 @@ export class UsuarioService {
       email: user.email,
       rol: 'aspirante',
     }
-    return userRef.set(data, { merge: true }).then(() => this.usuariosCollection.doc(user.id).delete());
+    return userRef.set(data, { merge: true }).then(() => this.usuariosCollectionReference.doc(user.id).delete());
   }
 
   removerAlerta(usuario: UsuarioInterface, alerta: Alert){
     if(typeof usuario.alertas !== 'undefined'){
       let index = usuario.alertas.indexOf(alerta.nombre, 0);
       if (index > -1) usuario.alertas.splice(index, 1);
-      this.usuariosCollection.doc(usuario.id).update({"alertas": usuario.alertas });
+      this.usuariosCollectionReference.doc(usuario.id).update({"alertas": usuario.alertas });
     }
     return usuario.alertas;
   }
