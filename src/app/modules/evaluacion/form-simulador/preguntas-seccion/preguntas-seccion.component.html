@@ -3,7 +3,7 @@
     <hr>
 </div>
 <div class="col-12">
-    <div class="row" *ngFor="let pregunta of preguntas; let i = index">
+    <div class="row" *ngFor="let pregunta of preguntas; let i = index; trackBy: trackByIdPregunta">
         <div class="col-12">
             <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
             <div *ngIf="pregunta.img" class="ml-3 img-fluid">

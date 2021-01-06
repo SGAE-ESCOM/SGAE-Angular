@@ -61,6 +61,24 @@ export class MainAprobacionComponent implements OnInit {
       this.definirUsuarios(usuarios, aplicacion.id);
     }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
   }
+  
+  cambiarEstadoAspirante(aspirante: UsuarioInterface){
+    if(aspirante.estado.evaluacionConocimientos !== 'invalida')
+    this._swal.confirmarGenerico(`¿Deseas cambiar el Estado de Evaluación de "${aspirante.nombres} ${aspirante.apellidos}" de "${aspirante.estado.evaluacionConocimientos}" a ${ this.estadoOpuesto(aspirante.estado.evaluacionConocimientos) }?`
+      , 'Podrás editar después el estado del aspirante', 'Cancelar', 'Cambiar').then( accion => {
+        if(accion.value){
+
+        }
+      });
+    else{
+      this._swal.confirmarGenerico(`¿Deseas admitir a "${aspirante.nombres} ${aspirante.apellidos}"?`
+      , 'Podrás editar después el estado del aspirante', 'Cancelar', 'Cambiar').then( accion => {
+        if(accion.value){
+
+        }
+      });
+    }
+  }
 
   aprobarTodos() {
     this._swal.confirmarGenerico('¿Deseas admitir a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then( accion => {
@@ -125,4 +143,9 @@ export class MainAprobacionComponent implements OnInit {
     }));
   }
 
+  private estadoOpuesto(estado:string): string{
+    if(estado === 'Admitido')
+      return 'Rechazado'
+    return 'Admitido';
+  }
 }

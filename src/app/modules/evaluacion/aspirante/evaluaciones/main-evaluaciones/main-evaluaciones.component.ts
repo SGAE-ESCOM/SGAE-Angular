@@ -48,7 +48,6 @@ export class MainEvaluacionesComponent implements OnInit {
           aplicaciones.push(aplicacion);
         });
         this.aplicaciones = aplicaciones;
-        console.log(this.aplicaciones);
         //OBETER TODAS LAS REALIZADAS POR EL ASPIRANTE
         this._resultados.getByUsuario(this.usuario).then(queryS => {
           let aplicacionesRealizadas = [];
@@ -83,7 +82,6 @@ export class MainEvaluacionesComponent implements OnInit {
 
   gotoAplicacion(aplicacion: Aplicacion, disponible: Boolean) {
     if(disponible){
-      console.log(aplicacion);
       this._swal.confirmarGenerico('¿Iniciar evaluación de ' + aplicacion.nombre + '?', 'Una vez inicies con la evaluación no podrás realizarla de nuevo.', 'Cancelar', 'Iniciar evaluación').then(accion => {
         if (accion.value) {
           this.router.navigate(['/app/evaluacion/evaluaciones/simulador'], { state: { aplicacion: JSON.stringify(aplicacion) } });

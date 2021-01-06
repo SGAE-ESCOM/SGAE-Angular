@@ -96,7 +96,7 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
     });
   }
 
-  /******************************************** HTTP *************************************/
+  /******************************************** UTILS *************************************/
   changeValue(opcion, i: number, j: number) {
     this.respuestas[i] = opcion.id;
     this.aciertos[i] = this.preguntas[i].respuesta == opcion.id ? 1 : 0;
@@ -109,4 +109,8 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
       return prev + current;
     }, 0);
   }
+
+  trackByIdPregunta(index: number, item: Pregunta) {
+    return item.id
+}
 }

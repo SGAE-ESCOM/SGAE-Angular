@@ -1,16 +1,5 @@
 <div class="container" @fadeInRight>
     <div class="row">
-        <!-- GRUPO -->
-        <!-- <div class="col-12 col-sm-4 form-group">
-            <mat-form-field appearance="outline">
-                <mat-label>Grupo</mat-label>
-                <mat-select name="SelectFiltro" [formControl]="grupo" (selectionChange)="onChangeGrupo($event.value)" required>
-                    <mat-option *ngFor="let grupo of grupos" [value]="grupo">
-                        {{ grupo.nombre }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div> -->
         <!-- APLICACION -->
         <div class="col-12 col-sm-12 col-md-4 form-group">
             <mat-form-field appearance="outline">
@@ -33,15 +22,11 @@
                 <button mat-button color="danger" (click)="rechazarTodos()" [disabled]="aspirantes.length == 0">Rechazar a todos <mat-icon>close</mat-icon></button>
             </div>
         </div>
-<!--         <div class="col-12 col-sm-4 form-group">
-            <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
-                <mat-icon>search</mat-icon>
-            </button>
-        </div> -->
     </div>
     <div class="row">
         <div class="col-12">
-            <app-tabla [columnas]="columnas" [datos]="aspirantes"></app-tabla>
+            <app-tabla [columnas]="columnas" [datos]="aspirantes" [isCustom]="true" [customIcon]="'cached'" [customColor]="'info'" [customDesc]="'Cambiar estado de evaluación'"
+                (custom)="cambiarEstadoAspirante($event)"></app-tabla>
         </div>
     </div>
 </div>

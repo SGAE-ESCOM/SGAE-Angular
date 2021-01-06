@@ -8,7 +8,7 @@
     </div>
 </div>
 <form [formGroup]="fgSimulador" *ngIf="evaluacion && secciones">
-    <div class="row pb-4" *ngFor="let seccion of secciones">
+    <div class="row pb-4" *ngFor="let seccion of secciones; trackBy: trackById">
         <app-preguntas-seccion [formControlName]="seccion[0]" [idSeccion]="seccion[0]" [temas]="seccion[1]"></app-preguntas-seccion>
     </div>
     <div class="row">

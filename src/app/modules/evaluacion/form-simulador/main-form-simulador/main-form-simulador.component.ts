@@ -35,7 +35,6 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   segundos: number = 59;
   interval;
 
-
   constructor(private fb: FormBuilder, private _toastr: ToastrService, private _swal: SweetalertService,
     private _auth: AuthService, private _usuarios:UsuarioService, private _resultados: ResultadosService) { }
 
@@ -47,7 +46,6 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     }
     if (changes.aplicacion && this.aplicacion != null) {
       this.startTimer();
-      console.log(this.aplicacion)
     }
   }
 
@@ -73,9 +71,6 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     }
     this._resultados.save(resultado).then(result => {
       this._usuarios.addEvaluacion(this._auth.getUsuarioC().id, this.aplicacion.id, resultado).then( accion => {
-        console.log("=================")
-        console.log(this._auth.getUsuarioC().id);
-        console.log(accion);
         this.finalizar.emit(true);
         this._toastr.success("Evaluación enviada. Revisa en publicación de resultados");
       });
@@ -98,7 +93,6 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
 
   async initForm() {
     this.fgSimulador = this.fb.group({});
-    console.log(this.secciones)
     this.secciones.forEach(([id, seccion]: any) => {
       this.fgSimulador.addControl(id, new FormControl(0));
     });
@@ -144,5 +138,9 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
       }
     //}, 10)
     },1000)
+  }
+
+  trackById(index: number, item: [string, any]) {
+    return item[0]
   }
 }
