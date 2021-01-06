@@ -61,14 +61,14 @@ export class CrearSimuladorComponent implements OnInit, OnChanges {
   }
 
   modalEliminarPregunta(pregunta: Pregunta) {
-    this._swal.confirmarEliminar('¿Deseas eliminar pregunta?', 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar('¿Deseas eliminar la pregunta?', 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
           this._preguntas.delete(pregunta).then(() => {
             this.getPreguntas();
             this.tema.total--;
             this._temas.update(this.tema).then( res => res );
-            this._swal.eliminadoCorrectamente();
+            this._swal.eliminadoCorrectamente('La pregunta se ha eliminado');
           }).catch(err => this._toast.error(MSJ_ERROR_CONECTAR_SERVIDOR));
         }
       });

@@ -197,7 +197,7 @@ export class MainPreguntasComponent implements OnInit {
   }
 
   modalEliminarTema(tema: Tema) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar tema '${tema.nombre}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar el tema '${tema.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
           this.eliminarTema(tema);

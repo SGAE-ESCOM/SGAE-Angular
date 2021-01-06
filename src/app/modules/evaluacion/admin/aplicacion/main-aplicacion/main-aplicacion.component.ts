@@ -114,7 +114,7 @@ export class MainAplicacionComponent implements OnInit {
       .then((result) => {
         if (result.value) {
           this._aplicaciones.delete(aplicacion).then(() => {
-            this._swal.eliminadoCorrecto('El grupo se ha eliminado');
+            this._swal.eliminadoCorrecto('La aplicación se ha eliminado');
           }).catch(err => this._toastr.error(err));
         }
       });

@@ -128,10 +128,10 @@ export class SweetalertService {
     });
   }
   
-  eliminadoCorrectamente(){
+  eliminadoCorrectamente(msj?: string | 'El elemento ha sido eliminado.' ){
     this.swalFinalizar.fire({
       title: 'Eliminado',
-      text: 'El elemento ha sido eliminado.',
+      text: msj,
       icon: 'success'
     });
   }

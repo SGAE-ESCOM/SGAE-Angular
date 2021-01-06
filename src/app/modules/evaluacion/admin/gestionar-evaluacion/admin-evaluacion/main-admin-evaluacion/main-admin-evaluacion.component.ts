@@ -80,7 +80,7 @@ export class MainAdminEvaluacionComponent implements OnInit {
   }
 
   modalEliminar(evaluacion: Evaluacion) {
-    this._swal.confirmarEliminar(`¿Deseas eliminar evaluación '${evaluacion.nombre}'?`, 'No se podrá revertir esta acción')
+    this._swal.confirmarEliminar(`¿Deseas eliminar la evaluación '${evaluacion.nombre}'?`, 'No se podrá revertir esta acción')
       .then((result) => {
         if (result.value) {
           this._evaluaciones.delete(evaluacion).then(() => {
