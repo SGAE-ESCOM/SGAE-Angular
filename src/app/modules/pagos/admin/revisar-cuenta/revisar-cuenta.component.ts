@@ -172,7 +172,7 @@ export class RevisarCuentaComponent implements OnInit {
           this.cuenta.datosAds.splice(index, 1);
         }
         this._cuentas.updateDatosCuenta(this.cuenta).then(() => {
-          this._swal.informacionActualizada();
+          this._swal.eliminadoCorrecto('El campo se ha eliminado.');
           this.recargarCuenta();
         }).catch( err => {
           this._swal.errorActualizar();

@@ -18,7 +18,7 @@ export class MainPagosComponent implements OnInit {
     let usuario = this._authServices.getUsuarioC();
     //Comprobar Permisos
     BreadcrumbComponent.update(BC_PAGOS);
-    if(usuario.rol != 'root' && !comprobarPermisos(usuario, GESTION_PAGOS, router)) sinAcceso(router);
+    if(usuario.rol == 'admin' && !comprobarPermisos(usuario, GESTION_PAGOS, router)) sinAcceso(router);
     BreadcrumbComponent.update(BC_PAGOS);
     this.cards = LINKS_PAGOS[this._authServices.getUsuarioC().rol];
   }

@@ -4,6 +4,7 @@
             <mat-label>Nombre del campo </mat-label>
             <input formControlName="nombreCampo" matInput placeholder="" autocomplete="off">
             <mat-icon matSuffix>playlist_add_check</mat-icon>
+            <mat-error *ngIf="fgCampo.get('nombreCampo').invalid">{{getNombreErrorMessage()}}</mat-error>
           </mat-form-field>
     </div>
     <div class="col-12">
@@ -11,6 +12,7 @@
             <mat-label>Contenido del campo </mat-label>
             <input formControlName="contenidoCampo" matInput placeholder="" autocomplete="off">
             <mat-icon matSuffix></mat-icon>
+            <mat-error *ngIf="fgCampo.get('contenidoCampo').invalid">{{getContenidoErrorMessage()}}</mat-error>
           </mat-form-field>
     </div>
     <div class="col-12 text-right" [ngSwitch]="opc">

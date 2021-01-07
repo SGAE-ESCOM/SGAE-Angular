@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CuentaPagos } from '@models/cuentas-pagos/cuenta-pagos';
 import { CuentasPagosService } from '@services/pagos/cuentas-pagos.service';
+import { REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION } from '@shared/utils/validators/regex';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 
@@ -31,8 +32,8 @@ export class FormNuevoCampoComponent implements OnInit {
 
   initForm(): Promise<Boolean> {
     this.fgCampo = this.fb.group({
-      nombreCampo: ['', [Validators.required]],
-      contenidoCampo: ['', [Validators.required]]
+      nombreCampo: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]],
+      contenidoCampo: ['', [Validators.required, Validators.pattern(REGEX_ALPHANUMERICO_CON_ESPACIOS_Y_PUNTUACION)]]
     });
 
     if(this.opc == "actualizar"){
@@ -81,7 +82,7 @@ export class FormNuevoCampoComponent implements OnInit {
       });
 
       this._cuentas.updateDatosCuenta(this.cuenta).then(caso => {
-        this._toastr.success("Actualizado correctamente");
+        this._toastr.success("Se actualizó exitosamente.");
         this.accion.emit(true);
       }, err => {
         this._toastr.error("Ha ocurrido un error");
@@ -90,6 +91,18 @@ export class FormNuevoCampoComponent implements OnInit {
     } else {
         this._toastr.error("Llena todos los campos requeridos");
     }
+  }
+
+  getNombreErrorMessage(){
+    return this.fgCampo.get('nombreCampo').hasError('required') ? 'Este campo es requerido' :
+      this.fgCampo.get('nombreCampo').hasError('pattern') ? 'Nombre no valido' :
+        '';
+  }
+
+  getContenidoErrorMessage(){
+    return this.fgCampo.get('contenidoCampo').hasError('required') ? 'Este campo es requerido' :
+      this.fgCampo.get('contenidoCampo').hasError('pattern') ? 'Contenido no valido' :
+        '';
   }
 
 
