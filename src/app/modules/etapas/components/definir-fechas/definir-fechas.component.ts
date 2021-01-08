@@ -12,6 +12,7 @@ import { EtapasService } from '@services/etapas/etapas.service';
 import { Router } from '@angular/router';
 import { comprobarPermisos, GESTION_ETAPAS } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
+import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 
 @Component({
   selector: 'app-definir-fechas',
@@ -42,17 +43,23 @@ export class DefinirFechasComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._etapaService.getEstadosAspirante().then(estadosAspirante => {
+    this.init();
+  }
+
+  /******************************************** REST HTTP ***********************************************/
+  init(){
+    this._etapaService.getEtapas().then(estadosAspirante => {
       if (estadosAspirante.exists) {
+        //Se obtienen las etapas
         this.etapas = this.getEtapasSeleccionadas(estadosAspirante.data());
         this.etapas.unshift( ETAPAS[0], ETAPAS[1] );
-        this.llenarFormulario();
+        this.initForm();
         this._etapaService.getFechasEtapas().then( querySnapshot => {
           if (!querySnapshot.empty){
             querySnapshot.forEach( doc => this.llenarDatos(doc.id, doc.data()) );
             this.pintarFechas();
           }
-        }).catch(err =>  err);
+        }).catch(err =>  { this._toast.error(MSJ_ERROR_CONECTAR_SERVIDOR), console.error(err)});
       } else {
         this.existDefinirEtapas = false;
         this._toast.warning("Aún no se han definido las etapas que se usarán");
@@ -60,7 +67,6 @@ export class DefinirFechasComponent implements OnInit {
     });
   }
 
-  // HTTPS
   saveFechas() {
     if (this.fgEtapasFechas.valid) {
       if( this.menoresConvocatoria() ){
@@ -85,7 +91,7 @@ export class DefinirFechasComponent implements OnInit {
     }
   }
 
-  //Lógica del componente
+  /******************************************** ACCIONES ***********************************************/
   pintarFechas() {
     if (this.fgEtapasFechas.valid) {
       this.dataSource = Object.entries(this.fgEtapasFechas.value).map(([atributo, valor]: any, index) => {
@@ -102,7 +108,8 @@ export class DefinirFechasComponent implements OnInit {
     }
   }
 
-  private llenarFormulario() {
+  /******************************************** UTILS ***********************************************/
+  private initForm() {
     this.fgEtapasFechas = new FormGroup({});
     this.etapas.forEach((etapa, index) => this.fgEtapasFechas.addControl(etapa.valor, this._fb.group({
       nombre: [etapa.nombre],
@@ -125,13 +132,20 @@ export class DefinirFechasComponent implements OnInit {
     return estatus;
   }
 
+  /**
+   * Convierte el Object de etapas en ETPAS
+   * @param etapas
+   */
   private getEtapasSeleccionadas(etapas) {
-    return Object.entries(etapas).map(([nombre]: any) => ETAPAS_BUSCAR[nombre]);
+    return Object.entries(etapas).reduce( (prev, [key, value]) => {
+      prev.push(value);
+      return prev;
+    }, []).sort( (a,b) => a.id - b.id );
   }
 
   private llenarDatos(nombre: string, etapa:any){
-    this.fgEtapasFechas.get(nombre).get('fechaInicio').setValue(new Date(etapa.fechaInicio));
-    this.fgEtapasFechas.get(nombre).get('fechaTermino').setValue(new Date(etapa.fechaTermino));    
+    this.fgEtapasFechas.get(nombre).get('fechaInicio').setValue(etapa.fechaInicio);
+    this.fgEtapasFechas.get(nombre).get('fechaTermino').setValue(etapa.fechaTermino);
     this.fgEtapasFechas.get(nombre).get('color').patchValue( BUSCAR_COLOR_ETAPAS[etapa.color]);
   }
 }

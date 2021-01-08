@@ -17,9 +17,11 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 export class MainInputFechaComponent implements OnChanges, ControlValueAccessor {
 
   @Input() label: string = 'Fecha';
-  @Input() error: boolean = false;
   @Input() minDate: Date = new Date();
   @Input() startDate: Boolean = true;
+  @Input() startView: string = 'month';
+  @Input() error: boolean = false;
+  @Input() required: boolean = false;
 
   value: number;
   valueBoolean: Boolean[] = [];

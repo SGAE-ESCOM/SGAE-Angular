@@ -1,9 +1,9 @@
 <mat-form-field appearance="legacy">
     <mat-label> {{ label}}</mat-label>
     <input matInput [matDatepicker]="picker" [formControl]="fechaInput" [min]="minDate"
-        name="fecha" id="fecha" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+        name="fecha" id="fecha" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)" [required]="required">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker #picker [startView]="startView"></mat-datepicker>
     <mat-error *ngIf="fechaInput.hasError('invalid')">Fecha no valida</mat-error>
     <mat-error *ngIf="fechaInput.hasError('min')">Fecha no valida</mat-error>
 </mat-form-field>

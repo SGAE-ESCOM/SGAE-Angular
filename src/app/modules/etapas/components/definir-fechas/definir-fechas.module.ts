@@ -13,6 +13,7 @@ import { ES_FORMAT } from '@shared/utils/traduccion/calendario-es';
 
 /* Components */
 import { DefinirFechasComponent } from './definir-fechas.component';
+import { InputFechaModule } from '@shared/components/input-fecha/input-fecha.module';
 
 @NgModule({
   declarations: [DefinirFechasComponent],
@@ -23,7 +24,8 @@ import { DefinirFechasComponent } from './definir-fechas.component';
     AngularMaterialModule,
     CalendarioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    InputFechaModule
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },

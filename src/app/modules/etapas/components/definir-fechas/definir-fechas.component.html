@@ -23,32 +23,16 @@
                             <div class="col-12 col-sm-6 col-md-3 form-group">
                                 <mat-form-field>
                                     <mat-label>Etapa</mat-label>
-                                    <input matInput formControlName="nombre" placeholder="Filtrar por palabra" readonly>
+                                    <input matInput formControlName="nombre" readonly>
                                     <mat-icon class="material-icons-outlined" matSuffix>assignment</mat-icon>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3 form-group">
-                                <mat-form-field>
-                                    <mat-label>Fecha de Inicio</mat-label>
-                                    <input matInput formControlName="fechaInicio" name="fechaInicio" [min]="fechaActual"
-                                        [matDatepicker]="fechaInicio" placeholder="Elige una fecha de inicio" required>
-                                    <mat-datepicker-toggle matSuffix [for]="fechaInicio">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #fechaInicio startView="year" [startAt]="fechaActual">
-                                    </mat-datepicker>
-                                </mat-form-field>
+                                <input-fecha formControlName="fechaInicio" [label]="'Fecha Inicio'" [startView]="'year'" required></input-fecha>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3 form-group">
-                                <mat-form-field>
-                                    <mat-label>Fecha de Termino</mat-label>
-                                    <input matInput formControlName="fechaTermino" name="fechaTermino"
-                                        [min]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value"
-                                        [matDatepicker]="fechaTermino" placeholder="Elige una fecha de termino"
-                                        required>
-                                    <mat-datepicker-toggle matSuffix [for]="fechaTermino">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #fechaTermino></mat-datepicker>
-                                </mat-form-field>
+                                <input-fecha formControlName="fechaTermino" [label]="'Fecha Termino'"
+                                    [minDate]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value" required></input-fecha>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3 form-group">
                                 <mat-form-field>
@@ -62,7 +46,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
                         <div class="col-12 text-right pt-2">
                             <button mat-button name="btnPintar" id="btnPintar" color="info" (click)="definirFechas()">
                                 Pintar en calendario <mat-icon class="material-icons-outlined"> event_note </mat-icon>

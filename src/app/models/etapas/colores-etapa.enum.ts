@@ -6,8 +6,9 @@ const AMARILLO = new ColorEtapa('amarillo', 'EFB916');
 const ROJO = new ColorEtapa('rojo', 'dc3545');
 const MORADO = new ColorEtapa('morado', 'BB8FCE');
 const NARANJA = new ColorEtapa('naranja', 'F5B041');
+const TURQUESA = new ColorEtapa('turquesa', '40E0D0');
 
-export const COLORES_ETAPAS = [ VERDE, AZUL, AMARILLO, ROJO, MORADO, NARANJA ];
+export const COLORES_ETAPAS = [ VERDE, AZUL, AMARILLO, ROJO, MORADO, NARANJA, TURQUESA ];
 
 export const BUSCAR_COLOR_ETAPAS = {
     verde: VERDE,
@@ -15,5 +16,6 @@ export const BUSCAR_COLOR_ETAPAS = {
     amarillo: AMARILLO,
     rojo: ROJO,
     morado: MORADO,
-    naranja :NARANJA
+    naranja :NARANJA,
+    turquesa: TURQUESA
 }

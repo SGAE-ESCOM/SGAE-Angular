@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Etapa } from '@models/etapas/etapa';
+import { map } from 'rxjs/operators';
+import { FechaEtapa } from '@models/etapas/fecha-etapa';
 
 @Injectable({
   providedIn: 'root'
@@ -19,35 +21,44 @@ export class EtapasService {
 
   //CRUD EESTADOS_ASPIRANTE
   saveEstadosAspirante(estadosAspirante: any) {
-    return this.etapasCollection.doc('estado').set( estadosAspirante );
+    return this.etapasCollection.doc('estado').set(estadosAspirante);
   }
 
   getEstadosAspirante() {
     return this.etapasCollection.doc('estado').get().toPromise();
   }
 
-  getEtapas() {
+  getEstadosAspiranteObserver() {
     return this.etapasCollection.doc('estado').get();
   }
 
+  saveEtapas(ordenEtapas: any) {
+    return this.etapasCollection.doc('ordenEtapas').set(ordenEtapas);
+  }
+
+  getEtapas(){
+    return this.etapasCollection.doc('ordenEtapas').get().toPromise();
+  }
+
   //CRUD FECHAS
-  saveFechasEtapas(fechas:any[]): Promise<any>{
+  saveFechasEtapas(fechas: any[]): Promise<any> {
     this.batch = this.db.firestore.batch();
+    console.log(fechas);
     let fechasFormateada = this.convertFecha(fechas);
-    Object.entries(fechas).forEach( ([nombre, etapa]:any) => {
+    Object.entries(fechas).forEach(([nombre, etapa]: any) => {
       const etapaRef: any = this.db.collection("FechasEstapas").doc<any>(nombre).ref;
       this.batch.set(etapaRef, etapa);
     });
     return this.batch.commit();
   }
 
-  getFechasEtapas(){
+  getFechasEtapas() {
     return this.fechasEtapasCollection.get().toPromise();
   }
 
-  deleteAllFechas(etapas: Etapa[]){
+  deleteAllFechas(etapas: Etapa[]) {
     this.batch = this.db.firestore.batch();
-    etapas.forEach( etapa => {
+    etapas.forEach(etapa => {
       const etapaRef: any = this.db.collection("FechasEstapas").doc<any>(etapa.valor).ref;
       this.batch.delete(etapaRef);
     });
@@ -55,10 +66,10 @@ export class EtapasService {
   }
 
   //LOGICA DEL SERVICE
-  private convertFecha( fechas:any ){
-    return Object.entries(fechas).map( ([nombre, etapa]:any) => {
-      etapa.fechaInicio = new Date(etapa.fechaInicio).getTime();
-      etapa.fechaTermino = new Date(etapa.fechaTermino).getTime();
+  private convertFecha(fechas: any) {
+    return Object.entries(fechas).map(([nombre, etapa]: any) => {
+      //etapa.fechaInicio = new Date(etapa.fechaInicio).getTime();
+      //etapa.fechaTermino = new Date(etapa.fechaTermino).getTime();
       etapa.color = etapa.color.nombre;
       return etapa;
     });
