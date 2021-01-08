@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { Aplicacion } from '@models/evaluacion/aplicacion';
@@ -8,11 +7,8 @@ import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Breadcrumb } from '@models/template/Breadcrumb';
 import { NavigationLink } from '@models/template/NavigationLink';
 import { AuthService } from '@services/auth.service';
-import { PreguntasService } from '@services/evaluacion/preguntas.service';
-import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { AdminEvaluacionesService } from '@services/evaluacion/admin-evaluaciones.service';
 import { EVALUACION, EVALUACIONES, HOME } from '@shared/routing-list/ListLinks';
-import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
-import { ToastrService } from 'ngx-toastr';
 
 //1. Obtener la evaluación
 //2. Hacer un random entre las evaluaciones disponibles
@@ -35,8 +31,8 @@ export class MainSimuladorComponent implements OnInit {
   preguntas: Pregunta[] = [];
   //totalIteraciones: number;
 
-  constructor(private router: Router, private _toastr: ToastrService, private _swal: SweetalertService,
-    private _auth: AuthService, private _preguntas: PreguntasService) {
+  constructor(private router: Router,
+    private _auth: AuthService, private _evaluaciones:AdminEvaluacionesService) {
     //OBTENER USUARIO Y APLICACION
     this.usuario = this._auth.getUsuarioC();
     const navigation = this.router.getCurrentNavigation();
@@ -64,7 +60,9 @@ export class MainSimuladorComponent implements OnInit {
     //Define la evaluacion a través de un random 
     let indexRandom = this.getRandomInt(0, this.aplicacion.evaluaciones.length)
     this.evaluacion = null;
-    this.evaluacion = this.aplicacion.evaluaciones[indexRandom];
+    this._evaluaciones.get(this.aplicacion.evaluaciones[indexRandom].id).subscribe( evaluacion => {
+      this.evaluacion = evaluacion;
+    });
   }
 
   /*************************************** UTILS *******************************************/

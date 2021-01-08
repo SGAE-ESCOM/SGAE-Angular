@@ -24,6 +24,16 @@ export class AdminEvaluacionesService {
     return this.evaluacionesCollection.add(evaluacion);
   }
 
+  get(idEvaluacion:string){
+    return this.evaluacionesCollection.doc(idEvaluacion)
+    .snapshotChanges()
+    .pipe(
+      map(change =>{
+          return change.payload.data() as Evaluacion;
+      })
+    );
+  }
+
   getAll(): Observable<Evaluacion[]> {
     return this.evaluacionesCollection
       .snapshotChanges()
