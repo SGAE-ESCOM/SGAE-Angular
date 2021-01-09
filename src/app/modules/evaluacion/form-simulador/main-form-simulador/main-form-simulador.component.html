@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container" >
     <div class="d-flex justify-content-end">
         <div class="button-bottom">
             <div class="button-left">
-                <p>{{horas}}:{{minutos}}:{{segundos}}</p>
+                <p style="z-index: 1000;">{{horas}}:{{minutos}}:{{segundos}}</p>
             </div>
         </div>
     </div>
@@ -11,9 +11,9 @@
     <div class="row pb-4" *ngFor="let seccion of secciones; trackBy: trackById">
         <app-preguntas-seccion [formControlName]="seccion[0]" [idSeccion]="seccion[0]" [temas]="seccion[1]"></app-preguntas-seccion>
     </div>
-    <div class="row">
+    <div class="row" >
         <div class="col-12 pb-5 text-right">
-            <button mat-flat-button color="success" (click)="onFinalizar()">Finalizar, evaluación <mat-icon>done</mat-icon></button> 
+            <button mat-flat-button color="success" (click)="onFinalizar()" style="z-index: 10000;">Finalizar, evaluación <mat-icon>done</mat-icon></button> 
         </div>
     </div>
 </form>

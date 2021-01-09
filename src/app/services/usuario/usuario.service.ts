@@ -53,7 +53,7 @@ export class UsuarioService {
   }
 
   updateEstadoEvaluacion(usuario: UsuarioInterface, estado: string) {
-    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.evaluacionConocimientos": estado });
+    return this.usuariosCollectionReference.doc(usuario.id).update({ "estado.evaluacionConocimientos": estado });
   }
 
   updateEstadoEvaluacionPorAplicacion(usuarios: UsuarioInterface[], estado: string){

@@ -3,6 +3,19 @@
     <hr>
 </div>
 <div class="col-12">
+    <!-- <table class="table col-12 table-sm table-borderless">
+        <tbody>
+            <tr>
+                <td style="width: 25px"><b>{{i+1}}. </b> </td>
+                <td style="padding-top: 4px;">
+                    <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
+                    <div *ngIf="pregunta.img" class="ml-3 img-fluid">
+                        <img [src]="pregunta.img"> 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table> -->
     <div class="row" *ngFor="let pregunta of preguntas; let i = index; trackBy: trackByIdPregunta">
         <div class="col-12">
             <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
@@ -14,7 +27,7 @@
             <table class="table table-sm table-borderless" [class.table-error]="error">
                 <tbody>
                     <mat-radio-group [(ngModel)]="respuestas[i]" color="primary">
-                        <tr *ngFor="let opcion of pregunta.opciones; let j = index" class="hover">
+                        <tr *ngFor="let opcion of pregunta.opciones; let j = index; trackBy: trackByIdOpcion" class="hover">
                             <td class="col-1" style="width: 25px;">
                                 <mat-radio-button class="example-radio-button" [value]="opcion.id" (change)="changeValue(opcion, i, j)">
                                 </mat-radio-button>

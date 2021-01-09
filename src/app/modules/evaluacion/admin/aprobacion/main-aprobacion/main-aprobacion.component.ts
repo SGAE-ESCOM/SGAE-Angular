@@ -23,7 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 export class MainAprobacionComponent implements OnInit {
 
   columnas: Tabla[] = [
-    { encabezado: 'Nombres', json: 'nombres' }, { encabezado: 'Apellidos', json: 'apellidos' }, { encabezado: 'Aciertos', json: 'aciertos' }, { encabezado: 'Resultado de simulador', json: 'resultado' }, 
+    { encabezado: 'Nombres', json: 'nombres' }, { encabezado: 'Apellidos', json: 'apellidos' }, { encabezado: 'Aciertos', json: 'aciertos' }, { encabezado: 'Resultado de simulador', json: 'resultado' },
     { encabezado: 'Estado Evaluación', tipo: TipoColumn.OBJETO_PROPERTY, json: 'estado', property: 'evaluacionConocimientos' }, { encabezado: 'Acciones', json: 'acciones' }];
   aspirantes: UsuarioInterface[] = [];
 
@@ -61,60 +61,70 @@ export class MainAprobacionComponent implements OnInit {
       this.definirUsuarios(usuarios, aplicacion.id);
     }).catch(err => this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR));
   }
-  
-  cambiarEstadoAspirante(aspirante: UsuarioInterface){
-    if(aspirante.estado.evaluacionConocimientos !== 'invalida')
-    this._swal.confirmarGenerico(`¿Deseas cambiar el Estado de Evaluación de "${aspirante.nombres} ${aspirante.apellidos}" de "${aspirante.estado.evaluacionConocimientos}" a ${ this.estadoOpuesto(aspirante.estado.evaluacionConocimientos) }?`
-      , 'Podrás editar después el estado del aspirante', 'Cancelar', 'Cambiar').then( accion => {
-        if(accion.value){
 
-        }
-      });
-    else{
-      this._swal.confirmarGenerico(`¿Deseas admitir a "${aspirante.nombres} ${aspirante.apellidos}"?`
-      , 'Podrás editar después el estado del aspirante', 'Cancelar', 'Cambiar').then( accion => {
-        if(accion.value){
+  cambiarEstadoAspirante(aspirante: UsuarioInterface) {
+    if (aspirante.estado.evaluacionConocimientos !== 'invalida')
+      this._swal.confirmarGenerico(`¿Deseas cambiar el Estado de Evaluación de "${aspirante.nombres} ${aspirante.apellidos}" de "${aspirante.estado.evaluacionConocimientos}" a "${this.estadoOpuesto(aspirante.estado.evaluacionConocimientos)}"?`
+        , '', 'Cancelar', 'Cambiar').then(accion => {
+          if (accion.value) {
+            this._usuarios.updateEstadoEvaluacion(aspirante, 'Admitido').then(result => {
 
-        }
-      });
+            }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR); console.error(err) })
+          }
+        });
+    else {
+      this._swal.confirmarGenerico(`¿Deseas validar a "${aspirante.nombres} ${aspirante.apellidos}"?`
+        , '', 'Cancelar', 'Cambiar').then(accion => {
+          if (accion.value) {
+
+          }
+        });
     }
   }
 
   aprobarTodos() {
-    this._swal.confirmarGenerico('¿Deseas admitir a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then( accion => {
-      if(accion.value){
-        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Admitido').then( res => {
+    this._swal.confirmarGenerico('¿Deseas admitir a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then(accion => {
+      if (accion.value) {
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Admitido').then(res => {
           this.onChangeAplicacion(this.aplicacionAux);
-        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
+        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
       }
     });
   }
 
   rechazarTodos() {
-    this._swal.confirmarGenerico('¿Deseas rechazar a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Rechazar').then( accion => {
-      if(accion.value){
-        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Rechazado').then( res => {
+    this._swal.confirmarGenerico('¿Deseas rechazar a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Rechazar').then(accion => {
+      if (accion.value) {
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Rechazado').then(res => {
           this.onChangeAplicacion(this.aplicacionAux);
-        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
+        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
       }
     });
   }
 
-  admitirSoloAprobados(){
-    this._swal.confirmarGenerico('¿Deseas admitir sólo a los aprobados?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then( accion => {
-      if(accion.value){
-        const aprobados = this.aspirantes.filter( aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Aprobado');
-        const reprobados = this.aspirantes.filter( aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Reprobado');
-        this._usuarios.updateEstadoEvaluacionPorAplicacion(aprobados, 'Admitido').then( res => {
-        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)}).then( s => {
-          this._usuarios.updateEstadoEvaluacionPorAplicacion(reprobados, 'Rechazado').then( res => {
+  admitirSoloAprobados() {
+    this._swal.confirmarGenerico('¿Deseas admitir sólo a los aprobados?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then(accion => {
+      if (accion.value) {
+        const aprobados = this.aspirantes.filter(aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Aprobado');
+        const reprobados = this.aspirantes.filter(aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Reprobado');
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(aprobados, 'Admitido').then(res => {
+        }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) }).then(s => {
+          this._usuarios.updateEstadoEvaluacionPorAplicacion(reprobados, 'Rechazado').then(res => {
             this.onChangeAplicacion(this.aplicacionAux);
-          }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR)});
+          }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
         });
       }
     });
   }
 
+
+  enviarNotificacion(){
+    this._swal.confirmarGenerico('¿Deseas enviar noficación de estado a estos aspirantes?', '', 'Cancelar', 'Enviar').then(accion => {
+      if (accion.value) {
+
+      }
+    });
+  }
   /*********************************************** ACCIONES **************************************************/
   onChangeGrupo(grupo: Grupo) {
     this.aplicaciones = this.aplicacionesDisponibles[grupo.id];
@@ -143,8 +153,8 @@ export class MainAprobacionComponent implements OnInit {
     }));
   }
 
-  private estadoOpuesto(estado:string): string{
-    if(estado === 'Admitido')
+  private estadoOpuesto(estado: string): string {
+    if (estado === 'Admitido')
       return 'Rechazado'
     return 'Admitido';
   }

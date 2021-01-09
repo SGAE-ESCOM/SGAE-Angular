@@ -26,8 +26,8 @@ export const BC_SUBIR_DOCUMENTACION = new Breadcrumb(SUBIR_DOCUMENTACION, [HOME,
 
 export const LINKS_DOCUMENTACION = {
     aspirante: [SUBIR_DOCUMENTACION],
-    admin: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION],
-    root: [VALIDAR_DOCUMENTACION, ADMINISTRAR_DOCUMENTACION]
+    admin: [ADMINISTRAR_DOCUMENTACION, VALIDAR_DOCUMENTACION],
+    root: [ADMINISTRAR_DOCUMENTACION, VALIDAR_DOCUMENTACION]
 }
 
 /************************************************ EVALUACION ********************************************************************************************/

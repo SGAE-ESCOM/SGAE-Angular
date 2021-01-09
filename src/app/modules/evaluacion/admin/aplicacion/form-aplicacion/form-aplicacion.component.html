@@ -7,7 +7,7 @@
             <div class="col-12">
                 <div mat-dialog-content> 
                     <form [formGroup]="fgAplicacion" class="row">
-                        <div class="col-12"><p><b>Parámetros de la aplicación</b></p></div>
+                        <div class="col-12"  *ngIf="isMain"><p><b>Parámetros de la aplicación</b></p></div>
                         <!-- NOMBER -->
                         <div class="col-12 col-md-4 form-group" *ngIf="isMain">
                             <mat-form-field appearance="legacy">
@@ -33,7 +33,7 @@
                         <div class="col-12 col-md-4 form-group" *ngIf="isMain"> 
                             <input-hora formControlName="duracion" [titulo]="'Duración'"></input-hora>
                         </div>
-                        <div class="col-12"><hr></div>
+                        <div class="col-12" *ngIf="isMain"><hr></div>
                         <!-- EVALUACIONES -->
                         <div class="col-12" *ngIf="isMain">
                             <p><b>Evaluaciones disponibles:</b></p>
