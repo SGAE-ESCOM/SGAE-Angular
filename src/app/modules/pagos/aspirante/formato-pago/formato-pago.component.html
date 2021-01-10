@@ -9,8 +9,7 @@
             <div class="alert alert-warning" role="alert" [ngSwitch]="estadoPago">
                 <div *ngIf="grupoId==''; else elseBlockAlertContent" class="col-12 pt-2">
                     <h4  class="alert-heading">Sin grupo inscrito</h4>
-                    <h4 class="alert-heading">Sin formato de pago asociado</h4>
-                    <p >Primero inscribete a un grupo para obtener tu formato de pago.</p>
+                    <p >Favor de inscribir a un grupo para poder consultar tu formato de pago.</p>
                 </div>
                 <ng-template #elseBlockAlertContent>
                     <div class="col-12 pt-2">

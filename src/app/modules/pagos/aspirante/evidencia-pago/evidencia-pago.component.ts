@@ -6,6 +6,7 @@ import { EvidenciaPago } from '@models/cuentas-pagos/evidencia-pago';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { Alert } from '@models/utils/Alert';
 import { AuthService } from '@services/auth.service';
+import { CuentasPagosService } from '@services/pagos/cuentas-pagos.service';
 import { EvidenciasPagosService } from '@services/pagos/evidencias-pagos.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { sinAcceso } from '@shared/admin-permissions/permissions';
@@ -25,7 +26,7 @@ export class EvidenciaPagoComponent implements OnInit {
   public comentarios: string;
 
   constructor(private _toastr: ToastrService, private _evidenciasPagos: EvidenciasPagosService, private _usuarioService: UsuarioService,
-      private _authService: AuthService, private router: Router) { 
+      private _authService: AuthService, private router: Router, private _cuentas: CuentasPagosService) { 
     /***************** REVISAR ACCESO SOLO ASPIRANTES *******************/
 
     this.usuario = this._authService.getUsuarioC();
@@ -52,7 +53,19 @@ export class EvidenciaPagoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    let usuario = this._authService.getUsuarioC();
+    if(typeof usuario.grupo !== 'undefined' && typeof usuario.grupo.id !== 'undefined'){
+      this._cuentas.obtenerCuentasPorIdGrupo(usuario.grupo.id).then((querySnapshot) => {
+        let cuentaPagos = [];
+        querySnapshot.forEach((doc) => {
+          cuentaPagos.push(doc.data());
+        });
+        if(cuentaPagos.length == 0) this.router.navigate(['/app/pagos/formato-pago']);
+      }).catch( err =>  {
+        console.log(err);
+      });
+    }
+    else this.router.navigate(['/app/pagos/formato-pago']);
   }
 
   subirArchivo(files: File[]){
@@ -84,21 +97,8 @@ export class EvidenciaPagoComponent implements OnInit {
     };
   }
 
-
-  singleFileDropError(){
-    this._toastr.error("Arrastre solo un archivo.");
-  }
-
-  fileLimitUploadError(){
-    this._toastr.error("Ya se subió un archivo.");
-  }
-
-  typeFilesError(){
-    this._toastr.error("Solo se soportan archivos con extensión pdf.");
-  }
-
-  fileUploadError(){
-    this._toastr.error("Ocurrio un error al cargar el archivo.");
+  componentError(error){
+    this._toastr.error(error);
   }
 
 }

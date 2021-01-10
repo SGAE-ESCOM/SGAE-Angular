@@ -1,7 +1,8 @@
 <div class="container animated-row pb-4">
     <div class="row">
         <div *ngIf="estadoPago == estadosPagos.PENDIENTE; else elseBlock" class="col-12">
-            <p>Sube la evidencía de tu pago en formato pdf para que pueda ser revisado por la institutción. Puedes revisar si tu pago fue validado en esta sección.</p>
+            <p>Sube la evidencía de tu pago para que pueda ser revisado por la institución. Puedes revisar si tu pago fue validado en esta sección.</p>
+            <p>La evidencía de tu pago debe estar en formato <strong>pdf</strong> y no debe pesar más de <strong>100 KB.</strong></p>
         </div>
         <ng-template #elseBlock>
             <div class="col-12">
@@ -33,9 +34,7 @@
 
     <app-drag-and-drop-files *ngIf="estadoPago == estadosPagos.PENDIENTE || estadoPago == estadosPagos.INVALIDA"
         [multipleFiles]="false" [typeFiles]="['application/pdf']" [titleBox]="'Arrastra y suelta el fórmato de pago.'" 
-        (sendFiles)="subirArchivo($event)" (singleFileDropError)="singleFileDropError()" 
-        (fileLimitUploadError)="fileLimitUploadError()" (typeFilesError)="typeFilesError()"
-        (fileUploadError)="fileUploadError()">
+        (sendFiles)="subirArchivo($event)" (componentError)="componentError($event)">
     </app-drag-and-drop-files>
 
     <div class="row">

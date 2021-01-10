@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 
 @Component({
   selector: 'app-drag-and-drop-files',
@@ -14,10 +15,7 @@ export class DragAndDropFilesComponent implements OnInit {
   @Input() titleBox: string = '';
 
   @Output() sendFiles: EventEmitter<any> = new EventEmitter<any>();
-  @Output() singleFileDropError: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() fileLimitUploadError: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() typeFilesError: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() fileUploadError: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() componentError: EventEmitter<string> = new EventEmitter<string>();
 
   @ViewChild('fileDropRef') btnGetFiles: ElementRef;
   files: any[] = [];
@@ -33,7 +31,7 @@ export class DragAndDropFilesComponent implements OnInit {
    */
   onFileDropped($event) {
     if (!this.multipleFiles && $event.length > 1){
-      this.singleFileDropError.emit(true);
+      this.componentError.emit("Arrastre solo un archivo.");
       return;
     }
     this.prepareFilesList($event);
@@ -92,14 +90,22 @@ export class DragAndDropFilesComponent implements OnInit {
   prepareFilesList(files: Array<any>) {
     //Validaciones para solo cargar 1 archivo a la vez
     if (!this.multipleFiles && this.files.length > 0){
-      this.fileLimitUploadError.emit(true);
+      this.componentError.emit("Ya se subió un archivo.");
       return;
+    }
+    for(let i = 0; i < files.length; i++){
+      //SIZE LIMIT
+      if(files[i].size >= 1048576){
+        this.componentError.emit("El archivo es demasiado pesado.");
+        console.log("limite tamaño");
+        return;
+      }
     }
 
     for(let i = 0; i < files.length; i++){
       let f = this.typeFiles.find(type => type == files[i].type);
       if(typeof f === "undefined"){
-        this.typeFilesError.emit(true);
+        this.componentError.emit("Formato de archivo incorrecto.");
         return;
       }
     }
@@ -158,7 +164,7 @@ export class DragAndDropFilesComponent implements OnInit {
     };
 
     reader.onerror = (error) => {
-      this.fileUploadError.emit(true);
+      this.componentError.emit("Ocurrio un error al cargar el archivo.");
     };
 
 
