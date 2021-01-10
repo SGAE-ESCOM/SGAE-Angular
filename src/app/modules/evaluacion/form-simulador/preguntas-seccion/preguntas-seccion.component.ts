@@ -38,11 +38,11 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.idSeccion && this.idSeccion != null) {
       this._secciones.getById(this.idSeccion).subscribe((doc: any) => {
-        if (doc.exists){
+        if (doc.exists) {
           this.seccion = doc.data();
           this.value.seccion = this.seccion.nombre;
           this.onChange(this.value);
-        }else{
+        } else {
           console.log(this.idSeccion);
         }
       });
@@ -112,5 +112,9 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
 
   trackByIdPregunta(index: number, item: Pregunta) {
     return item.id
-}
+  }
+
+  trackByIdOpcion(index: number, item: any) {
+    return item.id
+  }
 }

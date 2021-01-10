@@ -82,7 +82,7 @@ export class MainAplicacionComponent implements OnInit {
   onAgregar() {
     const dialogRef = this.dialog.open(ModalAplicacion, {
       width: '1100px',
-      data: { opc: 'agregar', titulo: 'Agregar', aplicacion: new Aplicacion(), grupos: this.grupos, evaluaciones: this.evaluaciones }
+      data: { opc: 'agregar', titulo: 'Agregar aplicación', aplicacion: new Aplicacion(), grupos: this.grupos, evaluaciones: this.evaluaciones }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -97,7 +97,7 @@ export class MainAplicacionComponent implements OnInit {
   onActualizar(aplicacion: Aplicacion) {
     const dialogRef = this.dialog.open(ModalAplicacion, {
       width: '1100px',
-      data: { opc: 'actualizar', titulo: 'Editar', aplicacion: aplicacion, grupos: this.grupos, evaluaciones: this.evaluaciones }
+      data: { opc: 'actualizar', titulo: 'Editar aplicación', aplicacion: aplicacion, grupos: this.grupos, evaluaciones: this.evaluaciones }
     });
 
     dialogRef.afterClosed().subscribe(result => {

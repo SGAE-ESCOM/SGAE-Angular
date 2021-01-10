@@ -77,7 +77,7 @@ export class ListaGruposAplicacionComponent implements OnChanges, ControlValueAc
   agregar() {
     if (this.fgLista.valid) {
       if(this.value[this.grupo.value]){
-        this._toastr.error("Ya hay un fecha para este grupo");
+        this._toastr.error("Ya hay una fecha para este grupo");
       }else{
         this.value[this.grupo.value] = { grupo: this.grupo.value, fechaInicio: this.fechaInicio.value, fechaTermino: this.fechaTermino.value };
         this.updateValueArray();

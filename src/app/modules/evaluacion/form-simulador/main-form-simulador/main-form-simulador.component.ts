@@ -32,7 +32,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   respuestasSeccion: number[] = [];
   horas: number = 0;
   minutos: number = 0;
-  segundos: number = 59;
+  segundos: number = 0;
   interval;
 
   constructor(private fb: FormBuilder, private _toastr: ToastrService, private _swal: SweetalertService,

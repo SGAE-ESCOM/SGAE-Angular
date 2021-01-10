@@ -6,6 +6,8 @@ import { EstadoPago } from '@models/cuentas-pagos/enums/estado-pago.enum';
 import * as Alerts from '@shared/alertas/Alerts';
 import { Resultado } from '@models/evaluacion/resultado';
 import { Alert } from '@models/utils/Alert';
+import { EstadoEvaluacion } from '@models/evaluacion/estado-evaluacion';
+import { EstadoDocumentacion } from '@models/documentacion/enums/estado-documentacion.enum';
 
 
 @Injectable({
@@ -36,7 +38,13 @@ export class UsuarioService {
   }
 
   updateEstadoDocumentacion(usuario: UsuarioInterface, estado: string) {
-    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.documentacion": estado });
+    if (typeof usuario.alertas === "undefined") usuario.alertas = new Array();
+    usuario.alertas = Alerts.removerGrupoAlertas(usuario.alertas, Alerts.ALERTAS_DOCUMENTACION);
+    
+    if (estado == EstadoDocumentacion.CORRECCION) usuario.alertas.push(Alerts.DOCUMENTACION_CORRECCION.nombre);
+    else if (estado == EstadoDocumentacion.VALIDADA) usuario.alertas.push(Alerts.DOCUMENTACION_VALIDADA.nombre);
+
+    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.documentacion": estado, "alertas": usuario.alertas  });
   }
 
   /*********************************************** EVALUACION **********************************************/
@@ -53,7 +61,7 @@ export class UsuarioService {
   }
 
   updateEstadoEvaluacion(usuario: UsuarioInterface, estado: string) {
-    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.evaluacionConocimientos": estado });
+    return this.usuariosCollectionReference.doc(usuario.id).update({ "estado.evaluacionConocimientos": estado });
   }
 
   updateEstadoEvaluacionPorAplicacion(usuarios: UsuarioInterface[], estado: string){
@@ -64,6 +72,24 @@ export class UsuarioService {
     });
     return this.batch.commit();
   }
+
+  enviarNotificacionEvaluacion(usuarios: UsuarioInterface[]){
+    this.batch = this.db.firestore.batch();
+    usuarios.forEach((usuario, index) => {
+      //Preparando notificación
+      if (typeof usuario.alertas === "undefined") usuario.alertas = new Array();
+        usuario.alertas = Alerts.removerGrupoAlertas(usuario.alertas ,Alerts.ALERTAS_EVALUACION);
+      
+      if (usuario.estado.evaluacionConocimientos == EstadoEvaluacion.VALIDO) usuario.alertas.push(Alerts.EVALUACION_VALIDO.nombre);
+      else if (usuario.estado.evaluacionConocimientos == EstadoEvaluacion.NO_VALIDO) usuario.alertas.push(Alerts.EVALUACION_NO_VALIDO.nombre);
+
+      //Prepara petición 
+      const requisitoRef: any = this.usuariosCollection.doc<any>(usuario.id).ref;
+      this.batch.update(requisitoRef, { "alertas": usuario.alertas });
+    });
+    return this.batch.commit();
+  }
+
 
   /*********************************************** PAGOS *****************************************************/
   getAspirantesConEstadoPago(estado: string) {
