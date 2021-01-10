@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
+import { EstadoEvaluacion } from '@models/evaluacion/estado-evaluacion';
 import { Resultado } from '@models/evaluacion/resultado';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { AuthService } from '@services/auth.service';
@@ -18,10 +19,13 @@ import { momentJS } from '@shared/utils/traduccion/moment';
 export class MainResultadosComponent implements OnInit {
 
   usuario: UsuarioInterface;
+  estadoEvaluacionUsuario: string;
+  estadosEvaluacion = EstadoEvaluacion;
   aplicacionesRealizadas: Resultado[] = [];
 
   constructor(public dialog: MatDialog, private _auth: AuthService, private _resultados: ResultadosService) {
     this.usuario = _auth.getUsuarioC();
+    this.estadoEvaluacionUsuario = this.usuario.estado.evaluacionConocimientos;
     BreadcrumbComponent.update(BC_RESULTADOS);
   }
 

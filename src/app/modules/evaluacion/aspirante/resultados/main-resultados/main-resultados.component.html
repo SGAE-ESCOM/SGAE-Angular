@@ -1,6 +1,29 @@
 <div class="container" @fadeInRight>
     <div class="row" *ngIf="aplicacionesRealizadas; else MensajeInscribirse">
         <div class="col-12">
+            <div class="alert " [ngClass]="{ 'alert-danger': estadoEvaluacionUsuario === estadosEvaluacion.NO_VALIDO,
+                'alert-warning': estadoEvaluacionUsuario === estadosEvaluacion.INVALIDA,
+                'alert-success': estadoEvaluacionUsuario === estadosEvaluacion.VALIDO  }" role="alert" [ngSwitch]="estadoEvaluacionUsuario">
+                <div class="col-12 pt-2">
+                    <h4 class="alert-heading">Estado de mi evaluación</h4>
+                    <p *ngSwitchCase="estadosEvaluacion.INVALIDA">
+                        No has realizado ninguna validación
+                    </p>
+                    <p *ngSwitchCase="estadosEvaluacion.VALIDO">
+                        Felicidades, el estado de tu etapa de evaluación es válido
+                    </p>
+                    <p *ngSwitchCase="estadosEvaluacion.NO_VALIDO">
+                        El estado de tu etapa de evaluación es no válido
+                    </p>
+                </div>
+                <!-- <div class="col-12" *ngSwitchCase="estadosEvaluacion.CORRECCION">
+                    <hr>
+                    <p class="mb-0">{{ requisitosGuardados?.comentarios }}</p>
+                </div> -->
+            </div>
+            <br>
+        </div>
+        <div class="col-12">
             <div *ngIf="aplicacionesRealizadas" class="row" [@cardAnimation]="aplicacionesRealizadas.length">
                 <div *ngFor="let aplicacion of aplicacionesRealizadas; trackBy: trackById" class="col-12 col-sm-4 col-md-3 py-2">
                     <div class="card card-hover mat-elevation-z2 bd-callout bd-callout-primary pt-2 pb-4" name="cardEvaluacion" matRipple (click)="mostrarResultado(aplicacion)">

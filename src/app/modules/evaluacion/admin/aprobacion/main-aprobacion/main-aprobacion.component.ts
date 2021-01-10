@@ -23,7 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 export class MainAprobacionComponent implements OnInit {
 
   columnas: Tabla[] = [
-    { encabezado: 'Nombres', json: 'nombres' }, { encabezado: 'Apellidos', json: 'apellidos' }, { encabezado: 'Aciertos', json: 'aciertos' }, { encabezado: 'Resultado de simulador', json: 'resultado' },
+    { encabezado: 'Nombres', json: 'nombres' }, { encabezado: 'Apellidos', json: 'apellidos' }, {encabezado:'Email', json: 'email'}, { encabezado: 'Aciertos', json: 'aciertos' }, { encabezado: 'Resultado de simulador', json: 'resultado' },
     { encabezado: 'Estado Evaluación', tipo: TipoColumn.OBJETO_PROPERTY, json: 'estado', property: 'evaluacionConocimientos' }, { encabezado: 'Acciones', json: 'acciones' }];
   aspirantes: UsuarioInterface[] = [];
 
@@ -63,16 +63,18 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   cambiarEstadoAspirante(aspirante: UsuarioInterface) {
-    if (aspirante.estado.evaluacionConocimientos !== 'invalida')
-      this._swal.confirmarGenerico(`¿Deseas cambiar el Estado de Evaluación de "${aspirante.nombres} ${aspirante.apellidos}" de "${aspirante.estado.evaluacionConocimientos}" a "${this.estadoOpuesto(aspirante.estado.evaluacionConocimientos)}"?`
+    if (aspirante.estado.evaluacionConocimientos !== 'invalida'){
+      let estadoOpuesto = this.estadoOpuesto(aspirante.estado.evaluacionConocimientos);
+      this._swal.confirmarGenerico(`¿Deseas cambiar el Estado de Evaluación de "${aspirante.nombres} ${aspirante.apellidos}" de "${aspirante.estado.evaluacionConocimientos}" a "${estadoOpuesto}"?`
         , '', 'Cancelar', 'Cambiar').then(accion => {
           if (accion.value) {
-            this._usuarios.updateEstadoEvaluacion(aspirante, 'Admitido').then(result => {
-
+            this._usuarios.updateEstadoEvaluacion(aspirante, estadoOpuesto).then(result => {
+              this._toastr.success("Estado de aspirante actualizado");
+              this.onChangeAplicacion(this.aplicacionAux);
             }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR); console.error(err) })
           }
         });
-    else {
+      } else {
       this._swal.confirmarGenerico(`¿Deseas validar a "${aspirante.nombres} ${aspirante.apellidos}"?`
         , '', 'Cancelar', 'Cambiar').then(accion => {
           if (accion.value) {
@@ -83,9 +85,9 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   aprobarTodos() {
-    this._swal.confirmarGenerico('¿Deseas admitir a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then(accion => {
+    this._swal.confirmarGenerico('¿Deseas validar a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Validar').then(accion => {
       if (accion.value) {
-        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Admitido').then(res => {
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Válido').then(res => {
           this.onChangeAplicacion(this.aplicacionAux);
         }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
       }
@@ -93,9 +95,9 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   rechazarTodos() {
-    this._swal.confirmarGenerico('¿Deseas rechazar a todos?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Rechazar').then(accion => {
+    this._swal.confirmarGenerico('¿Deseas no validar a ninguno?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'No validar').then(accion => {
       if (accion.value) {
-        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'Rechazado').then(res => {
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(this.aspirantes, 'No válido').then(res => {
           this.onChangeAplicacion(this.aplicacionAux);
         }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
       }
@@ -103,13 +105,13 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   admitirSoloAprobados() {
-    this._swal.confirmarGenerico('¿Deseas admitir sólo a los aprobados?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Aprobar').then(accion => {
+    this._swal.confirmarGenerico('¿Deseas validar sólo a los aprobados?', 'Podrás editar después el estado de cada uno de manera individual', 'Cancelar', 'Validar').then(accion => {
       if (accion.value) {
         const aprobados = this.aspirantes.filter(aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Aprobado');
         const reprobados = this.aspirantes.filter(aspirante => aspirante.historialAplicacion[this.aplicacionAux.id].resultado === 'Reprobado');
-        this._usuarios.updateEstadoEvaluacionPorAplicacion(aprobados, 'Admitido').then(res => {
+        this._usuarios.updateEstadoEvaluacionPorAplicacion(aprobados, 'Válido').then(res => {
         }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) }).then(s => {
-          this._usuarios.updateEstadoEvaluacionPorAplicacion(reprobados, 'Rechazado').then(res => {
+          this._usuarios.updateEstadoEvaluacionPorAplicacion(reprobados, 'No válido').then(res => {
             this.onChangeAplicacion(this.aplicacionAux);
           }, err => { console.error(err); this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
         });
@@ -118,10 +120,13 @@ export class MainAprobacionComponent implements OnInit {
   }
 
 
-  enviarNotificacion(){
+  enviarNotificacionTodos(){
     this._swal.confirmarGenerico('¿Deseas enviar noficación de estado a estos aspirantes?', '', 'Cancelar', 'Enviar').then(accion => {
       if (accion.value) {
-
+        this._usuarios.enviarNotificacionEvaluacion(this.aspirantes).then( result => {
+          this._toastr.success("Estado de evaluación enviado");
+          console.log(result);
+        }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR); console.error(err)});
       }
     });
   }
@@ -154,8 +159,8 @@ export class MainAprobacionComponent implements OnInit {
   }
 
   private estadoOpuesto(estado: string): string {
-    if (estado === 'Admitido')
-      return 'Rechazado'
-    return 'Admitido';
+    if (estado === 'Válido')
+      return 'No válido'
+    return 'Válido';
   }
 }
