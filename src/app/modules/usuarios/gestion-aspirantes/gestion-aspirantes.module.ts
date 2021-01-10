@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GestionAspirantesRoutingModule } from './gestion-aspirantes-routing.module';
-import { ModalVisualizarEstados, RevisarAspirantesComponent } from './revisar-aspirantes/revisar-aspirantes.component';
+import { ModalVisualizarEstados } from './asignar-aspirantes/asignar-aspirantes.component';
 import { UsuariosRoutingModule } from '../usuarios-routing.module';
 import { CardsModule } from '@shared/components/cards/cards.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,10 +18,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MainGestionAspirantesComponent } from './main-gestion-aspirantes/main-gestion-aspirantes.component';
 import { AsignarAspirantesComponent } from './asignar-aspirantes/asignar-aspirantes.component';
+import { RevisarAspirantesComponent } from './revisar-aspirantes/revisar-aspirantes.component';
+import { VerAspiranteComponent } from './ver-aspirante/ver-aspirante.component';
 
 
 @NgModule({
-  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados, AsignarAspirantesComponent],
+  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados, AsignarAspirantesComponent, VerAspiranteComponent],
   imports: [
     CommonModule,
     GestionAspirantesRoutingModule,

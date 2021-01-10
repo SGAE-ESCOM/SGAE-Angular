@@ -7,15 +7,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
-import { filtrosEstadosDocumentacion, filtrosEstadosEvaluacion, filtrosEstadosPagos, filtrosEstadosResultados, filtrosEtapas } from '@models/utils/Filtros';
+import { filtrosEstadosDocumentacion, filtrosEstadosEvaluacion, filtrosEstadosPagos, filtrosEtapas } from '@models/utils/Filtros';
 import { AuthService } from '@services/auth.service';
 import { EtapasService } from '@services/etapas/etapas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { comprobarPermisos, GESTION_USUARIOS, sinAcceso } from '@shared/admin-permissions/permissions';
-import { BC_ASIGNAR_ASPIRANTES, BC_REVISAR_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
+import { BC_ASIGNAR_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { ToastrService } from 'ngx-toastr';
-import { ModalVisualizarEstados } from '../revisar-aspirantes/revisar-aspirantes.component';
 
 @Component({
   selector: 'app-asignar-aspirantes',
@@ -152,6 +151,24 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
 
   private mensajeError():void{
     this._toast.error("Hubo un error al cargar información");
+  }
+
+}
+
+
+@Component({
+  selector: 'modal-visualizar-estados',
+  templateUrl: './modal-visualizar-estados.html'
+})
+export class ModalVisualizarEstados {
+
+  constructor(
+    public dialogRef: MatDialogRef<ModalVisualizarEstados>, public sanitizer: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

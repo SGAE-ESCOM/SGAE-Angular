@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainGestionAspirantesComponent } from './main-gestion-aspirantes/main-gestion-aspirantes.component';
 import { RevisarAspirantesComponent } from './revisar-aspirantes/revisar-aspirantes.component';
 import { AsignarAspirantesComponent } from './asignar-aspirantes/asignar-aspirantes.component';
+import { VerAspiranteComponent } from './ver-aspirante/ver-aspirante.component';
 
 const routes: Routes = [
   { path: '', component: MainGestionAspirantesComponent },
   { path: 'revisar-aspirantes', component: RevisarAspirantesComponent },
-  { path: 'asignar-aspirantes', component:  AsignarAspirantesComponent}
+  { path: 'asignar-aspirantes', component:  AsignarAspirantesComponent},
+  { path: 'revisar-aspirantes/ver-aspirante', component:  VerAspiranteComponent}
 ];
 
 @NgModule({

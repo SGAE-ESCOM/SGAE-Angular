@@ -29,7 +29,7 @@ export class ValidarPagoAspiranteComponent implements OnInit {
   usuario: UsuarioInterface;
 
   constructor(public dialog: MatDialog, private _evidenciasPagos: EvidenciasPagosService, private _personaService: UsuarioService, 
-      private route: ActivatedRoute, private router: Router, private _toast: ToastrService, private _swal: SweetalertService, 
+      private router: Router, private _toast: ToastrService, private _swal: SweetalertService, 
       private _authServices: AuthService, private _router:Router) { 
     //REVISAR PERMISOS DE ADMINISTRADOR
         
