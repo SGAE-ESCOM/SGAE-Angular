@@ -17,10 +17,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MainGestionAspirantesComponent } from './main-gestion-aspirantes/main-gestion-aspirantes.component';
+import { AsignarAspirantesComponent } from './asignar-aspirantes/asignar-aspirantes.component';
 
 
 @NgModule({
-  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados],
+  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados, AsignarAspirantesComponent],
   imports: [
     CommonModule,
     GestionAspirantesRoutingModule,

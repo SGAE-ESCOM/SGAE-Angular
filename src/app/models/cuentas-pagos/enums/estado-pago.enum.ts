@@ -1,6 +1,6 @@
 export enum EstadoPago {
-    PENDIENTE = "pendiente",
-    INVALIDA = "invalida",
+    PENDIENTE = "invalida",
+    INVALIDA = "correccion",
     REVISION = "revision",
     VALIDADA = "validada",
 }

@@ -25,7 +25,7 @@ export class ValidarPagoAspiranteComponent implements OnInit {
   requisitosTabla;
 
   //Variables de logica validacion
-  evidenciaPagoObject: EvidenciaPago = null;
+  evidenciaPagoObject: EvidenciaPago = new EvidenciaPago();
   usuario: UsuarioInterface;
 
   constructor(public dialog: MatDialog, private _evidenciasPagos: EvidenciasPagosService, private _personaService: UsuarioService, 
@@ -49,6 +49,11 @@ export class ValidarPagoAspiranteComponent implements OnInit {
 
   ngOnInit(): void {
     this._evidenciasPagos.getEvidenciaObs(this.usuario).subscribe(value => {
+      if(typeof value === 'undefined'){
+        this._toast.error("Usuario sin información de pagos, corrigiendo estado.");
+        this._personaService.updateEstadoPago(this.usuario, EstadoPago.PENDIENTE);
+        this.router.navigate(['/app/pagos/validar-pagos']);
+      }
       this.evidenciaPagoObject = value;
     }); //PRODUCCION
   }
