@@ -22,7 +22,7 @@
         <div class="col-12">
             <app-tabla [columnas]="tablaTemas" [datos]="temas" [orderBy]="ordenarPorNombre"
                 [isSave]="true" (save)="modalAgregarTema()"
-                [isCustom]="true" [customDesc]="'Gestionar preguntaas'" [customIcon]="'grading'" (custom)="showTema($event)"
+                [isCustom]="true" [customDesc]="'Gestionar preguntas'" [customIcon]="'grading'" (custom)="showTema($event)"
                 [isUpdate]="true" (update)="modalActualizarTema($event)"
                 [isDelete]="true" (delete)="modalEliminarTema($event)"></app-tabla>
         </div>
