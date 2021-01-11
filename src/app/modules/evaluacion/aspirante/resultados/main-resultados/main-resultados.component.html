@@ -7,19 +7,15 @@
                 <div class="col-12 pt-2">
                     <h4 class="alert-heading">Estado de mi evaluación</h4>
                     <p *ngSwitchCase="estadosEvaluacion.INVALIDA">
-                        No has realizado ninguna validación
+                        No se ha hecho ninguna validación
                     </p>
                     <p *ngSwitchCase="estadosEvaluacion.VALIDO">
-                        Felicidades, el estado de tu etapa de evaluación es válido
+                        Tu información fue validada
                     </p>
                     <p *ngSwitchCase="estadosEvaluacion.NO_VALIDO">
-                        El estado de tu etapa de evaluación es no válido
+                        Tu información no fue validada
                     </p>
                 </div>
-                <!-- <div class="col-12" *ngSwitchCase="estadosEvaluacion.CORRECCION">
-                    <hr>
-                    <p class="mb-0">{{ requisitosGuardados?.comentarios }}</p>
-                </div> -->
             </div>
             <br>
         </div>

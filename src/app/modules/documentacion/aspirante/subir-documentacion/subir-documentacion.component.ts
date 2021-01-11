@@ -77,7 +77,6 @@ export class SubirDocumentacionComponent implements OnInit {
   }
 
   guardarFormulario(formularioRecivido: FormGroup) {
-    console.log("HOLA FORM")
     if (this.estadoDocUsuario === EstadoDocumentacion.INVALIDA) {
       this.requisitosValidos = this.saveRequisitos(formularioRecivido);
     } else {
