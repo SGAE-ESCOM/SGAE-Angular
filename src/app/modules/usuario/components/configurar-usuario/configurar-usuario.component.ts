@@ -55,7 +55,7 @@ export class ConfigurarUsuarioComponent implements OnInit {
     if(formulario.valid){
       let data: UsuarioInterface = formulario.value;
       this._usuarioService.updateUsuario(this.usuario, data).then(() => {
-        this._swal.actualizadoCorrecto("Información actualizada.");
+        this._swal.actualizadoCorrecto("Los datos se actualizarón exitosamente.");
         this.usuario.nombres = data.nombres;
         this.usuario.apellidos = data.apellidos;
       }).catch( err => {

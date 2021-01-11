@@ -83,6 +83,7 @@ export class SidenavComponent implements OnInit {
 
   onLogout() {
     this._afsAuth.auth.signOut();
+    this.alertas = new Array<Alert>();
     this.isLoggedIn = false;
     this.navigationLinks = LINKS_HOME['page'];
     this.router.navigate(['']);
@@ -95,6 +96,4 @@ export class SidenavComponent implements OnInit {
     }
     this.router.navigate([alerta.url]);
   }
-
-
 }

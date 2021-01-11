@@ -1,1 +1,75 @@
-<p>ver-aspirante works! Userid: {{ id }}</p>
+<div class="container animated-row pb-4">
+    <div id="headerUserInfo" class="row">
+        <div class="col-12 text-center">
+            <h3 *ngIf="usuario">Información {{usuario.nombres}} {{usuario.apellidos}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Documentación</mat-panel-title>
+                        <mat-panel-description>Documentación subida por el aspirante.<mat-icon>folder_open</mat-icon></mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <hr>
+                    <div>
+                        <table>
+                            <tr *ngFor="let documento of documentacionTabla">
+                                <td class="leftTable"><p>{{ documento.nombre }}</p></td>
+                                <td [ngSwitch]="documento.tipo">
+                                    <div *ngSwitchCase="'texto'">
+                                        <p>{{ documento.valor }}</p>
+                                    </div>
+                                    <div *ngSwitchCase="'archivo'">
+                                        <a (click)="abrirArchivo(documento.valor)"><p>{{ documento.valor.nombre }}</p></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                    </mat-expansion-panel>
+                
+                    <mat-expansion-panel disabled>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Historial Aplicaciones</mat-panel-title>
+                        <mat-panel-description>Historial de las aplicaciones hechas por el aspirante<mat-icon>spellcheck</mat-icon></mat-panel-description>
+                    </mat-expansion-panel-header>
+                
+                    <hr>
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Aciertos</th>
+                                    <th scope="col">Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <p>prueba</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <p>prueba</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <p>prueba</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+        </div>
+    </div>
+</div>

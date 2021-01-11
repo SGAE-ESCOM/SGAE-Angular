@@ -1,0 +1,41 @@
+
+#headerUserInfo{
+    padding-bottom: 20px;
+}
+
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+mat-expansion-panel-header {
+    font-size: 16px !important;
+}
+
+p {
+    font-size: 16px;
+}
+
+
+.leftTable{
+    font-weight: 500;
+    padding-right: 25px;
+}
+
+td.leftTable {
+    width: 200px;
+}
+
+a {
+    color: #007bff !important;
+    cursor: pointer;
+  }

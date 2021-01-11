@@ -20,10 +20,12 @@ import { MainGestionAspirantesComponent } from './main-gestion-aspirantes/main-g
 import { AsignarAspirantesComponent } from './asignar-aspirantes/asignar-aspirantes.component';
 import { RevisarAspirantesComponent } from './revisar-aspirantes/revisar-aspirantes.component';
 import { VerAspiranteComponent } from './ver-aspirante/ver-aspirante.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ModalVerDocumento } from '@shared/components/drag-and-drop-files/drag-and-drop-files/drag-and-drop-files.component';
 
 
 @NgModule({
-  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados, AsignarAspirantesComponent, VerAspiranteComponent],
+  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados, AsignarAspirantesComponent, VerAspiranteComponent, ModalVerDocumento],
   imports: [
     CommonModule,
     GestionAspirantesRoutingModule,
@@ -43,6 +45,7 @@ import { VerAspiranteComponent } from './ver-aspirante/ver-aspirante.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatExpansionModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-MX' }]
 })
