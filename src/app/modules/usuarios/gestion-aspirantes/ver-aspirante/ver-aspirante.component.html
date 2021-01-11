@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <mat-accordion class="example-headers-align" multi>
-                <mat-expansion-panel>
+                <mat-expansion-panel [disabled]="emptyDocs">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Documentación</mat-panel-title>
                         <mat-panel-description>Documentación subida por el aspirante.<mat-icon>folder_open</mat-icon></mat-panel-description>
@@ -28,10 +28,8 @@
                             </tr>
                         </table>
                     </div>
-                
-                    </mat-expansion-panel>
-                
-                    <mat-expansion-panel disabled>
+                </mat-expansion-panel>
+                <mat-expansion-panel disabled>
                     <mat-expansion-panel-header>
                         <mat-panel-title>Historial Aplicaciones</mat-panel-title>
                         <mat-panel-description>Historial de las aplicaciones hechas por el aspirante<mat-icon>spellcheck</mat-icon></mat-panel-description>

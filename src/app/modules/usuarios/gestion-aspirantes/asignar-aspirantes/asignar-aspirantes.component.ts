@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
-import { filtrosEstadosDocumentacion, filtrosEstadosEvaluacion, filtrosEstadosPagos, filtrosEtapas } from '@models/utils/Filtros';
+import { filtrosEstadosDocumentacion, filtrosEstadosEvaluacion, filtrosEstadosPagos, filtrosEtapas, filtrosResultados } from '@models/utils/Filtros';
 import { AuthService } from '@services/auth.service';
 import { EtapasService } from '@services/etapas/etapas.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -27,13 +27,18 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns: string[] = ['nombres', 'apellidos', 'email',  'estados', 'acciones'];
+  displayedColumns: string[] = ['nombres', 'apellidos', 'email',  'estados', 'asignar'];
   fcFiltroEstados: FormControl = new FormControl();
   filtrosEstados: any[] = [];
   fcFiltroEtapas = new FormControl(filtrosEtapas[0].valor);
   filtrosEtapas = filtrosEtapas;
+  fcFiltroResultados = new FormControl(filtrosResultados[0].valor);
+  filtroResultados = filtrosResultados;
+
   colEstadoOn: boolean = false;
   etapaSeleccionada: any;
+
+  // {nombre: 'Resultados', valor: 'publicacionResultados'}
 
   constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
       private _authServices: AuthService, private router: Router, public dialog: MatDialog, private _etapas: EtapasService) {
@@ -54,10 +59,15 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
 
   //Eventos
   onChangeFiltroEstado(filtro) {
+    //Desactivar filtro Resultados
+    this.fcFiltroResultados = new FormControl(filtrosResultados[0].valor);
+    //Actualizar Lista
     this._usuarioService.getAspirantes().then((querySnapshot) => {
       let usuarios = [];
       querySnapshot.forEach((doc) => {
         let user = doc.data();
+        if(typeof user.estado.publicacionResultados === 'undefined')
+          user.estado.publicacionResultados = "invalida";
         if(filtro == 'true') usuarios.push(user);
         else {
           let etapa = this.etapaSeleccionada.valor;
@@ -83,16 +93,14 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
   }
 
   onChangeFiltroEtapa(filtro) {
-    console.log(this._authServices.getEtapas()['pago']);
-
     if (filtro == 'true'){
-      this.displayedColumns = ['nombres', 'apellidos', 'email',  'estados', 'acciones'];
+      this.displayedColumns = ['nombres', 'apellidos', 'email',  'estados', 'asignar'];
       this.colEstadoOn = false;
       this.fcFiltroEstados = new FormControl();
       this.filtrosEstados = [];
     } else {
       this.etapaSeleccionada = filtrosEtapas.find(etapa => etapa.valor == filtro);
-      this.displayedColumns = ['nombres', 'apellidos', 'email', 'colEstado',  'estados', 'acciones'];
+      this.displayedColumns = ['nombres', 'apellidos', 'email', 'colEstado',  'estados', 'asignar'];
       this.colEstadoOn = true;
 
       if(filtro == 'documentacion'){
@@ -109,6 +117,44 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
       }
     }
     this.onChangeFiltroEstado('true');
+  }
+
+  onChangeFiltroResultados(filtroRes){
+    //Desactivar Filtro Etapas
+    this.fcFiltroEtapas = new FormControl(filtrosEtapas[0].valor);
+    this.displayedColumns = ['nombres', 'apellidos', 'email',  'estados', 'asignar'];
+    this.colEstadoOn = false;
+    this.fcFiltroEstados = new FormControl();
+    this.filtrosEstados = [];
+    //Actualizar Lista
+    this._usuarioService.getAspirantes().then((querySnapshot) => {
+      let usuarios = [];
+      querySnapshot.forEach((doc) => {
+        let user = doc.data();
+        if(typeof user.estado.publicacionResultados === 'undefined')
+          user.estado.publicacionResultados = "invalida";
+
+        if(filtroRes == 'true') usuarios.push(user);
+        else {
+          switch(filtroRes){
+            case 'NoAsignables':
+              if(!this.esAsignable(user)) usuarios.push(user);
+              break;
+            case 'Asignables':
+              if(this.esAsignable(user) && user.estado.publicacionResultados != 'validada') usuarios.push(user);
+              break;
+            case 'Asignados':
+              if(user.estado.publicacionResultados == 'validada') usuarios.push(user);
+              break;
+          }
+        }
+      });
+      this.definirUsuarios(usuarios);
+    }).catch( err =>  {
+      this.mensajeError()
+      console.log(err);
+    });
+    this.updateTablaUsuarios();
   }
 
   private definirUsuarios(usuarios: any[]): void{
@@ -153,7 +199,28 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
     this._toast.error("Hubo un error al cargar información");
   }
 
+  asignarAspirante(row){
+    if(!this.esAsignable(row)) return;
+    row.estado.publicacionResultados = 'validada';
+    try {
+      this._usuarioService.updateEstadoResultados(row);
+    } catch (error) {
+      this._toast.error("No se pudo actualizar la información. Intente mas tarde.");
+      row.estado.publicacionResultados = 'invalida';
+    }finally{
+      this._toast.success("El aspirante " + row.nombres + " fue asignado.");
+    }
+  }
+
+  esAsignable(row){
+    if(typeof row.estado.documentacion !== 'undefined' && row.estado.documentacion != 'validada') return false;
+    if(typeof row.estado.evaluacionConocimientos !== 'undefined' && row.estado.evaluacionConocimientos != 'validada') return false;
+    if(typeof row.estado.pago !== 'undefined' && row.estado.pago != 'validada') return false;
+    return true;
+  }
 }
+
+
 
 
 @Component({

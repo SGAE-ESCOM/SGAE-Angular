@@ -21,6 +21,7 @@ export class VerAspiranteComponent implements OnInit {
 
   //Variables para las tablas
   documentacionTabla;
+  emptyDocs = true;
 
   usuario: UsuarioInterface;
   id = "vacio";
@@ -52,7 +53,13 @@ export class VerAspiranteComponent implements OnInit {
         this._authService.findUsuario(this.id).subscribe((usuario: UsuarioInterface) => {
           if (usuario) {
             this.usuario = usuario;
-            this._subirDocService.getDocumentacion(this.usuario).subscribe(documentacion => { this.formatearDocumentacion(documentacion) });
+            this._subirDocService.getDocumentacion(this.usuario).subscribe(documentacion => { 
+              if(typeof documentacion !== 'undefined'){
+                this.formatearDocumentacion(documentacion);
+                this.emptyDocs = false;
+              }
+              
+            });
           }
         }, error => {
           this._toast.error("Hubo un error al cargar información");

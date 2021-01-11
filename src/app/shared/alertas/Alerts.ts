@@ -76,3 +76,9 @@ export const EVALUACION_NO_VALIDO = new Alert(NAME_EVALUACION_NO_VALIDO, "Estado
 ALERTAS.set(NAME_EVALUACION_NO_VALIDO, EVALUACION_NO_VALIDO);
 
 export const ALERTAS_EVALUACION = [INICIO_ETAPA_EVALUACION, EVALUACION_VALIDO, EVALUACION_NO_VALIDO];
+
+/************************************************ RESULTADOS ********************************************************************************************/
+
+const NAME_RESULTADOS_VALIDO = "RESULTADOS_VALIDO";
+export const RESULTADOS_VALIDO = new Alert(NAME_RESULTADOS_VALIDO, "Etapas finalizadas.", "/app", TipoAlert.CONFIRMACION, true); //FALTA URL
+ALERTAS.set(NAME_RESULTADOS_VALIDO, RESULTADOS_VALIDO);

@@ -2,7 +2,7 @@
     <div class="row">
         <div *ngIf="estadoPago == estadosPagos.PENDIENTE; else elseBlock" class="col-12">
             <p>Sube la evidencía de tu pago para que pueda ser revisado por la institución. Puedes revisar si tu pago fue validado en esta sección.</p>
-            <p>La evidencía de tu pago debe estar en formato <strong>pdf</strong> y no debe pesar más de <strong>100 KB.</strong></p>
+            <p>La evidencía de tu pago debe estar en formato <strong>pdf</strong> y no debe pesar más de <strong>1000 KB.</strong></p>
         </div>
         <ng-template #elseBlock>
             <div class="col-12">
@@ -16,7 +16,7 @@
                             Tu evidencia de pago esta siendo revisada.
                         </p>
                         <p *ngSwitchCase="estadosPagos.INVALIDA">
-                            Tu evidencia de pago no fue aprobada, revise los comentarios y vuelva a enviar su evidencia.
+                            Tu evidencia de pago no fue validada, revise los comentarios y vuelva a enviar su evidencia.
                         </p>
                         <p *ngSwitchCase="estadosPagos.VALIDADA">
                             Tu evidencia de pago fue validada.

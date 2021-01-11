@@ -3,8 +3,7 @@ export const filtrosEtapas: any[] = [
     {nombre: 'Todas', valor: 'true'},
     {nombre: 'Documentación', valor: 'documentacion'},
     {nombre: 'Evaluacion', valor: 'evaluacionConocimientos'},
-    {nombre: 'Pagos', valor: 'pago'},
-    {nombre: 'Resultados', valor: 'publicacionResultados'}
+    {nombre: 'Pagos', valor: 'pago'}
 ];
 
 export const filtrosEstadosDocumentacion: any[] = [
@@ -26,7 +25,9 @@ export const filtrosEstadosPagos: any[] = [
     {nombre: 'Validada', valor: 'validada'}
 ];
 
-export const filtrosEstadosResultados: any[] = [
+export const filtrosResultados: any[] = [
     {nombre: 'Todos', valor: 'true'},
-    {nombre: 'Invalida', valor: 'invalida'}
+    {nombre: 'No Asignables', valor: 'NoAsignables'},
+    {nombre: 'Asignables', valor: 'Asignables'},
+    {nombre: 'Asignados', valor: 'Asignados'}
 ];

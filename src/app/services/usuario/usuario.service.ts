@@ -141,4 +141,13 @@ export class UsuarioService {
     return usuario.alertas;
   }
 
+  /**************************************************** Resultados *********************************************/
+  updateEstadoResultados(usuario: UsuarioInterface) {
+    if (typeof usuario.alertas === "undefined") usuario.alertas = new Array();
+    if(usuario.alertas.indexOf(Alerts.RESULTADOS_VALIDO.nombre, 0) == -1)
+      usuario.alertas.push(Alerts.RESULTADOS_VALIDO.nombre);
+
+    this.usuariosCollectionReference.doc(usuario.id).update({ "estado.publicacionResultados": "validada", "alertas": usuario.alertas });
+  }
+
 }

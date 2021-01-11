@@ -124,7 +124,7 @@ const GESTION_ASPIRANTES = new NavigationLink("Gestión Aspirantes", "/app/usuar
 const REGISTRAR_ADMON = new NavigationLink("Registrar Nuevo Administrador", "/app/usuarios/gestion-admon/registrar");
 const EDITAR_ADMON = new NavigationLink("Editar Administrador", "/app/usuarios/gestion-admon/editar");
 const REVISAR_ASPIRANTES = new NavigationLink("Revisar Aspirantes", "/app/usuarios/gestion-aspirantes/revisar-aspirantes", "people_outline", "Revisa la informacion de los aspirantes registrados.")
-const VER_ASPIRANTE = new NavigationLink("Ver Aspirante", "/app/usuarios/gestion-aspirantes/revisar-aspirantes/ver-aspirante");
+const VER_ASPIRANTE = new NavigationLink("Visualizar Aspirante", "/app/usuarios/gestion-aspirantes/revisar-aspirantes/ver-aspirante");
 const ASIGNAR_ASPIRANTES = new NavigationLink("Asignar Aspirantes", "/app/usuarios/gestion-aspirantes/asignar-aspirantes", "check_box", "Asigna los aspirantes que hayan completado todas las etapas del sistema.")
 
 export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);

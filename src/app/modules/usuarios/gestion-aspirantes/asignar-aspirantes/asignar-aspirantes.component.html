@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-12">
             <div class="row">
-                <div [ngClass]="colEstadoOn ? 'offset-md-2' : 'offset-md-5'" class="col-12 col-sm-3 form-group">
+                <div [ngClass]="colEstadoOn ? 'offset-md-0' : 'offset-md-3'" class="col-12 col-sm-2 form-group">
                     <mat-form-field appearance="outline">
                         <mat-label>Ver por etapas</mat-label>
-                        <mat-select name="selectFiltro" [formControl]="fcFiltroEtapas" (selectionChange)="onChangeFiltroEtapa($event.value)" required>
+                        <mat-select name="selectFiltroEtapa" [formControl]="fcFiltroEtapas" (selectionChange)="onChangeFiltroEtapa($event.value)" required>
                             <mat-option *ngFor="let filtro of filtrosEtapas" [value]="filtro.valor">
                                 {{ filtro.nombre }}
                             </mat-option>
@@ -15,8 +15,18 @@
                 <div *ngIf="colEstadoOn" class="col-12 col-sm-3 form-group">
                     <mat-form-field appearance="outline">
                         <mat-label>Filtrar por estado de {{ etapaSeleccionada.nombre }} </mat-label>
-                        <mat-select name="selectFiltro" [formControl]="fcFiltroEstados" (selectionChange)="onChangeFiltroEstado($event.value)" required>
+                        <mat-select name="selectFiltroEstados" [formControl]="fcFiltroEstados" (selectionChange)="onChangeFiltroEstado($event.value)" required>
                             <mat-option *ngFor="let filtro of filtrosEstados" [value]="filtro.valor">
+                                {{ filtro.nombre }}
+                            </mat-option>
+                        </mat-select>
+                     </mat-form-field>
+                </div>
+                <div class="col-12 col-sm-3 form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ver por estado de asignación</mat-label>
+                        <mat-select name="selectFiltroResultados" [formControl]="fcFiltroResultados" (selectionChange)="onChangeFiltroResultados($event.value)" required>
+                            <mat-option *ngFor="let filtro of filtroResultados" [value]="filtro.valor">
                                 {{ filtro.nombre }}
                             </mat-option>
                         </mat-select>
@@ -26,7 +36,7 @@
                     <mat-form-field id="bucar" appearance="outline">
                         <mat-label>Buscar</mat-label>
                         <input matInput (keyup)="buscarUsuario($event.target.value)" placeholder="Filtrar por palabra">
-                        <mat-icon matSuffix>search </mat-icon>
+                        <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
                 </div>
             </div>
@@ -73,13 +83,19 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="acciones">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+                    <ng-container matColumnDef="asignar">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Asignar </th>
                         
                         <td mat-cell *matCellDef="let row">
-                            <a mat-button name="btnEliminarUsuario" (click)="eliminarAspirante(row)"  color="danger">
-                                <mat-icon>delete</mat-icon>
+                            <a *ngIf="row.estado.publicacionResultados == 'invalida'; else elseResultados" mat-button matTooltip="Asignar" 
+                                    name="btnAsignarUsuario" (click)="asignarAspirante(row)"  color="info" [disabled]="!esAsignable(row)">
+                                <mat-icon>upgrade</mat-icon>
                             </a>
+                            <ng-template #elseResultados>
+                                <a mat-button matTooltip="Asignado" id="iconAspiranteAsignado" color="success">
+                                    <mat-icon>done_outiline</mat-icon>
+                                </a>
+                            </ng-template>
                         </td>
                     </ng-container>
 
