@@ -16,6 +16,22 @@ export function cardAnimation() {
     ])
 }
 
+export function cardAnimationFadeIn() {
+    return trigger('cardAnimationFadeIn', [
+        transition('* => *', [
+            // Initially the all cards are not visible
+            query(':enter', style({ opacity: 0 }) , { optional: true }),
+            // Each card will appear sequentially with the delay of 300ms
+            query(':enter', stagger('60ms', [
+                animate('290ms ease-in', keyframes([
+                    style({ opacity: '0', transform: 'translateY(-40px)' }),
+                    style({ opacity: '1', transform: 'translateY(0)' }),
+                ]))
+            ]), { optional: true })
+        ]),
+    ])
+}
+
 export function animatedCards() {
     return trigger('animatedCards', [
         transition('* => *', [

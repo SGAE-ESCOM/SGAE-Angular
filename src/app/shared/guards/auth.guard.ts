@@ -39,9 +39,9 @@ export class AuthGuard implements CanActivate {
         }))
       }),
       mergeMap( res => {
-        return this._etapas.getEstadosAspiranteObserver().pipe( map( estadosAspirante => {
-          if (estadosAspirante.exists) {
-            const etapas = estadosAspirante.data();
+        return this._etapas.getFechasEtapasObserver().pipe( map( estadosAspirante => {
+          if (estadosAspirante) {
+            const etapas = estadosAspirante;
             this.authService.setEtapas(etapas);
           }
           return res;

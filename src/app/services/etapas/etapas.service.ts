@@ -56,6 +56,18 @@ export class EtapasService {
     return this.fechasEtapasCollection.get().toPromise();
   }
 
+  getFechasEtapasObserver() {
+    return this.fechasEtapasCollection.snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => {
+          const data = a.payload.doc.data() as FechaEtapa;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        })
+      )
+    );;
+  }
+
   deleteAllFechas(etapas: Etapa[]) {
     this.batch = this.db.firestore.batch();
     etapas.forEach(etapa => {

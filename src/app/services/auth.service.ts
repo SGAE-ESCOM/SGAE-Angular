@@ -15,7 +15,7 @@ export class AuthService {
 
   private static usuario:firebase.User;
   private static usuarioC:UsuarioInterface;
-  public static etapas: any[];
+  public static etapas: any;
 
   public userData$: Observable<firebase.User>;
   private adminRegistryApp:any = firebase.initializeApp({
@@ -133,8 +133,13 @@ export class AuthService {
     return AuthService.usuarioC;
   }
 
-  setEtapas( etapas ){
-    AuthService.etapas = etapas;
+  setEtapas( etapas: any[] ){
+    AuthService.etapas = etapas.reduce( (prev, current) => {
+      prev[current.id] = current;
+      return prev;
+    }, {} );
+    delete AuthService.etapas.convocatoria;
+    delete AuthService.etapas.registro;
   }
 
   getEtapas(){
