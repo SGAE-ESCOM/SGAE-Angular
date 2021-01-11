@@ -80,5 +80,5 @@ export const ALERTAS_EVALUACION = [INICIO_ETAPA_EVALUACION, EVALUACION_VALIDO, E
 /************************************************ RESULTADOS ********************************************************************************************/
 
 const NAME_RESULTADOS_VALIDO = "RESULTADOS_VALIDO";
-export const RESULTADOS_VALIDO = new Alert(NAME_RESULTADOS_VALIDO, "Etapas finalizadas.", "/app", TipoAlert.CONFIRMACION, true); //FALTA URL
+export const RESULTADOS_VALIDO = new Alert(NAME_RESULTADOS_VALIDO, "Etapas finalizadas.", ListLinks.SEGUIMIENTO.url, TipoAlert.CONFIRMACION, true); //FALTA URL
 ALERTAS.set(NAME_RESULTADOS_VALIDO, RESULTADOS_VALIDO);

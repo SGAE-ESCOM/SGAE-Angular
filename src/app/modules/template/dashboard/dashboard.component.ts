@@ -22,7 +22,13 @@ export class DashboardComponent implements OnInit {
     let usuario = this._authService.getUsuarioC();
     let cardsAux = getCardsByEtapas(usuario.rol, this._authService.getEtapas()).slice(1);
     if(usuario.rol == 'admin') this.cards = filtrarLinksPorPermisos(cardsAux, usuario.permisos);
-    else this.cards = getCardsByEtapas(this._authService.getUsuarioC().rol, this._authService.getEtapas()).slice(1);
+    else if(usuario.rol == 'root') this.cards = getCardsByEtapas(this._authService.getUsuarioC().rol, this._authService.getEtapas()).slice(1);
+    else if(usuario.rol == 'aspirante'){
+      let resultadosActive = false;
+      if ((typeof usuario.estado !== 'undefined') && (typeof usuario.estado.publicacionResultados !== 'undefined'))
+        resultadosActive = usuario.estado.publicacionResultados == 'validada';
+      this.cards = getCardsByEtapas(this._authService.getUsuarioC().rol, this._authService.getEtapas(), resultadosActive).slice(1);
+    } 
   }
 
   ngOnInit() {

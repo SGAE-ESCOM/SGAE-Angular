@@ -1,0 +1,26 @@
+<div class="container animated-row pb-4">
+    <div id="headerUserInfo" class="row">
+        <div class="col-12">
+            <p>Llena las indicaciones para el seguimiento de los aspirantes asignados dependiendo del grupo en el que esta inscrito.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let grupo of grupos; ">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Indicaciones grupo {{ grupo.nombre | titlecase }}</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Indicaciones</mat-label>
+                        <textarea style="line-height: 1.5rem;" matInput rows="8" placeholder="Agrega las indicaciones para el seguimiento de asignación" [(ngModel)]="grupo.indicaciones"></textarea>
+                        <mat-icon matSuffix>message</mat-icon>
+                    </mat-form-field>
+                    <div class="text-right">
+                        <button mat-button color="info" (click)="guardarIndicaciones(grupo)">Guardar</button>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

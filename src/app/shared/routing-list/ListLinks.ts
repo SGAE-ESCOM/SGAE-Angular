@@ -105,7 +105,7 @@ export const LINKS_PAGOS = {
     aspirante: [FORMATO_PAGO, EVIDENCIA_PAGO],
     // admin: [GESTIONAR_CUENTAS, CONFIGURAR_REFERENCIAS, VALIDAR_PAGOS],
     admin: [GESTIONAR_CUENTAS, VALIDAR_PAGOS],
-    root: [GESTIONAR_CUENTAS, CONFIGURAR_REFERENCIAS, VALIDAR_PAGOS]
+    root: [GESTIONAR_CUENTAS, VALIDAR_PAGOS]
 }
 
 /************************************************ ETAPAS ********************************************************************************************/
@@ -126,6 +126,8 @@ const EDITAR_ADMON = new NavigationLink("Editar Administrador", "/app/usuarios/g
 const REVISAR_ASPIRANTES = new NavigationLink("Revisar Aspirantes", "/app/usuarios/gestion-aspirantes/revisar-aspirantes", "people_outline", "Revisa la informacion de los aspirantes registrados.")
 const VER_ASPIRANTE = new NavigationLink("Visualizar Aspirante", "/app/usuarios/gestion-aspirantes/revisar-aspirantes/ver-aspirante");
 const ASIGNAR_ASPIRANTES = new NavigationLink("Asignar Aspirantes", "/app/usuarios/gestion-aspirantes/asignar-aspirantes", "check_box", "Asigna los aspirantes que hayan completado todas las etapas del sistema.")
+const INDICACIONES_ASIGNACION = new NavigationLink("Editar Indicaciones de Asignación", "/app/usuarios/gestion-aspirantes/editar-indicaciones", "fact_check", "Edita las indicaciones de los alumnos asignados.")
+
 
 export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
 export const BC_GESTION_ADMON = new Breadcrumb(GESTION_ADMON, [HOME, USUARIOS]);
@@ -135,13 +137,20 @@ export const BC_EDITAR_ADMON = new Breadcrumb(EDITAR_ADMON, [HOME, USUARIOS, GES
 export const BC_REVISAR_ASPIRANTES = new Breadcrumb(REVISAR_ASPIRANTES, [HOME, USUARIOS, GESTION_ASPIRANTES]);
 export const BC_VER_ASPIRANTE = new Breadcrumb(VER_ASPIRANTE, [HOME, USUARIOS, GESTION_ASPIRANTES, REVISAR_ASPIRANTES]);
 export const BC_ASIGNAR_ASPIRANTES = new Breadcrumb(ASIGNAR_ASPIRANTES, [HOME, USUARIOS, GESTION_ASPIRANTES]);
+export const BC_INDICACIONES_ASIGNACION = new Breadcrumb(INDICACIONES_ASIGNACION, [HOME, USUARIOS, GESTION_ASPIRANTES]);
 
-export const LINKS_GESTION_ASPIRANTES = [REVISAR_ASPIRANTES, ASIGNAR_ASPIRANTES];
+export const LINKS_GESTION_ASPIRANTES = [REVISAR_ASPIRANTES, ASIGNAR_ASPIRANTES, INDICACIONES_ASIGNACION];
 
 /************************************************ USUARIO ********************************************************************************************/
 export const CONFIGURAR_USUARIO = new NavigationLink("Configurar Usuario", "/app/usuario/configurar-usuario");
 
 export const BC_CONFIGURAR_USUARIO = new Breadcrumb(CONFIGURAR_USUARIO, [HOME]);
+
+/************************************************ RESULTADOS ********************************************************************************************/
+
+export const SEGUIMIENTO = new NavigationLink("Seguimiento", "/app/seguimiento", "fast_forward", "Da seguimiento a tu inscripción");
+
+export const BC_SEGUIMIENTO = new Breadcrumb(SEGUIMIENTO, [HOME]);
 
 /************************************************ HOME AND LANDINGPAGE ********************************************************************************************/
 export const LINKS_PAGE: NavigationLink[] = [LANDINPAGE, LOGIN];
@@ -158,7 +167,7 @@ export const LINKS_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 export const LINKS_ROOT_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 
 /************************************************ HOME AND LANDINGPAGE ********************************************************************************************/
-export function getCardsByEtapas(rol: string, etapas: any) {
+export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boolean = false) {
     let links = [];
     if(etapas){
         links = Object.entries(etapasJson).reduce((prev, [key, value]) => {
@@ -169,6 +178,8 @@ export function getCardsByEtapas(rol: string, etapas: any) {
     }
     if(rol === 'admin' || rol === 'root')
         links = links.concat(ETAPAS, USUARIOS);
+    if(rol === 'aspirante' && resultadosActivo)
+        links = links.concat(ETAPAS, SEGUIMIENTO);
     links.unshift(HOME);
     return links;
 }

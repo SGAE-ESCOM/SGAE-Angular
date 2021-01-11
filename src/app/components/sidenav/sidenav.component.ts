@@ -68,8 +68,15 @@ export class SidenavComponent implements OnInit {
             if(typeof usaurio.alertas !== 'undefined') 
               this.alertas = getAlertas(usaurio.alertas);
 
-            if(usaurio.rol === 'root' || usaurio.rol === 'aspirante' )
+            if(usaurio.rol === 'root'){
               this.navigationLinks = getCardsByEtapas(usaurio.rol, this._authService.getEtapas() );
+            }
+            else if(usaurio.rol === 'aspirante'){
+              let resultadosActive = false;
+              if ((typeof usaurio.estado !== 'undefined') && (typeof usaurio.estado.publicacionResultados !== 'undefined'))
+                resultadosActive = usaurio.estado.publicacionResultados == 'validada';
+              this.navigationLinks = getCardsByEtapas(usaurio.rol, this._authService.getEtapas(), resultadosActive);
+            }
             else if(usaurio.rol === 'admin')
               this.navigationLinks = getNavigationLinksAdmin(usaurio.permisos);
           }

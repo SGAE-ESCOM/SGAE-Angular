@@ -22,10 +22,11 @@ import { RevisarAspirantesComponent } from './revisar-aspirantes/revisar-aspiran
 import { VerAspiranteComponent } from './ver-aspirante/ver-aspirante.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ModalVerDocumento } from '@shared/components/drag-and-drop-files/drag-and-drop-files/drag-and-drop-files.component';
+import { IndicacionesAsignacionComponent } from './indicaciones-asignacion/indicaciones-asignacion.component';
 
 
 @NgModule({
-  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados, AsignarAspirantesComponent, VerAspiranteComponent, ModalVerDocumento],
+  declarations: [RevisarAspirantesComponent, MainGestionAspirantesComponent, ModalVisualizarEstados, AsignarAspirantesComponent, VerAspiranteComponent, ModalVerDocumento, IndicacionesAsignacionComponent],
   imports: [
     CommonModule,
     GestionAspirantesRoutingModule,

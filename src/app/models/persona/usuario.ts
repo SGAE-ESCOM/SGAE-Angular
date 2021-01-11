@@ -10,6 +10,7 @@ export interface Estados {
     documentacion?: string;
     pago?: string;
     evaluacionConocimientos?: string;
+    publicacionResultados?: string;
 }
 
 export interface UsuarioInterface {
