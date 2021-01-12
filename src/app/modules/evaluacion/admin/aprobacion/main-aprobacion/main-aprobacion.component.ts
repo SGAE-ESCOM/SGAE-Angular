@@ -78,7 +78,10 @@ export class MainAprobacionComponent implements OnInit {
       this._swal.confirmarGenerico(`¿Deseas validar a "${aspirante.nombres} ${aspirante.apellidos}"?`
         , '', 'Cancelar', 'Cambiar').then(accion => {
           if (accion.value) {
-
+            this._usuarios.updateEstadoEvaluacion(aspirante, 'Válido').then(result => {
+              this._toastr.success("Estado de aspirante actualizado");
+              this.onChangeAplicacion(this.aplicacionAux);
+            }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR); console.error(err) })
           }
         });
     }
