@@ -148,7 +148,7 @@ export const BC_CONFIGURAR_USUARIO = new Breadcrumb(CONFIGURAR_USUARIO, [HOME]);
 
 /************************************************ RESULTADOS ********************************************************************************************/
 
-export const SEGUIMIENTO = new NavigationLink("Publicacion de Resultados", "/app/resultados", "fast_forward", "Da seguimiento a tu inscripción");
+export const SEGUIMIENTO = new NavigationLink("Publicación de Resultados", "/app/resultados", "fast_forward", "Da seguimiento a tu inscripción");
 
 export const BC_SEGUIMIENTO = new Breadcrumb(SEGUIMIENTO, [HOME]);
 

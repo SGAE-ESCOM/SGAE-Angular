@@ -37,7 +37,7 @@ export class GruposService {
   }
 
   update(grupo: Grupo){
-    return this.gruposCollection.doc(grupo.id).set(grupo);
+    return this.gruposCollection.doc(grupo.id).set({'id': grupo.id, 'nombre': grupo.nombre});
   }
 
   updateIndicaciones(grupo: IndicacionesGrupo){

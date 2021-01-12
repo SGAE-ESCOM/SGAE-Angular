@@ -14,7 +14,8 @@ export const filtrosEstadosDocumentacion: any[] = [
 
 export const filtrosEstadosEvaluacion: any[] = [
     {nombre: 'Todos', valor: 'true'},
-    {nombre: 'Invalida', valor: 'invalida'}
+    {nombre: 'No válido', valor: 'No válido'},
+    {nombre: 'Válido', valor: 'Válido'},
 ];
 
 export const filtrosEstadosPagos: any[] = [
@@ -27,7 +28,7 @@ export const filtrosEstadosPagos: any[] = [
 
 export const filtrosResultados: any[] = [
     {nombre: 'Todos', valor: 'true'},
-    {nombre: 'No Asignables', valor: 'NoAsignables'},
-    {nombre: 'Asignables', valor: 'Asignables'},
-    {nombre: 'Asignados', valor: 'Asignados'}
+    // {nombre: 'Invalidos', valor: 'NoAsignables'},
+    {nombre: 'En proceso', valor: 'Asignables'},
+    {nombre: 'Finalizados', valor: 'Asignados'}
 ];

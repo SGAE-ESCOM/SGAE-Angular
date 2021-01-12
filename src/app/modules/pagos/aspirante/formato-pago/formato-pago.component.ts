@@ -61,4 +61,14 @@ export class FormatoPagoComponent implements OnInit {
     this.cuentaSelec = cuentaPago;
   }
 
+  imprimirPantalla(){
+    window.print();
+  }
+
+  // function Print(){
+  //   window.print();
+  //   setTimeout(function () {
+  //       window.close();
+  //   }, 10); 
+// }
 }

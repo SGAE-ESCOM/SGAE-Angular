@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
+import { UsuarioInterface } from '@models/persona/usuario';
 import { filtrosEstadosDocumentacion, filtrosEstadosEvaluacion, filtrosEstadosPagos, filtrosEtapas, filtrosResultados } from '@models/utils/Filtros';
 import { AuthService } from '@services/auth.service';
 import { EtapasService } from '@services/etapas/etapas.service';
@@ -138,10 +139,12 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
         else {
           switch(filtroRes){
             case 'NoAsignables':
-              if(!this.esAsignable(user)) usuarios.push(user);
+              // if(!this.esAsignable(user)) usuarios.push(user);
+              usuarios.push(user);
               break;
             case 'Asignables':
-              if(this.esAsignable(user) && user.estado.publicacionResultados != 'validada') usuarios.push(user);
+              // if(this.esAsignable(user) && user.estado.publicacionResultados != 'validada') usuarios.push(user);
+              if(user.estado.publicacionResultados != 'validada') usuarios.push(user);
               break;
             case 'Asignados':
               if(user.estado.publicacionResultados == 'validada') usuarios.push(user);
@@ -199,24 +202,47 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
     this._toast.error("Hubo un error al cargar información");
   }
 
-  asignarAspirante(row){
+  asignarAspirante(row: UsuarioInterface, mssgAsignado = true){
     if(!this.esAsignable(row)) return;
     row.estado.publicacionResultados = 'validada';
     try {
       this._usuarioService.updateEstadoResultados(row);
     } catch (error) {
-      this._toast.error("No se pudo actualizar la información. Intente mas tarde.");
+      this._toast.error("Error aL actualizar aspirante con correo " + row.email);
       row.estado.publicacionResultados = 'invalida';
     }finally{
-      this._toast.success("El aspirante " + row.nombres + " fue asignado.");
+      if(mssgAsignado) this._toast.success("El aspirante " + row.nombres + " fue asignado.");
+      return true;
     }
+    return false;
   }
 
   esAsignable(row){
     if(typeof row.estado.documentacion !== 'undefined' && row.estado.documentacion != 'validada') return false;
-    if(typeof row.estado.evaluacionConocimientos !== 'undefined' && row.estado.evaluacionConocimientos != 'validada') return false;
+    if(typeof row.estado.evaluacionConocimientos !== 'undefined' && row.estado.evaluacionConocimientos != 'Válido') return false;
     if(typeof row.estado.pago !== 'undefined' && row.estado.pago != 'validada') return false;
     return true;
+  }
+
+  asignarAspirantes(){
+    //Actualizar Lista
+    this._usuarioService.getAspirantes().then((querySnapshot) => {
+      let emptyUsers = true;
+      querySnapshot.forEach((doc) => {
+        let user = doc.data();
+        if(typeof user.estado.publicacionResultados === 'undefined')
+          user.estado.publicacionResultados = "invalida";
+        if(this.esAsignable(user) && user.estado.publicacionResultados != 'validada') {
+          emptyUsers = false;
+          this.asignarAspirante(user, false);
+        }
+      });
+      this.onChangeFiltroEstado('true');
+      if(!emptyUsers) this._swal.actualizadoCorrecto("Aspirantes finalizados exitosamente."); //MENSAJE MUY PROBABLE PARA CAMBIAR
+    }).catch( err =>  {
+      this._toast.error("Error al actualizar la información. Intente mas tarde.");
+      console.log(err);
+    });
   }
 }
 

@@ -46,4 +46,8 @@ export class SeguimientoComponent implements OnInit {
     }
   }
 
+  imprimirPantalla(){
+    window.print();
+  }
+
 }

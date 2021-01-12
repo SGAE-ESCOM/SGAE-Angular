@@ -63,8 +63,11 @@
                     </ng-template>
                 </div>
             </div>
-            <div *ngIf="cuentaSelec" class="col-6 offset-3 text-right">
+            <div *ngIf="cuentaSelec" style="padding-bottom: 5px;"class="col-3 offset-6 text-right">
                 <button mat-raised-button color="info" name="btnIrAEvidenciaPago" [routerLink]="['/app/pagos/evidenciar-pago']" >Subir Evidencia Pago</button>
+            </div>
+            <div  *ngIf="cuentaSelec" class="col-3 offset-6 text-right">
+                <button mat-flat-button color="info" name="btnImprimirPantalla" (click)="imprimirPantalla()" >Imprimir <mat-icon>print</mat-icon></button>
             </div>
         </ng-template>
     </div>
