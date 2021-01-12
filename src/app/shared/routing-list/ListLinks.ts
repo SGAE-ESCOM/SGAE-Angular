@@ -123,10 +123,10 @@ const GESTION_ADMON = new NavigationLink("Gestión Administradores", "/app/usuar
 const GESTION_ASPIRANTES = new NavigationLink("Gestión Aspirantes", "/app/usuarios/gestion-aspirantes", "people_outline", "Gestión de los aspirantes registrados");
 const REGISTRAR_ADMON = new NavigationLink("Registrar Nuevo Administrador", "/app/usuarios/gestion-admon/registrar");
 const EDITAR_ADMON = new NavigationLink("Editar Administrador", "/app/usuarios/gestion-admon/editar");
-const REVISAR_ASPIRANTES = new NavigationLink("Revisar Aspirantes", "/app/usuarios/gestion-aspirantes/revisar-aspirantes", "people_outline", "Revisa la informacion de los aspirantes registrados.")
+const REVISAR_ASPIRANTES = new NavigationLink("Visualizar Aspirantes", "/app/usuarios/gestion-aspirantes/revisar-aspirantes", "people_outline", "Visualiza la información de los aspirantes registrados.")
 const VER_ASPIRANTE = new NavigationLink("Visualizar Aspirante", "/app/usuarios/gestion-aspirantes/revisar-aspirantes/ver-aspirante");
-const ASIGNAR_ASPIRANTES = new NavigationLink("Asignar Aspirantes", "/app/usuarios/gestion-aspirantes/asignar-aspirantes", "check_box", "Asigna los aspirantes que hayan completado todas las etapas del sistema.")
-const INDICACIONES_ASIGNACION = new NavigationLink("Editar Indicaciones de Asignación", "/app/usuarios/gestion-aspirantes/editar-indicaciones", "fact_check", "Edita las indicaciones de los alumnos asignados.")
+const ASIGNAR_ASPIRANTES = new NavigationLink("Finalizar Aspirantes", "/app/usuarios/gestion-aspirantes/asignar-aspirantes", "check_box", "Finaliza el proceso para los aspirantes que hayan completado todo el proceso.")
+const INDICACIONES_ASIGNACION = new NavigationLink("Indicaciones de Admisión", "/app/usuarios/gestion-aspirantes/editar-indicaciones", "fact_check", "Indicaciones posteriores al proceso de admisión.")
 
 
 export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
@@ -148,7 +148,7 @@ export const BC_CONFIGURAR_USUARIO = new Breadcrumb(CONFIGURAR_USUARIO, [HOME]);
 
 /************************************************ RESULTADOS ********************************************************************************************/
 
-export const SEGUIMIENTO = new NavigationLink("Seguimiento", "/app/seguimiento", "fast_forward", "Da seguimiento a tu inscripción");
+export const SEGUIMIENTO = new NavigationLink("Publicacion de Resultados", "/app/resultados", "fast_forward", "Da seguimiento a tu inscripción");
 
 export const BC_SEGUIMIENTO = new Breadcrumb(SEGUIMIENTO, [HOME]);
 
@@ -179,7 +179,7 @@ export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boo
     if(rol === 'admin' || rol === 'root')
         links = links.concat(ETAPAS, USUARIOS);
     if(rol === 'aspirante' && resultadosActivo)
-        links = links.concat(ETAPAS, SEGUIMIENTO);
+        links = links.concat(SEGUIMIENTO);
     links.unshift(HOME);
     return links;
 }

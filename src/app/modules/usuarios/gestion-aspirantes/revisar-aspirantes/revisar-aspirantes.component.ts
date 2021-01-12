@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, HostListener } from '@angular/core';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_REVISAR_ASPIRANTES, BC_USUARIOS } from '@shared/routing-list/ListLinks';
 import { UsuarioService } from '@services/usuario/usuario.service';
@@ -10,9 +10,10 @@ import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { comprobarPermisos, GESTION_USUARIOS, sinAcceso } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { EtapasService } from '@services/etapas/etapas.service';
 import { UsuarioInterface } from '@models/persona/usuario';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-revisar-aspirantes',
@@ -92,8 +93,13 @@ export class RevisarAspirantesComponent implements OnInit, AfterViewInit {
       { state: { userId: JSON.stringify(row.id) } });
   }
 
-    
 
+  buscarPorQR(){
+    const dialogRef = this.dialog.open(ModalQRListener, {
+      width: '350px'
+    });
+    dialogRef.afterClosed().subscribe(result => {});
+  }
 
   private updateTablaUsuarios(): void {
     this.usuarios.paginator = this.paginator;
@@ -103,5 +109,56 @@ export class RevisarAspirantesComponent implements OnInit, AfterViewInit {
   private mensajeError():void{
     this._toast.error("Hubo un error al cargar información");
   }
+}
 
+@Component({
+  selector: 'modal-qr-listener',
+  templateUrl: './modal-qr-listener.html',
+  styleUrls: ['./revisar-aspirantes.component.scss']
+})
+export class ModalQRListener {
+
+  scanState = 0;
+  id = "";
+
+  constructor(
+    public dialogRef: MatDialogRef<ModalQRListener>, public sanitizer: DomSanitizer, private _router: Router) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    let key = event.key;
+    switch(this.scanState){
+      case 0:
+        if(key == '<') this.scanState = 1;
+        break;
+      case 1:
+        if(key == '%') {
+          this.scanState = 2;
+          this.id = "";
+        }
+        else if(key == '<') this.scanState = 1;
+        else this.scanState = 0;
+        break;
+      case 2:
+        if(key == '%') this.scanState = 3;
+        else if(key == '<') this.scanState = 1;
+        else if(key == '>') this.scanState = 0;
+        else this.id += key;
+        break;
+      case 3:
+        if(key == '>'){
+          this.dialogRef.close();
+          this._router.navigate(['/app/usuarios/gestion-aspirantes/revisar-aspirantes/ver-aspirante'], 
+            { state: { userId: JSON.stringify(this.id) } });  
+        }
+        else if(key == '<') this.scanState = 1;
+        else this.scanState = 0;
+        break;
+    }
+  }
 }

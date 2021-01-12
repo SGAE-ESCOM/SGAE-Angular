@@ -1,14 +1,19 @@
 <div class="container animated-row pb-4">
     <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 text-right pt-2">
+            </div>
         <div class="col-12">
             <div class="row">
-                <div class="col-12 col-sm-4 offset-md-8">
+                <div class="col-12 col-sm-4">
+                    <button class="vertical-center" mat-flat-button color="info" name="btnBuscarPorQR" (click)="buscarPorQR()" >Buscar aspirante por código QR<mat-icon>perm_identity</mat-icon></button>
+                </div>  
+                <div class="col-12 col-sm-4 offset-md-4">
                     <mat-form-field id="bucar" appearance="outline">
                         <mat-label>Buscar</mat-label>
                         <input matInput (keyup)="buscarUsuario($event.target.value)" placeholder="Filtrar por palabra">
                         <mat-icon matSuffix>search </mat-icon>
                     </mat-form-field>
-                </div>
+                </div>         
             </div>
         </div>
         <div class="col-12">
