@@ -7,6 +7,7 @@ import { AuthService } from '@services/auth.service';
 import { GruposService } from '@services/evaluacion/grupos.service';
 import { sinAcceso } from '@shared/admin-permissions/permissions';
 import { BC_HOME, BC_SEGUIMIENTO } from '@shared/routing-list/ListLinks';
+import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 
 @Component({
   selector: 'app-seguimiento',
@@ -18,6 +19,12 @@ export class SeguimientoComponent implements OnInit {
   usuario: UsuarioInterface;
   indicaciones = "";
 
+  //ElementosQR
+  elementType = NgxQrcodeElementTypes.URL;
+  correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+  value;
+
+
   constructor(private _authService: AuthService, private router: Router, private _grupos: GruposService) { 
     this.usuario = this._authService.getUsuarioC();
     //Comprobar Permisos
@@ -27,6 +34,8 @@ export class SeguimientoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.value = "<%" + this.usuario.id + "%>"
+
     try {
       this._grupos.getGrupoIndicaciones(this.usuario.grupo.id).then(grupo =>{
         let grupoAux = grupo.data();

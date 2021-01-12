@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatTooltipModule,
     MatDialogModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgxQRCodeModule
   ]
 })
 export class ResultadosModule { }
