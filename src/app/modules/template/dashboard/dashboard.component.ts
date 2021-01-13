@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { getCardsByEtapas, LINKS_HOME } from '@routing/ListLinks';
+import { Component } from '@angular/core';
+import { getCardsByEtapas } from '@routing/ListLinks';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_HOME } from '@routing/ListLinks';
 import { cardAnimationFadeIn, fadeInDown } from '@shared/utils/animations/router.animations';
@@ -7,7 +7,6 @@ import { AuthService } from '@services/auth.service';
 import { filtrarLinksPorPermisos } from '@shared/admin-permissions/permissions';
 import { UsuarioInterface } from '@models/persona/usuario';
 import { momentJS } from '@shared/utils/traduccion/moment';
-
 
 @Component({
   selector: 'app-dashboard',

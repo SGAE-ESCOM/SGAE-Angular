@@ -18,8 +18,9 @@ export class CardsComponent implements OnInit {
   ngOnInit() {
   }
 
-  gotoSeccion(url: string){
-    this.router.navigate([url]);
+  gotoSeccion(url: string, disabled?: boolean | false){
+    if(!disabled)
+      this.router.navigate([url]);
   }
 
   trackById(index, item) {

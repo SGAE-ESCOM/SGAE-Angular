@@ -169,10 +169,17 @@ export const LINKS_ROOT_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 /************************************************ HOME AND LANDINGPAGE ********************************************************************************************/
 export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boolean = false) {
     let links = [];
+    const fechaHoy = new Date().getTime();
     if(etapas){
-        links = Object.entries(etapasJson).reduce((prev, [key, value]) => {
-            if (etapas[key])
-                prev = prev.concat(value);
+        links = Object.entries(etapasJson).reduce((prev, [key, etapaLink]:any) => {
+            let etapa = etapas[key];
+            if (etapa){
+                if( (fechaHoy < etapa.fechaInicio || fechaHoy > etapa.fechaTermino ) && rol === 'aspirante')
+                    etapaLink.disabled = true;
+                else
+                    etapaLink.disabled = false;
+                prev = prev.concat(etapaLink);
+            }
             return prev;
         }, []);
     }
