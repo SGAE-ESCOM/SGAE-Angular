@@ -83,10 +83,13 @@ export class DefinirEtapasComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<string[]>) {
+    const ultimo = this.etapas.length-1;
     if ((event.previousIndex * event.currentIndex) == 0)
       this._toast.warning("No puedes cambiar el orden de la convocatoria");
     else if (event.previousIndex == 1 || event.currentIndex == 1)
       this._toast.warning("No puedes cambiar el orden del registro");
+    else if ( (event.previousIndex == ultimo || event.currentIndex == ultimo ) && this.etapas[this.etapas.length-1].valor === "publicacionResultados")
+      this._toast.warning("No puedes cambiar el orden de publicación de resultados");
     else
       moveItemInArray(this.etapas, event.previousIndex, event.currentIndex);
   }

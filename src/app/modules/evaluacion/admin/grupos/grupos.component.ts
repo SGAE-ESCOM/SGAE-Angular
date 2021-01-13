@@ -6,6 +6,7 @@ import { Grupo } from '@models/evaluacion/Grupo';
 import { Tabla } from '@models/utils/Tabla';
 import { GruposService } from '@services/evaluacion/grupos.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
+import { UsuarioService } from '@services/usuario/usuario.service';
 import { BC_GESTIONAR_GRUPOS } from '@shared/routing-list/ListLinks';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,7 +21,8 @@ export class GruposComponent implements OnInit {
   columnas: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
   grupos: Grupo[] = [];
 
-  constructor(public dialog: MatDialog, private _grupos: GruposService, private _swal: SweetalertService, private _toastr:ToastrService) {
+  constructor(public dialog: MatDialog, private _grupos: GruposService, private _usuariosService: UsuarioService,
+    private _swal: SweetalertService, private _toastr:ToastrService) {
     BreadcrumbComponent.update(BC_GESTIONAR_GRUPOS);
   }
 
@@ -35,11 +37,7 @@ export class GruposComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        /*this._ads.updateDocumento(documento.id, result).then(data =>
-          this.toast.info("El requisito se actualizó exitosamente")
-        ).catch(error => this.toast.error(error))*/
-      }
+      if (result != null) {}
     });
   }
 
@@ -50,11 +48,7 @@ export class GruposComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        /*this._ads.updateDocumento(documento.id, result).then(data =>
-          this.toast.info("El requisito se actualizó exitosamente")
-        ).catch(error => this.toast.error(error))*/
-      }
+      if (result != null) {}
     });
   }
 
@@ -62,6 +56,7 @@ export class GruposComponent implements OnInit {
     this._swal.confirmarEliminar(`¿Deseas eliminar el grupo '${grupo.nombre}'?`, 'No se podrá revertir esta acción')
     .then((result) => {
       if (result.value) {
+        
         this._grupos.delete(grupo).then(() => {
           this._swal.eliminadoCorrecto('El grupo se ha eliminado');
         }).catch(err => this._toastr.error(err));
@@ -88,14 +83,6 @@ export class ModalGrupos {
 
   accion(realizado: boolean) {
     this.dialogRef.close(realizado);
-  }
-
-  enviarForm(repuesta) {
-    /*if (requisito.valid)
-      this.dialogRef.close(requisito.value);
-    else {
-      this._toast.error("Llena todos los campos requeridos");
-    }*/
   }
 
 }
