@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div *ngIf="grupos; else elseBlockAlert" class="col-12">
             <mat-accordion>
                 <mat-expansion-panel *ngFor="let grupo of grupos; ">
                     <mat-expansion-panel-header>
@@ -21,6 +21,24 @@
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
+        </div>
+        <ng-template #elseBlockAlert>
+            <div  class="col-12">
+                <div class="alert alert-warning" role="alert">
+                    <div class="col-12 pt-2">
+                        <h4 class="alert-heading">No se han agregado grupos</h4>
+                        <p>Agrega al menos a un grupo para poder editar las indicaciones de admisión.</p>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </ng-template>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right return">
+            <button name="btnRegresar" type="submit" type="submit" [routerLink]="['/app/usuarios/gestion-aspirantes']" mat-button color="info">
+                    Regresar <mat-icon>undo</mat-icon> 
+            </button>
         </div>
     </div>
 </div>

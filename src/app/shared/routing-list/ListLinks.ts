@@ -128,7 +128,6 @@ const VER_ASPIRANTE = new NavigationLink("Visualizar Aspirante", "/app/usuarios/
 const ASIGNAR_ASPIRANTES = new NavigationLink("Finalizar Aspirantes", "/app/usuarios/gestion-aspirantes/asignar-aspirantes", "check_box", "Finaliza el proceso para los aspirantes que hayan completado todo el proceso.")
 const INDICACIONES_ASIGNACION = new NavigationLink("Indicaciones de Admisión", "/app/usuarios/gestion-aspirantes/editar-indicaciones", "fact_check", "Indicaciones posteriores al proceso de admisión.")
 
-
 export const BC_USUARIOS = new Breadcrumb(USUARIOS, [HOME]);
 export const BC_GESTION_ADMON = new Breadcrumb(GESTION_ADMON, [HOME, USUARIOS]);
 export const BC_GESTION_ASPIRANTES = new Breadcrumb(GESTION_ASPIRANTES, [HOME, USUARIOS]);
@@ -139,7 +138,8 @@ export const BC_VER_ASPIRANTE = new Breadcrumb(VER_ASPIRANTE, [HOME, USUARIOS, G
 export const BC_ASIGNAR_ASPIRANTES = new Breadcrumb(ASIGNAR_ASPIRANTES, [HOME, USUARIOS, GESTION_ASPIRANTES]);
 export const BC_INDICACIONES_ASIGNACION = new Breadcrumb(INDICACIONES_ASIGNACION, [HOME, USUARIOS, GESTION_ASPIRANTES]);
 
-export const LINKS_GESTION_ASPIRANTES = [REVISAR_ASPIRANTES, ASIGNAR_ASPIRANTES, INDICACIONES_ASIGNACION];
+export const LINKS_GESTION_ASPIRANTES_ALT = [REVISAR_ASPIRANTES, ASIGNAR_ASPIRANTES, INDICACIONES_ASIGNACION];
+export const LINKS_GESTION_ASPIRANTES = [REVISAR_ASPIRANTES];
 
 /************************************************ USUARIO ********************************************************************************************/
 export const CONFIGURAR_USUARIO = new NavigationLink("Configurar Usuario", "/app/usuario/configurar-usuario");

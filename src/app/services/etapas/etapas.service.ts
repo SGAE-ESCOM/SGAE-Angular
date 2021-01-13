@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreCollection, AngularFirestore, CollectionReference } from '@angular/fire/firestore';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Etapa } from '@models/etapas/etapa';
 import { map } from 'rxjs/operators';
 import { FechaEtapa } from '@models/etapas/fecha-etapa';
+import { ETAPAS_BUSCAR } from '@models/etapas/etapa.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,14 @@ import { FechaEtapa } from '@models/etapas/fecha-etapa';
 export class EtapasService {
 
   private etapasCollection: AngularFirestoreCollection<any>;
+  private etapasCollectionReference: CollectionReference;
   private fechasEtapasCollection: AngularFirestoreCollection<any>;
   private batch: firebase.firestore.WriteBatch;
 
   constructor(private db: AngularFirestore, private data: AngularFireDatabase) {
     this.etapasCollection = db.collection<any>('EstadosAspirante');
     this.fechasEtapasCollection = db.collection<any>('FechasEstapas');
+    this.etapasCollectionReference = db.firestore.collection('FechasEstapas');
   }
 
   //CRUD EESTADOS_ASPIRANTE
@@ -85,5 +88,9 @@ export class EtapasService {
       etapa.color = etapa.color.nombre;
       return etapa;
     });
+  }
+
+  getEtapaResultados() {
+    return this.etapasCollectionReference.doc(ETAPAS_BUSCAR.publicacionResultados.valor).get();
   }
 }

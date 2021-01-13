@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { IndicacionesGrupo } from '@models/Indicaciones/indicaciones-grupo';
 import { AuthService } from '@services/auth.service';
+import { EtapasService } from '@services/etapas/etapas.service';
 import { GruposService } from '@services/evaluacion/grupos.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { comprobarPermisos, GESTION_USUARIOS, sinAcceso } from '@shared/admin-permissions/permissions';
@@ -16,9 +17,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class IndicacionesAsignacionComponent implements OnInit {
 
-  grupos: IndicacionesGrupo[] = [];
+  grupos: IndicacionesGrupo[];
 
-  constructor(private _authServices: AuthService, private router: Router, private _grupos: GruposService, private _toast: ToastrService, private _swal: SweetalertService) {
+  constructor(private _authServices: AuthService, private router: Router, private _grupos: GruposService, private _toast: ToastrService, 
+        private _swal: SweetalertService, private _etapas: EtapasService) {
+    //ETAPA RESULTADOS EXISTE
+    this._etapas.getEtapaResultados().then(res =>  { if(typeof res === 'undefined') sinAcceso(router); });
+    
+    
     let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
     //Comprobar Permisos

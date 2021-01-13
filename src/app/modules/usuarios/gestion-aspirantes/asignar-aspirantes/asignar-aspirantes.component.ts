@@ -43,6 +43,10 @@ export class AsignarAspirantesComponent implements OnInit, AfterViewInit {
 
   constructor(private _usuarioService: UsuarioService, private _toast:ToastrService, private _swal: SweetalertService, 
       private _authServices: AuthService, private router: Router, public dialog: MatDialog, private _etapas: EtapasService) {
+    //ETAPA RESULTADOS EXISTE
+    this._etapas.getEtapaResultados().then(res =>  { if(typeof res === 'undefined') sinAcceso(router); });
+
+    
     let usuario = this._authServices.getUsuarioC();
     BreadcrumbComponent.update(BC_USUARIOS);
     //Comprobar Permisos
