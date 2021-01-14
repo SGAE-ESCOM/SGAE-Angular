@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'usuarios', loadChildren: () => import('@modules/usuarios/usuarios.module').then(m => m.UsuariosModule) },
   { path: 'usuario', loadChildren: () => import('@modules/usuario/usuario.module').then(m => m.UsuarioModule) },
   { path: 'resultados', loadChildren: () => import('@modules/resultados/resultados.module').then(m => m.ResultadosModule) },
+  { path: 'grupos', loadChildren: () => import('@modules/grupos/grupos.module').then(m => m.GruposModule) },
   { path: 'acceso-restringido', component: AccesoRestringidoComponent }
   //Agregar SinPermisos
 ];

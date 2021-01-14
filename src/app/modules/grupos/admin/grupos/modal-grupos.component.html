@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center">{{ data.titulo }}</h3>
+            <hr>
+        </div>
+        <div class="col-12">
+            <app-form-grupos-admin [opc]="data.opc" [grupo]="data.grupo" [titulo]="data.titulo" (cerrar)="onNoClick()" (accion)="accion($event)"></app-form-grupos-admin>
+        </div>
+    </div>
+</div>

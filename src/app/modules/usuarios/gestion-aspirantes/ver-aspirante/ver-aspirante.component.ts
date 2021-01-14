@@ -4,7 +4,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { UsuarioInterface } from '@models/persona/usuario';
-import { Breadcrumb } from '@models/template/Breadcrumb';
 import { AuthService } from '@services/auth.service';
 import { ValidarDocumentacionService } from '@services/documentacion/validar-documentacion.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
@@ -82,7 +81,7 @@ export class VerAspiranteComponent implements OnInit {
   }
 
   abrirArchivo(archivo) {
-    const dialogRef = this.dialog.open(ModalVerDocumento, {
+    const dialogRef = this.dialog.open(ModalVerDocumentoUsuario, {
       width: '1000px',
       data: archivo
     });
@@ -91,13 +90,13 @@ export class VerAspiranteComponent implements OnInit {
 }
 
 @Component({
-  selector: 'modal-editar',
+  selector: 'modal-ver-documento-usuario',
   templateUrl: './modal-documento.component.html',
 })
-export class ModalVerDocumento {
+export class ModalVerDocumentoUsuario {
 
   constructor(
-    public dialogRef: MatDialogRef<ModalVerDocumento>,
+    public dialogRef: MatDialogRef<ModalVerDocumentoUsuario>,
     public sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 

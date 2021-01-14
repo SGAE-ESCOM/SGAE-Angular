@@ -1,0 +1,29 @@
+<div class="container animated-row">
+    <div class="row">
+        <div class="col-12">
+            <p>Los grupos se crean para que los aspirantes puedan inscribirse a ellos. Recuerda que dependiendo del tipo de proceso de admisión puedes cambiar el nombre de 'grupo' por alguno
+                que se asocie a él. Ejemplo 'Unidad Academica', 'Salon', 'Inglés I', etc.
+            </p>
+        </div>
+        <!--
+            <div class="col-12 col-sm-8 col-md-4">
+            <mat-form-field id="bucar" appearance="outline">
+                <mat-label>Nombre de los grupos</mat-label>
+                <input matInput #nombreGrupo name="txtBuscar" placeholder="Filtrar por palabra">
+                <mat-icon matSuffix>group</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-12">
+            <b>Ejemplo del texto que visualizarán los aspirantes:</b>
+            <p>Selecciona {{ this.nombreGrupo.value ? this.nombreGrupo.value : 'Grupo' }} </p>
+        </div>
+        -->
+
+        <div class="col-12">
+            <app-tabla [columnas]="columnas" [datos]="grupos"
+                [isSave]="true" (save)="modalGuardar()"
+                [isUpdate]="true" (update)="modalActualizar($event)"
+                [isDelete]="true" (delete)="modalEliminar($event)" ></app-tabla>
+        </div>
+    </div>
+</div>

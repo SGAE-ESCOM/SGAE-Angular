@@ -30,6 +30,20 @@ export const LINKS_DOCUMENTACION = {
     root: [ADMINISTRAR_DOCUMENTACION, VALIDAR_DOCUMENTACION]
 }
 
+/************************************************ GRUPOS ********************************************************************************************/
+//ADMIN
+export const GESTIONAR_GRUPOS_ALT = new NavigationLink("Gestionar Grupos", "/app/grupos/gestionar-grupos", "group", "Gestiona los grupos para aplicar evaluación(s)");
+export const BC_GESTIONAR_GRUPOS_ALT = new Breadcrumb(GESTIONAR_GRUPOS_ALT, [HOME]);
+
+//ASPIRANTE
+export const GRUPOS_ALT = new NavigationLink("Inscribir grupo", "/app/grupos/inscribir-grupo", "group", "Inscribete a un grupo para realizar evaluación(s)");
+export const BC_GRUPOS_ALT = new Breadcrumb(GRUPOS_ALT, [HOME]);
+
+export const LINKS_GRUPOS = {
+    aspirante: [GRUPOS_ALT],
+    admin: [GESTIONAR_GRUPOS_ALT],
+    root: [GESTIONAR_GRUPOS_ALT]
+}
 /************************************************ EVALUACION ********************************************************************************************/
 export const EVALUACION = new NavigationLink("Evaluación", "/app/evaluacion", "spellcheck", "Simulador de exámen y publicación de resultados");
 export const BC_EVALUACION = new Breadcrumb(EVALUACION, [HOME]);
@@ -184,9 +198,11 @@ export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boo
         }, []);
     }
     if(rol === 'admin' || rol === 'root')
-        links = links.concat(ETAPAS, USUARIOS);
-    if(rol === 'aspirante' && resultadosActivo)
-        links = links.concat(SEGUIMIENTO);
+        links = links.concat(ETAPAS, GESTIONAR_GRUPOS_ALT,USUARIOS);
+    if(rol === 'aspirante'){
+        if(resultadosActivo) links = links.concat(SEGUIMIENTO);
+        links = links.concat(GRUPOS_ALT);
+    }
     links.unshift(HOME);
     return links;
 }

@@ -1,0 +1,42 @@
+<div class="container" @fadeInRight>
+    <!-- FORMULARIO INSCRIBIR GRUPO -->
+    <div class="row"  *ngIf="hasGrupo; else MensajeInscribirse">
+        <div class="col-12 pt-2">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading pb-3">Ya estás inscrito al grupo {{ grupoName }} </h4>
+                <a mat-flat-button color="warning" [routerLink]="linkEvaluaciones">Ir a Evaluaciones <mat-icon>
+                        navigate_next</mat-icon></a>
+            </div>
+        </div>
+    </div>
+    <!-- FORMULARIO INSCRIBIR GRUPO -->
+    <ng-template #MensajeInscribirse>
+        <form [formGroup]="fgInscripcionGrupo" class="row justify-content-center">
+            <div class="col-12 py-4">
+                <div class="alert alert-warning" role="alert">
+                    <h5 class="alert-heading">Hemos detectado que no te has inscrito a ningún grupo. Selecciona el grupo al cual deseas inscribirte.</h5>
+                    <b class="text-danger">Nota: No podras cambiar de grupo una vez seleccionado alguno de ellos</b>
+                </div>
+            </div>
+            <div class="col-12 col-sm-7 col-md-4 form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Grupo </mat-label>
+                            <mat-select formControlName="grupo" name="grupo" id="grupo" required>
+                                <mat-option *ngFor="let grupo of grupos" [value]="grupo">
+                                    {{ grupo.nombre }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="grupo.hasError('required')">{{ MSJ_ERROR_REQUERIDO }}</mat-error>
+                            <mat-icon matSuffix>groups </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12">
+                        <button mat-button color="success" (click)="inscribir()" class="btn-block">Inscribirse<mat-icon>check</mat-icon></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>

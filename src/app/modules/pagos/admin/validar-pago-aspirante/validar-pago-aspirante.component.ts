@@ -104,7 +104,7 @@ export class ValidarPagoAspiranteComponent implements OnInit {
       nombre: this.evidenciaPagoObject.nombre
     }
 
-    const dialogRef = this.dialog.open(ModalVerDocumentoRequisito, {
+    const dialogRef = this.dialog.open(ModalVerDocumentoPagos, {
       width: '1000px',
       data: data
     });
@@ -113,13 +113,13 @@ export class ValidarPagoAspiranteComponent implements OnInit {
 }
 
 @Component({
-  selector: 'modal-editar',
+  selector: 'modal-editar-pagos',
   templateUrl: './modal-documento.component.html',
 })
-export class ModalVerDocumentoRequisito {
+export class ModalVerDocumentoPagos {
 
   constructor(
-    public dialogRef: MatDialogRef<ModalVerDocumentoRequisito>,
+    public dialogRef: MatDialogRef<ModalVerDocumentoPagos>,
     public sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
