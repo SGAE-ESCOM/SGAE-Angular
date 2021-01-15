@@ -22,14 +22,12 @@ export class PasswordResetComponent implements OnInit {
   }
 
   resetPassword(form){
-    try{
-      this._authService.passwordReset(form.email).then(()=>{
-        this._toast.success("Correo enviado, revisa tu bandeja de entrada.");
-        this.router.navigate(['/login']);
-      });
-    }catch(error){
+    this._authService.passwordReset(form.email).then(()=>{
+      this._toast.success("Correo enviado, revisa tu bandeja de entrada.");
+      this.router.navigate(['/login']);
+    }).catch(error =>{
       console.log(error);
-    }
+    });
   }
 
   ngOnInit() {

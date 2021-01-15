@@ -121,6 +121,15 @@ export class AuthService {
     return this.afsAuth.auth.sendPasswordResetEmail(email);
   }
 
+  reauthenticate(currentPassword){
+    let credential = firebase.auth.EmailAuthProvider.credential(this.getUsuarioC().email, currentPassword);
+    return this.afsAuth.auth.currentUser.reauthenticateWithCredential(credential);
+  }
+
+  updatePassword(newPassword){
+    return this.afsAuth.auth.currentUser.updatePassword(newPassword);
+  }
+
   /********************************************* GETTERS AND SETTERS ****************************************/
   setUsuario(usuario){
     AuthService.usuario = usuario;

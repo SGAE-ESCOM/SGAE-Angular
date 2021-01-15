@@ -39,6 +39,60 @@
                         </div>
                     </form>
                     <hr>
+                    <h5>Actualizar Contraseña</h5>
+                    <form [formGroup]="fgPassword" #formDirective="ngForm">
+                        <div class="row">
+                            <div class="col-12 col-md-4 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Contraseña Actual</mat-label>
+                                    <input matInput formControlName="prevPassword" type="prevPassword" id="prevPassword" name="prevPassword" [type]="hidePrev ? 'password' : 'text'" placeholder="****" required>
+                                    <button type="button" mat-icon-button matSuffix (click)="hidePrev = !hidePrev"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePrev">
+                                        <mat-icon>{{hidePrev ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="fgPassword.get('prevPassword').hasError('required')"> Este campo es requerido </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Nueva Contraseña</mat-label>
+                                    <input matInput formControlName="password" type="password" id="password" name="password" [type]="hide ? 'password' : 'text'" placeholder="****"  required>
+                                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="fgPassword.get('password').hasError('required')"> Este campo es requerido </mat-error>
+                                    <mat-error *ngIf="fgPassword.get('password').touched && fgPassword.get('password').hasError('minlength')">
+                                        La longitud debe ser de almenos 6 caracteres
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <mat-form-field appearance="legacy">
+                                    <mat-label>Repita la nueva contraseña</mat-label>
+                                    <input matInput formControlName="passwordRepeat" type="newPasswordRepeat" id="newPasswordRepeat" [type]="hide ? 'password' : 'text'" placeholder="****"  required>
+                                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="fgPassword.get('passwordRepeat').invalid">{{getErrorNotMatch()}}</mat-error>
+                                    <mat-error *ngIf="fgPassword.get('passwordRepeat').touched && fgPassword.get('passwordRepeat').hasError('minlength')">
+                                        La longitud debe ser de almenos 6 caracteres
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button name="btnActualizarPassword" type="submit" type="submit" mat-button color="info" (click)="updatePassword(fgPassword,formDirective)" [disabled]="fgPassword.invalid">Cambiar Contraseña<mat-icon>cached</mat-icon> 
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+
                     <div class="row">
                         <div class="col-12 text-right">
                             <button name="btnRegresar" type="submit" type="submit" [routerLink]="['/app/usuarios/gestion-admon']" mat-button color="warning">

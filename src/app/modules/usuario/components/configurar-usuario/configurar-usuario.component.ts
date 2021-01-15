@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@components/breadcrumb/breadcrumb.component';
 import { UsuarioInterface } from '@models/persona/usuario';
@@ -7,7 +7,9 @@ import { AuthService } from '@services/auth.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
 import { UsuarioService } from '@services/usuario/usuario.service';
 import { BC_CONFIGURAR_USUARIO } from '@shared/routing-list/ListLinks';
+import { passwordMatchValidator } from '@shared/utils/validators/passwordValidators';
 import { TEXTO_CON_ESPACIOS } from '@shared/utils/validators/regex';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configurar-usuario',
@@ -16,12 +18,17 @@ import { TEXTO_CON_ESPACIOS } from '@shared/utils/validators/regex';
 })
 export class ConfigurarUsuarioComponent implements OnInit {
 
+  hidePrev: boolean = true;
+  hide: boolean = true;
   usuario: UsuarioInterface;
   fgUser: FormGroup;
   btnActualizar = false;
 
+  fgPassword: FormGroup;
+
+
   constructor(private fb: FormBuilder, private _usuarioService: UsuarioService, private _swal: SweetalertService, 
-        private _authService: AuthService, private router: Router) { 
+        private _authService: AuthService, private router: Router, private _toast: ToastrService) { 
     BreadcrumbComponent.update(BC_CONFIGURAR_USUARIO);
 
   }
@@ -30,6 +37,14 @@ export class ConfigurarUsuarioComponent implements OnInit {
     this.fgUser = this.fb.group({
       nombres: ['', [Validators.required, Validators.pattern(TEXTO_CON_ESPACIOS)]],
       apellidos: ['', [Validators.required, Validators.pattern(TEXTO_CON_ESPACIOS)]]
+    });
+
+    this.fgPassword = this.fb.group({
+      prevPassword: ['', [Validators.required, Validators.minLength(6) ]],
+      password: ['', [Validators.required, Validators.minLength(6) ]],
+      passwordRepeat: ['', [Validators.required, Validators.minLength(6) ]]
+    },{
+      validators: passwordMatchValidator
     });
     this.getUsuarioActual();
   }
@@ -67,6 +82,30 @@ export class ConfigurarUsuarioComponent implements OnInit {
     }
   }
 
+  updatePassword(form: FormGroup, formDirective: FormGroupDirective){
+    if(form.valid){
+      // Actualizar Contraseña
+      let data = form.value;
+      this._authService.reauthenticate(data.prevPassword).then(() => {
+        this._authService.updatePassword(data.password).then(()=>{
+          this._swal.actualizadoCorrecto("La contraseña se actualizo correctamente.");
+          formDirective.resetForm();
+          this.fgPassword.reset();
+        }).catch(error => {
+          this._swal.errorActualizarAdmin();
+        })
+      }).catch(error => {
+        this._toast.error("Contraseña actual incorrecta.");
+      });
+    }
+
+  }
+
+  getErrorNotMatch() {
+    return this.fgPassword.get('passwordRepeat').hasError('required') ? 'Este campo es requerido' :
+      this.fgPassword.get('passwordRepeat').hasError('mustMatch') ? 'Debe coincidir la contraseña' :
+        '';
+  }
 
   getNombreErrorMessage(){
     return this.fgUser.get('nombres').hasError('required') ? 'Este campo es requerido' :

@@ -7,6 +7,7 @@ import { AngularMaterialModule } from '@modules/template/angular-material.module
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { AngularMaterialMinModule } from '@modules/template/angular-material-min.module';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
     MatTooltipModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
+    AngularMaterialMinModule
   ]
 })
 export class UsuarioModule { }
