@@ -9,7 +9,7 @@ import { AuthService } from '@services/auth.service';
 import { AplicacionService } from '@services/evaluacion/aplicacion.service';
 import { ResultadosService } from '@services/evaluacion/resultados.service';
 import { SweetalertService } from '@services/sweetalert/sweetalert.service';
-import { BC_EVALUACIONES, GRUPOS } from '@shared/routing-list/ListLinks';
+import { BC_EVALUACIONES, GRUPOS_ALT } from '@shared/routing-list/ListLinks';
 import { cardAnimation, fadeInRight } from '@shared/utils/animations/router.animations';
 import { MSJ_ERROR_CONECTAR_SERVIDOR } from '@shared/utils/mensajes';
 import { momentJS } from '@shared/utils/traduccion/moment';
@@ -28,7 +28,7 @@ export class MainEvaluacionesComponent implements OnInit {
   aplicaciones: Aplicacion[] = [];
   aplicacionesDisponibles: Aplicacion[] = [];
   aplicacionesRealizadas: Resultado[] = [];
-  linkInscribirGrupo = GRUPOS.url;
+  linkInscribirGrupo = GRUPOS_ALT.url;
 
   constructor(private _auth: AuthService, private _swal: SweetalertService, private router: Router,
     private _aplicaciones: AplicacionService, private _resultados: ResultadosService,) {

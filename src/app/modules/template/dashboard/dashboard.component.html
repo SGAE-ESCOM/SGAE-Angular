@@ -1,13 +1,23 @@
 <div class="container">
   <div class="row" *ngIf="isAspirante">
     <div class="col-12">
-      <div class="progress" style="height: 17px;" [@cardAnimationFadeIn]="etapas.length">
-        <div [matTooltip]="etapa.info" *ngFor="let etapa of etapas"
-          [class]="'progress-bar progress-bar-striped hover '+ etapa.color" role="progressbar" 
-          [ngStyle]="{'width': etapa.porcentaje+ '%' }" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
-          <b> {{ etapa.nombre }} </b>
-        </div>
-      </div>
+      <table class="table table-sm table-borderless text-center">
+        <tbody [@cardAnimationFadeIn]="etapas.length">
+          <tr>
+            <th style="padding-bottom: 1rem !important;" [attr.colspan]="etapas.length"> Estado de mis etapas</th>
+          </tr>
+          <tr>
+            <td *ngFor="let etapa of etapas; let i = index" [matBadge]="i+1" matBadgePosition="before" matBadgeColor="accent" style="padding: 0 !important" [ngStyle]="{'width': etapa.porcentaje+ '%' }">
+              <b class="hide">{{ etapa.nombre }}</b>
+              <div [matTooltip]="etapa.info"
+                [class]="'progress-bar progress-bar-striped hover '+ etapa.color" role="progressbar" 
+                style="width: 100%; min-width: 100%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+                <b class="hide-info"> {{ etapa.estado }} </b>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <app-cards [cards]="cards"></app-cards>

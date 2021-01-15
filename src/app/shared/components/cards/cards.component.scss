@@ -30,3 +30,8 @@ span .mat-icon {
   align-items: center;
   justify-content: center;
 }
+
+.mat-badge-medium.mat-badge-above .mat-badge-content {
+  top: 6px;
+  left: 6px;
+}

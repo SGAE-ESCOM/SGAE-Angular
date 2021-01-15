@@ -34,7 +34,8 @@ export class DashboardComponent {
   }
 
   /**
-   * Función que define 
+   * Función que define los cards que serán utilzados en el proceso de Admisión,
+   * Docuentación, Evaluación, Pagos y/o Publicación de resultados
    * @param usuario: UsuarioInterface
    */
   private defineCards(usuario: UsuarioInterface){
@@ -59,12 +60,16 @@ export class DashboardComponent {
     const porcentajeUnitario = 100 / Object.keys( this.etapasDisponibles ).length;
     this.etapas = Object.entries( this.etapasDisponibles ).map( ([key, value]:any) => {
       return {
+        lugar: value.lugar,
         nombre: value.nombre,
-        color: colorEtapas[value.id][this.usuario.estado[value.id]], 
+        color: colorEtapas[value.id][this.usuario.estado[value.id]],
         porcentaje: porcentajeUnitario,
+        estado: labelEtapas[value.id][this.usuario.estado[value.id]],
         info: `${value.nombre}: Del ${ momentJS(value.fechaInicio).format('Do MMMM YYYY') } al ${ momentJS(value.fechaTermino).format('Do MMMM YYYY') }`
       }
     });
+    this.etapas.sort( (a,b) => { return a.lugar - b.lugar });
+    console.log(this.etapas);
   }
 }
 
@@ -91,7 +96,31 @@ const colorEtapas = {
   }
 }
 
+const labelEtapas = {
+  'documentacion' : {
+    invalida : 'Inválida',
+    revision : 'Revisión',
+    correccion : 'Necesita corrección',
+    validada : 'Validada'
+  },
+  'evaluacionConocimientos' : {
+    invalida : 'Inválida',
+    'No válido': 'Nó valido',
+    'Válido' : 'Válido'
+  },
+  'pago' : {
+    invalida : 'Inválida',
+    revision : 'Revisión',
+    correccion : 'Necesita corrección',
+    validada : 'Validado'
+  },
+  'publicacionResultados' : {
+    invalida : 'Inválida',
+  }
+}
+
 class EtapaProgress {
+  lugar: number;
   nombre: string;
   info: string;
   color: string;

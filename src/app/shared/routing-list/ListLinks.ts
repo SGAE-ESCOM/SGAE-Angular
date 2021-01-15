@@ -78,9 +78,9 @@ export const ADMIN_APLICACION = new NavigationLink("Aplicación", "/app/evaluaci
 export const BC_ADMIN_APLICACION = new Breadcrumb(ADMIN_APLICACION, [HOME, EVALUACION])
 
 export const LINKS_EVALUACION = {
-    aspirante: [GRUPOS, EVALUACIONES, RESULTADOS],
-    admin: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, APROBACION_EVALUACION],
-    root: [GESTIONAR_GRUPOS, GESTIONAR_EVALUACION, ADMIN_APLICACION, APROBACION_EVALUACION]
+    aspirante: [EVALUACIONES, RESULTADOS],
+    admin: [GESTIONAR_EVALUACION, ADMIN_APLICACION, APROBACION_EVALUACION],
+    root: [GESTIONAR_EVALUACION, ADMIN_APLICACION, APROBACION_EVALUACION]
 }
 
 /************************************************ CONVOCATORIA ********************************************************************************************/
@@ -184,24 +184,45 @@ export const LINKS_ROOT_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boolean = false) {
     let links = [];
     const fechaHoy = new Date().getTime();
+    console.log(etapas)
     if(etapas){
         links = Object.entries(etapasJson).reduce((prev, [key, etapaLink]:any) => {
             let etapa = etapas[key];
             if (etapa){
-                if( (fechaHoy < etapa.fechaInicio || fechaHoy > etapa.fechaTermino ) && rol === 'aspirante')
+                //Definir su orden
+                etapaLink.orden = etapa.lugar;
+                //Validacion de cards disabled
+                if( (fechaHoy < etapa.fechaInicio || fechaHoy > etapa.fechaTermino ) && rol === 'aspirante'){
+                    etapaLink.badgeLabel = '';
+                    etapaLink.badgeColor = '';
                     etapaLink.disabled = true;
-                else
+                }else{
+                    etapaLink.badgeLabel = '';
+                    etapaLink.badgeColor = '';
                     etapaLink.disabled = false;
+                }
+                //Se concatena con la nueva card
                 prev = prev.concat(etapaLink);
             }
             return prev;
         }, []);
+        links.sort( (a,b) => a.orden - b.orden );
     }
     if(rol === 'admin' || rol === 'root')
         links = links.concat(ETAPAS, GESTIONAR_GRUPOS_ALT,USUARIOS);
     if(rol === 'aspirante'){
         if(resultadosActivo) links = links.concat(SEGUIMIENTO);
-        links = links.concat(GRUPOS_ALT);
+        if(etapas['evaluacionConocimientos'] || etapas['pago'] || etapas['publicacionResultados']){
+            let noEsTiempo = false;
+            if(etapas['evaluacionConocimientos'])
+                noEsTiempo = fechaHoy <= etapas['evaluacionConocimientos'].fechaInicio;
+            else if(etapas['pago'])
+                noEsTiempo = fechaHoy <= etapas['pago'].fechaInicio;
+            else if(etapas['publicacionResultados'])
+                noEsTiempo = fechaHoy <= etapas['publicacionResultados'].fechaInicio;
+            GRUPOS_ALT.disabled = noEsTiempo;
+            links = links.concat(GRUPOS_ALT);
+        }
     }
     links.unshift(HOME);
     return links;

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [CardsComponent],
@@ -13,7 +14,8 @@ import { MatRippleModule } from '@angular/material/core';
     RouterModule,
     MatButtonModule,
     MatIconModule,
-    MatRippleModule
+    MatRippleModule,
+    MatBadgeModule
   ],
   exports: [CardsComponent],
   entryComponents: [CardsComponent]

@@ -112,6 +112,7 @@ export class DefinirFechasComponent implements OnInit {
   private initForm() {
     this.fgEtapasFechas = new FormGroup({});
     this.etapas.forEach((etapa, index) => this.fgEtapasFechas.addControl(etapa.valor, this._fb.group({
+      lugar: index,
       nombre: [etapa.nombre],
       fechaInicio: ['', Validators.required],
       fechaTermino: ['', Validators.required],
