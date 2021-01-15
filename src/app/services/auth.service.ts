@@ -114,6 +114,11 @@ export class AuthService {
    */
   findUsuario( uid ) {
     return this.afs.doc<UsuarioInterface>(`Usuarios/${uid}`).valueChanges();
+
+  }
+
+  passwordReset(email){
+    return this.afsAuth.auth.sendPasswordResetEmail(email);
   }
 
   /********************************************* GETTERS AND SETTERS ****************************************/

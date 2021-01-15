@@ -6,9 +6,11 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
 import { AngularMaterialTemplateModule } from '@modules/template/angular-material-template.module';
 import { MatInputModule } from '@angular/material/input';
 import { CalendarioModule } from "@shared/components/calendario/calendario.module";
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { AngularMaterialMinModule } from '@modules/template/angular-material-min.module';
 
 @NgModule({
-  declarations: [LandingpageComponent],
+  declarations: [LandingpageComponent, PasswordResetComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -16,7 +18,9 @@ import { CalendarioModule } from "@shared/components/calendario/calendario.modul
     PagesRoutingModule,
     AngularMaterialTemplateModule,
     MatInputModule,
-    CalendarioModule
+    CalendarioModule,
+    CommonModule,
+    AngularMaterialMinModule
   ]
 })
 export class PagesModule { }
