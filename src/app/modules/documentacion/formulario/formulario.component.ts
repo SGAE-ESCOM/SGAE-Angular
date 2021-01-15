@@ -7,6 +7,8 @@ import { OPC_SELECCION } from '@models/documentacion/enums/enum-tipo-seleccion.e
 import { OPC_FECHA } from '@models/documentacion/enums/enum-tipo-fecha.enum'
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { REGEX_MAYUSCULAS, REGEX_NUMEROS_MINUTOS, REGEX_MINUSCULAS } from '@shared/utils/validators/regex';
+import { FileValidator } from 'ngx-material-file-input';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-formulario',
@@ -16,6 +18,8 @@ import { REGEX_MAYUSCULAS, REGEX_NUMEROS_MINUTOS, REGEX_MINUSCULAS } from '@shar
 export class FormularioComponent implements OnInit, OnChanges {
 
   public readonly OPC = OPC_TIPO_DATO;
+  readonly maxSize = 104857600;
+
   OPC_CAMPO = OPC_CAMPO;
   OPC_ARCHIVO = OPC_ARCHIVO;
   objectKeys = Object.keys;
@@ -28,7 +32,7 @@ export class FormularioComponent implements OnInit, OnChanges {
   @Output() finalizarForm = new EventEmitter<FormGroup>();
   @Output() guardarForm = new EventEmitter<FormGroup>();
 
-  constructor(private fg: FormBuilder) {
+  constructor(private fg: FormBuilder, private _toastr:ToastrService) {
     this.initForm();
   }
 
@@ -65,13 +69,18 @@ export class FormularioComponent implements OnInit, OnChanges {
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => {
-        let jsonFile = {
-          nombre: file.name,
-          archivo: reader.result
+      if(file.size < 250000 ){
+        reader.onload = () => {
+          let jsonFile = {
+            nombre: file.name,
+            archivo: reader.result
+          };
+          this.fgFormulario.get(documento).patchValue(jsonFile);
         };
-        this.fgFormulario.get(documento).patchValue(jsonFile);
-      };
+      }else{
+        this.fgFormulario.get(documento).patchValue("");
+        this._toastr.error("Tamaño máximo de archivo superado")
+      }
     }
   }
 
@@ -144,6 +153,12 @@ export class FormularioComponent implements OnInit, OnChanges {
         documento.fechaMin = new Date(documento.fechaMin);
         documento.fechaMax = new Date(documento.fechaMax);
         break;
+      }
+      case OPC_ARCHIVO.IMAGEN: {
+        //validadores.push( FileValidator.maxContentSize(this.maxSize) );
+      }
+      case OPC_ARCHIVO.PDF: {
+        //validadores.push( FileValidator.maxContentSize(104857600) );
       }
       default: {
         break;

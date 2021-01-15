@@ -32,11 +32,11 @@ export const LINKS_DOCUMENTACION = {
 
 /************************************************ GRUPOS ********************************************************************************************/
 //ADMIN
-export const GESTIONAR_GRUPOS_ALT = new NavigationLink("Gestionar Grupos", "/app/grupos/gestionar-grupos", "group", "Gestiona los grupos para aplicar evaluación(s)");
+export const GESTIONAR_GRUPOS_ALT = new NavigationLink("Gestionar Grupos", "/app/grupos/gestionar-grupos", "group", "Gestiona los grupos para el proceso de admisión");
 export const BC_GESTIONAR_GRUPOS_ALT = new Breadcrumb(GESTIONAR_GRUPOS_ALT, [HOME]);
 
 //ASPIRANTE
-export const GRUPOS_ALT = new NavigationLink("Inscribir grupo", "/app/grupos/inscribir-grupo", "group", "Inscribete a un grupo para realizar evaluación(s)");
+export const GRUPOS_ALT = new NavigationLink("Inscribir grupo", "/app/grupos/inscribir-grupo", "group", "Inscribete a un grupo para tu proceso de admisión");
 export const BC_GRUPOS_ALT = new Breadcrumb(GRUPOS_ALT, [HOME]);
 
 export const LINKS_GRUPOS = {
@@ -214,13 +214,12 @@ export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boo
         if(resultadosActivo) links = links.concat(SEGUIMIENTO);
         if(etapas['evaluacionConocimientos'] || etapas['pago'] || etapas['publicacionResultados']){
             let noEsTiempo = false;
-            if(etapas['evaluacionConocimientos'])
-                noEsTiempo = fechaHoy <= etapas['evaluacionConocimientos'].fechaInicio;
-            else if(etapas['pago'])
-                noEsTiempo = fechaHoy <= etapas['pago'].fechaInicio;
-            else if(etapas['publicacionResultados'])
-                noEsTiempo = fechaHoy <= etapas['publicacionResultados'].fechaInicio;
-            GRUPOS_ALT.disabled = noEsTiempo;
+            let minimo = Array.of(etapas['evaluacionConocimientos'], etapas['pago'], etapas['publicacionResultados'] ).reduce( (prev, current) => {
+                if( current.fechaInicio < prev )
+                    prev = current.fechaInicio
+                return prev;
+            }, fechaHoy );
+            GRUPOS_ALT.disabled = minimo == fechaHoy;
             links = links.concat(GRUPOS_ALT);
         }
     }

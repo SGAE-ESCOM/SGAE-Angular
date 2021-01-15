@@ -18,7 +18,7 @@ export class EnumTipoDato implements Dato {
     public static ALL: Dato[] = [];
 
     static readonly CAMPO = new EnumTipoDato(OPC_TIPO_DATO.CAMPO, 'Ingresar un valor a través del teclado', EnumTipoCampo.ALL);
-    static readonly ARCHIVO = new EnumTipoDato(OPC_TIPO_DATO.ARCHIVO, 'Subir algún tipo de archivo', EnumTipoArchivo.ALL);
+    static readonly ARCHIVO = new EnumTipoDato(OPC_TIPO_DATO.ARCHIVO, 'Subir algún tipo de archivo. Tamaño máx. 250 KB', EnumTipoArchivo.ALL);
     static readonly SELECCION = new EnumTipoDato(OPC_TIPO_DATO.SELECCION, 'Selecciona valor entre opciones definidas', EnumTipoSeleccion.ALL);
     //static readonly FECHA = new EnumTipoDato(OPC_TIPO_DATO.FECHA, 'Subir algún tipo de archivo', EnumTipoFecha.ALL);
 

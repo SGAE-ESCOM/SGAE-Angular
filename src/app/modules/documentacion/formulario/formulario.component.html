@@ -49,9 +49,12 @@
                                 [valuePlaceholder]="( fgFormulario.get(documento.nombre).invalid ) ? 'Archivo no seleccionado': fgFormulario.get(documento.nombre).value.nombre "
                                 (change)="handleUpload($event, documento.nombre )" required></ngx-mat-file-input>
                             <mat-icon class="material-icons-outlined" matSuffix>folder</mat-icon>
-                            <mat-hint class="toggle-hint"> {{ documento.descripcion }} </mat-hint>
+                            <mat-hint class="toggle-hint"><span *ngIf="documento.subtipo != OPC_ARCHIVO.PDF">Sólo imágenes extensión .jpg, .png, .jpeg .</span> Tamaño máx. de 250 KB. {{ documento.descripcion }} </mat-hint>
                             <mat-error *ngIf="fgFormulario.get(documento.nombre).hasError('required')">
                                 Este campo es requerido
+                            </mat-error>
+                            <mat-error *ngIf="fgFormulario.get(documento.nombre).hasError('maxContentSize')">
+                                Máx tamaño 1 MB
                             </mat-error>
                         </mat-form-field>
                     </div>

@@ -69,7 +69,6 @@ export class DashboardComponent {
       }
     });
     this.etapas.sort( (a,b) => { return a.lugar - b.lugar });
-    console.log(this.etapas);
   }
 }
 
