@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnChanges, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Pregunta } from '@models/evaluacion/evaluacion/pregunta';
 import { Seccion } from '@models/evaluacion/evaluacion/seccion';
@@ -16,7 +16,8 @@ import { SeccionesService } from '@services/evaluacion/secciones.service';
       useExisting: forwardRef(() => PreguntasSeccionComponent),
       multi: true
     }
-  ]
+  ],
+  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreguntasSeccionComponent implements OnChanges, ControlValueAccessor {
 
@@ -27,6 +28,13 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   respuestas: any[];
   aciertos: number[] = [];
 
+  //RENDERING
+  @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
+  @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+
+  @ViewChild('', { read: ViewContainerRef }) opcionesContainer: ViewContainerRef[];
+  @ViewChild('', { read: TemplateRef }) opcionTemplate: TemplateRef<any>[];
+  
   //CONTROL VALUE
   value: any = { seccion: '', aciertos: 0, total: 0 };
   isDisabled: boolean;
@@ -89,6 +97,7 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
       this.respuestas = new Array(this.preguntas.length).fill(-1);
       this.aciertos = new Array(this.preguntas.length).fill(0);
       this.value.total = this.preguntas.length;
+      this.buildData(this.preguntas.length);
       this.onChange(this.value);
     }).catch(err => {
       console.error(err);
@@ -117,4 +126,18 @@ export class PreguntasSeccionComponent implements OnChanges, ControlValueAccesso
   trackByIdOpcion(index: number, item: any) {
     return item.id
   }
+
+  private buildData(length: number) {
+    const end = this.preguntas.length;
+    if(this.preguntas){
+      this.container.clear();
+      for (let n = 0; n < end; n++) {
+        this.container.createEmbeddedView(this.template, {
+          item: this.preguntas[n],
+          index: n
+        });
+      }
+    }
+  }
+
 }

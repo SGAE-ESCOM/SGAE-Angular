@@ -7,3 +7,5 @@ export const MSJ_SOLO_NUMEROS = 'Sólo números';
 export const MSJ_HORAS_NO_VALIDAS = 'Horas no validas';
 export const MSJ_MINUTOS_NO_VALIDAS = 'Minutos no validos';
 export const MSJ_ERROR_CONECTAR_SERVIDOR = 'Error al conectar con el servidor';
+export const MSJ_ERROR_ETAPA_FUERA_TIEMPO = 'No es fecha del periodo para esta etapa';
+export const MSJ_ERROR_ETAPA_NO_DEFINIDA = 'Etapa no definida en el Proceso de Admisión';

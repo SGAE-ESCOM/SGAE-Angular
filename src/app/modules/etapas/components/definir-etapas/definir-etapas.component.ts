@@ -12,6 +12,7 @@ import { fadeInDown } from '@shared/utils/animations/router.animations';
 import { comprobarPermisos, GESTION_ETAPAS } from '@shared/admin-permissions/permissions';
 import { AuthService } from '@services/auth.service';
 import { Etapa } from '@models/etapas/etapa';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-definir-etapas',
@@ -78,8 +79,13 @@ export class DefinirEtapasComponent implements OnInit {
   }
 
   /******************************************** ACCIONES ***********************************************/
-  definirEtapas() {
-    this.etapas = ETAPAS.concat(this.fgEtapaUsar.get('etapas').value);
+  definirEtapas(stepper: MatStepper) {
+    if( this.fgEtapaUsar.get('etapas').value.length == 1 &&  this.fgEtapaUsar.get('etapas').value[0].valor === "publicacionResultados"){
+      this._toast.error("La etapa de 'Publicación de Resultados' debe seleccionarse con al menos otra etapa")
+    }else{
+      this.etapas = ETAPAS.concat(this.fgEtapaUsar.get('etapas').value);
+      stepper.next();
+    }
   }
 
   onDrop(event: CdkDragDrop<string[]>) {

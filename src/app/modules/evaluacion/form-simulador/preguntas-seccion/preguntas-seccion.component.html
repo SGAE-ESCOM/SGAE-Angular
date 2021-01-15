@@ -3,61 +3,37 @@
     <hr>
 </div>
 <div class="col-12">
-    <!-- <table class="table col-12 table-sm table-borderless">
-        <tbody>
-            <tr>
-                <td style="width: 25px"><b>{{i+1}}. </b> </td>
-                <td style="padding-top: 4px;">
-                    <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
-                    <div *ngIf="pregunta.img" class="ml-3 img-fluid">
-                        <img [src]="pregunta.img"> 
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table> -->
-    <div class="row" *ngFor="let pregunta of preguntas; let i = index; trackBy: trackByIdPregunta">
-        <div class="col-12">
-            <b>{{i+1}}. </b> <ng-katex-html [html]="pregunta.enunciado"></ng-katex-html>
-            <div *ngIf="pregunta.img" class="ml-3 img-fluid">
-                <img [src]="pregunta.img"> 
+    <!-- CONTAINER PRUEBA -->
+    <ng-container #itemsContainer></ng-container>
+    <!-- TEMPLATE PRUEBA -->
+    <ng-template #item let-item="item" let-index="index">
+        <div class="row">
+            <div class="col-12">
+                <b>{{index+1}}. </b> <ng-katex-html [html]="item.enunciado"></ng-katex-html>
+                <div *ngIf="item.img" class="ml-3 img-fluid">
+                    <img [src]="item.img"> 
+                </div>
+            </div>
+            <div class="col-12 ml-3 pt-2 pb-3">
+                <table class="table table-sm table-borderless" [class.table-error]="error">
+                    <tbody>
+                        <mat-radio-group [(ngModel)]="respuestas[index]" color="primary"><tr *ngFor="let opcion of item.opciones; let j = index; trackBy: trackByIdOpcion" class="hover">
+                                <td class="col-1" style="width: 25px;">
+                                    <mat-radio-button class="example-radio-button" [value]="opcion.id" (change)="changeValue(opcion, index, j)">
+                                    </mat-radio-button>
+                                </td>
+                                <td (click)="changeValue(opcion, index, j)" class="col-10">
+                                    <ng-katex-html [html]="opcion.enunciado"></ng-katex-html>
+                                    <div *ngIf="opcion.img" class="img-fluid">
+                                        <img [src]="opcion.img"> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </mat-radio-group>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="col-12 ml-3 pt-2 pb-3">
-            <table class="table table-sm table-borderless" [class.table-error]="error">
-                <tbody>
-                    <mat-radio-group [(ngModel)]="respuestas[i]" color="primary">
-                        <tr *ngFor="let opcion of pregunta.opciones; let j = index; trackBy: trackByIdOpcion" class="hover">
-                            <td class="col-1" style="width: 25px;">
-                                <mat-radio-button class="example-radio-button" [value]="opcion.id" (change)="changeValue(opcion, i, j)">
-                                </mat-radio-button>
-                            </td>
-                            <td (click)="changeValue(opcion, i, j)" class="col-10">
-                                <ng-katex-html [html]="opcion.enunciado"></ng-katex-html>
-                                <div *ngIf="opcion.img" class="img-fluid">
-                                    <img [src]="opcion.img"> 
-                                </div>
-                            </td>
-                        </tr>
-                    </mat-radio-group>
-                </tbody>
-            </table>
-        </div>
-        <!-- <div class="col-12">
-            <mat-radio-group color="primary" class="example-radio-group">
-                <mat-radio-button class="example-radio-button" *ngFor="let opcion of pregunta.opciones" [value]="opcion.id">
-                    <ng-katex-html [html]="opcion.enunciado"></ng-katex-html>
-                </mat-radio-button>
-            </mat-radio-group>
-        </div> -->
-    </div>
+    </ng-template>
+    
 </div>
-<!-- <div class="col-12">
-    {{ respuestas | json }}
-</div>
-<div class="col-12">
-    {{ aciertos | json }}
-</div>
-<div class="col-12">
-    {{ value | json }}
-</div> -->

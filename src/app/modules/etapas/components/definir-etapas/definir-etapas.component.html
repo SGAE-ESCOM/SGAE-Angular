@@ -19,7 +19,8 @@
                 <mat-step [stepControl]="fgEtapaUsar">
                     <ng-template matStepLabel>Etapas necesarias</ng-template>
                     <div class="col-12">
-                        <p>Selecciona las etapas que tendra el proceso de admisión. <b>NOTA: Las etapas de 'Convocatoria' y 'Registro' son obligatorias.</b></p>
+                        <p>Selecciona las etapas que tendra el proceso de admisión. <b>NOTA: Las etapas de 'Convocatoria' y 'Registro' son obligatorias.
+                            Para seleccionar 'Publicación de Resultados' debes tener al menos una de las otras etapas.</b></p>
                     </div>
                     <form [formGroup]="fgEtapaUsar">
                         <div class="col-12 col-sm-12 col-md-6">
@@ -36,8 +37,8 @@
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 text-right pt-2">
-                            <button mat-flat-button color="info" name="btnPaso2" id="btnPaso2" (click)="definirEtapas()"
-                                [disabled]="fgEtapaUsar.invalid" matStepperNext>Siguiente<mat-icon>navigate_next
+                            <button mat-flat-button color="info" name="btnPaso2" id="btnPaso2" (click)="definirEtapas(stepper)"
+                                [disabled]="fgEtapaUsar.invalid">Siguiente<mat-icon>navigate_next
                                 </mat-icon></button>
                         </div>
                     </form>

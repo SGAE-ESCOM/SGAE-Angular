@@ -184,7 +184,6 @@ export const LINKS_ROOT_USUARIOS = [GESTION_ADMON, GESTION_ASPIRANTES];
 export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boolean = false) {
     let links = [];
     const fechaHoy = new Date().getTime();
-    console.log(etapas)
     if(etapas){
         links = Object.entries(etapasJson).reduce((prev, [key, etapaLink]:any) => {
             let etapa = etapas[key];
