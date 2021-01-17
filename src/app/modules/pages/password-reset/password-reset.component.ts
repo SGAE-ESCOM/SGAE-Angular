@@ -26,7 +26,7 @@ export class PasswordResetComponent implements OnInit {
       this._toast.success("Correo enviado, revisa tu bandeja de entrada.");
       this.router.navigate(['/login']);
     }).catch(error =>{
-      console.log(error);
+      this._toast.error("Usuario no registrado en el sistema.");
     });
   }
 
