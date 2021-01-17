@@ -17,7 +17,7 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 export class SeguimientoComponent implements OnInit {
 
   usuario: UsuarioInterface;
-  indicaciones = "";
+  indicaciones;
 
   //ElementosQR
   elementType = NgxQrcodeElementTypes.URL;

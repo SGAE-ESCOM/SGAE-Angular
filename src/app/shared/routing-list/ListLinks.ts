@@ -211,6 +211,10 @@ export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boo
         links = links.concat(ETAPAS, GESTIONAR_GRUPOS_ALT,USUARIOS);
     if(rol === 'aspirante'){
         if(resultadosActivo) links = links.concat(SEGUIMIENTO);
+        else {
+            SEGUIMIENTO.disabled = true;
+            links = links.concat(SEGUIMIENTO);
+        }
         if(etapas['evaluacionConocimientos'] || etapas['pago'] || etapas['publicacionResultados']){
             let noEsTiempo = false;
             let minimo = Array.of(etapas['evaluacionConocimientos'], etapas['pago'], etapas['publicacionResultados'] ).reduce( (prev, current) => {
