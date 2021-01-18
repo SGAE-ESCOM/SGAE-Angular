@@ -70,6 +70,11 @@
                 <button mat-flat-button color="info" name="btnImprimirPantalla" (click)="imprimirPantalla()" >Imprimir <mat-icon>print</mat-icon></button>
             </div>
         </ng-template>
+        <div *ngIf="grupoId==''" class="col-12 text-right">
+            <button mat-flat-button name="btnIrGrupos" type="submit" type="submit" [routerLink]="['/app/grupos/inscribir-grupo']" mat-button color="info">
+                    Ir a inscribir grupos <mat-icon>group</mat-icon> 
+            </button>
+        </div>
     </div>
     <div class="row">
         <div class="col-12 text-right return">

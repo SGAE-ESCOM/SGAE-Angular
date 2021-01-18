@@ -44,6 +44,7 @@ export class GruposService {
     return this.gruposCollection.doc(grupo.id).set(grupo);
   }
 
+
   delete( grupo: Grupo ){
     return this.gruposCollection.doc(grupo.id).delete();
   }
@@ -51,4 +52,6 @@ export class GruposService {
   getGrupoIndicaciones(idGrupo: string) : Promise<any>{
     return this.gruposCollectionReference.doc(idGrupo).get();
   }
+
+  
 }

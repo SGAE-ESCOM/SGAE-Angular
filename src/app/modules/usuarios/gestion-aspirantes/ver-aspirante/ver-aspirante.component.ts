@@ -21,6 +21,7 @@ export class VerAspiranteComponent implements OnInit {
   //Variables para las tablas
   documentacionTabla;
   emptyDocs = true;
+  docHeaderDesc = "Sin documentación.";
 
   usuario: UsuarioInterface;
   id = "vacio";
@@ -56,6 +57,7 @@ export class VerAspiranteComponent implements OnInit {
               if(typeof documentacion !== 'undefined'){
                 this.formatearDocumentacion(documentacion);
                 this.emptyDocs = false;
+                this.docHeaderDesc = "Documentación subida por el aspirante.";
               }
               
             });

@@ -93,4 +93,8 @@ export class EtapasService {
   getEtapaResultados() {
     return this.etapasCollectionReference.doc(ETAPAS_BUSCAR.publicacionResultados.valor).get();
   }
+
+  getEtapa(etapa: Etapa){
+    return this.etapasCollectionReference.doc(etapa.valor).get();
+  }
 }

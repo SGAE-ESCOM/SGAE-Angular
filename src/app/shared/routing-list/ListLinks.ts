@@ -210,7 +210,8 @@ export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boo
     if(rol === 'admin' || rol === 'root')
         links = links.concat(ETAPAS, GESTIONAR_GRUPOS_ALT,USUARIOS);
     if(rol === 'aspirante'){
-        if(resultadosActivo) links = links.concat(SEGUIMIENTO);
+        let resultadosDateActive = (fechaHoy >= etapas['publicacionResultados'].fechaInicio && fechaHoy <= etapas['publicacionResultados'].fechaTermino );
+        if(resultadosActivo || resultadosDateActive) links = links.concat(SEGUIMIENTO);
         else {
             SEGUIMIENTO.disabled = true;
             links = links.concat(SEGUIMIENTO);

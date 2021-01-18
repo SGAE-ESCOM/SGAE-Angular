@@ -7,16 +7,41 @@
     <div class="row">
         <div class="col-12">
             <mat-accordion class="example-headers-align" multi>
+                <!-- Info Aspirante -->
+                <mat-expansion-panel *ngIf="usuario">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Datos Aspirante</mat-panel-title>
+                        <mat-panel-description>Datos principales del aspirante<mat-icon>face</mat-icon></mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <hr>
+                    <div>
+                        <table>
+                            <tr>
+                                <td class="leftTable"><p>Nombre(s):</p></td>
+                                <td><div><p>{{ usuario.nombres }}</p></div></td>
+                            </tr>
+                            <tr>
+                                <td class="leftTable"><p>Apellido(s):</p></td>
+                                <td><div><p>{{ usuario.apellidos }}</p></div></td>
+                            </tr>
+                            <tr>
+                                <td class="leftTable"><p>Email:</p></td>
+                                <td><div><p>{{ usuario.email }}</p></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-expansion-panel>
+                <!-- Documentos -->
                 <mat-expansion-panel [disabled]="emptyDocs">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Documentación</mat-panel-title>
-                        <mat-panel-description>Documentación subida por el aspirante.<mat-icon>folder_open</mat-icon></mat-panel-description>
+                        <mat-panel-description>{{docHeaderDesc}}<mat-icon>folder_open</mat-icon></mat-panel-description>
                     </mat-expansion-panel-header>
                     <hr>
                     <div>
                         <table>
                             <tr *ngFor="let documento of documentacionTabla">
-                                <td class="leftTable"><p>{{ documento.nombre }}</p></td>
+                                <td class="leftTable"><p>{{ documento.nombre }}:</p></td>
                                 <td [ngSwitch]="documento.tipo">
                                     <div *ngSwitchCase="'texto'">
                                         <p>{{ documento.valor }}</p>
@@ -29,6 +54,8 @@
                         </table>
                     </div>
                 </mat-expansion-panel>
+
+
                 <!--<mat-expansion-panel disabled>
                     <mat-expansion-panel-header>
                         <mat-panel-title>Historial Aplicaciones</mat-panel-title>

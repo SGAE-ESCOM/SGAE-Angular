@@ -18,6 +18,8 @@ export class SeguimientoComponent implements OnInit {
 
   usuario: UsuarioInterface;
   indicaciones;
+  etapas;
+  estado;
 
   //ElementosQR
   elementType = NgxQrcodeElementTypes.URL;
@@ -27,6 +29,13 @@ export class SeguimientoComponent implements OnInit {
 
   constructor(private _authService: AuthService, private router: Router, private _grupos: GruposService) { 
     this.usuario = this._authService.getUsuarioC();
+    //Validar fecha
+    const fechaHoy = new Date().getTime();
+    this.etapas = this._authService.getEtapas();
+    if (fechaHoy < this.etapas['publicacionResultados'].fechaInicio || fechaHoy > this.etapas['publicacionResultados'].fechaTermino) sinAcceso(router);
+    //Checar estado resultados
+    this.estado = this.usuario.estado['publicacionResultados'];
+
     //Comprobar Permisos
     BreadcrumbComponent.update(BC_HOME);
     if(this.usuario.rol != 'aspirante') sinAcceso(router);

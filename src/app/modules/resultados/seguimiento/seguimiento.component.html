@@ -1,5 +1,5 @@
-<div class="container animated-row pb-4">
-    <div class="col-12">
+<div *ngIf="estado && estado=='validada'" class="container animated-row pb-4">
+    <div  class="col-12">
         <div class="alert alert-success" role="alert">
             <div class="col-12 pt-2">
                 <h4 class="alert-heading">¡Felicidades!</h4>
@@ -47,3 +47,18 @@
         </div>
     </div>
 </div>
+<div *ngIf="estado && estado=='invalida'" class="container animated-row pb-4">
+    <div  class="col-12">
+        <div class="alert alert-warning" role="alert">
+            <div class="col-12 pt-2">
+                <h4 class="alert-heading">Sin asignar</h4>
+            </div>
+            <div class="col-12">
+                <hr>
+                <p class="mb-0">No has cumplido con éxito todas tus etapas.</p>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<!-- *ngIf="estado=='validada'" -->
