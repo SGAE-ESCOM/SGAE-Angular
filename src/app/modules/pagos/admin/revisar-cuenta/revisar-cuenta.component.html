@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-12 col-md-6 form-group">
                                 <mat-form-field appearance="legacy">
-                                    <mat-label>Número de la cuenta bancaria</mat-label>
+                                    <mat-label>Número de la cuenta bancaria o convenio</mat-label>
                                     <input matInput formControlName="noCuenta" id="noCuenta" name="noCuenta" [readonly] = "!editarCuenta" required>
                                     <mat-icon matSuffix>payment</mat-icon>
                                     <mat-error *ngIf="fgDatosCuenta.get('noCuenta').invalid">{{getNoCuentaErrorMessage()}}</mat-error>

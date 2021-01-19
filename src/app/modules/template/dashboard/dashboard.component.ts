@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { getCardsByEtapas } from '@routing/ListLinks';
+import { GESTIONAR_GRUPOS_ALT, getCardsByEtapas, GRUPOS_ALT } from '@routing/ListLinks';
 import { BreadcrumbComponent } from '@breadcrumb/breadcrumb.component';
 import { BC_HOME } from '@routing/ListLinks';
 import { cardAnimationFadeIn, fadeInDown } from '@shared/utils/animations/router.animations';
@@ -40,7 +40,7 @@ export class DashboardComponent {
    */
   private defineCards(usuario: UsuarioInterface){
     let cardsAux = getCardsByEtapas(usuario.rol, this.etapasDisponibles).slice(1);
-    if(usuario.rol == 'admin') this.cards = filtrarLinksPorPermisos(cardsAux, usuario.permisos);
+    if(usuario.rol == 'admin') this.cards = filtrarLinksPorPermisos(cardsAux, usuario.permisos).concat(GESTIONAR_GRUPOS_ALT);
     else if(usuario.rol == 'root') this.cards = getCardsByEtapas(this._authService.getUsuarioC().rol, this.etapasDisponibles).slice(1);
     else if(usuario.rol == 'aspirante'){
       let resultadosActive = false;
