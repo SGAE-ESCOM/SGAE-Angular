@@ -92,6 +92,7 @@ const colorEtapas = {
   },
   'publicacionResultados' : {
     invalida : 'bg-secondary',
+    validada : 'bg-success',
   }
 }
 
@@ -114,7 +115,8 @@ const labelEtapas = {
     validada : 'Validado'
   },
   'publicacionResultados' : {
-    invalida : 'Inválida',
+    invalida : 'Sin asignación',
+    validada : 'Asignado',
   }
 }
 

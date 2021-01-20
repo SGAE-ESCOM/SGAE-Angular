@@ -210,15 +210,18 @@ export function getCardsByEtapas(rol: string, etapas: any, resultadosActivo: boo
     if(rol === 'admin' || rol === 'root')
         links = links.concat(ETAPAS, GESTIONAR_GRUPOS_ALT,USUARIOS);
     if(rol === 'aspirante'){
-        let resultadosDateActive = (fechaHoy >= etapas['publicacionResultados'].fechaInicio && fechaHoy <= etapas['publicacionResultados'].fechaTermino );
-        if(resultadosActivo || resultadosDateActive) links = links.concat(SEGUIMIENTO);
-        else {
-            SEGUIMIENTO.disabled = true;
-            links = links.concat(SEGUIMIENTO);
+        if(etapas['publicacionResultados']){
+            let resultadosDateActive = (fechaHoy >= etapas['publicacionResultados'].fechaInicio && fechaHoy <= etapas['publicacionResultados'].fechaTermino );
+            if(resultadosActivo || resultadosDateActive) links = links.concat(SEGUIMIENTO);
+            else {
+                SEGUIMIENTO.disabled = true;
+                links = links.concat(SEGUIMIENTO);
+            }
         }
         if(etapas['evaluacionConocimientos'] || etapas['pago'] || etapas['publicacionResultados']){
             let noEsTiempo = false;
-            let minimo = Array.of(etapas['evaluacionConocimientos'], etapas['pago'], etapas['publicacionResultados'] ).reduce( (prev, current) => {
+            let arrayEtapas = Array.of(etapas['evaluacionConocimientos'], etapas['pago'], etapas['publicacionResultados']);
+            let minimo = arrayEtapas.filter( etapa => etapa != null ).reduce( (prev, current) => {
                 if( current.fechaInicio < prev )
                     prev = current.fechaInicio
                 return prev;
