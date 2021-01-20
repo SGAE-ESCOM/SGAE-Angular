@@ -11,7 +11,7 @@
                                     <mat-form-field appearance="outline">
                                         <mat-label>Nombre(s)</mat-label>
                                         <input matInput formControlName="nombres" type="nombres" id="nombres"
-                                            name="nombres" placeholder="Introduce tu correo" required>
+                                            name="nombres" placeholder="Introduce tu(s) nombre(s)" required>
                                         <mat-icon matSuffix>text_fields</mat-icon>
                                         <mat-error *ngIf="fgUsuario.get('nombres').hasError('required')">
                                             Este campo es requerido
@@ -22,7 +22,7 @@
                                     <mat-form-field appearance="outline">
                                         <mat-label>Apellido(s)</mat-label>
                                         <input matInput formControlName="apellidos" type="apellidos" id="apellidos"
-                                            name="apellidos" placeholder="Introduce tu correo" required>
+                                            name="apellidos" placeholder="Introduce tu(s) apellido(s)" required>
                                         <mat-icon matSuffix>text_fields</mat-icon>
                                         <mat-error *ngIf="fgUsuario.get('apellidos').hasError('required')">
                                             Este campo es requerido

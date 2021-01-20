@@ -132,13 +132,13 @@ export const BC_DEFINIR_ETAPAS = new Breadcrumb(DEFINIR_ETAPAS, [HOME, ETAPAS]);
 export const BC_DEFINIR_FECHAS = new Breadcrumb(DEFINIR_FECHAS, [HOME, ETAPAS]);
 
 /************************************************ USUARIOS ********************************************************************************************/
-export const USUARIOS = new NavigationLink("Gestión Usuarios", "/app/usuarios", "people_outline", "Generación los usuarios y grupos de la aplicacion");
+export const USUARIOS = new NavigationLink("Gestión Usuarios", "/app/usuarios", "people_outline", "Gestiona a los usuarios y aspirantes del sistema");
 const GESTION_ADMON = new NavigationLink("Gestión Administradores", "/app/usuarios/gestion-admon", "people_outline", "Gestión de los administradores de la institución");
 const GESTION_ASPIRANTES = new NavigationLink("Gestión Aspirantes", "/app/usuarios/gestion-aspirantes", "people_outline", "Gestión de los aspirantes registrados");
 const REGISTRAR_ADMON = new NavigationLink("Registrar Nuevo Administrador", "/app/usuarios/gestion-admon/registrar");
 const EDITAR_ADMON = new NavigationLink("Editar Administrador", "/app/usuarios/gestion-admon/editar");
 const REVISAR_ASPIRANTES = new NavigationLink("Visualizar Aspirantes", "/app/usuarios/gestion-aspirantes/revisar-aspirantes", "people_outline", "Visualiza la información de los aspirantes registrados.")
-const VER_ASPIRANTE = new NavigationLink("Visualizar Aspirante", "/app/usuarios/gestion-aspirantes/revisar-aspirantes/ver-aspirante");
+const VER_ASPIRANTE = new NavigationLink("Visualizar Información Aspirante", "/app/usuarios/gestion-aspirantes/revisar-aspirantes/ver-aspirante");
 const ASIGNAR_ASPIRANTES = new NavigationLink("Finalizar Aspirantes", "/app/usuarios/gestion-aspirantes/asignar-aspirantes", "check_box", "Finaliza el proceso para los aspirantes que hayan completado todo el proceso.")
 const INDICACIONES_ASIGNACION = new NavigationLink("Indicaciones de Admisión", "/app/usuarios/gestion-aspirantes/editar-indicaciones", "fact_check", "Indicaciones posteriores al proceso de admisión.")
 
