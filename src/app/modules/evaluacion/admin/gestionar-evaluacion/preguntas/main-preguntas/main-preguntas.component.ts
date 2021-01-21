@@ -26,8 +26,8 @@ import { ToastrService } from 'ngx-toastr';
 export class MainPreguntasComponent implements OnInit {
 
   //TABLA TEMAS
-  tablaSecciones: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
-  tablaTemas: Tabla[] = [{ encabezado: 'Nombre', json: 'nombre' }, { encabezado: "Preguntas totales", json: 'total' }, { encabezado: 'Acciones', json: 'acciones' }];
+  tablaSecciones: Tabla[] = [{ encabezado: 'Sección', json: 'nombre' }, { encabezado: 'Acciones', json: 'acciones' }];
+  tablaTemas: Tabla[] = [{ encabezado: 'Tema', json: 'nombre' }, { encabezado: "Preguntas totales", json: 'total' }, { encabezado: 'Acciones', json: 'acciones' }];
   ordenarPorNombre = "nombre";
 
   temas: Tema[] = [];

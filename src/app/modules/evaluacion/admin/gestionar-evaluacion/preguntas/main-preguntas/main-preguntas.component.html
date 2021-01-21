@@ -1,6 +1,7 @@
 <div class="container" [ngSwitch]="seccionActivada">
     <div class="row" *ngSwitchCase="'secciones'" @fadeInLeft>
         <div class="col-12">
+            <h3>Secciones</h3>
             <b>Instrucciones:</b>
             <p>Agrega secciones y posteriormente preciona la opcion 'Gestionar temas' <mat-icon>sort</mat-icon> para agregar temas a esa sección</p>
         </div>
@@ -16,6 +17,7 @@
 
     <div class="row" *ngSwitchCase="'temas'" @fadeInLeft>
         <div class="col-12">
+            <h3>Temas: {{ seccion.nombre }}</h3>
             <b>Instrucciones:</b>
             <p>Agrega temas y posteriormente preciona la opcion 'Gestionar preguntas' <mat-icon>grading</mat-icon> para agregar preguntas a ese tema</p>
         </div>

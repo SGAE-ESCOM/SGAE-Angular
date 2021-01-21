@@ -58,7 +58,6 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
       return { seccion: aciertosSeccion.seccion, aciertos: aciertosSeccion.aciertos, total: aciertosSeccion.total };
     });
     let aciertosTotales = aciertos.reduce( (prev, current ) => { return current.aciertos + prev }, 0 );
-
     let resultado: Resultado = {
       idUsuario: this._auth.getUsuarioC().id,
       idAplicacion: this.aplicacion.id,
@@ -74,6 +73,26 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
         this.finalizar.emit(true);
         this._toastr.success("Evaluación enviada. Revisa en publicación de resultados");
       });
+    }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
+  }
+
+  private validarEvaluacion(){
+    let aciertos = Object.entries(this.fgSimulador.value).map(([id, aciertosSeccion]: any) => {
+      return { seccion: aciertosSeccion.seccion, aciertos: aciertosSeccion.aciertos, total: aciertosSeccion.total };
+    });
+    let aciertosTotales = aciertos.reduce( (prev, current ) => { return current.aciertos + prev }, 0 );
+    let resultado: Resultado = {
+      idUsuario: this._auth.getUsuarioC().id,
+      idAplicacion: this.aplicacion.id,
+      nombre: this.aplicacion.nombre,
+      minAciertos: this.aplicacion.aciertos,
+      fecha: new Date().getTime(),
+      aciertos: aciertos,
+      aciertosTotales: aciertosTotales,
+      resultado: ResultadoEnum.REPROBADO
+    }
+    this._resultados.save(resultado).then(result => {
+      this._usuarios.addEvaluacion(this._auth.getUsuarioC().id, this.aplicacion.id, resultado).then( accion => {} );
     }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
   }
 
