@@ -14,11 +14,11 @@
     </div>
     <!-- FECHA INICIO -->
     <div class="col-12 col-md-4 form-group">
-        <input-fecha formControlName="fechaInicio"></input-fecha>
+        <input-fecha formControlName="fechaInicio" [label]="'Fecha Inicio'"></input-fecha>
     </div>
     <!-- FECHA TERMINO -->
     <div class="col-12 col-md-4 form-group">
-        <input-fecha formControlName="fechaTermino" [minDate]="fechaInicio.value" [startDate]="false"></input-fecha>
+        <input-fecha formControlName="fechaTermino" [label]="'Fecha Termino'" [minDate]="fechaInicio.value" [startDate]="false"></input-fecha>
     </div>
 
     <div class="col-12 text-right">

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { Location, PopStateEvent } from "@angular/common";
+import { ControlDeEtapaService } from '@services/etapas/control-de-etapa.service';
 
 @Component({
   selector: 'app-root',
@@ -9,27 +8,11 @@ import { Location, PopStateEvent } from "@angular/common";
 })
 export class AppComponent {
   title = 'SGAE-angular';
+  tiempoValido = true;
 
-  private lastPoppedUrl: string;
-  private yScrollStack: number[] = [];
-
-  constructor(private router: Router, private location: Location) { }
+  constructor(private _control: ControlDeEtapaService) { }
 
   ngOnInit() {
-    this.location.subscribe((ev: PopStateEvent) => {
-      this.lastPoppedUrl = ev.url;
-    });
-    this.router.events.subscribe((ev: any) => {
-      if (ev instanceof NavigationStart) {
-        if (ev.url != this.lastPoppedUrl)
-          this.yScrollStack.push(window.scrollY);
-      } else if (ev instanceof NavigationEnd) {
-        if (ev.url == this.lastPoppedUrl) {
-          this.lastPoppedUrl = undefined;
-          window.scrollTo(0, this.yScrollStack.pop());
-        } else
-          window.scrollTo(0, 0);
-      }
-    });
+    this._control.getHoraServidor().then( res => { this.tiempoValido = res });
   }
 }

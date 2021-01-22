@@ -24,11 +24,19 @@ export class ControlDeEtapaService {
     return this.fechasEtapasCollection.get();
   }
 
-  getHoraServidor(){
-    firebase.database().ref('/.info/serverTimeOffset').once('value')
-    .then(function stv(data) {
-      const horaServidor = data.val() + Date.now();
-    }, function (err) {
+  /**
+   * La Hora del servidor con respecto a la hora de CDMX es de 15 seg como
+   * outline, es decir en el peor de los casos 12 segundos es el máximo
+   * tiempo entre el servidor y la hora real.
+   * En javascript la hora se da milisegundos, entonces 12, equivalen a
+   * 15,000
+   */
+  async getHoraServidor() {
+    return firebase.database().ref('/.info/serverTimeOffset').once('value')
+    .then( data => {
+      //const horaServidor = data.val() + Date.now();
+      return ( data.val() < 15000 && data.val() > -15000);
+    }, err => {
       return err;
     });
   }

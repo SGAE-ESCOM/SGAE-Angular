@@ -31,7 +31,7 @@
                                 <input-fecha formControlName="fechaInicio" [label]="'Fecha Inicio'" [startView]="'year'" required></input-fecha>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3 form-group">
-                                <input-fecha formControlName="fechaTermino" [label]="'Fecha Termino'"
+                                <input-fecha formControlName="fechaTermino" [label]="'Fecha Termino'" [startDate]="false"
                                     [minDate]="fgEtapasFechas.get(etapa.valor).get('fechaInicio').value" required></input-fecha>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3 form-group">

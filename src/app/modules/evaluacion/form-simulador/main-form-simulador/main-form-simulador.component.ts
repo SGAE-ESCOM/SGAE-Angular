@@ -28,6 +28,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   @Input() totalIteraciones: number = 0;
   @Output() finalizar: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
+  resultado: Resultado;
   secciones: Seccion[];
   respuestasSeccion: number[] = [];
   horas: number = 0;
@@ -46,6 +47,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     }
     if (changes.aplicacion && this.aplicacion != null) {
       this.startTimer();
+      this.validarEvaluacion();
     }
   }
 
@@ -59,6 +61,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
     });
     let aciertosTotales = aciertos.reduce( (prev, current ) => { return current.aciertos + prev }, 0 );
     let resultado: Resultado = {
+      id: this.resultado.id,
       idUsuario: this._auth.getUsuarioC().id,
       idAplicacion: this.aplicacion.id,
       nombre: this.aplicacion.nombre,
@@ -68,7 +71,7 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
       aciertosTotales: aciertosTotales,
       resultado: aciertosTotales >= this.aplicacion.aciertos? ResultadoEnum.APROBADO : ResultadoEnum.REPROBADO
     }
-    this._resultados.save(resultado).then(result => {
+    this._resultados.update(resultado).then(result => {
       this._usuarios.addEvaluacion(this._auth.getUsuarioC().id, this.aplicacion.id, resultado).then( accion => {
         this.finalizar.emit(true);
         this._toastr.success("Evaluación enviada. Revisa en publicación de resultados");
@@ -77,22 +80,24 @@ export class MainFormSimuladorComponent implements OnInit, OnChanges {
   }
 
   private validarEvaluacion(){
-    let aciertos = Object.entries(this.fgSimulador.value).map(([id, aciertosSeccion]: any) => {
-      return { seccion: aciertosSeccion.seccion, aciertos: aciertosSeccion.aciertos, total: aciertosSeccion.total };
-    });
-    let aciertosTotales = aciertos.reduce( (prev, current ) => { return current.aciertos + prev }, 0 );
+    //SE CREA RESULTADO REPROBATORIO
     let resultado: Resultado = {
       idUsuario: this._auth.getUsuarioC().id,
       idAplicacion: this.aplicacion.id,
       nombre: this.aplicacion.nombre,
       minAciertos: this.aplicacion.aciertos,
       fecha: new Date().getTime(),
-      aciertos: aciertos,
-      aciertosTotales: aciertosTotales,
+      aciertos: [{ aciertos: 0, seccion: 'NO TERMINO EVALUACIÓN', total:0 }],
+      aciertosTotales: 0,
       resultado: ResultadoEnum.REPROBADO
     }
+    //SE GURADA Y SE OBTIEE EL ID DEL RESULTADO SUBIDO
     this._resultados.save(resultado).then(result => {
-      this._usuarios.addEvaluacion(this._auth.getUsuarioC().id, this.aplicacion.id, resultado).then( accion => {} );
+      this._usuarios.addEvaluacion(this._auth.getUsuarioC().id, this.aplicacion.id, resultado).then( accion => {
+        this._resultados.getByAplicacion(this._auth.getUsuarioC().id, this.aplicacion.id).then( resultado => {
+          this.resultado = resultado;
+        })
+      });
     }, err => { this._toastr.error(MSJ_ERROR_CONECTAR_SERVIDOR) });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { getCardsByEtapas, LINKS_HOME } from '@routing/ListLinks';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -19,13 +19,14 @@ import { UsuarioService } from '@services/usuario/usuario.service';
 })
 export class SidenavComponent implements OnInit {
 
+  @Input() tiempoValido: boolean = true;
+
   usuario: UsuarioInterface = { nombres: '-', roles: null, alertas: [] , id: ''};
   alertas: Array<Alert>;
   tipoAlerta: any =  TipoAlert;
   mobileQuery: MediaQueryList;
   navigationLinks = LINKS_HOME['page']; // admin; DEBUG //CAMBIAR A page EN PRODUCCION
   isLoggedIn: boolean = false; //true; DEBUG //CAMBIAR A false EN PRODUCCION
-  shouldRun = true;
 
 
   private _mobileQueryListener: () => void;

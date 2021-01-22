@@ -1,4 +1,4 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="tiempoValido; else NoTime">
   <!-- TOOLBAR  -->
   <mat-toolbar color="basic" class="example-toolbar mat-elevation-z3">
     <button mat-icon-button (click)="snav.toggle()">
@@ -85,4 +85,13 @@
   </mat-sidenav-container>
 </div>
 
-<div *ngIf="!shouldRun">Please open on Stackblitz to see result</div>
+<ng-template #NoTime>
+  <div class="container"  style="width: 100%; height: 100%;">
+    <div class="row" style="width: 100%; height: 100%;">
+      <div class="col-12 mx-auto my-auto text-center">
+        <h1>Revisa el horario de tu computadora</h1>
+        <h1> <mat-icon>sync_problem</mat-icon></h1>
+      </div>
+    </div>
+  </div>
+</ng-template>

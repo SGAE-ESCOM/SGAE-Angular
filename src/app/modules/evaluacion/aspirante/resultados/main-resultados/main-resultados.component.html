@@ -22,7 +22,7 @@
         <div class="col-12">
             <div *ngIf="aplicacionesRealizadas" class="row" [@cardAnimation]="aplicacionesRealizadas.length">
                 <div *ngFor="let aplicacion of aplicacionesRealizadas; trackBy: trackById" class="col-12 col-sm-4 col-md-3 py-2">
-                    <div class="card card-hover mat-elevation-z2 bd-callout bd-callout-primary pt-2 pb-4" name="cardEvaluacion" matRipple (click)="mostrarResultado(aplicacion)">
+                    <div class="card hover mat-elevation-z2 bd-callout bd-callout-primary pt-2 pb-4" name="cardEvaluacion" matRipple (click)="mostrarResultado(aplicacion)">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <span>
